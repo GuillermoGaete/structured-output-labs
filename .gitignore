@@ -1,0 +1,27 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+backend/.toy_cache/
+
+# Node
+node_modules/
+web/.next/
+web/out/
+web/next-env.d.ts
+*.tsbuildinfo
+npm-debug.log*
+
+# Env
+.env
+.env.local
+.env*.local
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Presentation build scratch (rendered outputs in presentation/out are committed)
+presentation/.tmp/

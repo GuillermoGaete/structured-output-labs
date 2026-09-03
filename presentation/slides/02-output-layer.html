@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>02 · Output layer</title>
+<link rel="stylesheet" href="_theme.css">
+</head>
+<body>
+<svg class="slide" viewBox="0 0 1920 1080" width="1920" height="1080" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The output layer: the final hidden vector h of size 896 is multiplied by the unembedding matrix to give one logit per vocabulary entry, then softmax with temperature turns logits into probabilities">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#AEB6C7"/>
+    </marker>
+  </defs>
+  <rect width="1920" height="1080" fill="#0E1016"/>
+
+  <text x="96" y="92" font-family="IBM Plex Mono, monospace" font-size="22" fill="#7C8599" letter-spacing="2">02 · OUTPUT LAYER</text>
+  <text x="96" y="152" font-size="52" font-weight="600" fill="#ECEFF4">One dot product per vocabulary entry</text>
+  <text x="96" y="196" font-size="26" fill="#AEB6C7">The LM head is a single matrix multiplication. Its output is called the logits: unnormalised scores, one per token.</text>
+
+  <!-- h vector -->
+  <g>
+    <text x="216" y="292" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="26" fill="#ECEFF4">h</text>
+    <text x="216" y="322" text-anchor="middle" font-size="18" fill="#7C8599">ℝ^896</text>
+    <rect x="186" y="340" width="60" height="330" rx="8" fill="#171A22" stroke="#2A2F3C"/>
+    <g font-family="IBM Plex Mono, monospace" font-size="17" fill="#2DD4BF" text-anchor="middle">
+      <text x="216" y="372">0.31</text><text x="216" y="402">-1.20</text><text x="216" y="432">0.08</text><text x="216" y="462">2.44</text><text x="216" y="492">-0.57</text>
+      <text x="216" y="530" fill="#7C8599">⋮</text>
+      <text x="216" y="570">0.92</text><text x="216" y="600">-0.03</text><text x="216" y="630">1.15</text><text x="216" y="660">-0.66</text>
+    </g>
+    <text x="216" y="706" text-anchor="middle" font-size="18" fill="#7C8599">last position, after</text>
+    <text x="216" y="730" text-anchor="middle" font-size="18" fill="#7C8599">the final RMSNorm</text>
+  </g>
+
+  <text x="300" y="512" text-anchor="middle" font-size="44" fill="#AEB6C7">·</text>
+
+  <!-- W_U matrix -->
+  <g>
+    <text x="560" y="292" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="26" fill="#ECEFF4">W_U</text>
+    <text x="560" y="322" text-anchor="middle" font-size="18" fill="#7C8599">ℝ^(151,936 × 896)</text>
+    <rect x="360" y="340" width="400" height="330" rx="8" fill="#171A22" stroke="#2A2F3C"/>
+    <g font-family="IBM Plex Mono, monospace" font-size="17" fill="#AEB6C7">
+      <rect x="376" y="356" width="368" height="30" rx="4" fill="#1E2330"/>
+      <text x="388" y="377" fill="#ECEFF4">row for "{"</text><text x="736" y="377" text-anchor="end">0.44  -0.9  …  1.3</text>
+      <rect x="376" y="392" width="368" height="30" rx="4" fill="#1E2330"/>
+      <text x="388" y="413" fill="#ECEFF4">row for "Sure"</text><text x="736" y="413" text-anchor="end">-0.2   0.7  …  0.1</text>
+      <rect x="376" y="428" width="368" height="30" rx="4" fill="#1E2330"/>
+      <text x="388" y="449" fill="#ECEFF4">row for "Here"</text><text x="736" y="449" text-anchor="end">0.9   0.3  … -0.4</text>
+      <rect x="376" y="464" width="368" height="30" rx="4" fill="#1E2330"/>
+      <text x="388" y="485" fill="#ECEFF4">row for "Ġname"</text><text x="736" y="485" text-anchor="end">-1.1   0.2  …  0.8</text>
+      <text x="560" y="530" text-anchor="middle" font-size="24" fill="#7C8599">⋮</text>
+      <rect x="376" y="560" width="368" height="30" rx="4" fill="#1E2330"/>
+      <text x="388" y="581" fill="#ECEFF4">row for "⟨eos⟩"</text><text x="736" y="581" text-anchor="end">0.1  -0.6  … -0.2</text>
+      <text x="560" y="630" text-anchor="middle" font-size="17" fill="#7C8599">151,936 rows · one learned vector per token</text>
+    </g>
+    <text x="560" y="706" text-anchor="middle" font-size="18" fill="#7C8599">in Qwen2.5-0.5B this matrix is</text>
+    <text x="560" y="730" text-anchor="middle" font-size="18" fill="#7C8599">the input embedding, tied</text>
+  </g>
+
+  <text x="820" y="512" text-anchor="middle" font-size="44" fill="#AEB6C7">=</text>
+
+  <!-- z logits -->
+  <g>
+    <text x="960" y="292" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="26" fill="#ECEFF4">z = W_U h</text>
+    <text x="960" y="322" text-anchor="middle" font-size="18" fill="#7C8599">ℝ^151,936 · the logits</text>
+    <rect x="880" y="340" width="160" height="330" rx="8" fill="#171A22" stroke="#2A2F3C"/>
+    <g font-family="IBM Plex Mono, monospace" font-size="17" text-anchor="end">
+      <text x="1020" y="377" fill="#3987E5">18.2</text>
+      <text x="1020" y="413" fill="#3987E5">17.1</text>
+      <text x="1020" y="449" fill="#3987E5">15.9</text>
+      <text x="1020" y="485" fill="#3987E5">7.0</text>
+      <text x="960" y="530" text-anchor="middle" font-size="24" fill="#7C8599">⋮</text>
+      <text x="1020" y="581" fill="#3987E5">-3.0</text>
+    </g>
+    <g fill="#3987E5" opacity="0.5">
+      <rect x="896" y="364" width="80" height="18" rx="2"/><rect x="896" y="400" width="74" height="18" rx="2"/><rect x="896" y="436" width="66" height="18" rx="2"/><rect x="896" y="472" width="22" height="18" rx="2"/><rect x="896" y="568" width="4" height="18" rx="2"/>
+    </g>
+    <text x="960" y="706" text-anchor="middle" font-size="18" fill="#7C8599">any real number;</text>
+    <text x="960" y="730" text-anchor="middle" font-size="18" fill="#7C8599">bigger means more likely</text>
+  </g>
+
+  <line x1="1060" y1="505" x2="1130" y2="505" stroke="#AEB6C7" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1095" y="490" text-anchor="middle" font-size="18" fill="#AEB6C7">softmax</text>
+
+  <!-- p probabilities -->
+  <g>
+    <text x="1240" y="292" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="26" fill="#ECEFF4">p = softmax(z / T)</text>
+    <text x="1240" y="322" text-anchor="middle" font-size="18" fill="#7C8599">sums to 1 · the distribution we sample from</text>
+    <rect x="1150" y="340" width="180" height="330" rx="8" fill="#171A22" stroke="#2A2F3C"/>
+    <g font-family="IBM Plex Mono, monospace" font-size="17" text-anchor="end">
+      <text x="1310" y="377" fill="#ECEFF4">68.2%</text>
+      <text x="1310" y="413" fill="#ECEFF4">22.7%</text>
+      <text x="1310" y="449" fill="#ECEFF4">6.8%</text>
+      <text x="1310" y="485" fill="#ECEFF4">0.001%</text>
+      <text x="1240" y="530" text-anchor="middle" font-size="24" fill="#7C8599">⋮</text>
+      <text x="1310" y="581" fill="#ECEFF4">≈0%</text>
+    </g>
+    <g fill="#3987E5">
+      <rect x="1166" y="364" width="70" height="18" rx="2"/><rect x="1166" y="400" width="24" height="18" rx="2"/><rect x="1166" y="436" width="8" height="18" rx="2"/><rect x="1166" y="472" width="2" height="18" rx="2"/>
+    </g>
+    <text x="1240" y="706" text-anchor="middle" font-size="18" fill="#7C8599">exponentiate, then divide</text>
+    <text x="1240" y="730" text-anchor="middle" font-size="18" fill="#7C8599">by the sum</text>
+  </g>
+
+  <!-- formula panel -->
+  <rect x="1400" y="340" width="424" height="330" rx="12" fill="#171A22" stroke="#2A2F3C"/>
+  <text x="1424" y="384" font-size="20" fill="#7C8599">softmax with temperature T</text>
+  <g font-family="IBM Plex Mono, monospace" fill="#ECEFF4">
+    <text x="1424" y="450" font-size="30">p<tspan baseline-shift="sub" font-size="18">i</tspan> =</text>
+    <text x="1600" y="428" font-size="26" text-anchor="middle">exp(z<tspan baseline-shift="sub" font-size="16">i</tspan> / T)</text>
+    <line x1="1500" y1="444" x2="1700" y2="444" stroke="#ECEFF4" stroke-width="2"/>
+    <text x="1600" y="484" font-size="26" text-anchor="middle">Σ<tspan baseline-shift="sub" font-size="16">j</tspan> exp(z<tspan baseline-shift="sub" font-size="16">j</tspan> / T)</text>
+  </g>
+  <text x="1424" y="548" font-size="19" fill="#AEB6C7">T → 0  picks the max (greedy)</text>
+  <text x="1424" y="580" font-size="19" fill="#AEB6C7">T = 1  the model's own belief</text>
+  <text x="1424" y="612" font-size="19" fill="#AEB6C7">T &gt; 1  flatter, more random</text>
+  <text x="1424" y="650" font-size="19" fill="#2DD4BF">exp(−∞) = 0 — remember this line</text>
+
+  <!-- footer -->
+  <rect x="96" y="860" width="1728" height="120" rx="12" fill="#171A22" stroke="#2A2F3C"/>
+  <text x="128" y="906" font-size="26" font-weight="600" fill="#ECEFF4">Logits are just numbers in a vector, and the vector is ours to edit before softmax.</text>
+  <text x="128" y="946" font-size="24" fill="#AEB6C7">Sampling never sees z directly; it sees softmax(z). Whatever we write into z decides what can come out.</text>
+</svg>
+</body>
+</html>

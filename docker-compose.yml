@@ -1,0 +1,34 @@
+# Local development with Docker only (no Python on the host).
+#
+#   docker compose up --build                 # real model (downloads Qwen2.5-0.5B once, cached in a volume)
+#   TOY_MODEL=1 docker compose up --build     # tiny random model, no download, meaningless probabilities
+#   docker compose run --rm backend-test      # pytest on the toy model
+#
+# The web app runs on the host: cd web && npm run dev (NEXT_PUBLIC_BACKEND_URL=http://127.0.0.1:7860)
+
+services:
+  backend:
+    build: ./backend
+    image: structured-output-labs-backend
+    ports:
+      - "7860:7860"
+    environment:
+      MODEL_ID: ${MODEL_ID:-Qwen/Qwen2.5-0.5B-Instruct}
+      TOY_MODEL: ${TOY_MODEL:-0}
+      TORCH_THREADS: ${TORCH_THREADS:-4}
+    volumes:
+      - hf-cache:/home/user/.cache/huggingface
+
+  backend-test:
+    image: structured-output-labs-backend
+    build: ./backend
+    profiles: ["test"]
+    environment:
+      TOY_MODEL: "1"
+    volumes:
+      - ./backend/tests:/home/user/app/tests:ro
+      - ./backend/pytest.ini:/home/user/app/pytest.ini:ro
+    command: sh -c "pip install --user -q pytest httpx && python -m pytest -q"
+
+volumes:
+  hf-cache:

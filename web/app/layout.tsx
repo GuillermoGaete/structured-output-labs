@@ -1,0 +1,38 @@
+import type { Metadata } from "next";
+import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
+import "./globals.css";
+import { BackendProvider } from "@/components/BackendProvider";
+import { Nav } from "@/components/Nav";
+
+const plexSans = IBM_Plex_Sans({
+  variable: "--font-plex-sans",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+});
+
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
+  subsets: ["latin"],
+  weight: ["400", "500"],
+});
+
+export const metadata: Metadata = {
+  title: "Structured Output Labs",
+  description: "Watch constrained decoding mask a language model's logits, token by token.",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" className={`${plexSans.variable} ${plexMono.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col">
+        <BackendProvider>
+          <Nav />
+          <main className="flex-1 w-full max-w-6xl mx-auto px-5 py-8">{children}</main>
+          <footer className="border-t border-line py-4 text-center text-xs text-muted">
+            outlines 1.3 · transformers · Next.js — a lab for constrained decoding
+          </footer>
+        </BackendProvider>
+      </body>
+    </html>
+  );
+}

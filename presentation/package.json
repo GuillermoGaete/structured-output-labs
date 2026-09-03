@@ -1,0 +1,11 @@
+{
+  "name": "structured-output-labs-presentation",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}

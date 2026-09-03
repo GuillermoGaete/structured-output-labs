@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>06 · The two observers</title>
+<link rel="stylesheet" href="_theme.css">
+</head>
+<body>
+<svg class="slide" viewBox="0 0 1920 1080" width="1920" height="1080" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The logits processor chain used in the lab: the model emits logits, PreMaskObserver clones them, the outlines processor writes minus infinity on forbidden tokens, MasterObserver measures the result, and the sampler picks a token that is fed back into the model">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#AEB6C7"/>
+    </marker>
+  </defs>
+  <rect width="1920" height="1080" fill="#0E1016"/>
+
+  <text x="96" y="92" font-family="IBM Plex Mono, monospace" font-size="22" fill="#7C8599" letter-spacing="2">06 · INSTRUMENTING THE MASK</text>
+  <text x="96" y="152" font-size="52" font-weight="600" fill="#ECEFF4">Two observers around the mask, one per step</text>
+  <text x="96" y="196" font-size="26" fill="#AEB6C7">A LogitsProcessorList runs left to right on every step. Neither observer changes a value; they only look.</text>
+
+  <g>
+    <rect x="96" y="300" width="250" height="120" rx="12" fill="#171A22" stroke="#3A4152"/>
+    <text x="221" y="350" text-anchor="middle" font-size="24" font-weight="600" fill="#ECEFF4">Transformer</text>
+    <text x="221" y="384" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="18" fill="#AEB6C7">logits[1, |V|]</text>
+
+    <rect x="416" y="300" width="300" height="120" rx="12" fill="#171A22" stroke="#3987E5" stroke-width="3"/>
+    <text x="566" y="344" text-anchor="middle" font-size="24" font-weight="600" fill="#ECEFF4">PreMaskObserver</text>
+    <text x="566" y="374" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="17" fill="#AEB6C7">raw.append(scores.clone())</text>
+    <text x="566" y="400" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="17" fill="#AEB6C7">return scores</text>
+
+    <rect x="786" y="300" width="300" height="120" rx="12" fill="#171A22" stroke="#D95926" stroke-width="3"/>
+    <text x="936" y="344" text-anchor="middle" font-size="24" font-weight="600" fill="#ECEFF4">outlines processor</text>
+    <text x="936" y="374" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="17" fill="#AEB6C7">guide.advance(last token)</text>
+    <text x="936" y="400" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="17" fill="#AEB6C7">scores[~allowed] = −∞</text>
+
+    <rect x="1156" y="300" width="300" height="120" rx="12" fill="#171A22" stroke="#3987E5" stroke-width="3"/>
+    <text x="1306" y="344" text-anchor="middle" font-size="24" font-weight="600" fill="#ECEFF4">MasterObserver</text>
+    <text x="1306" y="374" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="17" fill="#AEB6C7">compare raw vs masked</text>
+    <text x="1306" y="400" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="17" fill="#AEB6C7">record; return scores</text>
+
+    <rect x="1526" y="300" width="298" height="120" rx="12" fill="#171A22" stroke="#3A4152"/>
+    <text x="1675" y="350" text-anchor="middle" font-size="24" font-weight="600" fill="#ECEFF4">Sampler</text>
+    <text x="1675" y="384" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="18" fill="#AEB6C7">argmax / multinomial</text>
+
+    <g stroke="#AEB6C7" stroke-width="3" fill="none" marker-end="url(#arrow)">
+      <line x1="346" y1="360" x2="412" y2="360"/>
+      <line x1="716" y1="360" x2="782" y2="360"/>
+      <line x1="1086" y1="360" x2="1152" y2="360"/>
+      <line x1="1456" y1="360" x2="1522" y2="360"/>
+    </g>
+    <g font-family="IBM Plex Mono, monospace" font-size="18" fill="#7C8599" text-anchor="middle">
+      <text x="566" y="284">processors[0]</text>
+      <text x="936" y="284">processors[1]</text>
+      <text x="1306" y="284">processors[-1]</text>
+    </g>
+    <path d="M1675,420 L1675,470 L221,470 L221,424" fill="none" stroke="#3A4152" stroke-width="2" stroke-dasharray="8 8" marker-end="url(#arrow)"/>
+    <text x="948" y="496" text-anchor="middle" font-size="18" fill="#7C8599">next token appended to input_ids → next step</text>
+  </g>
+
+  <rect x="96" y="540" width="820" height="300" rx="12" fill="#171A22" stroke="#2A2F3C"/>
+  <text x="120" y="576" font-size="18" fill="#7C8599">backend/app/engine.py (abridged)</text>
+  <g font-family="IBM Plex Mono, monospace" font-size="17" fill="#ECEFF4">
+    <text x="120" y="612">pre    = PreMaskObserver()</text>
+    <text x="120" y="640">mask   = get_json_schema_logits_processor(<tspan fill="#2DD4BF">"outlines_core"</tspan>, model, schema)</text>
+    <text x="120" y="668">master = MasterObserver(pre, state_getter=<tspan fill="#7C8599">lambda</tspan>: mask._guides[0].get_state())</text>
+    <text x="120" y="696">processors = LogitsProcessorList([<tspan fill="#3987E5">pre</tspan>, <tspan fill="#D95926">mask</tspan>, <tspan fill="#3987E5">master</tspan>])</text>
+    <text x="120" y="724">master.reset(); mask.reset()  <tspan fill="#7C8599"># before every generation</tspan></text>
+    <text x="120" y="752"><tspan fill="#7C8599">for</tspan> _ <tspan fill="#7C8599">in</tspan> range(max_new_tokens):</text>
+    <text x="120" y="780">&#160;&#160;&#160;&#160;scores = processors(input_ids, logits)  <tspan fill="#7C8599"># the chain above</tspan></text>
+    <text x="120" y="808">&#160;&#160;&#160;&#160;next_id = sample(scores); input_ids = cat(input_ids, next_id)</text>
+  </g>
+
+  <rect x="948" y="540" width="876" height="300" rx="12" fill="#171A22" stroke="#2A2F3C"/>
+  <text x="972" y="576" font-size="18" fill="#7C8599">Recorded per generated token</text>
+  <g font-size="21" fill="#ECEFF4">
+    <text x="972" y="618"><tspan font-family="IBM Plex Mono, monospace" fill="#2DD4BF">n_allowed</tspan>  finite entries after the mask (vs |V|)</text>
+    <text x="972" y="654"><tspan font-family="IBM Plex Mono, monospace" fill="#2DD4BF">top_original</tspan>  top-K of softmax(raw), flagged allowed / forbidden</text>
+    <text x="972" y="690"><tspan font-family="IBM Plex Mono, monospace" fill="#2DD4BF">top_forced</tspan>  top-K of softmax(masked)</text>
+    <text x="972" y="726"><tspan font-family="IBM Plex Mono, monospace" fill="#2DD4BF">mass_removed</tspan>  Σ p_raw over forbidden tokens</text>
+    <text x="972" y="762"><tspan font-family="IBM Plex Mono, monospace" fill="#2DD4BF">fsm_state</tspan>  Guide.get_state() the mask was read from</text>
+    <text x="972" y="798"><tspan font-family="IBM Plex Mono, monospace" fill="#2DD4BF">was_overridden</tspan>  argmax(raw) ≠ chosen token</text>
+  </g>
+
+  <rect x="96" y="860" width="1728" height="120" rx="12" fill="#171A22" stroke="#2A2F3C"/>
+  <text x="128" y="906" font-size="26" font-weight="600" fill="#ECEFF4">Original intent and forced choice, side by side, for every token: that is what the Time Machine replays.</text>
+  <text x="128" y="946" font-size="24" fill="#AEB6C7">reset() clears both observers before each request so one visitor's run never leaks into another's.</text>
+</svg>
+</body>
+</html>
