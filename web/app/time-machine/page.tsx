@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useBackend } from "@/components/BackendProvider";
 import { BackendSettings } from "@/components/BackendSettings";
 import { FsmGraph } from "@/components/FsmGraph";
+import { PathStrip } from "@/components/PathStrip";
 import { SchemaEditor } from "@/components/SchemaEditor";
 import { StackDepth } from "@/components/StackDepth";
 import { StepPanel } from "@/components/StepPanel";
@@ -27,6 +28,7 @@ export default function TimeMachinePage() {
   const [streaming, setStreaming] = useState(false);
   const [follow, setFollow] = useState(true);
   const [showGraph, setShowGraph] = useState(true);
+  const [followCurrent, setFollowCurrent] = useState(true);
   const abort = useRef<AbortController | null>(null);
 
   const run = useCallback(async () => {
@@ -91,10 +93,24 @@ export default function TimeMachinePage() {
   const mode = trace.meta?.mode ?? (state.mode === "cfg" ? "cfg" : "fsm");
   const automaton = compiled?.token_dfa ?? null;
   // Guide.get_state() reports outlines_core's own state ids; the graph renumbers them in BFS order.
-  const currentGraphState = useMemo(() => {
-    if (!automaton || !step || step.fsm_state === null) return null;
-    return automaton.nodes.find((n) => n.raw === step.fsm_state)?.id ?? null;
-  }, [automaton, step]);
+  const rawToGraphId = useMemo(() => {
+    const map = new Map<number, number>();
+    automaton?.nodes.forEach((n) => {
+      if (n.raw !== undefined) map.set(n.raw, n.id);
+    });
+    return map;
+  }, [automaton]);
+  const graphIdOf = useCallback((raw: number | null) => (raw === null ? null : (rawToGraphId.get(raw) ?? null)), [rawToGraphId]);
+  const currentGraphState = step ? graphIdOf(step.fsm_state) : null;
+  // States visited up to the current step, in order, restricted to the ones the graph draws.
+  const visitedGraphStates = useMemo(() => {
+    const ids: number[] = [];
+    for (const s of trace.steps.slice(0, index + 1)) {
+      const id = graphIdOf(s.fsm_state);
+      if (id !== null) ids.push(id);
+    }
+    return ids;
+  }, [trace.steps, index, graphIdOf]);
 
   return (
     <div className="flex flex-col gap-8">
@@ -183,17 +199,23 @@ export default function TimeMachinePage() {
           )}
 
           {automaton && mode === "fsm" && (
-            <section className="flex flex-col gap-2">
-              <div className="flex items-center gap-3">
+            <section className="flex flex-col gap-3">
+              <div className="flex items-center gap-3 flex-wrap">
                 <span className="eyebrow">Token-level automaton</span>
                 <button className="btn" type="button" onClick={() => setShowGraph((v) => !v)}>
                   {showGraph ? "Hide" : "Show"}
+                </button>
+                <button className={`btn ${followCurrent ? "border-accent" : ""}`} type="button" onClick={() => setFollowCurrent((v) => !v)} title="Keep the current state centred as you scrub">
+                  {followCurrent ? "Following current state" : "Follow current state"}
                 </button>
                 <span className="text-xs text-muted">
                   {currentGraphState === null ? "current state not among the drawn nodes" : `current state ${currentGraphState}`}
                 </span>
               </div>
-              {showGraph && <FsmGraph automaton={automaton} currentState={currentGraphState} height={420} />}
+              {trace.steps.length > 0 && <PathStrip steps={trace.steps} index={index} graphIdOf={graphIdOf} onPick={onIndex} />}
+              {showGraph && (
+                <FsmGraph automaton={automaton} currentState={currentGraphState} visited={visitedGraphStates} followCurrent={followCurrent} height={420} />
+              )}
             </section>
           )}
         </div>

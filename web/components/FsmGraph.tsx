@@ -8,6 +8,10 @@ interface Props {
   automaton: Automaton;
   /** Node id (in the automaton's own numbering) to highlight as the current state. */
   currentState?: number | null;
+  /** Node ids visited so far, in order; consecutive pairs are drawn as the path taken. */
+  visited?: number[];
+  /** Keep the current state centred in the viewport as it changes. */
+  followCurrent?: boolean;
   height?: number;
 }
 
@@ -29,9 +33,11 @@ interface SimLink extends d3.SimulationLinkDatum<SimNode> {
  * between them. Initial state: teal ring. Final states: double ring. Current
  * state: orange fill.
  */
-export function FsmGraph({ automaton, currentState = null, height = 520 }: Props) {
+export function FsmGraph({ automaton, currentState = null, visited = [], followCurrent = false, height = 520 }: Props) {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const fitRef = useRef<(() => void) | null>(null);
+  const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null);
+  const nodesRef = useRef<SimNode[]>([]);
   const [hover, setHover] = useState<{ x: number; y: number; text: string } | null>(null);
 
   const data = useMemo(() => {
@@ -99,6 +105,7 @@ export function FsmGraph({ automaton, currentState = null, height = 520 }: Props
       .selectAll("path")
       .data(links)
       .join("path")
+      .attr("class", "link")
       .attr("stroke-width", (d) => Math.min(1 + Math.log2(d.count), 4))
       .attr("marker-end", "url(#fsm-arrow)");
 
@@ -237,6 +244,8 @@ export function FsmGraph({ automaton, currentState = null, height = 520 }: Props
 
     sim.on("end", fit);
     fitRef.current = fit;
+    zoomRef.current = zoom;
+    nodesRef.current = nodes;
 
     return () => {
       sim.stop();
@@ -244,18 +253,41 @@ export function FsmGraph({ automaton, currentState = null, height = 520 }: Props
     };
   }, [data, automaton.initial, height]);
 
-  // Current-state highlight is cheap, so it lives in its own effect and does
-  // not restart the simulation when the Time Machine slider moves.
+  // Highlights are cheap, so they live in their own effect and do not restart
+  // the simulation when the Time Machine slider moves.
   useEffect(() => {
     const svgEl = svgRef.current;
     if (!svgEl) return;
-    d3.select(svgEl)
+    const svg = d3.select(svgEl);
+    const visitedSet = new Set(visited);
+    const pathEdges = new Set<string>();
+    for (let i = 1; i < visited.length; i++) pathEdges.add(`${visited[i - 1]}->${visited[i]}`);
+    const isCurrent = (id: number) => currentState !== null && id === currentState;
+
+    svg
       .selectAll<SVGCircleElement, SimNode>("circle.state")
-      .attr("fill", (d) => (currentState !== null && d.id === currentState ? "var(--series-forced)" : "var(--surface)"))
+      .attr("fill", (d) => (isCurrent(d.id) ? "var(--series-forced)" : visitedSet.has(d.id) ? "var(--accent-soft)" : "var(--surface)"))
       .attr("stroke", (d) =>
-        currentState !== null && d.id === currentState ? "var(--series-forced)" : d.id === automaton.initial ? "var(--accent)" : "var(--line-2)",
-      );
-  }, [currentState, automaton.initial, data]);
+        isCurrent(d.id) ? "var(--series-forced)" : visitedSet.has(d.id) || d.id === automaton.initial ? "var(--accent)" : "var(--line-2)",
+      )
+      .attr("stroke-width", (d) => (isCurrent(d.id) || visitedSet.has(d.id) || d.id === automaton.initial ? 2.5 : 1.5));
+
+    const onPath = (l: SimLink) => pathEdges.has(`${(l.source as SimNode).id}->${(l.target as SimNode).id}`);
+    svg
+      .selectAll<SVGPathElement, SimLink>("path.link")
+      .attr("stroke", (l) => (onPath(l) ? "var(--series-forced)" : "var(--line-2)"))
+      .attr("stroke-width", (l) => (onPath(l) ? 3.5 : Math.min(1 + Math.log2(l.count), 4)))
+      .attr("stroke-opacity", (l) => (pathEdges.size && !onPath(l) ? 0.45 : 1))
+      .filter(onPath)
+      .raise();
+
+    if (followCurrent && currentState !== null && zoomRef.current) {
+      const node = nodesRef.current.find((n) => n.id === currentState);
+      if (node && node.x !== undefined && node.y !== undefined) {
+        svg.transition().duration(250).call(zoomRef.current.translateTo, node.x, node.y);
+      }
+    }
+  }, [currentState, visited, followCurrent, automaton.initial, data]);
 
   return (
     <div className="relative">
@@ -276,7 +308,13 @@ export function FsmGraph({ automaton, currentState = null, height = 520 }: Props
           <span className="inline-block w-3 h-3 rounded-full border border-good ring-1 ring-good ring-offset-1 ring-offset-surface" /> final
         </span>
         <span className="inline-flex items-center gap-1.5">
+          <span className="inline-block w-3 h-3 rounded-full bg-accent-soft border-2 border-accent" /> visited
+        </span>
+        <span className="inline-flex items-center gap-1.5">
           <span className="inline-block w-3 h-3 rounded-full bg-forced" /> current
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <span className="inline-block w-4 h-0.5 bg-forced" /> path taken
         </span>
         <span className="text-muted">
           {automaton.nodes.length.toLocaleString("en-US")} of {automaton.total_states.toLocaleString("en-US")} states shown · drag nodes, scroll to zoom
