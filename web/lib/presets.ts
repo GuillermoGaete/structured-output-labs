@@ -17,6 +17,7 @@ export const FALLBACK_PRESETS: Preset[] = [
       required: ["name", "age", "city"],
       title: "Person",
       type: "object",
+      additionalProperties: false,
     },
     prompt:
       "Extract the person from this text as JSON: Ada Lovelace, 36, lives in London and writes about analytical engines.",
@@ -36,6 +37,7 @@ export const FALLBACK_PRESETS: Preset[] = [
           required: ["sku", "qty", "unit_price"],
           title: "LineItem",
           type: "object",
+          additionalProperties: false,
         },
       },
       properties: {
@@ -47,6 +49,7 @@ export const FALLBACK_PRESETS: Preset[] = [
       required: ["invoice_id", "customer", "items", "paid"],
       title: "Invoice",
       type: "object",
+      additionalProperties: false,
     },
     prompt:
       "Turn this order into an invoice JSON: customer Grace Hopper bought 2 units of SKU COB-1 at 12.5 each and 1 unit of SKU LSP-9 at 99.0; the invoice is unpaid.",
@@ -66,6 +69,7 @@ export const FALLBACK_PRESETS: Preset[] = [
           required: ["value", "children"],
           title: "TreeNode",
           type: "object",
+          additionalProperties: false,
         },
       },
       $ref: "#/$defs/TreeNode",

@@ -9,22 +9,37 @@ from __future__ import annotations
 
 from typing import Any
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class Person(BaseModel):
+    # `extra="forbid"` becomes `additionalProperties: false`, so the grammar engine
+    # (which follows the JSON Schema default of allowing extra keys) matches the
+    # regex engine (which never allows them).
+    model_config = ConfigDict(extra="forbid")
+
     name: str = Field(max_length=24)
     age: int
     city: str = Field(max_length=24)
 
 
 class LineItem(BaseModel):
+    # `extra="forbid"` becomes `additionalProperties: false`, so the grammar engine
+    # (which follows the JSON Schema default of allowing extra keys) matches the
+    # regex engine (which never allows them).
+    model_config = ConfigDict(extra="forbid")
+
     sku: str = Field(max_length=12)
     qty: int
     unit_price: float
 
 
 class Invoice(BaseModel):
+    # `extra="forbid"` becomes `additionalProperties: false`, so the grammar engine
+    # (which follows the JSON Schema default of allowing extra keys) matches the
+    # regex engine (which never allows them).
+    model_config = ConfigDict(extra="forbid")
+
     invoice_id: str = Field(max_length=12)
     customer: str = Field(max_length=24)
     items: list[LineItem]
@@ -33,6 +48,8 @@ class Invoice(BaseModel):
 
 class TreeNode(BaseModel):
     """A recursive schema: every node holds a list of nodes."""
+
+    model_config = ConfigDict(extra="forbid")
 
     value: int
     children: list["TreeNode"]

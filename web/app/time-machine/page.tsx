@@ -7,6 +7,7 @@ import { FsmGraph } from "@/components/FsmGraph";
 import { PathStrip } from "@/components/PathStrip";
 import { SchemaEditor } from "@/components/SchemaEditor";
 import { StackDepth } from "@/components/StackDepth";
+import { StackView } from "@/components/StackView";
 import { StepPanel } from "@/components/StepPanel";
 import { TimeMachine } from "@/components/TimeMachine";
 import { TokenRenderer } from "@/components/TokenRenderer";
@@ -202,6 +203,18 @@ export default function TimeMachinePage() {
                 </span>
               </div>
               <StackDepth steps={trace.steps} current={index} />
+            </section>
+          )}
+
+          {step && mode === "cfg" && (
+            <section className="flex flex-col gap-3">
+              <div className="flex items-center gap-3 flex-wrap">
+                <span className="eyebrow">Grammar engine</span>
+                <span className="text-xs text-muted">llguidance · no automaton to draw; the stack is the state</span>
+              </div>
+              <div className="panel p-4">
+                <StackView step={step} />
+              </div>
             </section>
           )}
 
