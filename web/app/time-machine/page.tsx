@@ -173,6 +173,13 @@ export default function TimeMachinePage() {
               )}
             </div>
             <TokenRenderer tokens={trace.steps} limit={step ? index + 1 : 0} activeIndex={index} onPick={onIndex} />
+            {trace.done && !trace.done.valid && trace.meta?.recursive && trace.meta.mode === "fsm" && (
+              <p className="text-xs rounded-md px-3 py-2 border border-warning text-ink max-w-prose">
+                <strong>Why the automaton accepted invalid JSON:</strong> outlines_core unrolls a recursive schema three levels and
+                its innermost level is malformed (it keeps a trailing comma where the recursive property was cut off). The mask
+                did exactly what the regex said; the regex was wrong. Switch the engine to CFG (or Auto) for recursive schemas.
+              </p>
+            )}
           </section>
 
           {step ? (

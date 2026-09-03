@@ -38,6 +38,19 @@ export function FsmGraph({ automaton, currentState = null, visited = [], followC
   const fitRef = useRef<(() => void) | null>(null);
   const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null);
   const nodesRef = useRef<SimNode[]>([]);
+  const simRef = useRef<d3.Simulation<SimNode, undefined> | null>(null);
+  // "Frozen" = no forces: nodes stay exactly where you drop them.
+  const [frozen, setFrozen] = useState<boolean>(() => {
+    try {
+      return window.localStorage.getItem("sol.graphFrozen") === "1";
+    } catch {
+      return false;
+    }
+  });
+  const frozenRef = useRef(frozen);
+  useEffect(() => {
+    frozenRef.current = frozen;
+  }, [frozen]);
   const [hover, setHover] = useState<{ x: number; y: number; text: string } | null>(null);
 
   const data = useMemo(() => {
@@ -120,6 +133,8 @@ export function FsmGraph({ automaton, currentState = null, visited = [], followC
       .attr("stroke-width", 3)
       .text((d) => (d.label.length > 14 ? d.label.slice(0, 13) + "…" : d.label));
 
+    let ticked: () => void = () => undefined; // assigned below, after the selections exist
+
     const node = root
       .append("g")
       .selectAll<SVGGElement, SimNode>("g")
@@ -130,15 +145,21 @@ export function FsmGraph({ automaton, currentState = null, visited = [], followC
         d3
           .drag<SVGGElement, SimNode>()
           .on("start", (event, d) => {
-            if (!event.active) sim.alphaTarget(0.3).restart();
+            if (!frozenRef.current && !event.active) sim.alphaTarget(0.3).restart();
             d.fx = d.x;
             d.fy = d.y;
           })
           .on("drag", (event, d) => {
             d.fx = event.x;
             d.fy = event.y;
+            if (frozenRef.current) {
+              d.x = event.x;
+              d.y = event.y;
+              ticked();
+            }
           })
           .on("end", (event, d) => {
+            if (frozenRef.current) return; // stay pinned where it was dropped
             if (!event.active) sim.alphaTarget(0);
             d.fx = null;
             d.fy = null;
@@ -199,7 +220,7 @@ export function FsmGraph({ automaton, currentState = null, visited = [], followC
     };
 
     let ticks = 0;
-    sim.on("tick", () => {
+    ticked = () => {
       // Fit once early so the first frame is readable, then again when the layout settles.
       if (++ticks === 90) fit();
       link.attr("d", linkPath);
@@ -220,7 +241,8 @@ export function FsmGraph({ automaton, currentState = null, visited = [], followC
         return my + dx * 0.12;
       });
       node.attr("transform", (d) => `translate(${d.x},${d.y})`);
-    });
+    };
+    sim.on("tick", ticked);
 
     // Scale the layout to fit the viewport (a force layout of a few hundred
     // states easily spreads past the box otherwise).
@@ -246,12 +268,49 @@ export function FsmGraph({ automaton, currentState = null, visited = [], followC
     fitRef.current = fit;
     zoomRef.current = zoom;
     nodesRef.current = nodes;
+    simRef.current = sim;
+    if (frozenRef.current) {
+      // Let the layout settle without animating, then pin everything.
+      sim.stop();
+      for (let i = 0; i < 300; i++) sim.tick();
+      nodes.forEach((n) => {
+        n.fx = n.x;
+        n.fy = n.y;
+      });
+      ticked();
+      fit();
+    }
 
     return () => {
       sim.stop();
       fitRef.current = null;
     };
   }, [data, automaton.initial, height]);
+
+  const toggleFrozen = () => {
+    const next = !frozen;
+    setFrozen(next);
+    try {
+      window.localStorage.setItem("sol.graphFrozen", next ? "1" : "0");
+    } catch {
+      /* ignore */
+    }
+    const sim = simRef.current;
+    if (!sim) return;
+    if (next) {
+      sim.stop();
+      nodesRef.current.forEach((n) => {
+        n.fx = n.x;
+        n.fy = n.y;
+      });
+    } else {
+      nodesRef.current.forEach((n) => {
+        n.fx = null;
+        n.fy = null;
+      });
+      sim.alpha(0.5).restart();
+    }
+  };
 
   // Highlights are cheap, so they live in their own effect and do not restart
   // the simulation when the Time Machine slider moves.
@@ -319,7 +378,15 @@ export function FsmGraph({ automaton, currentState = null, visited = [], followC
         <span className="text-muted">
           {automaton.nodes.length.toLocaleString("en-US")} of {automaton.total_states.toLocaleString("en-US")} states shown · drag nodes, scroll to zoom
         </span>
-        <button type="button" className="btn ml-auto py-0.5 px-2 text-xs" onClick={() => fitRef.current?.()}>
+        <button
+          type="button"
+          className={`btn ml-auto py-0.5 px-2 text-xs ${frozen ? "border-accent" : ""}`}
+          onClick={toggleFrozen}
+          title={frozen ? "Forces are off: nodes stay where you drop them" : "Forces are on: nodes spring back into the layout"}
+        >
+          {frozen ? "Layout frozen" : "Freeze layout"}
+        </button>
+        <button type="button" className="btn py-0.5 px-2 text-xs" onClick={() => fitRef.current?.()}>
           Fit to view
         </button>
       </div>

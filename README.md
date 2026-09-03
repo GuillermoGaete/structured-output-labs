@@ -89,3 +89,6 @@ cd presentation && npm install && npx playwright install chromium && npm run bui
 - A recursive schema does **not** become a CFG in `outlines_core` 0.2: the regex is unrolled a fixed number of levels. The
   lab's CFG mode uses the `llguidance` backend instead (grammar with a stack); it exposes no automaton state, so the stack
   depth shown is computed from the text (unclosed `{`/`[`).
+- Bug worth showing in the talk: at the innermost unrolled level `outlines_core` 0.2.14 drops the recursive property but keeps
+  the comma before it (`\{"value": <int>, \}`), so a deep enough run in FSM mode ends in JSON the automaton accepts and a
+  parser rejects. The app warns when this happens; `auto` mode avoids it by using the grammar engine for recursive schemas.
