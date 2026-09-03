@@ -21,10 +21,18 @@ export function pastelFor(index: number): string {
   return PASTELS[index % PASTELS.length];
 }
 
+/**
+ * Percentage with `digits` decimals. Values that would round to zero are shown in
+ * scientific notation instead of being hidden behind "<0.1%".
+ */
 export function formatPct(p: number, digits = 1): string {
-  if (p >= 0.9995) return "100%";
-  if (p < 0.0005) return p === 0 ? "0%" : "<0.1%";
-  return `${(p * 100).toFixed(digits)}%`;
+  const pct = p * 100;
+  if (!Number.isFinite(pct)) return "—";
+  if (pct === 0) return "0%";
+  const min = 10 ** -digits;
+  if (pct >= 100 - min / 2) return "100%";
+  if (pct < min) return `${pct.toExponential(Math.max(digits - 1, 1))}%`;
+  return `${pct.toFixed(digits)}%`;
 }
 
 export function formatInt(n: number): string {

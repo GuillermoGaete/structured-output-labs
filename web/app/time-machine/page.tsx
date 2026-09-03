@@ -56,7 +56,7 @@ export default function TimeMachinePage() {
           max_new_tokens: state.maxNewTokens,
           temperature: state.temperature,
           top_k_sampling: 0,
-          top_k_report: 8,
+          top_k_report: Math.min(Math.max(state.topK, 1), 20),
           seed: state.seed,
           use_chat_template: true,
         },
@@ -183,9 +183,47 @@ export default function TimeMachinePage() {
             )}
           </section>
 
+          <section className="flex items-center gap-x-5 gap-y-2 flex-wrap text-xs">
+            <span className="eyebrow">Display</span>
+            <label className="inline-flex items-center gap-2">
+              <span className="text-muted">Precision</span>
+              <select
+                className="input w-auto py-0.5 px-1.5 text-xs"
+                value={state.pctDigits}
+                onChange={(e) => update({ pctDigits: Number(e.target.value) })}
+                aria-label="Decimals shown on probabilities"
+              >
+                {[1, 2, 3, 4, 6].map((d) => (
+                  <option key={d} value={d}>
+                    {d} decimal{d === 1 ? "" : "s"}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="inline-flex items-center gap-2">
+              <span className="text-muted">Bars</span>
+              <button type="button" className="btn py-0.5 px-2 text-xs" onClick={() => update({ logBars: !state.logBars })} title="Log scale keeps tiny probabilities visible">
+                {state.logBars ? "log scale" : "linear"}
+              </button>
+            </label>
+            <label className="inline-flex items-center gap-2">
+              <span className="text-muted">Top-K</span>
+              <input
+                type="number"
+                min={1}
+                max={20}
+                className="input w-16 py-0.5 px-1.5 text-xs tabular-nums"
+                value={state.topK}
+                onChange={(e) => update({ topK: Math.min(Math.max(Number(e.target.value) || 1, 1), 20) })}
+                aria-label="Entries per top-K list"
+              />
+              <span className="text-muted">per list, applies to the next run (max 20)</span>
+            </label>
+          </section>
+
           {step ? (
             <section className="panel p-4">
-              <StepPanel step={step} mode={mode} />
+              <StepPanel step={step} mode={mode} digits={state.pctDigits} logBars={state.logBars} />
             </section>
           ) : (
             <section className="panel p-8 text-sm text-ink-2">
@@ -199,7 +237,7 @@ export default function TimeMachinePage() {
                 <span className="eyebrow">Across the run</span>
                 <span className="text-xs text-muted">
                   {trace.steps.filter((s) => s.was_overridden).length} of {trace.steps.length} tokens overridden · mean vocabulary kept{" "}
-                  {formatPct(trace.steps.reduce((a, s) => a + s.n_allowed / s.vocab_size, 0) / trace.steps.length, 2)}
+                  {formatPct(trace.steps.reduce((a, s) => a + s.n_allowed / s.vocab_size, 0) / trace.steps.length, Math.max(state.pctDigits, 2))}
                 </span>
               </div>
               <StackDepth steps={trace.steps} current={index} />

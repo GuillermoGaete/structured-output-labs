@@ -12,6 +12,12 @@ export interface LabState {
   maxNewTokens: number;
   temperature: number;
   seed: number | null;
+  /** Decimals shown on probabilities. */
+  pctDigits: number;
+  /** Entries per top-K list (sent to the backend on the next run, max 20). */
+  topK: number;
+  /** Log-scale bars so tiny probabilities stay visible. */
+  logBars: boolean;
 }
 
 const KEY = "sol.lab";
@@ -24,6 +30,9 @@ const initial: LabState = {
   maxNewTokens: 120,
   temperature: 0,
   seed: null,
+  pctDigits: 1,
+  topK: 8,
+  logBars: false,
 };
 
 /** Schema, prompt and knobs shared by the labs and remembered per browser. */
