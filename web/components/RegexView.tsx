@@ -24,7 +24,7 @@ export function RegexView({ compiled }: { compiled: CompilePayload }) {
       {compiled.recursive && compiled.mode === "fsm" && compiled.regex && /,\[ \]\?\\\}/.test(compiled.regex) && (
         <p className="text-xs rounded-md px-3 py-2 border border-warning text-ink max-w-prose">
           <strong>Known outlines_core 0.2 bug:</strong> at the innermost unrolled level the regex drops the recursive property
-          but keeps the comma before it (look for <code>,[ ]?\}</code> at the end). A run that nests that deep will end with{" "}
+          but keeps the comma before it (look for <code>{",[ ]?\\}"}</code> at the end). A run that nests that deep will end with{" "}
           <code>{"{\"value\": 3, }"}</code>, which the automaton accepts and JSON does not. Use the CFG engine for recursive
           schemas; Auto does.
         </p>
