@@ -1,5 +1,5 @@
 import { FigureSlide } from "@/deck/FigureSlide";
-import { Bullets, Callout, Claim, Eyebrow, Foot, Source, TitleSlide, Widget } from "@/deck/primitives";
+import { Bullets, Callout, Claim, Eyebrow, Foot, TitleSlide, Widget } from "@/deck/primitives";
 import type { SlideDefinition } from "@/modules/types";
 import ui from "../i18n/es";
 import { LOOP_PROMPTS } from "../presets";
@@ -67,10 +67,9 @@ const slides = {
       <>
         <Eyebrow>M1 · Cómo se elige el siguiente token</Eyebrow>
         <Claim>Step: una pasada, un token, y de vuelta a la entrada</Claim>
-        <Widget zoom={1.35}>
-          <InferenceLoop params={{ prompt: PERSON.prompt, useChatTemplate: PERSON.useChatTemplate, temperature: 0, topK: 0, topP: 1, seed: 7, maxSteps: 48, topKReport: 12 }} speed="real" rows={6} ui={ui} compact />
+        <Widget zoom={1.25}>
+          <InferenceLoop params={{ prompt: PERSON.prompt, useChatTemplate: PERSON.useChatTemplate, temperature: 0, topK: 0, topP: 1, seed: 7, maxSteps: 48, topKReport: 12 }} speed="real" rows={5} ui={ui} compact />
         </Widget>
-        <Source>Qwen2.5-0.5B-Instruct · prompt Person con chat template · greedy</Source>
       </>
     ),
     notes: (

@@ -73,7 +73,7 @@ export function InferenceLoop({ params, speed, rows = 8, ui, compact = false, la
   const traveling = loop.phase === "travel";
   const forwarding = loop.phase === "forward";
   const newIndex = loop.index > 0 && response ? response.tokens.length - 1 : null;
-  const mapH = compact ? 140 : 220;
+  const mapH = compact ? 0 : 220;
 
   return (
     <div className="flex flex-col gap-3">
@@ -110,7 +110,7 @@ export function InferenceLoop({ params, speed, rows = 8, ui, compact = false, la
       {loop.error && <p className="text-sm text-critical">{loop.error}</p>}
       {response && view && (
         <>
-          <div className="grid gap-4 md:grid-cols-[1.3fr_auto_1.15fr]" style={{ minHeight: mapH }}>
+          <div className={`grid md:grid-cols-[1.3fr_auto_1.15fr] ${compact ? "gap-2" : "gap-4"}`} style={mapH ? { minHeight: mapH } : undefined}>
             <div className="panel p-3">
               <TokenRow tokens={tokens} newIndex={newIndex} ui={ui} compact={compact} />
             </div>

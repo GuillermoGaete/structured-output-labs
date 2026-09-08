@@ -103,7 +103,30 @@ for (const moduleId of modules) {
     const started = Date.now();
     let response;
     let compile;
-    if (recipe.kind === "generate") {
+    if (recipe.kind === "experiment") {
+      const runs = [];
+      for (const constraint of recipe.modes) {
+        for (let seed = 0; seed < recipe.n; seed++) {
+          const includeSteps = seed < recipe.full;
+          const req = { ...request, constraint, seed, include_steps: includeSteps };
+          const t0 = Date.now();
+          const events = await postSse("/generate", req);
+          const meta_ = events.find((e) => e.event === "meta")?.data ?? null;
+          const done = events.find((e) => e.event === "done")?.data ?? null;
+          const error = events.find((e) => e.event === "error")?.data?.detail ?? null;
+          runs.push({
+            constraint,
+            seed,
+            detail: includeSteps ? "full" : "compact",
+            request: req,
+            trace: { meta: meta_, steps: events.filter((e) => e.event === "step").map((e) => e.data), done, error },
+            wall_ms: Date.now() - t0,
+          });
+          process.stdout.write(`  ${recipe.id} ${constraint} seed ${seed}: ${done?.validation?.failure_class ?? error} ${Date.now() - t0} ms\n`);
+        }
+      }
+      response = { presetId: recipe.presetId, modes: recipe.modes, n: recipe.n, runs };
+    } else if (recipe.kind === "generate") {
       const events = await postSse("/generate", request);
       const meta_ = events.find((e) => e.event === "meta")?.data;
       const done = events.find((e) => e.event === "done")?.data;

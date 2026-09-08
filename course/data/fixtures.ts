@@ -18,13 +18,30 @@ import type {
  * no backend. One file per request; the same shape whether the recorder script
  * or the "save recording" button produced it.
  */
-export type FixtureKind = "tokenize" | "logits" | "forward" | "generate" | "compile" | "loop";
+export type FixtureKind = "tokenize" | "logits" | "forward" | "generate" | "compile" | "loop" | "experiment";
 export type Locale = "es" | "en";
 
 export interface RecordedGenerate {
   meta: Meta;
   steps: Step[];
   done: Done;
+}
+
+/** N generations per constraint mode with the same seeds (the Experiment Runner). */
+export interface RecordedExperimentRun {
+  constraint: "none" | "json" | "schema";
+  seed: number;
+  detail: "full" | "compact";
+  request: GenerateRequest;
+  trace: { meta: Meta | null; steps: Step[]; done: Done | null; error: string | null };
+  wall_ms: number;
+}
+
+export interface RecordedExperiment {
+  presetId: string;
+  modes: ("none" | "json" | "schema")[];
+  n: number;
+  runs: RecordedExperimentRun[];
 }
 
 /** A sequence of /forward calls, one per generated token (the Inference Loop). */
@@ -62,7 +79,8 @@ export type FixtureFile =
   | FixtureBase<"forward", ForwardRequest, ForwardResponse>
   | FixtureBase<"generate", GenerateRequest, RecordedGenerate>
   | FixtureBase<"compile", CompileRequest, CompilePayload>
-  | FixtureBase<"loop", { prompt: string; use_chat_template: boolean; sample: ForwardRequest["sample"] }, RecordedLoop>;
+  | FixtureBase<"loop", { prompt: string; use_chat_template: boolean; sample: ForwardRequest["sample"] }, RecordedLoop>
+  | FixtureBase<"experiment", GenerateRequest, RecordedExperiment>;
 
 export type FixtureOf<K extends FixtureKind> = Extract<FixtureFile, { kind: K }>;
 

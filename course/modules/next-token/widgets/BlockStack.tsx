@@ -24,12 +24,12 @@ export function BlockStack({ nLayers, running, expectedMs, selected, onSelect, u
       if (raf.current) cancelAnimationFrame(raf.current);
     };
   }, [running, expectedMs, nLayers]);
-  const slabH = compact ? 5 : 7;
+  const slabH = compact ? 4 : 7;
   return (
     <div className="flex h-full flex-col items-center gap-2">
       <div className="text-xs font-semibold uppercase tracking-wide text-muted">2 · {ui.blocksTitle}</div>
       <div className="mono text-[10px] text-ink-2">h ↑</div>
-      <div className="relative flex flex-col-reverse gap-[2px]" data-hotkeys="local">
+      <div className="relative flex flex-col-reverse" style={{ gap: compact ? 1.5 : 2 }} data-hotkeys="local">
         <div className="absolute bottom-0 left-1/2 top-0 w-[2px] -translate-x-1/2" style={{ background: "var(--series-third)", opacity: 0.35 }} aria-hidden="true" />
         {Array.from({ length: nLayers }).map((_, i) => {
           const layer = i + 1;
@@ -50,7 +50,7 @@ export function BlockStack({ nLayers, running, expectedMs, selected, onSelect, u
         })}
       </div>
       <div className="mono text-[10px] text-ink-2">↑ E[id]</div>
-      <p className="mt-auto max-w-[120px] text-center text-[10px] leading-tight text-muted">{ui.blocksCaption}</p>
+      {!compact && <p className="mt-auto max-w-[120px] text-center text-[10px] leading-tight text-muted">{ui.blocksCaption}</p>}
     </div>
   );
 }

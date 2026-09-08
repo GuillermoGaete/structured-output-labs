@@ -30,7 +30,33 @@ const loop = (id, title, prompt, useChatTemplate, steps, sample, seed) => ({
   },
 });
 
+/** N generations per mode with the same seeds; the first `full` runs keep their steps. */
+const experiment = (id, title, presetId, { n, full, modes, temperature = 0.7, top_p = 0.8, top_k = 20, schema_in_prompt = true, max_new_tokens = 120 }) => ({
+  id,
+  kind: "experiment",
+  title,
+  presetId,
+  n,
+  full,
+  modes,
+  request: ({ presets }) => ({
+    schema: presets[presetId].schema,
+    prompt: presets[presetId].prompt,
+    mode: "auto",
+    max_new_tokens,
+    temperature,
+    top_k_sampling: top_k,
+    top_p,
+    top_k_report: 8,
+    use_chat_template: true,
+    schema_in_prompt,
+  }),
+});
+
 export const RECIPES = {
+  "no-strict": [
+    experiment("person-dev", { es: "Person · 8 corridas por modo (desarrollo)", en: "Person · 8 runs per mode (development)" }, "person", { n: 8, full: 2, modes: ["none", "json", "schema"] }),
+  ],
   "next-token": [
     loop("person-chat-greedy", { es: "Person · greedy", en: "Person · greedy" }, null, true, 48, { temperature: 0 }),
     loop("person-chat-t1-seed7", { es: "Person · T = 1 · semilla 7", en: "Person · T = 1 · seed 7" }, null, true, 48, { temperature: 1 }, 7),

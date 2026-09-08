@@ -69,8 +69,10 @@ export function Widget({ children, title, zoom = 2 }: { children: ReactNode; tit
   return (
     <div className="s-widget" data-hotkeys="local">
       {title && <div className="s-widget-title">{title}</div>}
-      <div className="s-widget-body" style={{ zoom }}>
-        {children}
+      <div className="s-widget-body">
+        <div className="s-widget-zoom" style={{ width: `calc(100% / ${zoom})`, height: `calc(100% / ${zoom})`, transform: `scale(${zoom})`, transformOrigin: "top left" }}>
+          {children}
+        </div>
       </div>
     </div>
   );
