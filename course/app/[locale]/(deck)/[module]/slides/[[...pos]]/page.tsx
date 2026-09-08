@@ -19,7 +19,7 @@ export default async function SlidesPage({ params }: { params: Promise<{ locale:
   const index = byId >= 0 ? byId : Math.min(Math.max(byNumber, 0), def.slideIds.length - 1);
   return (
     <Suspense fallback={null}>
-      <DeckHost moduleId={def.id} locale={locale} slideIds={def.slideIds} initialIndex={index} />
+      <DeckHost moduleId={def.id} moduleOrder={def.order} moduleTitle={def.title[locale]} locale={locale} slideIds={def.slideIds} initialIndex={index} />
     </Suspense>
   );
 }
