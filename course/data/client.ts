@@ -89,7 +89,9 @@ export function createRecordedClient(fixtures: FixtureFile[], opts: RecordedOpti
     tokenize: async (req) => pick(fixtures, "tokenize", req, opts).response,
     forward: async (req) => {
       // A loop fixture answers step by step: the request's token list selects the step.
-      const loops = fixtures.filter((f): f is FixtureOf<"loop"> => f.kind === "loop");
+      const loops = fixtures
+        .filter((f): f is FixtureOf<"loop"> => f.kind === "loop")
+        .sort((a, b) => Number(b.id === opts.activeId) - Number(a.id === opts.activeId));
       for (const loop of loops) {
         const hit = loop.response.steps.find((s) => sameIds(s.request.token_ids, req.token_ids) || (req.prompt !== undefined && s.request.prompt === req.prompt));
         if (hit) return hit.response;

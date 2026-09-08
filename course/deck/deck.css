@@ -97,7 +97,7 @@
 .s-columns { display: grid; gap: 60px; align-items: start; }
 .s-widget { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 16px; }
 .s-widget-title { font-size: 26px; font-weight: 600; color: var(--ink-2); }
-.s-widget-body { flex: 1; min-height: 0; zoom: 2; }
+.s-widget-body { flex: 1; min-height: 0; }
 .s-source { margin: 24px 0 0; font-family: var(--font-mono); font-size: var(--scale-caption); color: var(--ink-3); }
 .s-foot {
   margin-top: auto;

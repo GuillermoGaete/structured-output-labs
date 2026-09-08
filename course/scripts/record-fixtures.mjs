@@ -6,6 +6,33 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { RECIPES } from "./recipes.mjs";
 
+// Same PRNG as lib/prng.ts, so the browser can regenerate the recorded draws from (seed, step).
+function splitmix32(seed) {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x9e3779b9) >>> 0;
+    let t = a ^ (a >>> 16);
+    t = Math.imul(t, 0x21f0aaad);
+    t = t ^ (t >>> 15);
+    t = Math.imul(t, 0x735a2d97);
+    t = t ^ (t >>> 15);
+    return (t >>> 0) / 4294967296;
+  };
+}
+const uFor = (seed, step) => splitmix32((seed * 1000003 + step * 7919) >>> 0)();
+
+/** Fixtures keep the head-mean of the attention only (24 × n instead of 24 × 14 × n). */
+function compactForward(res) {
+  if (!res.attention || res.attention.mode !== "last") return res;
+  const weights = res.attention.weights.map((heads) => {
+    const n = heads[0]?.length ?? 0;
+    const mean = new Array(n).fill(0);
+    for (const row of heads) for (let p = 0; p < n; p++) mean[p] += row[p];
+    return [mean.map((v) => Number((v / heads.length).toFixed(4)))];
+  });
+  return { ...res, attention: { ...res.attention, weights, heads_recorded: "mean" } };
+}
+
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const base = (process.env.BACKEND_URL ?? "http://127.0.0.1:7860").replace(/\/+$/, "");
 const wanted = process.argv.slice(2);
@@ -88,13 +115,16 @@ for (const moduleId of modules) {
       const steps = [];
       let tokenIds = null;
       for (let i = 0; i < recipe.steps; i++) {
-        const req = tokenIds ? { ...request.step, token_ids: tokenIds } : { ...request.step, prompt: request.prompt, use_chat_template: request.use_chat_template };
-        const res = await postJson("/forward", req);
+        const prompt = request.prompt ?? presets.person.prompt;
+        const sample = recipe.seed !== undefined ? { ...request.step.sample, u: uFor(recipe.seed, i) } : request.step.sample;
+        const req = tokenIds ? { ...request.step, sample, token_ids: tokenIds } : { ...request.step, sample, prompt, use_chat_template: request.use_chat_template };
+        const res = compactForward(await postJson("/forward", req));
         steps.push({ request: req, response: res, u: res.sampled?.u ?? null });
+        process.stdout.write(`  ${recipe.id} step ${i} ${JSON.stringify(res.sampled?.text ?? "")} ${res.timing_ms.total} ms\n`);
         if (!res.next_token_ids || res.sampled?.is_eos) break;
         tokenIds = res.next_token_ids;
       }
-      response = { steps };
+      response = { steps, prompt: request.prompt ?? presets.person.prompt, use_chat_template: request.use_chat_template, seed: recipe.seed ?? null };
     } else {
       const path = { tokenize: "/tokenize", logits: "/logits", forward: "/forward", compile: "/compile" }[recipe.kind];
       response = await postJson(path, request);

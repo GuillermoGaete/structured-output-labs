@@ -17,7 +17,26 @@ const tokenize = (id, text, extra = {}, title) => ({
 
 const logits = (id, title, request) => ({ id, kind: "logits", title, request });
 
+const loop = (id, title, prompt, useChatTemplate, steps, sample, seed) => ({
+  id,
+  kind: "loop",
+  title,
+  steps,
+  seed,
+  request: {
+    prompt,
+    use_chat_template: useChatTemplate,
+    step: { top_k: 12, attention: "last", logit_lens: true, lens_top_k: 5, tail_bins: 64, decimals: 3, sample },
+  },
+});
+
 export const RECIPES = {
+  "next-token": [
+    loop("person-chat-greedy", { es: "Person · greedy", en: "Person · greedy" }, null, true, 48, { temperature: 0 }),
+    loop("person-chat-t1-seed7", { es: "Person · T = 1 · semilla 7", en: "Person · T = 1 · seed 7" }, null, true, 48, { temperature: 1 }, 7),
+    loop("capital-greedy", { es: "«The capital of France is» · greedy", en: "\"The capital of France is\" · greedy" }, "The capital of France is", false, 16, { temperature: 0 }),
+    loop("fibonacci-greedy", { es: "«def fibonacci(n):» · greedy", en: "\"def fibonacci(n):\" · greedy" }, "def fibonacci(n):\n    ", false, 24, { temperature: 0 }),
+  ],
   temperature: [
     logits("person-chat", { es: "Prompt Person con template · paso 0", en: "Person prompt with template · step 0" }, ({ presets }) => ({
       prompt: presets.person.prompt, use_chat_template: true, top_k: 200, tail_buckets: 64, full_logits: false,

@@ -65,11 +65,13 @@ export function Columns({ children, ratio = "1fr 1fr" }: { children: ReactNode; 
 }
 
 /** A live widget inside a slide: it fills the remaining space and keeps its own keyboard handling. */
-export function Widget({ children, title }: { children: ReactNode; title?: ReactNode }) {
+export function Widget({ children, title, zoom = 2 }: { children: ReactNode; title?: ReactNode; zoom?: number }) {
   return (
     <div className="s-widget" data-hotkeys="local">
       {title && <div className="s-widget-title">{title}</div>}
-      <div className="s-widget-body">{children}</div>
+      <div className="s-widget-body" style={{ zoom }}>
+        {children}
+      </div>
     </div>
   );
 }

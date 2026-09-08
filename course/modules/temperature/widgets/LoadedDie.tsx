@@ -98,8 +98,12 @@ export function LoadedDie({ top, view, seed, ui, locale = "en" }: { top: LogitLi
             {formatInt(rolls.total, locale)} {ui.rollsSoFar}
           </span>
           <div className="flex flex-wrap gap-x-4 gap-y-1">
-            {segments.map((s, i) => {
-              const c = rolls.counts.get(s.key) ?? 0;
+            {segments
+              .map((s, i) => ({ s, i, c: rolls.counts.get(s.key) ?? 0 }))
+              .filter(({ c }) => c > 0)
+              .sort((a, b) => b.c - a.c)
+              .slice(0, 12)
+              .map(({ s, i, c }) => {
               return (
                 <span key={String(s.key)} className="mono inline-flex items-center gap-1">
                   <span className="inline-block h-2.5 w-2.5 rounded-sm" style={{ background: s.key === "tail" ? "var(--series-masked)" : pastelFor(typeof s.key === "number" ? s.key : i) }} />
