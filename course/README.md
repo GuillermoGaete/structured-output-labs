@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Del token al JSON · curso interactivo
 
-## Getting Started
+Seis módulos, cada uno con sus slides (deck propio en React, es/en) y su app para jugar con parámetros:
 
-First, run the development server:
+| # | Módulo | App |
+|---|---|---|
+| M0 | Tokens | Tokenizer Lab: texto → chips con id, Qwen vs GPT-2, chat template, merges BPE |
+| M1 | Cómo se elige el siguiente token | Inference Loop: tokens → 24 bloques → salida → el token vuelve a la entrada |
+| M2 | Temperatura y sampling | Sampling Lab: logits reales, T / top-k / top-p en el cliente, el dado cargado |
+| M3 | Structured output sin strict mode | Experiment Runner: el mismo prompt N veces, clasificación de fallas |
+| M4 | Structured output con strict mode | El mismo runner con la máscara + Time Machine paso a paso |
+| M5 | Benchmark | Tiempos por modo: compilación, prefill, por token, hasta un JSON válido |
+
+Todo funciona **sin backend** con las grabaciones commiteadas en `modules/*/fixtures`; con el backend
+(`../backend`, FastAPI + transformers) cada módulo corre en vivo.
+
+## Correr
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# backend (desde la raíz del repo; el modelo queda cacheado en un volumen)
+TORCH_THREADS=10 docker compose up -d --build
+
+# curso
+npm install
+NEXT_PUBLIC_BACKEND_URL=http://127.0.0.1:7860 npm run dev     # http://localhost:3000 → /es
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Rutas: `/{es|en}` mapa del curso · `/{locale}/{módulo}/lab` · `/{locale}/{módulo}/slides/{n|id}`
+(`?presenter=1` presentador, `?print=1` para PDF, `?theme=light|dark` fija el tema, `?src=recorded` fuerza las grabaciones).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Teclas en el deck: ←/→/Espacio navegar · `f` pantalla completa · `p` presentador · `t` tema · Esc salir.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Scripts
 
-## Learn More
+| Comando | Qué hace |
+|---|---|
+| `npm run tokens` | regenera `design/tokens.css` desde `design/tokens.lab.json` |
+| `npm run sync-figures` | copia las figuras SVG/PNG y las fuentes desde `../presentation` |
+| `BACKEND_URL=… node scripts/record-fixtures.mjs [módulo…]` | graba las fixtures (recetas en `scripts/recipes.mjs`) |
+| `node scripts/export-deck.mjs strict es` | PDF de un deck (con el dev server corriendo) |
+| `npm run typecheck && npm run lint && npm test && npm run build` | verificación completa |
 
-To learn more about Next.js, take a look at the following resources:
+## Checklist de charla (30 minutos antes)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [ ] `TORCH_THREADS=10 docker compose up -d`; `curl /health` → `loaded: true`, `warmed_up: true`.
+- [ ] `npm run dev` con `NEXT_PUBLIC_BACKEND_URL`; en la home el pill dice el modelo y «en vivo».
+- [ ] Una pestaña por módulo en `/es/<módulo>/slides/1`; el modo de datos en **Auto** (cae a grabado si el backend no responde).
+- [ ] M4 lab abierto en otra pestaña con Person: la única generación en vivo («Correr 1 más en vivo», ~8 s).
+- [ ] Zoom del navegador 125 %; `?theme=light` si el proyector lo pide; `f` en la ventana de audiencia.
+- [ ] PDF de respaldo de cada deck en `out/`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploy
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Vercel: Root Directory `course`, variable `NEXT_PUBLIC_BACKEND_URL` apuntando al Space de Hugging Face
+(`backend/` es un Space Docker listo; ver `../backend/README.md`). Los visitantes también pueden pegar otra URL de
+backend en la app. El selector de modelos sale de `MODEL_IDS` del backend.

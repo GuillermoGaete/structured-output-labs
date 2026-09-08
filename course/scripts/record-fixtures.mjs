@@ -108,7 +108,8 @@ for (const moduleId of modules) {
       for (const constraint of recipe.modes) {
         for (let seed = 0; seed < recipe.n; seed++) {
           const includeSteps = seed < recipe.full;
-          const req = { ...request, constraint, seed, include_steps: includeSteps };
+          // The first strict run pays the compile on purpose so the benchmark can show the cold cost.
+          const req = { ...request, constraint, seed, include_steps: includeSteps, force_compile: constraint === "schema" && seed === 0 };
           const t0 = Date.now();
           const events = await postSse("/generate", req);
           const meta_ = events.find((e) => e.event === "meta")?.data ?? null;

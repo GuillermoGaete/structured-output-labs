@@ -79,9 +79,12 @@ class Engine:
             self._llg = LLGuidanceBackend(self.outlines_model)
         return self._llg
 
-    def index_for(self, regex: str) -> tuple[Index, bool]:
-        """Return (index, cached): the token-level automaton for `regex`, built once per vocabulary."""
-        cached = self._index_cache.get(regex)
+    def index_for(self, regex: str, force: bool = False) -> tuple[Index, bool]:
+        """Return (index, cached): the token-level automaton for `regex`, built once per vocabulary.
+
+        `force` rebuilds even when cached (so a benchmark can measure the cold compile).
+        """
+        cached = None if force else self._index_cache.get(regex)
         if cached is not None:
             self._index_cache.move_to_end(regex)
             return cached, True
@@ -258,13 +261,13 @@ class Engine:
         return payload
 
     # ------------------------------------------------------------------ generate
-    def build_processor(self, schema: dict[str, Any], resolved: Mode):
+    def build_processor(self, schema: dict[str, Any], resolved: Mode, force_compile: bool = False):
         """Return (processor or None, automaton state getter or None, compile_ms, compile_cached)."""
         started = time.perf_counter()
         if resolved == "none":
             return None, None, 0.0, None
         if resolved == "fsm":
-            index, cached = self.index_for(self.regex_for(schema))
+            index, cached = self.index_for(self.regex_for(schema), force=force_compile)
             proc = OutlinesCoreLogitsProcessor(index, "torch")
 
             def state_getter() -> int | None:
@@ -335,6 +338,7 @@ class Engine:
         schema_in_prompt: bool = False,
         include_steps: bool = True,
         stop: threading.Event | None = None,
+        force_compile: bool = False,
     ) -> Iterator[tuple[str, dict[str, Any]]]:
         """Yield ("meta"|"step"|"done", payload) while decoding one sequence.
 
@@ -345,7 +349,7 @@ class Engine:
         """
         resolved, recursive = self.resolve(schema, mode, constraint)
         engine_backend = self.backend_for(resolved)
-        inner, state_getter, compile_ms, compile_cached = self.build_processor(schema, resolved)
+        inner, state_getter, compile_ms, compile_cached = self.build_processor(schema, resolved, force_compile)
         pre = PreMaskObserver()
         master = MasterObserver(pre, top_k=top_k_report, state_getter=state_getter)
         timed = TimedProcessor(inner) if inner is not None else None

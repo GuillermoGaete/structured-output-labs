@@ -77,6 +77,8 @@ def test_timings_and_compile_cache(engine: Engine):
     again = list(engine.generate(schema, PERSON["prompt"], constraint="schema", mode="fsm", max_new_tokens=6, seed=1))
     assert fresh[0][1]["compile_cached"] is False
     assert again[0][1]["compile_cached"] is True
+    forced = list(engine.generate(schema, PERSON["prompt"], constraint="schema", mode="fsm", max_new_tokens=2, seed=1, force_compile=True))
+    assert forced[0][1]["compile_cached"] is False and forced[0][1]["compile_ms"] > 0
     steps = [p for n, p in again if n == "step"]
     done = again[-1][1]
     timing = done["timing"]

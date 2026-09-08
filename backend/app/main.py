@@ -106,6 +106,7 @@ class GenerateRequest(CompileRequest):
     use_chat_template: bool = True
     schema_in_prompt: bool = False
     include_steps: bool = True
+    force_compile: bool = False
 
 
 class TokenizeRequest(ModelChoice):
@@ -319,6 +320,7 @@ async def generate(req: GenerateRequest) -> EventSourceResponse:
                     schema_in_prompt=req.schema_in_prompt,
                     include_steps=req.include_steps,
                     stop=stop,
+                    force_compile=req.force_compile,
                 ):
                     events.put((name, payload))
         except Exception as exc:

@@ -12,7 +12,7 @@ export interface ExperimentParams {
 }
 
 /** The request every mode shares; the recorded fixtures were made with the defaults below. */
-export const DEFAULT_PARAMS: ExperimentParams = { preset: "person", temperature: 0.7, topP: 0.8, maxTokens: 120, schemaInPrompt: true };
+export const DEFAULT_PARAMS: ExperimentParams = { preset: "invoice", temperature: 0.7, topP: 0.8, maxTokens: 160, schemaInPrompt: true };
 
 export function baseRequest(params: ExperimentParams, presets: Preset[]): GenerateRequest {
   const preset = presets.find((p) => p.id === params.preset) ?? FALLBACK_PRESETS.find((p) => p.id === params.preset)!;

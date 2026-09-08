@@ -295,6 +295,7 @@ export interface GenerateRequest {
   use_chat_template: boolean;
   schema_in_prompt: boolean;
   include_steps: boolean;
+  force_compile?: boolean;
   model?: string | null;
 }
 

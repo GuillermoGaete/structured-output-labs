@@ -55,7 +55,10 @@ const experiment = (id, title, presetId, { n, full, modes, temperature = 0.7, to
 
 export const RECIPES = {
   "no-strict": [
-    experiment("person-dev", { es: "Person · 8 corridas por modo (desarrollo)", en: "Person · 8 runs per mode (development)" }, "person", { n: 8, full: 2, modes: ["none", "json", "schema"] }),
+    experiment("person-sp", { es: "Person · schema en el prompt · 20 por modo", en: "Person · schema in the prompt · 20 per mode" }, "person", { n: 20, full: 3, modes: ["none", "json", "schema"], schema_in_prompt: true, max_new_tokens: 160 }),
+    experiment("invoice-sp", { es: "Invoice · schema en el prompt · 20 por modo", en: "Invoice · schema in the prompt · 20 per mode" }, "invoice", { n: 20, full: 3, modes: ["none", "json", "schema"], schema_in_prompt: true, max_new_tokens: 160 }),
+    experiment("person-nosp", { es: "Person · sin schema en el prompt · 20 por modo", en: "Person · no schema in the prompt · 20 per mode" }, "person", { n: 20, full: 3, modes: ["none", "json", "schema"], schema_in_prompt: false, max_new_tokens: 160 }),
+    experiment("invoice-nosp", { es: "Invoice · sin schema en el prompt · 20 por modo", en: "Invoice · no schema in the prompt · 20 per mode" }, "invoice", { n: 20, full: 3, modes: ["none", "json", "schema"], schema_in_prompt: false, max_new_tokens: 160 }),
   ],
   "next-token": [
     loop("person-chat-greedy", { es: "Person · greedy", en: "Person · greedy" }, null, true, 48, { temperature: 0 }),

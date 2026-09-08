@@ -29,7 +29,7 @@ interface State {
 }
 
 const SCHEMA: UrlSchema<State> = {
-  preset: { codec: codecs.enumOf(["person", "invoice"] as const), default: "person" },
+  preset: { codec: codecs.enumOf(["person", "invoice"] as const), default: DEFAULT_PARAMS.preset },
   json: { codec: codecs.boolean(), default: false },
   n: { codec: codecs.number({ min: 1, max: 50 }), default: 8 },
   T: { codec: codecs.number({ min: 0, max: 1.5 }), default: DEFAULT_PARAMS.temperature },

@@ -84,7 +84,7 @@ const slides = {
         <Eyebrow>M4 · Structured output con strict mode</Eyebrow>
         <Claim>Las mismas semillas que fallaban en M3: ahora, todas</Claim>
         <Widget zoom={1.3}>
-          <ExperimentWidget modes={["plain", "strict"]} ui={ui} rows={5} />
+          <ExperimentWidget modes={["plain", "strict"]} preset="invoice" ui={ui} rows={5} />
         </Widget>
       </>
     ),
