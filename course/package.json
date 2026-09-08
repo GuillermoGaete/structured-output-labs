@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typegen": "next typegen",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "tokens": "node scripts/build-tokens.mjs",
+    "sync-figures": "node scripts/sync-figures.mjs"
   },
   "dependencies": {
     "next": "16.3.4",
@@ -21,6 +26,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.3.4",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.7"
   }
 }

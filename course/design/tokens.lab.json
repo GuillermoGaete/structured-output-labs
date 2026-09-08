@@ -1,0 +1,41 @@
+{
+  "$schema": "sol-design-tokens/1",
+  "style": "lab",
+  "name": "Laboratorio",
+  "version": 1,
+  "font": {
+    "display": "Manrope",
+    "body": "Manrope",
+    "mono": "Source Code Pro",
+    "weights": { "display": [600, 800], "body": [400, 600], "mono": [400, 500] }
+  },
+  "scale": { "title": 100, "claim": 64, "body": 36, "caption": 24, "code": 30, "eyebrow": 26, "minRoom": 24 },
+  "space": { "padX": 120, "padY": 96, "gridCols": 12, "radius": 16, "radiusSm": 8, "stroke": 2, "hairline": 1 },
+  "motion": { "fast": 150, "base": 250, "slow": 400 },
+  "modes": {
+    "light": {
+      "surface": { "page": "#fafafa", "panel": "#ffffff", "raised": "#f1f2f6" },
+      "ink": { "primary": "#181a2a", "secondary": "#4c5068", "muted": "#7f849c" },
+      "rule": { "hairline": "#e4e6ee", "strong": "#d3d6e0" },
+      "accent": { "base": "#5b5bd6", "soft": "#ececfb", "strong": "#3f3fb0", "ink": "#ffffff" },
+      "series": { "model": "#5b5bd6", "chosen": "#f2994a", "third": "#12a594", "masked": "#7f849c" },
+      "status": { "good": "#0ca30c", "warn": "#fab219", "critical": "#d03b3b" },
+      "focus": "#5b5bd6"
+    },
+    "dark": {
+      "surface": { "page": "#15171a", "panel": "#1d2026", "raised": "#252932" },
+      "ink": { "primary": "#eef0f6", "secondary": "#b8bcc9", "muted": "#7f849c" },
+      "rule": { "hairline": "#2c3039", "strong": "#3a3f4b" },
+      "accent": { "base": "#8b8bff", "soft": "#2a2a4a", "strong": "#c0c0ff", "ink": "#15171a" },
+      "series": { "model": "#7878ea", "chosen": "#c9782b", "third": "#1f9d90", "masked": "#7f849c" },
+      "status": { "good": "#0ca30c", "warn": "#fab219", "critical": "#d03b3b" },
+      "focus": "#8b8bff"
+    }
+  },
+  "tokenPastels": ["#fde68a", "#bfdbfe", "#bbf7d0", "#fbcfe8", "#ddd6fe", "#fed7aa", "#a5f3fc", "#e5e7eb"],
+  "validated": {
+    "tool": "dataviz/scripts/validate_palette.js",
+    "light": "series pass with direct labels (chosen 2.13:1, third 2.94:1 on #fafafa)",
+    "dark": "series pass clean on #15171a"
+  }
+}
