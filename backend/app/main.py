@@ -1,7 +1,9 @@
 """HTTP surface of the lab backend.
 
-    GET  /health    -> is the model loaded, which one, what it looks like inside
+    GET  /health    -> is the default model loaded, what it looks like inside, every model's state
+    GET  /models    -> the allowlist (MODEL_IDS) and which ones are resident; POST /models/load starts one
     GET  /presets   -> editable starting points (schema + prompt)
+    every POST accepts `model` (one of /models) and defaults to the first one
     POST /compile   -> schema -> regex + automata for the graph view
     POST /generate  -> Server-Sent Events: meta, step*, done (constraint: schema | json | none)
     POST /tokenize  -> tokens with ids, offsets, chat-template segments, BPE merge replay
@@ -27,7 +29,7 @@ from pydantic import BaseModel, Field
 from sse_starlette.sse import EventSourceResponse
 
 from . import __version__ as backend_version
-from .engine import DEFAULT_MODEL_ID, Engine, engine_from_env
+from .engine import DEFAULT_MODEL_ID, Engine
 from .introspect import (
     BadRequest,
     ComparisonTokenizerUnavailable,
@@ -37,50 +39,37 @@ from .introspect import (
     tokenize_payload,
 )
 from .presets import PRESETS
+from .registry import ModelRegistry, registry_from_env
 
 MAX_NEW_TOKENS_CAP = int(os.environ.get("MAX_NEW_TOKENS_CAP", "200"))
 FORWARD_MAX_TOKENS = int(os.environ.get("FORWARD_MAX_TOKENS", "128"))
 ATTENTION_ALL_MAX_TOKENS = int(os.environ.get("ATTENTION_ALL_MAX_TOKENS", "32"))
 LOGITS_TOP_K_CAP = int(os.environ.get("LOGITS_TOP_K_CAP", "2000"))
-WARMUP = os.environ.get("WARMUP", "1") == "1"
-
 T = TypeVar("T")
 
 
 class State:
-    engine: Engine | None = None
+    registry: ModelRegistry | None = None
     error: str | None = None
-    loading: bool = True
     started_at: float = time.time()
-    loaded_at: float | None = None
     busy: bool = False
-    warmed_up: bool = False
-    model_id: str = os.environ.get("MODEL_ID", DEFAULT_MODEL_ID)
 
 
 state = State()
 generation_lock = asyncio.Lock()
 
 
-def _load_engine() -> None:
+def _boot() -> None:
     try:
-        engine = engine_from_env()
-        state.engine = engine
-        state.model_id = engine.model_id
-        state.loaded_at = time.time()
-        state.loading = False
-        if WARMUP and not engine.toy:
-            engine.warm_up()
-        state.warmed_up = True
+        state.registry = registry_from_env()
+        state.registry.start_loading(None)  # the default model loads at boot; the others on first use
     except Exception as exc:  # surfaced through /health so the UI can show it
         state.error = f"{type(exc).__name__}: {exc}"
-    finally:
-        state.loading = False
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    threading.Thread(target=_load_engine, name="model-loader", daemon=True).start()
+    threading.Thread(target=_boot, name="model-loader", daemon=True).start()
     yield
 
 
@@ -94,12 +83,16 @@ app.add_middleware(
 )
 
 
-class CompileRequest(BaseModel):
+class ModelChoice(BaseModel):
+    model: str | None = Field(default=None, description="one of /models; the default model when omitted")
+
+    model_config = {"populate_by_name": True, "protected_namespaces": ()}
+
+
+class CompileRequest(ModelChoice):
     schema_: dict[str, Any] = Field(alias="schema")
     mode: Literal["auto", "fsm", "cfg"] = "auto"
     constraint: Literal["schema", "none", "json"] = "schema"
-
-    model_config = {"populate_by_name": True}
 
 
 class GenerateRequest(CompileRequest):
@@ -115,11 +108,15 @@ class GenerateRequest(CompileRequest):
     include_steps: bool = True
 
 
-class TokenizeRequest(BaseModel):
+class TokenizeRequest(ModelChoice):
     text: str = Field(min_length=1, max_length=20000)
     use_chat_template: bool = False
     tokenizer: Literal["model", "gpt2"] = "model"
     merges: bool = False
+
+
+class LoadRequest(ModelChoice):
+    pass
 
 
 class SampleSpec(BaseModel):
@@ -130,7 +127,7 @@ class SampleSpec(BaseModel):
     u: float | None = Field(default=None, ge=0.0, lt=1.0)
 
 
-class ForwardRequest(BaseModel):
+class ForwardRequest(ModelChoice):
     prompt: str | None = Field(default=None, max_length=4000)
     token_ids: list[int] | None = None
     use_chat_template: bool = True
@@ -145,7 +142,7 @@ class ForwardRequest(BaseModel):
     tail_bins: int = Field(default=64, ge=8, le=256)
 
 
-class LogitsRequest(BaseModel):
+class LogitsRequest(ModelChoice):
     prompt: str | None = Field(default=None, max_length=4000)
     token_ids: list[int] | None = None
     use_chat_template: bool = True
@@ -155,12 +152,32 @@ class LogitsRequest(BaseModel):
     decimals: int = Field(default=4, ge=2, le=8)
 
 
-def _engine_or_503() -> Engine:
-    if state.engine is None:
+def _registry_or_503() -> ModelRegistry:
+    if state.registry is None:
         if state.error:
-            raise HTTPException(status_code=503, detail=f"model failed to load: {state.error}")
-        raise HTTPException(status_code=503, detail="model is still loading")
-    return state.engine
+            raise HTTPException(status_code=503, detail=f"backend failed to start: {state.error}")
+        raise HTTPException(status_code=503, detail="backend is starting")
+    return state.registry
+
+
+def _engine_or_503(model_id: str | None = None) -> Engine:
+    """The engine for `model_id`; starts loading it on first use and asks the client to retry."""
+    registry = _registry_or_503()
+    try:
+        engine = registry.get(model_id)
+    except KeyError:
+        raise HTTPException(status_code=404, detail=f"unknown model {model_id!r}; see /models") from None
+    if engine is not None:
+        return engine
+    error = registry.error(model_id)
+    if error:
+        raise HTTPException(status_code=503, detail=f"model failed to load: {error}")
+    registry.start_loading(model_id)
+    raise HTTPException(
+        status_code=503,
+        detail=f"model {registry.resolve_id(model_id)} is loading; poll /models and retry",
+        headers={"Retry-After": "10"},
+    )
 
 
 def _http_error(exc: Exception) -> HTTPException:
@@ -195,21 +212,29 @@ def root() -> dict[str, Any]:
 
 @app.get("/health")
 def health() -> dict[str, Any]:
-    engine = state.engine
+    """The default model's state (the fields the first web client reads) plus every model's."""
+    registry = state.registry
+    engine = registry.get(None) if registry is not None else None
+    models = registry.status() if registry is not None else []
+    default_row = next((m for m in models if m["default"]), None)
+    error = state.error or (default_row["error"] if default_row else None)
     loaded = engine is not None
+    loading = bool(default_row and default_row["loading"]) or (registry is None and not state.error)
     payload: dict[str, Any] = {
-        "status": "ok" if loaded else ("error" if state.error else "loading"),
+        "status": "ok" if loaded else ("error" if error else "loading"),
         "loaded": loaded,
-        "loading": state.loading,
-        "error": state.error,
-        "model_id": state.model_id,
+        "loading": loading,
+        "error": error,
+        "model_id": registry.default_id if registry is not None else os.environ.get("MODEL_ID", DEFAULT_MODEL_ID),
         "toy": bool(engine and engine.toy),
         "device": "cpu",
         "vocab_size": engine.vocab_size if engine else None,
         "busy": state.busy,
-        "warmed_up": state.warmed_up,
+        "warmed_up": bool(default_row and default_row["warmed_up"]),
         "uptime_s": round(time.time() - state.started_at, 1),
-        "load_time_s": round(state.loaded_at - state.started_at, 1) if state.loaded_at else None,
+        "load_time_s": default_row["load_time_s"] if default_row else None,
+        "models": models,
+        "max_resident_models": registry.max_resident if registry is not None else None,
         "max_new_tokens_cap": MAX_NEW_TOKENS_CAP,
         "forward_max_tokens": FORWARD_MAX_TOKENS,
         "attention_all_max_tokens": ATTENTION_ALL_MAX_TOKENS,
@@ -244,9 +269,26 @@ def presets() -> list[dict[str, Any]]:
     return list(PRESETS.values())
 
 
+@app.get("/models")
+def models() -> dict[str, Any]:
+    registry = _registry_or_503()
+    return {"default": registry.default_id, "max_resident": registry.max_resident, "models": registry.status()}
+
+
+@app.post("/models/load", status_code=202)
+def load_model(req: LoadRequest) -> dict[str, Any]:
+    """Start loading a model in the background (idempotent); poll /models for its state."""
+    registry = _registry_or_503()
+    try:
+        started = registry.start_loading(req.model)
+    except KeyError:
+        raise HTTPException(status_code=404, detail=f"unknown model {req.model!r}; see /models") from None
+    return {"model": registry.resolve_id(req.model), "started": started, "models": registry.status()}
+
+
 @app.post("/compile")
 def compile_schema(req: CompileRequest) -> dict[str, Any]:
-    engine = _engine_or_503()
+    engine = _engine_or_503(req.model)
     try:
         return engine.compile(req.schema_, req.mode, req.constraint)
     except Exception as exc:
@@ -255,7 +297,7 @@ def compile_schema(req: CompileRequest) -> dict[str, Any]:
 
 @app.post("/generate")
 async def generate(req: GenerateRequest) -> EventSourceResponse:
-    engine = _engine_or_503()
+    engine = _engine_or_503(req.model)
     events: queue.Queue[tuple[str, Any] | None] = queue.Queue()
     stop = threading.Event()
 
@@ -306,7 +348,7 @@ async def generate(req: GenerateRequest) -> EventSourceResponse:
 
 @app.post("/tokenize")
 def tokenize(req: TokenizeRequest) -> dict[str, Any]:
-    engine = _engine_or_503()
+    engine = _engine_or_503(req.model)
     try:
         return tokenize_payload(engine, req.text, req.use_chat_template, req.tokenizer, req.merges)
     except (BadRequest, ComparisonTokenizerUnavailable) as exc:
@@ -315,7 +357,7 @@ def tokenize(req: TokenizeRequest) -> dict[str, Any]:
 
 @app.post("/forward")
 async def forward(req: ForwardRequest) -> dict[str, Any]:
-    engine = _engine_or_503()
+    engine = _engine_or_503(req.model)
     if (req.prompt is None) == (req.token_ids is None):
         raise HTTPException(status_code=400, detail="send exactly one of `prompt` or `token_ids`")
     try:
@@ -345,7 +387,7 @@ async def forward(req: ForwardRequest) -> dict[str, Any]:
 
 @app.post("/logits")
 async def logits(req: LogitsRequest) -> dict[str, Any]:
-    engine = _engine_or_503()
+    engine = _engine_or_503(req.model)
     if (req.prompt is None) == (req.token_ids is None):
         raise HTTPException(status_code=400, detail="send exactly one of `prompt` or `token_ids`")
     try:

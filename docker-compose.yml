@@ -14,6 +14,10 @@ services:
       - "7860:7860"
     environment:
       MODEL_ID: ${MODEL_ID:-Qwen/Qwen2.5-0.5B-Instruct}
+      # Comma-separated allowlist for the model selector; the first one loads at boot. Overrides MODEL_ID.
+      MODEL_IDS: ${MODEL_IDS:-}
+      MAX_RESIDENT_MODELS: ${MAX_RESIDENT_MODELS:-2}
+      WARMUP: ${WARMUP:-1}
       TOY_MODEL: ${TOY_MODEL:-0}
       TORCH_THREADS: ${TORCH_THREADS:-4}
     volumes:

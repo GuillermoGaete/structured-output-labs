@@ -6,6 +6,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=1 \
     HF_HOME=/home/user/.cache/huggingface \
     MODEL_ID=Qwen/Qwen2.5-0.5B-Instruct \
+    MODEL_IDS="" \
+    MAX_RESIDENT_MODELS=2 \
+    WARMUP=1 \
     TORCH_THREADS=2
 
 RUN apt-get update && apt-get install -y --no-install-recommends git && rm -rf /var/lib/apt/lists/*

@@ -10,6 +10,9 @@ node_modules/
 web/.next/
 web/out/
 web/next-env.d.ts
+course/.next/
+course/out/
+course/next-env.d.ts
 *.tsbuildinfo
 npm-debug.log*
 
