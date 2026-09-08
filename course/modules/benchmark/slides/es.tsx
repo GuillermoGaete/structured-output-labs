@@ -25,7 +25,7 @@ const slides = {
           items={[
             <><b>Compilar:</b> una vez por (schema, vocabulario): el regex se convierte en un autómata sobre 151,936 tokens. Segundos la primera vez; después, cache.</>,
             <><b>Prefill:</b> la pasada sobre el prompt. Igual con y sin restricción.</>,
-            <><b>Por token:</b> el forward pass domina. La máscara es un bitmask sobre los logits: décimas de milisegundo.</>,
+            <><b>Por token:</b> el forward pass domina (300 ms acá). La máscara es un bitmask sobre los logits: 1–2 ms, con cualquiera de los dos motores.</>,
             <><b>Tokens generados:</b> sin restricción el modelo escribe más (fences, explicaciones); con restricción, lo justo.</>,
           ]}
         />

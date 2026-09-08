@@ -15,7 +15,7 @@ const ui: ModuleUi = {
   "chartTotal": "Tiempo total por corrida",
   "chartTotalNote": "puntos = corridas · barra = mediana · marca = p90",
   "chartPerToken": "Milisegundos por token (decode)",
-  "chartPerTokenNote": "el forward domina; la máscara agrega décimas de ms",
+  "chartPerTokenNote": "el forward domina; la máscara agrega 1–2 ms por token",
   "chartPrefill": "Prefill (la pasada sobre el prompt)",
   "chartPrefillNote": "mediana por modo",
   "chartCompile": "Compilar y enmascarar (strict)",

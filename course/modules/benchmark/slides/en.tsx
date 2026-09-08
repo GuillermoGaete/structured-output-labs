@@ -25,7 +25,7 @@ const slides = {
           items={[
             <><b>Compile:</b> once per (schema, vocabulary): the regex becomes an automaton over 151,936 tokens. Seconds the first time; cached afterwards.</>,
             <><b>Prefill:</b> the pass over the prompt. The same with and without the constraint.</>,
-            <><b>Per token:</b> the forward pass dominates. The mask is a bitmask over the logits: tenths of a millisecond.</>,
+            <><b>Per token:</b> the forward pass dominates (300 ms here). The mask is a bitmask over the logits: 1–2 ms, with either engine.</>,
             <><b>Tokens generated:</b> without a constraint the model writes more (fences, explanations); with one, just enough.</>,
           ]}
         />

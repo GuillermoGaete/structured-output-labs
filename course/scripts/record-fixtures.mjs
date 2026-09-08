@@ -112,6 +112,10 @@ for (const moduleId of modules) {
       const target = join(dir, `${recipe.id}.json`);
       const previous = onlyConstraints && existsSync(target) ? JSON.parse(readFileSync(target, "utf8")) : null;
       if (onlyConstraints && !previous) throw new Error(`--constraint needs an existing ${target} to merge into`);
+      // Timings only compare within one machine setup: refuse to splice runs recorded with another thread count.
+      if (previous && previous.meta?.torch_threads !== meta.torch_threads) {
+        throw new Error(`${target} was recorded with TORCH_THREADS=${previous.meta?.torch_threads}, the backend runs ${meta.torch_threads}; restart it with the same value`);
+      }
       const modes = onlyConstraints ? recipe.modes.filter((m) => onlyConstraints.includes(m)) : recipe.modes;
       const runs = previous ? previous.response.runs.filter((r) => !modes.includes(r.constraint)) : [];
       for (const constraint of modes) {

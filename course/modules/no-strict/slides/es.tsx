@@ -45,7 +45,7 @@ const slides = {
         <Bullets
           items={[
             <><b>Solo prompt:</b> el schema va en el texto. El modelo puede ignorarlo: fence, preámbulo, claves inventadas, tipos cambiados.</>,
-            <><b>JSON mode:</b> se garantiza JSON válido de cualquier forma. El parser nunca falla; el validador de schema, sí.</>,
+            <><b>JSON mode:</b> JSON válido de cualquier forma, si el modelo termina dentro del presupuesto. El parser no falla; el validador de schema, sí.</>,
             <><b>Strict (schema):</b> se garantiza el schema completo. Es el tema de M4: una máscara sobre los logits.</>,
           ]}
         />
@@ -90,6 +90,7 @@ const slides = {
     ),
     notes: (
       <ul>
+        <li>Destildá «schema dentro del prompt»: sin schema, solo prompt emite un fence en 20/20 (no parsea) y JSON mode parsea 20/20 pero con claves inventadas; strict pasa igual. Con schema, JSON mode no agrega nada: las fallas que quedan son truncados y el modelo copiando el $defs.</li>
         <li>Grabado: N corridas por modo con el modelo y el prompt de siempre (T 0.7, top-p 0.8, schema en el prompt).</li>
         <li>Clic en una fila: la salida cruda con el fence tachado y lo que dice el parser o el validador.</li>
         <li>En vivo: «Correr 1 más» hace una generación real. Una sola en la charla.</li>

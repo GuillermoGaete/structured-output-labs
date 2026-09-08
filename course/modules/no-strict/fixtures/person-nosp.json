@@ -7,7 +7,7 @@
   "es": "Person · sin schema en el prompt · 20 por modo",
   "en": "Person · no schema in the prompt · 20 per mode"
  },
- "recordedAt": "2026-09-08T04:31:36.974Z",
+ "recordedAt": "2026-09-08T13:24:29.679Z",
  "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
  "request": {
   "schema": {
@@ -4688,159 +4688,323 @@
       "schema_in_prompt": false,
       "use_chat_template": true,
       "prompt_rendered": "<|im_start|>system\nYou are a JSON generator. Reply with a single JSON object and nothing else.<|im_end|>\n<|im_start|>user\nExtract the person from this text as JSON: Ada Lovelace, 36, lives in London and writes about analytical engines.<|im_end|>\n<|im_start|>assistant\n",
-      "compile_ms": 3.9903740034787916,
+      "compile_ms": 0.2882100088754669,
       "compile_cached": false,
       "include_steps": true
      },
      "steps": [
       {
        "i": 0,
-       "token_id": 4913,
-       "token": "{\"",
-       "text": "{\"",
-       "n_allowed": 3,
+       "token_id": 515,
+       "token": "{Ċ",
+       "text": "{\n",
+       "n_allowed": 8,
        "vocab_size": 151936,
-       "mass_removed": 0.92284095287323,
+       "mass_removed": 0.23808975517749786,
        "top_original": [],
        "top_forced": [],
        "fsm_state": null,
        "stack_depth": 1,
-       "was_overridden": true,
-       "p_original": 0.03258096054196358,
-       "p_forced": 0.4221937656402588,
-       "argmax_taken": false,
-       "dt_ms": 747.1140650013695,
-       "forward_ms": 690.0944299995899,
-       "mask_ms": 22.143605005112477,
-       "observer_ms": 16.273294000711758,
-       "sample_ms": 18.6027359959553
+       "was_overridden": false,
+       "p_original": 0.6847372651100159,
+       "p_forced": 0.8986974954605103,
+       "argmax_taken": true,
+       "dt_ms": 541.0564019985031,
+       "forward_ms": 488.64676400262397,
+       "mask_ms": 14.931145997252315,
+       "observer_ms": 14.494061993900687,
+       "sample_ms": 22.984430004726164
       },
       {
        "i": 1,
-       "token_id": 8987,
-       "token": "person",
-       "text": "person",
-       "n_allowed": 147000,
+       "token_id": 220,
+       "token": "Ġ",
+       "text": " ",
+       "n_allowed": 814,
        "vocab_size": 151936,
-       "mass_removed": 0.00011496255319798365,
+       "mass_removed": 0.000016107078408822417,
        "top_original": [],
        "top_forced": [],
        "fsm_state": null,
        "stack_depth": 1,
        "was_overridden": false,
-       "p_original": 0.34953534603118896,
-       "p_forced": 0.3495739698410034,
+       "p_original": 0.9988580942153931,
+       "p_forced": 0.9988725781440735,
        "argmax_taken": true,
-       "dt_ms": 374.7865240002284,
-       "forward_ms": 341.7788059960003,
-       "mask_ms": 3.4829529977287166,
-       "observer_ms": 9.714351006550714,
-       "sample_ms": 19.81041399994865
+       "dt_ms": 332.19714800361544,
+       "forward_ms": 309.80688700219616,
+       "mask_ms": 2.152467000996694,
+       "observer_ms": 6.635402998654172,
+       "sample_ms": 13.60239100176841
       },
       {
        "i": 2,
-       "token_id": 788,
-       "token": "\":",
-       "text": "\":",
-       "n_allowed": 147000,
+       "token_id": 330,
+       "token": "Ġ\"",
+       "text": " \"",
+       "n_allowed": 814,
        "vocab_size": 151936,
-       "mass_removed": 0.000036495537642622367,
+       "mass_removed": 0.00000991780780168483,
        "top_original": [],
        "top_forced": [],
        "fsm_state": null,
        "stack_depth": 1,
        "was_overridden": false,
-       "p_original": 0.9815866351127625,
-       "p_forced": 0.981622040271759,
+       "p_original": 0.9989981055259705,
+       "p_forced": 0.9990068078041077,
        "argmax_taken": true,
-       "dt_ms": 388.16687100188574,
-       "forward_ms": 355.12365300382953,
-       "mask_ms": 3.800247999606654,
-       "observer_ms": 9.20546999986982,
-       "sample_ms": 20.037499998579733
+       "dt_ms": 276.53174599981867,
+       "forward_ms": 252.65652099915314,
+       "mask_ms": 2.263008995214477,
+       "observer_ms": 7.089655016898178,
+       "sample_ms": 14.522560988552868
       },
       {
        "i": 3,
-       "token_id": 6257,
-       "token": "{}",
-       "text": "{}",
-       "n_allowed": 311,
+       "token_id": 8987,
+       "token": "person",
+       "text": "person",
+       "n_allowed": 147060,
        "vocab_size": 151936,
-       "mass_removed": 0.9948917031288147,
+       "mass_removed": 0.000044064639951102436,
        "top_original": [],
        "top_forced": [],
        "fsm_state": null,
        "stack_depth": 1,
-       "was_overridden": true,
-       "p_original": 0.0018659152556210756,
-       "p_forced": 0.3613050878047943,
-       "argmax_taken": false,
-       "dt_ms": 383.1912370005739,
-       "forward_ms": 351.6514919974725,
-       "mask_ms": 3.4708690000115894,
-       "observer_ms": 9.050220003700815,
-       "sample_ms": 19.01865599938901
+       "was_overridden": false,
+       "p_original": 0.7311474680900574,
+       "p_forced": 0.7311785221099854,
+       "argmax_taken": true,
+       "dt_ms": 275.80461800971534,
+       "forward_ms": 252.3648950009374,
+       "mask_ms": 2.4264269886771217,
+       "observer_ms": 6.655153018073179,
+       "sample_ms": 14.358143002027646
       },
       {
        "i": 4,
+       "token_id": 788,
+       "token": "\":",
+       "text": "\":",
+       "n_allowed": 147060,
+       "vocab_size": 151936,
+       "mass_removed": 0.000003649030077212956,
+       "top_original": [],
+       "top_forced": [],
+       "fsm_state": null,
+       "stack_depth": 1,
+       "was_overridden": false,
+       "p_original": 0.9965014457702637,
+       "p_forced": 0.9965049028396606,
+       "argmax_taken": true,
+       "dt_ms": 284.13573700527195,
+       "forward_ms": 258.11758601048496,
+       "mask_ms": 2.074133008136414,
+       "observer_ms": 6.168442982016131,
+       "sample_ms": 17.775575004634447
+      },
+      {
+       "i": 5,
+       "token_id": 330,
+       "token": "Ġ\"",
+       "text": " \"",
+       "n_allowed": 935,
+       "vocab_size": 151936,
+       "mass_removed": 0.0007173084304668009,
+       "top_original": [],
+       "top_forced": [],
+       "fsm_state": null,
+       "stack_depth": 1,
+       "was_overridden": false,
+       "p_original": 0.8339961171150208,
+       "p_forced": 0.8345874547958374,
+       "argmax_taken": true,
+       "dt_ms": 278.22417100833263,
+       "forward_ms": 254.8764060047688,
+       "mask_ms": 2.6230520015815273,
+       "observer_ms": 6.6614870011108,
+       "sample_ms": 14.06322600087151
+      },
+      {
+       "i": 6,
+       "token_id": 95347,
+       "token": "Ada",
+       "text": "Ada",
+       "n_allowed": 147113,
+       "vocab_size": 151936,
+       "mass_removed": 3.610224439398735e-7,
+       "top_original": [],
+       "top_forced": [],
+       "fsm_state": null,
+       "stack_depth": 1,
+       "was_overridden": false,
+       "p_original": 0.9942518472671509,
+       "p_forced": 0.99425208568573,
+       "argmax_taken": true,
+       "dt_ms": 279.7742189868586,
+       "forward_ms": 255.2121159969829,
+       "mask_ms": 2.4468850024277344,
+       "observer_ms": 6.502610995084979,
+       "sample_ms": 15.612606992362998
+      },
+      {
+       "i": 7,
+       "token_id": 34293,
+       "token": "ĠLov",
+       "text": " Lov",
+       "n_allowed": 147113,
+       "vocab_size": 151936,
+       "mass_removed": 0.0000017086255184040056,
+       "top_original": [],
+       "top_forced": [],
+       "fsm_state": null,
+       "stack_depth": 1,
+       "was_overridden": false,
+       "p_original": 0.999945878982544,
+       "p_forced": 0.9999476671218872,
+       "argmax_taken": true,
+       "dt_ms": 278.80279799865093,
+       "forward_ms": 255.84578499547206,
+       "mask_ms": 2.2978839988354594,
+       "observer_ms": 6.275485007790849,
+       "sample_ms": 14.383643996552564
+      },
+      {
+       "i": 8,
+       "token_id": 301,
+       "token": "el",
+       "text": "el",
+       "n_allowed": 147113,
+       "vocab_size": 151936,
+       "mass_removed": 1.1434968527623823e-8,
+       "top_original": [],
+       "top_forced": [],
+       "fsm_state": null,
+       "stack_depth": 1,
+       "was_overridden": false,
+       "p_original": 0.9999709129333496,
+       "p_forced": 0.9999709129333496,
+       "argmax_taken": true,
+       "dt_ms": 285.3628680022666,
+       "forward_ms": 262.9075230070157,
+       "mask_ms": 1.985466995392926,
+       "observer_ms": 6.1110669921617955,
+       "sample_ms": 14.358811007696204
+      },
+      {
+       "i": 9,
+       "token_id": 578,
+       "token": "ace",
+       "text": "ace",
+       "n_allowed": 147113,
+       "vocab_size": 151936,
+       "mass_removed": 3.2561295881805563e-9,
+       "top_original": [],
+       "top_forced": [],
+       "fsm_state": null,
+       "stack_depth": 1,
+       "was_overridden": false,
+       "p_original": 0.9999849796295166,
+       "p_forced": 0.9999849796295166,
+       "argmax_taken": true,
+       "dt_ms": 278.8345899898559,
+       "forward_ms": 256.63437199546024,
+       "mask_ms": 2.3586759925819933,
+       "observer_ms": 6.116109012509696,
+       "sample_ms": 13.725432989303954
+      },
+      {
+       "i": 10,
+       "token_id": 698,
+       "token": "\"Ċ",
+       "text": "\"\n",
+       "n_allowed": 147113,
+       "vocab_size": 151936,
+       "mass_removed": 0.000022896219888934866,
+       "top_original": [],
+       "top_forced": [],
+       "fsm_state": null,
+       "stack_depth": 1,
+       "was_overridden": false,
+       "p_original": 0.7068812847137451,
+       "p_forced": 0.7068971991539001,
+       "argmax_taken": true,
+       "dt_ms": 285.21390800597146,
+       "forward_ms": 258.7125050049508,
+       "mask_ms": 2.1349670132622123,
+       "observer_ms": 6.342693988699466,
+       "sample_ms": 18.023741999058984
+      },
+      {
+       "i": 11,
        "token_id": 92,
        "token": "}",
        "text": "}",
-       "n_allowed": 6,
+       "n_allowed": 440,
        "vocab_size": 151936,
-       "mass_removed": 0.008013449609279633,
+       "mass_removed": 0.0001360730966553092,
        "top_original": [],
        "top_forced": [],
        "fsm_state": null,
        "stack_depth": 0,
        "was_overridden": false,
-       "p_original": 0.9851642847061157,
-       "p_forced": 0.9930927753448486,
+       "p_original": 0.9998488426208496,
+       "p_forced": 0.9999847412109375,
        "argmax_taken": true,
-       "dt_ms": 376.18587300676154,
-       "forward_ms": 345.8864740023273,
-       "mask_ms": 2.5208170045516454,
-       "observer_ms": 9.352847999252845,
-       "sample_ms": 18.425734000629745
+       "dt_ms": 275.26832500007004,
+       "forward_ms": 252.24614499893505,
+       "mask_ms": 2.2554680035682395,
+       "observer_ms": 6.994112001848407,
+       "sample_ms": 13.772599995718338
       },
       {
-       "i": 5,
+       "i": 12,
        "token_id": 151645,
        "token": "<|im_end|>",
        "text": "",
        "n_allowed": 1,
        "vocab_size": 151936,
-       "mass_removed": 0.000024115890482789837,
+       "mass_removed": 0.00001923367744893767,
        "top_original": [],
        "top_forced": [],
        "fsm_state": null,
        "stack_depth": 0,
        "was_overridden": false,
-       "p_original": 0.9999758005142212,
+       "p_original": 0.9999808073043823,
        "p_forced": 1,
        "argmax_taken": true,
-       "dt_ms": 485.354049000307,
-       "forward_ms": 455.61090700357454,
-       "mask_ms": 2.923988999100402,
-       "observer_ms": 8.570464000513311,
-       "sample_ms": 18.248688997118734
+       "dt_ms": 285.1879500085488,
+       "forward_ms": 259.1771330044139,
+       "mask_ms": 2.1802599949296564,
+       "observer_ms": 6.725694009219296,
+       "sample_ms": 17.104862999985926
       }
      ],
      "done": {
-      "text": "{\"person\":{}}",
+      "text": "{\n  \"person\": \"Ada Lovelace\"\n}",
       "parsed": {
-       "person": {}
+       "person": "Ada Lovelace"
       },
       "valid": false,
       "validation_error": "JSON does not match the schema: Additional properties are not allowed ('person' was unexpected)",
-      "n_steps": 6,
-      "elapsed_s": 2.7586937840023893,
+      "n_steps": 13,
+      "elapsed_s": 3.9645648060104577,
       "stopped_by": "eos",
       "tokens": [
        {
-        "token_id": 4913,
-        "token": "{\"",
-        "text": "{\""
+        "token_id": 515,
+        "token": "{Ċ",
+        "text": "{\n"
+       },
+       {
+        "token_id": 220,
+        "token": "Ġ",
+        "text": " "
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
        },
        {
         "token_id": 8987,
@@ -4853,9 +5017,34 @@
         "text": "\":"
        },
        {
-        "token_id": 6257,
-        "token": "{}",
-        "text": "{}"
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 95347,
+        "token": "Ada",
+        "text": "Ada"
+       },
+       {
+        "token_id": 34293,
+        "token": "ĠLov",
+        "text": " Lov"
+       },
+       {
+        "token_id": 301,
+        "token": "el",
+        "text": "el"
+       },
+       {
+        "token_id": 578,
+        "token": "ace",
+        "text": "ace"
+       },
+       {
+        "token_id": 698,
+        "token": "\"Ċ",
+        "text": "\"\n"
        },
        {
         "token_id": 92,
@@ -4867,8 +5056,8 @@
       "engine_backend": "llguidance",
       "stop_reason": "eos",
       "validation": {
-       "raw_text": "{\"person\":{}}",
-       "stripped_text": "{\"person\":{}}",
+       "raw_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+       "stripped_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
        "strip_applied": [],
        "raw_parse_ok": true,
        "raw_schema_ok": false,
@@ -4895,38 +5084,38 @@
        "failure_class": "schema_extra_key",
        "failure_class_stripped": "schema_extra_key",
        "parsed": {
-        "person": {}
+        "person": "Ada Lovelace"
        }
       },
       "timing": {
-       "compile_ms": 3.9903740034787916,
+       "compile_ms": 0.2882100088754669,
        "compile_cached": false,
-       "prefill_ms": 690.0944299995899,
-       "decode_ms": 1850.0513320032042,
-       "forward_ms": 2540.145762002794,
-       "processor_ms": 38.342481006111484,
-       "observer_ms": 62.16664701059926,
-       "sample_ms": 114.14372899162117,
-       "total_ms": 2758.788993014605,
+       "prefill_ms": 488.64676400262397,
+       "decode_ms": 3128.557874020771,
+       "forward_ms": 3617.204638023395,
+       "processor_ms": 42.12984099285677,
+       "observer_ms": 92.77197501796763,
+       "sample_ms": 204.28802598326,
+       "total_ms": 3956.682690026355,
        "n_prompt_tokens": 56,
-       "n_new_tokens": 5,
-       "tokens_per_s": 2.1780176447720834,
-       "decode_tokens_per_s": 2.7026277128138303,
-       "first_token_ms": 751.1044390048482,
+       "n_new_tokens": 12,
+       "tokens_per_s": 3.285819972113237,
+       "decode_tokens_per_s": 3.835633056254701,
+       "first_token_ms": 541.3446120073786,
        "torch_threads": 10
       },
       "summary": {
-       "n_overridden": 2,
-       "n_argmax_taken": 4,
-       "mean_vocab_kept": 0.32285633424599836,
-       "mean_mass_removed": 0.32098694659877464,
+       "n_overridden": 0,
+       "n_argmax_taken": 13,
+       "mean_vocab_kept": 0.5228400824638715,
+       "mean_mass_removed": 0.018389314576712088,
        "min_n_allowed": 1,
        "max_stack_depth": 1
       }
      },
      "error": null
     },
-    "wall_ms": 2768
+    "wall_ms": 3979
    },
    {
     "constraint": "json",
@@ -4960,77 +5149,376 @@
       "schema_in_prompt": false,
       "use_chat_template": true,
       "prompt_rendered": "",
-      "compile_ms": 0.0920429956750013,
+      "compile_ms": 0.03404199378564954,
       "compile_cached": false,
       "include_steps": true
      },
      "steps": [
       {
        "i": 0,
-       "token_id": 6257,
-       "token": "{}",
-       "text": "{}",
-       "n_allowed": 3,
+       "token_id": 515,
+       "token": "{Ċ",
+       "text": "{\n",
+       "n_allowed": 8,
        "vocab_size": 151936,
-       "mass_removed": 0.92284095287323,
+       "mass_removed": 0.23808975517749786,
        "top_original": [],
        "top_forced": [],
        "fsm_state": null,
-       "stack_depth": 0,
-       "was_overridden": true,
-       "p_original": 0.03346957638859749,
-       "p_forced": 0.4337087571620941,
-       "argmax_taken": false,
-       "dt_ms": 666.0313879983732,
-       "forward_ms": 632.232160998683,
-       "mask_ms": 3.440785003476776,
-       "observer_ms": 9.140804002527148,
-       "sample_ms": 21.217637993686367
+       "stack_depth": 1,
+       "was_overridden": false,
+       "p_original": 0.6847372651100159,
+       "p_forced": 0.8986974954605103,
+       "argmax_taken": true,
+       "dt_ms": 519.5178529975237,
+       "forward_ms": 493.41353500494733,
+       "mask_ms": 3.038846989511512,
+       "observer_ms": 7.401572016533464,
+       "sample_ms": 15.663898986531422
       },
       {
        "i": 1,
-       "token_id": 151645,
-       "token": "<|im_end|>",
-       "text": "",
-       "n_allowed": 1,
+       "token_id": 220,
+       "token": "Ġ",
+       "text": " ",
+       "n_allowed": 814,
        "vocab_size": 151936,
-       "mass_removed": 0.000037620535294990987,
+       "mass_removed": 0.000016107078408822417,
+       "top_original": [],
+       "top_forced": [],
+       "fsm_state": null,
+       "stack_depth": 1,
+       "was_overridden": false,
+       "p_original": 0.9988580942153931,
+       "p_forced": 0.9988725781440735,
+       "argmax_taken": true,
+       "dt_ms": 283.8999870000407,
+       "forward_ms": 260.1738869998371,
+       "mask_ms": 2.40984300035052,
+       "observer_ms": 6.927446011104621,
+       "sample_ms": 14.388810988748446
+      },
+      {
+       "i": 2,
+       "token_id": 330,
+       "token": "Ġ\"",
+       "text": " \"",
+       "n_allowed": 814,
+       "vocab_size": 151936,
+       "mass_removed": 0.00000991780780168483,
+       "top_original": [],
+       "top_forced": [],
+       "fsm_state": null,
+       "stack_depth": 1,
+       "was_overridden": false,
+       "p_original": 0.9989981055259705,
+       "p_forced": 0.9990068078041077,
+       "argmax_taken": true,
+       "dt_ms": 275.5111169972224,
+       "forward_ms": 252.75039700500201,
+       "mask_ms": 1.8465080065652728,
+       "observer_ms": 6.5194849885301664,
+       "sample_ms": 14.394726997124963
+      },
+      {
+       "i": 3,
+       "token_id": 8987,
+       "token": "person",
+       "text": "person",
+       "n_allowed": 147060,
+       "vocab_size": 151936,
+       "mass_removed": 0.000044064639951102436,
+       "top_original": [],
+       "top_forced": [],
+       "fsm_state": null,
+       "stack_depth": 1,
+       "was_overridden": false,
+       "p_original": 0.7311474680900574,
+       "p_forced": 0.7311785221099854,
+       "argmax_taken": true,
+       "dt_ms": 274.2756539955735,
+       "forward_ms": 251.4035159983905,
+       "mask_ms": 2.300384992850013,
+       "observer_ms": 6.263651011977345,
+       "sample_ms": 14.30810199235566
+      },
+      {
+       "i": 4,
+       "token_id": 788,
+       "token": "\":",
+       "text": "\":",
+       "n_allowed": 147060,
+       "vocab_size": 151936,
+       "mass_removed": 0.000003649030077212956,
+       "top_original": [],
+       "top_forced": [],
+       "fsm_state": null,
+       "stack_depth": 1,
+       "was_overridden": false,
+       "p_original": 0.9965014457702637,
+       "p_forced": 0.9965049028396606,
+       "argmax_taken": true,
+       "dt_ms": 275.1781990082236,
+       "forward_ms": 252.36635300097987,
+       "mask_ms": 2.3208019993035123,
+       "observer_ms": 6.442067999159917,
+       "sample_ms": 14.0489760087803
+      },
+      {
+       "i": 5,
+       "token_id": 330,
+       "token": "Ġ\"",
+       "text": " \"",
+       "n_allowed": 935,
+       "vocab_size": 151936,
+       "mass_removed": 0.0007173084304668009,
+       "top_original": [],
+       "top_forced": [],
+       "fsm_state": null,
+       "stack_depth": 1,
+       "was_overridden": false,
+       "p_original": 0.8339961171150208,
+       "p_forced": 0.8345874547958374,
+       "argmax_taken": true,
+       "dt_ms": 278.62979800556786,
+       "forward_ms": 254.98224000330083,
+       "mask_ms": 2.231010003015399,
+       "observer_ms": 7.072362001053989,
+       "sample_ms": 14.344185998197645
+      },
+      {
+       "i": 6,
+       "token_id": 95347,
+       "token": "Ada",
+       "text": "Ada",
+       "n_allowed": 147113,
+       "vocab_size": 151936,
+       "mass_removed": 3.610224439398735e-7,
+       "top_original": [],
+       "top_forced": [],
+       "fsm_state": null,
+       "stack_depth": 1,
+       "was_overridden": false,
+       "p_original": 0.9942518472671509,
+       "p_forced": 0.99425208568573,
+       "argmax_taken": true,
+       "dt_ms": 279.15409101115074,
+       "forward_ms": 253.7656920030713,
+       "mask_ms": 2.2645510034635663,
+       "observer_ms": 6.047900998964906,
+       "sample_ms": 17.07594700565096
+      },
+      {
+       "i": 7,
+       "token_id": 34293,
+       "token": "ĠLov",
+       "text": " Lov",
+       "n_allowed": 147113,
+       "vocab_size": 151936,
+       "mass_removed": 0.0000017086255184040056,
+       "top_original": [],
+       "top_forced": [],
+       "fsm_state": null,
+       "stack_depth": 1,
+       "was_overridden": false,
+       "p_original": 0.999945878982544,
+       "p_forced": 0.9999476671218872,
+       "argmax_taken": true,
+       "dt_ms": 274.6946559927892,
+       "forward_ms": 254.07281899242662,
+       "mask_ms": 1.813381997635588,
+       "observer_ms": 5.9856920124730095,
+       "sample_ms": 12.822762990253977
+      },
+      {
+       "i": 8,
+       "token_id": 301,
+       "token": "el",
+       "text": "el",
+       "n_allowed": 147113,
+       "vocab_size": 151936,
+       "mass_removed": 1.1434968527623823e-8,
+       "top_original": [],
+       "top_forced": [],
+       "fsm_state": null,
+       "stack_depth": 1,
+       "was_overridden": false,
+       "p_original": 0.9999709129333496,
+       "p_forced": 0.9999709129333496,
+       "argmax_taken": true,
+       "dt_ms": 276.1989949940471,
+       "forward_ms": 253.8019009953132,
+       "mask_ms": 2.1255510073387995,
+       "observer_ms": 6.531568986247294,
+       "sample_ms": 13.739974005147815
+      },
+      {
+       "i": 9,
+       "token_id": 578,
+       "token": "ace",
+       "text": "ace",
+       "n_allowed": 147113,
+       "vocab_size": 151936,
+       "mass_removed": 3.2561295881805563e-9,
+       "top_original": [],
+       "top_forced": [],
+       "fsm_state": null,
+       "stack_depth": 1,
+       "was_overridden": false,
+       "p_original": 0.9999849796295166,
+       "p_forced": 0.9999849796295166,
+       "argmax_taken": true,
+       "dt_ms": 302.93294199509546,
+       "forward_ms": 278.30496299429797,
+       "mask_ms": 2.251218000310473,
+       "observer_ms": 7.029446001979522,
+       "sample_ms": 15.3473149985075
+      },
+      {
+       "i": 10,
+       "token_id": 698,
+       "token": "\"Ċ",
+       "text": "\"\n",
+       "n_allowed": 147113,
+       "vocab_size": 151936,
+       "mass_removed": 0.000022896219888934866,
+       "top_original": [],
+       "top_forced": [],
+       "fsm_state": null,
+       "stack_depth": 1,
+       "was_overridden": false,
+       "p_original": 0.7068812847137451,
+       "p_forced": 0.7068971991539001,
+       "argmax_taken": true,
+       "dt_ms": 290.00321999774314,
+       "forward_ms": 267.55783399858046,
+       "mask_ms": 1.927216988406144,
+       "observer_ms": 6.035733022144996,
+       "sample_ms": 14.482435988611542
+      },
+      {
+       "i": 11,
+       "token_id": 92,
+       "token": "}",
+       "text": "}",
+       "n_allowed": 440,
+       "vocab_size": 151936,
+       "mass_removed": 0.0001360730966553092,
        "top_original": [],
        "top_forced": [],
        "fsm_state": null,
        "stack_depth": 0,
        "was_overridden": false,
-       "p_original": 0.9999624490737915,
+       "p_original": 0.9998488426208496,
+       "p_forced": 0.9999847412109375,
+       "argmax_taken": true,
+       "dt_ms": 274.20736200292595,
+       "forward_ms": 250.71993000165094,
+       "mask_ms": 2.34967700089328,
+       "observer_ms": 6.999446006375365,
+       "sample_ms": 14.138308994006366
+      },
+      {
+       "i": 12,
+       "token_id": 151645,
+       "token": "<|im_end|>",
+       "text": "",
+       "n_allowed": 1,
+       "vocab_size": 151936,
+       "mass_removed": 0.00001923367744893767,
+       "top_original": [],
+       "top_forced": [],
+       "fsm_state": null,
+       "stack_depth": 0,
+       "was_overridden": false,
+       "p_original": 0.9999808073043823,
        "p_forced": 1,
        "argmax_taken": true,
-       "dt_ms": 381.5028440003516,
-       "forward_ms": 351.1862369996379,
-       "mask_ms": 2.914696997322608,
-       "observer_ms": 9.125178003159817,
-       "sample_ms": 18.276732000231277
+       "dt_ms": 277.59183500893414,
+       "forward_ms": 256.57987099839374,
+       "mask_ms": 1.9963420054409653,
+       "observer_ms": 6.4442360016983,
+       "sample_ms": 12.57138600340113
       }
      ],
      "done": {
-      "text": "{}",
-      "parsed": {},
+      "text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+      "parsed": {
+       "person": "Ada Lovelace"
+      },
       "valid": false,
-      "validation_error": "JSON does not match the schema: 'name' is a required property",
-      "n_steps": 2,
-      "elapsed_s": 1.0483203229960054,
+      "validation_error": "JSON does not match the schema: Additional properties are not allowed ('person' was unexpected)",
+      "n_steps": 13,
+      "elapsed_s": 3.888409152001259,
       "stopped_by": "eos",
       "tokens": [
        {
-        "token_id": 6257,
-        "token": "{}",
-        "text": "{}"
+        "token_id": 515,
+        "token": "{Ċ",
+        "text": "{\n"
+       },
+       {
+        "token_id": 220,
+        "token": "Ġ",
+        "text": " "
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 8987,
+        "token": "person",
+        "text": "person"
+       },
+       {
+        "token_id": 788,
+        "token": "\":",
+        "text": "\":"
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 95347,
+        "token": "Ada",
+        "text": "Ada"
+       },
+       {
+        "token_id": 34293,
+        "token": "ĠLov",
+        "text": " Lov"
+       },
+       {
+        "token_id": 301,
+        "token": "el",
+        "text": "el"
+       },
+       {
+        "token_id": 578,
+        "token": "ace",
+        "text": "ace"
+       },
+       {
+        "token_id": 698,
+        "token": "\"Ċ",
+        "text": "\"\n"
+       },
+       {
+        "token_id": 92,
+        "token": "}",
+        "text": "}"
        }
       ],
       "mode": "json",
       "engine_backend": "llguidance",
       "stop_reason": "eos",
       "validation": {
-       "raw_text": "{}",
-       "stripped_text": "{}",
+       "raw_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+       "stripped_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
        "strip_applied": [],
        "raw_parse_ok": true,
        "raw_schema_ok": false,
@@ -5038,59 +5526,57 @@
        "parse_error": null,
        "schema_ok": false,
        "schema_error": {
-        "message": "'name' is a required property",
-        "validator": "required",
+        "message": "Additional properties are not allowed ('person' was unexpected)",
+        "validator": "additionalProperties",
         "path": [],
         "json_path": "$",
         "schema_path": [
-         "required"
+         "additionalProperties"
         ],
-        "validator_value": [
-         "name",
-         "age",
-         "city"
-        ]
+        "validator_value": false
        },
        "schema_error_counts": {
         "required": 3,
-        "additionalProperties": 0,
+        "additionalProperties": 1,
         "type": 0,
         "other": 0
        },
        "stop_reason": "eos",
-       "failure_class": "schema_missing_key",
-       "failure_class_stripped": "schema_missing_key",
-       "parsed": {}
+       "failure_class": "schema_extra_key",
+       "failure_class_stripped": "schema_extra_key",
+       "parsed": {
+        "person": "Ada Lovelace"
+       }
       },
       "timing": {
-       "compile_ms": 0.0920429956750013,
+       "compile_ms": 0.03404199378564954,
        "compile_cached": false,
-       "prefill_ms": 632.232160998683,
-       "decode_ms": 351.1862369996379,
-       "forward_ms": 983.4183979983209,
-       "processor_ms": 6.355482000799384,
-       "observer_ms": 18.265982005686965,
-       "sample_ms": 39.494369993917644,
-       "total_ms": 1047.6262749943999,
+       "prefill_ms": 493.41353500494733,
+       "decode_ms": 3086.4794029912446,
+       "forward_ms": 3579.892937996192,
+       "processor_ms": 28.875332995085046,
+       "observer_ms": 85.7006070582429,
+       "sample_ms": 187.32683095731772,
+       "total_ms": 3881.829751000623,
        "n_prompt_tokens": 56,
-       "n_new_tokens": 1,
-       "tokens_per_s": 1.9092454823017513,
-       "decode_tokens_per_s": 2.8474919989561864,
-       "first_token_ms": 666.1234309940482,
+       "n_new_tokens": 12,
+       "tokens_per_s": 3.3489655238261022,
+       "decode_tokens_per_s": 3.8879248597512963,
+       "first_token_ms": 519.5518949913094,
        "torch_threads": 10
       },
       "summary": {
-       "n_overridden": 1,
-       "n_argmax_taken": 1,
-       "mean_vocab_kept": 0.000013163437236731255,
-       "mean_mass_removed": 0.4614392867042625,
+       "n_overridden": 0,
+       "n_argmax_taken": 13,
+       "mean_vocab_kept": 0.5228400824638715,
+       "mean_mass_removed": 0.018389314576712088,
        "min_n_allowed": 1,
-       "max_stack_depth": 0
+       "max_stack_depth": 1
       }
      },
      "error": null
     },
-    "wall_ms": 1054
+    "wall_ms": 3893
    },
    {
     "constraint": "json",
@@ -5124,159 +5610,323 @@
       "schema_in_prompt": false,
       "use_chat_template": true,
       "prompt_rendered": "",
-      "compile_ms": 0.0701260069035925,
+      "compile_ms": 0.046959001338109374,
       "compile_cached": false,
       "include_steps": true
      },
      "steps": [
       {
        "i": 0,
-       "token_id": 4913,
-       "token": "{\"",
-       "text": "{\"",
-       "n_allowed": 3,
+       "token_id": 515,
+       "token": "{Ċ",
+       "text": "{\n",
+       "n_allowed": 8,
        "vocab_size": 151936,
-       "mass_removed": 0.92284095287323,
+       "mass_removed": 0.23808975517749786,
        "top_original": [],
        "top_forced": [],
        "fsm_state": null,
        "stack_depth": 1,
-       "was_overridden": true,
-       "p_original": 0.03258096054196358,
-       "p_forced": 0.4221937656402588,
-       "argmax_taken": false,
-       "dt_ms": 677.1630869989167,
-       "forward_ms": 632.0235339953797,
-       "mask_ms": 4.330545001721475,
-       "observer_ms": 10.935489000985399,
-       "sample_ms": 29.87351900083013
+       "was_overridden": false,
+       "p_original": 0.6847372651100159,
+       "p_forced": 0.8986974954605103,
+       "argmax_taken": true,
+       "dt_ms": 518.7065159989288,
+       "forward_ms": 491.2006500089774,
+       "mask_ms": 3.461472995695658,
+       "observer_ms": 7.976366992807016,
+       "sample_ms": 16.068026001448743
       },
       {
        "i": 1,
-       "token_id": 8987,
-       "token": "person",
-       "text": "person",
-       "n_allowed": 147000,
+       "token_id": 220,
+       "token": "Ġ",
+       "text": " ",
+       "n_allowed": 814,
        "vocab_size": 151936,
-       "mass_removed": 0.00011496255319798365,
+       "mass_removed": 0.000016107078408822417,
        "top_original": [],
        "top_forced": [],
        "fsm_state": null,
        "stack_depth": 1,
        "was_overridden": false,
-       "p_original": 0.34953534603118896,
-       "p_forced": 0.3495739698410034,
+       "p_original": 0.9988580942153931,
+       "p_forced": 0.9988725781440735,
        "argmax_taken": true,
-       "dt_ms": 383.22415400034515,
-       "forward_ms": 350.8941089967266,
-       "mask_ms": 3.4153269953094423,
-       "observer_ms": 8.706257001904305,
-       "sample_ms": 20.208461006404832
+       "dt_ms": 278.15587900113314,
+       "forward_ms": 254.06452700553928,
+       "mask_ms": 2.529135992517695,
+       "observer_ms": 7.4421150056878105,
+       "sample_ms": 14.120100997388363
       },
       {
        "i": 2,
-       "token_id": 788,
-       "token": "\":",
-       "text": "\":",
-       "n_allowed": 147000,
+       "token_id": 330,
+       "token": "Ġ\"",
+       "text": " \"",
+       "n_allowed": 814,
        "vocab_size": 151936,
-       "mass_removed": 0.000036495537642622367,
+       "mass_removed": 0.00000991780780168483,
        "top_original": [],
        "top_forced": [],
        "fsm_state": null,
        "stack_depth": 1,
        "was_overridden": false,
-       "p_original": 0.9815866351127625,
-       "p_forced": 0.981622040271759,
+       "p_original": 0.9989981055259705,
+       "p_forced": 0.9990068078041077,
        "argmax_taken": true,
-       "dt_ms": 366.22935199557105,
-       "forward_ms": 334.2873109941138,
-       "mask_ms": 2.5782770026125945,
-       "observer_ms": 8.560255999327637,
-       "sample_ms": 20.803507999517024
+       "dt_ms": 276.8135819933377,
+       "forward_ms": 253.62806698831264,
+       "mask_ms": 1.863715995568782,
+       "observer_ms": 6.872988014947623,
+       "sample_ms": 14.448810994508676
       },
       {
        "i": 3,
-       "token_id": 6257,
-       "token": "{}",
-       "text": "{}",
-       "n_allowed": 311,
+       "token_id": 8987,
+       "token": "person",
+       "text": "person",
+       "n_allowed": 147060,
        "vocab_size": 151936,
-       "mass_removed": 0.9948917031288147,
+       "mass_removed": 0.000044064639951102436,
        "top_original": [],
        "top_forced": [],
        "fsm_state": null,
        "stack_depth": 1,
-       "was_overridden": true,
-       "p_original": 0.0018659152556210756,
-       "p_forced": 0.3613050878047943,
-       "argmax_taken": false,
-       "dt_ms": 371.650408997084,
-       "forward_ms": 336.75954600039404,
-       "mask_ms": 2.99857299978612,
-       "observer_ms": 8.85125799686648,
-       "sample_ms": 23.041032000037376
+       "was_overridden": false,
+       "p_original": 0.7311474680900574,
+       "p_forced": 0.7311785221099854,
+       "argmax_taken": true,
+       "dt_ms": 274.1977779951412,
+       "forward_ms": 251.6115579928737,
+       "mask_ms": 2.3427190026268363,
+       "observer_ms": 6.1666499968850985,
+       "sample_ms": 14.076851002755575
       },
       {
        "i": 4,
+       "token_id": 788,
+       "token": "\":",
+       "text": "\":",
+       "n_allowed": 147060,
+       "vocab_size": 151936,
+       "mass_removed": 0.000003649030077212956,
+       "top_original": [],
+       "top_forced": [],
+       "fsm_state": null,
+       "stack_depth": 1,
+       "was_overridden": false,
+       "p_original": 0.9965014457702637,
+       "p_forced": 0.9965049028396606,
+       "argmax_taken": true,
+       "dt_ms": 273.8235680008074,
+       "forward_ms": 251.27451500156894,
+       "mask_ms": 2.0525080035440624,
+       "observer_ms": 6.658903992502019,
+       "sample_ms": 13.837641003192402
+      },
+      {
+       "i": 5,
+       "token_id": 330,
+       "token": "Ġ\"",
+       "text": " \"",
+       "n_allowed": 935,
+       "vocab_size": 151936,
+       "mass_removed": 0.0007173084304668009,
+       "top_original": [],
+       "top_forced": [],
+       "fsm_state": null,
+       "stack_depth": 1,
+       "was_overridden": false,
+       "p_original": 0.8339961171150208,
+       "p_forced": 0.8345874547958374,
+       "argmax_taken": true,
+       "dt_ms": 278.9349230006337,
+       "forward_ms": 254.99865598976612,
+       "mask_ms": 2.2710930061293766,
+       "observer_ms": 6.774277993827127,
+       "sample_ms": 14.890896010911092
+      },
+      {
+       "i": 6,
+       "token_id": 95347,
+       "token": "Ada",
+       "text": "Ada",
+       "n_allowed": 147113,
+       "vocab_size": 151936,
+       "mass_removed": 3.610224439398735e-7,
+       "top_original": [],
+       "top_forced": [],
+       "fsm_state": null,
+       "stack_depth": 1,
+       "was_overridden": false,
+       "p_original": 0.9942518472671509,
+       "p_forced": 0.99425208568573,
+       "argmax_taken": true,
+       "dt_ms": 410.55651899660006,
+       "forward_ms": 383.4574880020227,
+       "mask_ms": 2.4138020089594647,
+       "observer_ms": 6.606735987588763,
+       "sample_ms": 18.078492998029105
+      },
+      {
+       "i": 7,
+       "token_id": 34293,
+       "token": "ĠLov",
+       "text": " Lov",
+       "n_allowed": 147113,
+       "vocab_size": 151936,
+       "mass_removed": 0.0000017086255184040056,
+       "top_original": [],
+       "top_forced": [],
+       "fsm_state": null,
+       "stack_depth": 1,
+       "was_overridden": false,
+       "p_original": 0.999945878982544,
+       "p_forced": 0.9999476671218872,
+       "argmax_taken": true,
+       "dt_ms": 302.9426080029225,
+       "forward_ms": 268.0396270006895,
+       "mask_ms": 9.377747992402874,
+       "observer_ms": 11.18188101099804,
+       "sample_ms": 14.343351998832077
+      },
+      {
+       "i": 8,
+       "token_id": 301,
+       "token": "el",
+       "text": "el",
+       "n_allowed": 147113,
+       "vocab_size": 151936,
+       "mass_removed": 1.1434968527623823e-8,
+       "top_original": [],
+       "top_forced": [],
+       "fsm_state": null,
+       "stack_depth": 1,
+       "was_overridden": false,
+       "p_original": 0.9999709129333496,
+       "p_forced": 0.9999709129333496,
+       "argmax_taken": true,
+       "dt_ms": 276.83020700351335,
+       "forward_ms": 253.6123169993516,
+       "mask_ms": 2.3783849901519716,
+       "observer_ms": 6.2784850160824135,
+       "sample_ms": 14.56101999792736
+      },
+      {
+       "i": 9,
+       "token_id": 578,
+       "token": "ace",
+       "text": "ace",
+       "n_allowed": 147113,
+       "vocab_size": 151936,
+       "mass_removed": 3.2561295881805563e-9,
+       "top_original": [],
+       "top_forced": [],
+       "fsm_state": null,
+       "stack_depth": 1,
+       "was_overridden": false,
+       "p_original": 0.9999849796295166,
+       "p_forced": 0.9999849796295166,
+       "argmax_taken": true,
+       "dt_ms": 283.50465100083966,
+       "forward_ms": 259.39613301306963,
+       "mask_ms": 2.4356770009035245,
+       "observer_ms": 6.0750669945264235,
+       "sample_ms": 15.59777399234008
+      },
+      {
+       "i": 10,
+       "token_id": 698,
+       "token": "\"Ċ",
+       "text": "\"\n",
+       "n_allowed": 147113,
+       "vocab_size": 151936,
+       "mass_removed": 0.000022896219888934866,
+       "top_original": [],
+       "top_forced": [],
+       "fsm_state": null,
+       "stack_depth": 1,
+       "was_overridden": false,
+       "p_original": 0.7068812847137451,
+       "p_forced": 0.7068971991539001,
+       "argmax_taken": true,
+       "dt_ms": 294.62390700064134,
+       "forward_ms": 268.63617199705914,
+       "mask_ms": 1.9311330106575042,
+       "observer_ms": 6.276317988522351,
+       "sample_ms": 17.780284004402347
+      },
+      {
+       "i": 11,
        "token_id": 92,
        "token": "}",
        "text": "}",
-       "n_allowed": 6,
+       "n_allowed": 440,
        "vocab_size": 151936,
-       "mass_removed": 0.008013449609279633,
+       "mass_removed": 0.0001360730966553092,
        "top_original": [],
        "top_forced": [],
        "fsm_state": null,
        "stack_depth": 0,
        "was_overridden": false,
-       "p_original": 0.9851642847061157,
-       "p_forced": 0.9930927753448486,
+       "p_original": 0.9998488426208496,
+       "p_forced": 0.9999847412109375,
        "argmax_taken": true,
-       "dt_ms": 363.9187859953381,
-       "forward_ms": 333.80022299388656,
-       "mask_ms": 2.502651004760992,
-       "observer_ms": 9.030761000758503,
-       "sample_ms": 18.585150995932054
+       "dt_ms": 275.63432601164095,
+       "forward_ms": 250.9676390036475,
+       "mask_ms": 3.5036390036111698,
+       "observer_ms": 6.782195996493101,
+       "sample_ms": 14.380852007889189
       },
       {
-       "i": 5,
+       "i": 12,
        "token_id": 151645,
        "token": "<|im_end|>",
        "text": "",
        "n_allowed": 1,
        "vocab_size": 151936,
-       "mass_removed": 0.000024115890482789837,
+       "mass_removed": 0.00001923367744893767,
        "top_original": [],
        "top_forced": [],
        "fsm_state": null,
        "stack_depth": 0,
        "was_overridden": false,
-       "p_original": 0.9999758005142212,
+       "p_original": 0.9999808073043823,
        "p_forced": 1,
        "argmax_taken": true,
-       "dt_ms": 368.15624599694274,
-       "forward_ms": 336.0189539962448,
-       "mask_ms": 3.4357859985902905,
-       "observer_ms": 10.19018900115043,
-       "sample_ms": 18.511317000957206
+       "dt_ms": 279.8995949997334,
+       "forward_ms": 257.0514569961233,
+       "mask_ms": 2.017217004322447,
+       "observer_ms": 6.989486995735206,
+       "sample_ms": 13.841434003552422
       }
      ],
      "done": {
-      "text": "{\"person\":{}}",
+      "text": "{\n  \"person\": \"Ada Lovelace\"\n}",
       "parsed": {
-       "person": {}
+       "person": "Ada Lovelace"
       },
       "valid": false,
       "validation_error": "JSON does not match the schema: Additional properties are not allowed ('person' was unexpected)",
-      "n_steps": 6,
-      "elapsed_s": 2.5339516130043194,
+      "n_steps": 13,
+      "elapsed_s": 4.03060737499618,
       "stopped_by": "eos",
       "tokens": [
        {
-        "token_id": 4913,
-        "token": "{\"",
-        "text": "{\""
+        "token_id": 515,
+        "token": "{Ċ",
+        "text": "{\n"
+       },
+       {
+        "token_id": 220,
+        "token": "Ġ",
+        "text": " "
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
        },
        {
         "token_id": 8987,
@@ -5289,9 +5939,34 @@
         "text": "\":"
        },
        {
-        "token_id": 6257,
-        "token": "{}",
-        "text": "{}"
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 95347,
+        "token": "Ada",
+        "text": "Ada"
+       },
+       {
+        "token_id": 34293,
+        "token": "ĠLov",
+        "text": " Lov"
+       },
+       {
+        "token_id": 301,
+        "token": "el",
+        "text": "el"
+       },
+       {
+        "token_id": 578,
+        "token": "ace",
+        "text": "ace"
+       },
+       {
+        "token_id": 698,
+        "token": "\"Ċ",
+        "text": "\"\n"
        },
        {
         "token_id": 92,
@@ -5303,8 +5978,8 @@
       "engine_backend": "llguidance",
       "stop_reason": "eos",
       "validation": {
-       "raw_text": "{\"person\":{}}",
-       "stripped_text": "{\"person\":{}}",
+       "raw_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+       "stripped_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
        "strip_applied": [],
        "raw_parse_ok": true,
        "raw_schema_ok": false,
@@ -5331,38 +6006,38 @@
        "failure_class": "schema_extra_key",
        "failure_class_stripped": "schema_extra_key",
        "parsed": {
-        "person": {}
+        "person": "Ada Lovelace"
        }
       },
       "timing": {
-       "compile_ms": 0.0701260069035925,
+       "compile_ms": 0.046959001338109374,
        "compile_cached": false,
-       "prefill_ms": 632.0235339953797,
-       "decode_ms": 1691.7601429813658,
-       "forward_ms": 2323.7836769767455,
-       "processor_ms": 19.261159002780914,
-       "observer_ms": 56.27421000099275,
-       "sample_ms": 131.02298800367862,
-       "total_ms": 2530.4121599911014,
+       "prefill_ms": 491.2006500089774,
+       "decode_ms": 3206.738155990024,
+       "forward_ms": 3697.9388059990015,
+       "processor_ms": 38.578246007091366,
+       "observer_ms": 92.08147198660299,
+       "sample_ms": 196.02553501317743,
+       "total_ms": 4024.6710180072114,
        "n_prompt_tokens": 56,
-       "n_new_tokens": 5,
-       "tokens_per_s": 2.371220933540193,
-       "decode_tokens_per_s": 2.9555017126651113,
-       "first_token_ms": 677.2332130058203,
+       "n_new_tokens": 12,
+       "tokens_per_s": 3.2301153621814667,
+       "decode_tokens_per_s": 3.7421203154939886,
+       "first_token_ms": 518.7534750002669,
        "torch_threads": 10
       },
       "summary": {
-       "n_overridden": 2,
-       "n_argmax_taken": 4,
-       "mean_vocab_kept": 0.32285633424599836,
-       "mean_mass_removed": 0.32098694659877464,
+       "n_overridden": 0,
+       "n_argmax_taken": 13,
+       "mean_vocab_kept": 0.5228400824638715,
+       "mean_mass_removed": 0.018389314576712088,
        "min_n_allowed": 1,
        "max_stack_depth": 1
       }
      },
      "error": null
     },
-    "wall_ms": 2538
+    "wall_ms": 4035
    },
    {
     "constraint": "json",
@@ -5396,32 +6071,154 @@
       "schema_in_prompt": false,
       "use_chat_template": true,
       "prompt_rendered": "",
-      "compile_ms": 0.0424169993493706,
+      "compile_ms": 0.05208399670664221,
       "compile_cached": false,
       "include_steps": false
      },
      "steps": [],
      "done": {
-      "text": "{}",
-      "parsed": {},
+      "text": "{\n  \"person\": \"Ada Lovelace, 36, lives in London and writes about analytical engines.\"\n}",
+      "parsed": {
+       "person": "Ada Lovelace, 36, lives in London and writes about analytical engines."
+      },
       "valid": false,
-      "validation_error": "JSON does not match the schema: 'name' is a required property",
-      "n_steps": 2,
-      "elapsed_s": 1.1439382349999505,
+      "validation_error": "JSON does not match the schema: Additional properties are not allowed ('person' was unexpected)",
+      "n_steps": 26,
+      "elapsed_s": 7.757023971003946,
       "stopped_by": "eos",
       "tokens": [
        {
-        "token_id": 6257,
-        "token": "{}",
-        "text": "{}"
+        "token_id": 515,
+        "token": "{Ċ",
+        "text": "{\n"
+       },
+       {
+        "token_id": 220,
+        "token": "Ġ",
+        "text": " "
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 8987,
+        "token": "person",
+        "text": "person"
+       },
+       {
+        "token_id": 788,
+        "token": "\":",
+        "text": "\":"
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 95347,
+        "token": "Ada",
+        "text": "Ada"
+       },
+       {
+        "token_id": 34293,
+        "token": "ĠLov",
+        "text": " Lov"
+       },
+       {
+        "token_id": 301,
+        "token": "el",
+        "text": "el"
+       },
+       {
+        "token_id": 578,
+        "token": "ace",
+        "text": "ace"
+       },
+       {
+        "token_id": 11,
+        "token": ",",
+        "text": ","
+       },
+       {
+        "token_id": 220,
+        "token": "Ġ",
+        "text": " "
+       },
+       {
+        "token_id": 18,
+        "token": "3",
+        "text": "3"
+       },
+       {
+        "token_id": 21,
+        "token": "6",
+        "text": "6"
+       },
+       {
+        "token_id": 11,
+        "token": ",",
+        "text": ","
+       },
+       {
+        "token_id": 6305,
+        "token": "Ġlives",
+        "text": " lives"
+       },
+       {
+        "token_id": 304,
+        "token": "Ġin",
+        "text": " in"
+       },
+       {
+        "token_id": 7148,
+        "token": "ĠLondon",
+        "text": " London"
+       },
+       {
+        "token_id": 323,
+        "token": "Ġand",
+        "text": " and"
+       },
+       {
+        "token_id": 13914,
+        "token": "Ġwrites",
+        "text": " writes"
+       },
+       {
+        "token_id": 911,
+        "token": "Ġabout",
+        "text": " about"
+       },
+       {
+        "token_id": 42964,
+        "token": "Ġanalytical",
+        "text": " analytical"
+       },
+       {
+        "token_id": 21106,
+        "token": "Ġengines",
+        "text": " engines"
+       },
+       {
+        "token_id": 10040,
+        "token": ".\"Ċ",
+        "text": ".\"\n"
+       },
+       {
+        "token_id": 92,
+        "token": "}",
+        "text": "}"
        }
       ],
       "mode": "json",
       "engine_backend": "llguidance",
       "stop_reason": "eos",
       "validation": {
-       "raw_text": "{}",
-       "stripped_text": "{}",
+       "raw_text": "{\n  \"person\": \"Ada Lovelace, 36, lives in London and writes about analytical engines.\"\n}",
+       "stripped_text": "{\n  \"person\": \"Ada Lovelace, 36, lives in London and writes about analytical engines.\"\n}",
        "strip_applied": [],
        "raw_parse_ok": true,
        "raw_schema_ok": false,
@@ -5429,59 +6226,57 @@
        "parse_error": null,
        "schema_ok": false,
        "schema_error": {
-        "message": "'name' is a required property",
-        "validator": "required",
+        "message": "Additional properties are not allowed ('person' was unexpected)",
+        "validator": "additionalProperties",
         "path": [],
         "json_path": "$",
         "schema_path": [
-         "required"
+         "additionalProperties"
         ],
-        "validator_value": [
-         "name",
-         "age",
-         "city"
-        ]
+        "validator_value": false
        },
        "schema_error_counts": {
         "required": 3,
-        "additionalProperties": 0,
+        "additionalProperties": 1,
         "type": 0,
         "other": 0
        },
        "stop_reason": "eos",
-       "failure_class": "schema_missing_key",
-       "failure_class_stripped": "schema_missing_key",
-       "parsed": {}
+       "failure_class": "schema_extra_key",
+       "failure_class_stripped": "schema_extra_key",
+       "parsed": {
+        "person": "Ada Lovelace, 36, lives in London and writes about analytical engines."
+       }
       },
       "timing": {
-       "compile_ms": 0.0424169993493706,
+       "compile_ms": 0.05208399670664221,
        "compile_cached": false,
-       "prefill_ms": 641.4099230023567,
-       "decode_ms": 424.2451229947619,
-       "forward_ms": 1065.6550459971186,
-       "processor_ms": 10.035936997155659,
-       "observer_ms": 25.75797700410476,
-       "sample_ms": 42.35298200364923,
-       "total_ms": 1143.8443590013776,
+       "prefill_ms": 479.6040179935517,
+       "decode_ms": 6629.081849983777,
+       "forward_ms": 7108.685867977329,
+       "processor_ms": 57.69545101793483,
+       "observer_ms": 174.5138179976493,
+       "sample_ms": 413.7822419870645,
+       "total_ms": 7754.729462976684,
        "n_prompt_tokens": 56,
-       "n_new_tokens": 1,
-       "tokens_per_s": 1.7485544713268668,
-       "decode_tokens_per_s": 2.357127862639795,
-       "first_token_ms": 678.088138003659,
+       "n_new_tokens": 25,
+       "tokens_per_s": 3.3528151758416476,
+       "decode_tokens_per_s": 3.771261324833571,
+       "first_token_ms": 506.7667159892153,
        "torch_threads": 10
       },
       "summary": {
-       "n_overridden": 1,
-       "n_argmax_taken": 1,
-       "mean_vocab_kept": 0.000013163437236731255,
-       "mean_mass_removed": 0.4614392867042625,
+       "n_overridden": 0,
+       "n_argmax_taken": 25,
+       "mean_vocab_kept": 0.7455482267837469,
+       "mean_mass_removed": 0.009206792019136049,
        "min_n_allowed": 1,
-       "max_stack_depth": 0
+       "max_stack_depth": 1
       }
      },
      "error": null
     },
-    "wall_ms": 1151
+    "wall_ms": 7762
    },
    {
     "constraint": "json",
@@ -5515,27 +6310,51 @@
       "schema_in_prompt": false,
       "use_chat_template": true,
       "prompt_rendered": "",
-      "compile_ms": 0.07025100057944655,
+      "compile_ms": 0.04733400419354439,
       "compile_cached": false,
       "include_steps": false
      },
      "steps": [],
      "done": {
-      "text": "{\"Ada Lovelace\":36,\"Lovelace lives in London and writes about analytical engines.\":\"}ortejson.json\"}",
+      "text": "{\n  \"person\": \"Ada Lovelace\"\n}",
       "parsed": {
-       "Ada Lovelace": 36,
-       "Lovelace lives in London and writes about analytical engines.": "}ortejson.json"
+       "person": "Ada Lovelace"
       },
       "valid": false,
-      "validation_error": "JSON does not match the schema: Additional properties are not allowed ('Ada Lovelace', 'Lovelace lives in London and writes about analytical engines.' were unexpected)",
-      "n_steps": 29,
-      "elapsed_s": 12.200883436998993,
+      "validation_error": "JSON does not match the schema: Additional properties are not allowed ('person' was unexpected)",
+      "n_steps": 13,
+      "elapsed_s": 3.8553597319987603,
       "stopped_by": "eos",
       "tokens": [
        {
-        "token_id": 4913,
-        "token": "{\"",
-        "text": "{\""
+        "token_id": 515,
+        "token": "{Ċ",
+        "text": "{\n"
+       },
+       {
+        "token_id": 220,
+        "token": "Ġ",
+        "text": " "
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 8987,
+        "token": "person",
+        "text": "person"
+       },
+       {
+        "token_id": 788,
+        "token": "\":",
+        "text": "\":"
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
        },
        {
         "token_id": 95347,
@@ -5558,114 +6377,9 @@
         "text": "ace"
        },
        {
-        "token_id": 788,
-        "token": "\":",
-        "text": "\":"
-       },
-       {
-        "token_id": 18,
-        "token": "3",
-        "text": "3"
-       },
-       {
-        "token_id": 21,
-        "token": "6",
-        "text": "6"
-       },
-       {
-        "token_id": 1335,
-        "token": ",\"",
-        "text": ",\""
-       },
-       {
-        "token_id": 43,
-        "token": "L",
-        "text": "L"
-       },
-       {
-        "token_id": 43335,
-        "token": "ovel",
-        "text": "ovel"
-       },
-       {
-        "token_id": 578,
-        "token": "ace",
-        "text": "ace"
-       },
-       {
-        "token_id": 6305,
-        "token": "Ġlives",
-        "text": " lives"
-       },
-       {
-        "token_id": 304,
-        "token": "Ġin",
-        "text": " in"
-       },
-       {
-        "token_id": 7148,
-        "token": "ĠLondon",
-        "text": " London"
-       },
-       {
-        "token_id": 323,
-        "token": "Ġand",
-        "text": " and"
-       },
-       {
-        "token_id": 13914,
-        "token": "Ġwrites",
-        "text": " writes"
-       },
-       {
-        "token_id": 911,
-        "token": "Ġabout",
-        "text": " about"
-       },
-       {
-        "token_id": 42964,
-        "token": "Ġanalytical",
-        "text": " analytical"
-       },
-       {
-        "token_id": 21106,
-        "token": "Ġengines",
-        "text": " engines"
-       },
-       {
-        "token_id": 1189,
-        "token": ".\"",
-        "text": ".\""
-       },
-       {
-        "token_id": 2974,
-        "token": ":\"",
-        "text": ":\""
-       },
-       {
-        "token_id": 92,
-        "token": "}",
-        "text": "}"
-       },
-       {
-        "token_id": 16568,
-        "token": "orte",
-        "text": "orte"
-       },
-       {
-        "token_id": 2236,
-        "token": "json",
-        "text": "json"
-       },
-       {
-        "token_id": 4323,
-        "token": ".json",
-        "text": ".json"
-       },
-       {
-        "token_id": 1,
-        "token": "\"",
-        "text": "\""
+        "token_id": 698,
+        "token": "\"Ċ",
+        "text": "\"\n"
        },
        {
         "token_id": 92,
@@ -5677,8 +6391,8 @@
       "engine_backend": "llguidance",
       "stop_reason": "eos",
       "validation": {
-       "raw_text": "{\"Ada Lovelace\":36,\"Lovelace lives in London and writes about analytical engines.\":\"}ortejson.json\"}",
-       "stripped_text": "{\"Ada Lovelace\":36,\"Lovelace lives in London and writes about analytical engines.\":\"}ortejson.json\"}",
+       "raw_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+       "stripped_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
        "strip_applied": [],
        "raw_parse_ok": true,
        "raw_schema_ok": false,
@@ -5686,7 +6400,7 @@
        "parse_error": null,
        "schema_ok": false,
        "schema_error": {
-        "message": "Additional properties are not allowed ('Ada Lovelace', 'Lovelace lives in London and writes about analytical engines.' were unexpected)",
+        "message": "Additional properties are not allowed ('person' was unexpected)",
         "validator": "additionalProperties",
         "path": [],
         "json_path": "$",
@@ -5705,39 +6419,38 @@
        "failure_class": "schema_extra_key",
        "failure_class_stripped": "schema_extra_key",
        "parsed": {
-        "Ada Lovelace": 36,
-        "Lovelace lives in London and writes about analytical engines.": "}ortejson.json"
+        "person": "Ada Lovelace"
        }
       },
       "timing": {
-       "compile_ms": 0.07025100057944655,
+       "compile_ms": 0.04733400419354439,
        "compile_cached": false,
-       "prefill_ms": 655.7624059933005,
-       "decode_ms": 10523.172793000413,
-       "forward_ms": 11178.935198993713,
-       "processor_ms": 112.79256300622365,
-       "observer_ms": 282.607533983537,
-       "sample_ms": 617.509813986544,
-       "total_ms": 12191.915360970597,
+       "prefill_ms": 498.5125980019802,
+       "decode_ms": 3036.8520650372375,
+       "forward_ms": 3535.3646630392177,
+       "processor_ms": 33.9885249704821,
+       "observer_ms": 90.9852289914852,
+       "sample_ms": 194.08877099340316,
+       "total_ms": 3854.4745219987817,
        "n_prompt_tokens": 56,
-       "n_new_tokens": 28,
-       "tokens_per_s": 2.378639142674551,
-       "decode_tokens_per_s": 2.660794472426079,
-       "first_token_ms": 691.1857329978375,
+       "n_new_tokens": 12,
+       "tokens_per_s": 3.3727449932096767,
+       "decode_tokens_per_s": 3.9514601775153833,
+       "first_token_ms": 526.2830900028348,
        "torch_threads": 10
       },
       "summary": {
-       "n_overridden": 8,
-       "n_argmax_taken": 19,
-       "mean_vocab_kept": 0.7341049225808329,
-       "mean_mass_removed": 0.2826987472598424,
+       "n_overridden": 0,
+       "n_argmax_taken": 13,
+       "mean_vocab_kept": 0.5228400824638715,
+       "mean_mass_removed": 0.018389314576712088,
        "min_n_allowed": 1,
        "max_stack_depth": 1
       }
      },
      "error": null
     },
-    "wall_ms": 12218
+    "wall_ms": 3860
    },
    {
     "constraint": "json",
@@ -5771,32 +6484,89 @@
       "schema_in_prompt": false,
       "use_chat_template": true,
       "prompt_rendered": "",
-      "compile_ms": 0.4702929945779033,
+      "compile_ms": 0.042166997445747256,
       "compile_cached": false,
       "include_steps": false
      },
      "steps": [],
      "done": {
-      "text": "{}",
-      "parsed": {},
+      "text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+      "parsed": {
+       "person": "Ada Lovelace"
+      },
       "valid": false,
-      "validation_error": "JSON does not match the schema: 'name' is a required property",
-      "n_steps": 2,
-      "elapsed_s": 1.1012994289994822,
+      "validation_error": "JSON does not match the schema: Additional properties are not allowed ('person' was unexpected)",
+      "n_steps": 13,
+      "elapsed_s": 3.8528135719971033,
       "stopped_by": "eos",
       "tokens": [
        {
-        "token_id": 6257,
-        "token": "{}",
-        "text": "{}"
+        "token_id": 515,
+        "token": "{Ċ",
+        "text": "{\n"
+       },
+       {
+        "token_id": 220,
+        "token": "Ġ",
+        "text": " "
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 8987,
+        "token": "person",
+        "text": "person"
+       },
+       {
+        "token_id": 788,
+        "token": "\":",
+        "text": "\":"
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 95347,
+        "token": "Ada",
+        "text": "Ada"
+       },
+       {
+        "token_id": 34293,
+        "token": "ĠLov",
+        "text": " Lov"
+       },
+       {
+        "token_id": 301,
+        "token": "el",
+        "text": "el"
+       },
+       {
+        "token_id": 578,
+        "token": "ace",
+        "text": "ace"
+       },
+       {
+        "token_id": 698,
+        "token": "\"Ċ",
+        "text": "\"\n"
+       },
+       {
+        "token_id": 92,
+        "token": "}",
+        "text": "}"
        }
       ],
       "mode": "json",
       "engine_backend": "llguidance",
       "stop_reason": "eos",
       "validation": {
-       "raw_text": "{}",
-       "stripped_text": "{}",
+       "raw_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+       "stripped_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
        "strip_applied": [],
        "raw_parse_ok": true,
        "raw_schema_ok": false,
@@ -5804,59 +6574,57 @@
        "parse_error": null,
        "schema_ok": false,
        "schema_error": {
-        "message": "'name' is a required property",
-        "validator": "required",
+        "message": "Additional properties are not allowed ('person' was unexpected)",
+        "validator": "additionalProperties",
         "path": [],
         "json_path": "$",
         "schema_path": [
-         "required"
+         "additionalProperties"
         ],
-        "validator_value": [
-         "name",
-         "age",
-         "city"
-        ]
+        "validator_value": false
        },
        "schema_error_counts": {
         "required": 3,
-        "additionalProperties": 0,
+        "additionalProperties": 1,
         "type": 0,
         "other": 0
        },
        "stop_reason": "eos",
-       "failure_class": "schema_missing_key",
-       "failure_class_stripped": "schema_missing_key",
-       "parsed": {}
+       "failure_class": "schema_extra_key",
+       "failure_class_stripped": "schema_extra_key",
+       "parsed": {
+        "person": "Ada Lovelace"
+       }
       },
       "timing": {
-       "compile_ms": 0.4702929945779033,
+       "compile_ms": 0.042166997445747256,
        "compile_cached": false,
-       "prefill_ms": 642.8023039989057,
-       "decode_ms": 393.4513890053495,
-       "forward_ms": 1036.2536930042552,
-       "processor_ms": 8.267525001429021,
-       "observer_ms": 17.126758997619618,
-       "sample_ms": 39.491993993578944,
-       "total_ms": 1101.6102639914607,
+       "prefill_ms": 490.42453498987015,
+       "decode_ms": 3035.595958994236,
+       "forward_ms": 3526.020493984106,
+       "processor_ms": 28.662858007010072,
+       "observer_ms": 85.21152602043003,
+       "sample_ms": 212.01348498289008,
+       "total_ms": 3851.950529991882,
        "n_prompt_tokens": 56,
-       "n_new_tokens": 1,
-       "tokens_per_s": 1.8162995192966815,
-       "decode_tokens_per_s": 2.5416100386073452,
-       "first_token_ms": 679.27137199149,
+       "n_new_tokens": 12,
+       "tokens_per_s": 3.374950485554627,
+       "decode_tokens_per_s": 3.9530952610623062,
+       "first_token_ms": 519.8431439930573,
        "torch_threads": 10
       },
       "summary": {
-       "n_overridden": 1,
-       "n_argmax_taken": 1,
-       "mean_vocab_kept": 0.000013163437236731255,
-       "mean_mass_removed": 0.4614392867042625,
+       "n_overridden": 0,
+       "n_argmax_taken": 13,
+       "mean_vocab_kept": 0.5228400824638715,
+       "mean_mass_removed": 0.018389314576712088,
        "min_n_allowed": 1,
-       "max_stack_depth": 0
+       "max_stack_depth": 1
       }
      },
      "error": null
     },
-    "wall_ms": 1116
+    "wall_ms": 3857
    },
    {
     "constraint": "json",
@@ -5890,150 +6658,36 @@
       "schema_in_prompt": false,
       "use_chat_template": true,
       "prompt_rendered": "",
-      "compile_ms": 0.0657499986118637,
+      "compile_ms": 0.04170800093561411,
       "compile_cached": false,
       "include_steps": false
      },
      "steps": [],
      "done": {
-      "text": "{}",
-      "parsed": {},
-      "valid": false,
-      "validation_error": "JSON does not match the schema: 'name' is a required property",
-      "n_steps": 2,
-      "elapsed_s": 1.107721781998407,
-      "stopped_by": "eos",
-      "tokens": [
-       {
-        "token_id": 6257,
-        "token": "{}",
-        "text": "{}"
-       }
-      ],
-      "mode": "json",
-      "engine_backend": "llguidance",
-      "stop_reason": "eos",
-      "validation": {
-       "raw_text": "{}",
-       "stripped_text": "{}",
-       "strip_applied": [],
-       "raw_parse_ok": true,
-       "raw_schema_ok": false,
-       "parse_ok": true,
-       "parse_error": null,
-       "schema_ok": false,
-       "schema_error": {
-        "message": "'name' is a required property",
-        "validator": "required",
-        "path": [],
-        "json_path": "$",
-        "schema_path": [
-         "required"
-        ],
-        "validator_value": [
-         "name",
-         "age",
-         "city"
-        ]
-       },
-       "schema_error_counts": {
-        "required": 3,
-        "additionalProperties": 0,
-        "type": 0,
-        "other": 0
-       },
-       "stop_reason": "eos",
-       "failure_class": "schema_missing_key",
-       "failure_class_stripped": "schema_missing_key",
-       "parsed": {}
-      },
-      "timing": {
-       "compile_ms": 0.0657499986118637,
-       "compile_cached": false,
-       "prefill_ms": 664.0041589998873,
-       "decode_ms": 373.16782800189685,
-       "forward_ms": 1037.1719870017841,
-       "processor_ms": 9.054942995135207,
-       "observer_ms": 20.101978014281485,
-       "sample_ms": 41.074498993111774,
-       "total_ms": 1107.4691570029245,
-       "n_prompt_tokens": 56,
-       "n_new_tokens": 1,
-       "tokens_per_s": 1.8060265909875526,
-       "decode_tokens_per_s": 2.679759413758779,
-       "first_token_ms": 703.3742359999451,
-       "torch_threads": 10
-      },
-      "summary": {
-       "n_overridden": 1,
-       "n_argmax_taken": 1,
-       "mean_vocab_kept": 0.000013163437236731255,
-       "mean_mass_removed": 0.4614392867042625,
-       "min_n_allowed": 1,
-       "max_stack_depth": 0
-      }
-     },
-     "error": null
-    },
-    "wall_ms": 1116
-   },
-   {
-    "constraint": "json",
-    "seed": 7,
-    "detail": "compact",
-    "request": {
-     "constraint": "json",
-     "seed": 7,
-     "include_steps": false,
-     "force_compile": false
-    },
-    "trace": {
-     "meta": {
-      "mode": "json",
-      "backend": "llguidance",
-      "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
-      "regex": null,
-      "prompt_token_count": 56,
-      "vocab_size": 151936,
-      "max_new_tokens": 160,
-      "temperature": 0.7,
-      "recursive": false,
-      "constraint": "json",
-      "engine_backend": "llguidance",
-      "sampling": {
-       "temperature": 0.7,
-       "top_k": 20,
-       "top_p": 0.8,
-       "seed": 7
-      },
-      "schema_in_prompt": false,
-      "use_chat_template": true,
-      "prompt_rendered": "",
-      "compile_ms": 0.06104200292611495,
-      "compile_cached": false,
-      "include_steps": false
-     },
-     "steps": [],
-     "done": {
-      "text": "{\"person\":[\"Ada Lovelace\",\"36\",\"London\",\"analytical engines\"]}",
+      "text": "{\n  \"person\": \"Ada Lovelace, 36, lives in London and writes about analytical engines.\"\n}",
       "parsed": {
-       "person": [
-        "Ada Lovelace",
-        "36",
-        "London",
-        "analytical engines"
-       ]
+       "person": "Ada Lovelace, 36, lives in London and writes about analytical engines."
       },
       "valid": false,
       "validation_error": "JSON does not match the schema: Additional properties are not allowed ('person' was unexpected)",
-      "n_steps": 19,
-      "elapsed_s": 7.897119863002445,
+      "n_steps": 26,
+      "elapsed_s": 7.513508621996152,
       "stopped_by": "eos",
       "tokens": [
        {
-        "token_id": 4913,
-        "token": "{\"",
-        "text": "{\""
+        "token_id": 515,
+        "token": "{Ċ",
+        "text": "{\n"
+       },
+       {
+        "token_id": 220,
+        "token": "Ġ",
+        "text": " "
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
        },
        {
         "token_id": 8987,
@@ -6046,9 +6700,9 @@
         "text": "\":"
        },
        {
-        "token_id": 1183,
-        "token": "[\"",
-        "text": "[\""
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
        },
        {
         "token_id": 95347,
@@ -6071,9 +6725,14 @@
         "text": "ace"
        },
        {
-        "token_id": 2198,
-        "token": "\",\"",
-        "text": "\",\""
+        "token_id": 11,
+        "token": ",",
+        "text": ","
+       },
+       {
+        "token_id": 220,
+        "token": "Ġ",
+        "text": " "
        },
        {
         "token_id": 18,
@@ -6086,1099 +6745,9 @@
         "text": "6"
        },
        {
-        "token_id": 2198,
-        "token": "\",\"",
-        "text": "\",\""
-       },
-       {
-        "token_id": 39572,
-        "token": "London",
-        "text": "London"
-       },
-       {
-        "token_id": 2198,
-        "token": "\",\"",
-        "text": "\",\""
-       },
-       {
-        "token_id": 43703,
-        "token": "analy",
-        "text": "analy"
-       },
-       {
-        "token_id": 34658,
-        "token": "tical",
-        "text": "tical"
-       },
-       {
-        "token_id": 21106,
-        "token": "Ġengines",
-        "text": " engines"
-       },
-       {
-        "token_id": 92446,
-        "token": "\"]}",
-        "text": "\"]}"
-       }
-      ],
-      "mode": "json",
-      "engine_backend": "llguidance",
-      "stop_reason": "eos",
-      "validation": {
-       "raw_text": "{\"person\":[\"Ada Lovelace\",\"36\",\"London\",\"analytical engines\"]}",
-       "stripped_text": "{\"person\":[\"Ada Lovelace\",\"36\",\"London\",\"analytical engines\"]}",
-       "strip_applied": [],
-       "raw_parse_ok": true,
-       "raw_schema_ok": false,
-       "parse_ok": true,
-       "parse_error": null,
-       "schema_ok": false,
-       "schema_error": {
-        "message": "Additional properties are not allowed ('person' was unexpected)",
-        "validator": "additionalProperties",
-        "path": [],
-        "json_path": "$",
-        "schema_path": [
-         "additionalProperties"
-        ],
-        "validator_value": false
-       },
-       "schema_error_counts": {
-        "required": 3,
-        "additionalProperties": 1,
-        "type": 0,
-        "other": 0
-       },
-       "stop_reason": "eos",
-       "failure_class": "schema_extra_key",
-       "failure_class_stripped": "schema_extra_key",
-       "parsed": {
-        "person": [
-         "Ada Lovelace",
-         "36",
-         "London",
-         "analytical engines"
-        ]
-       }
-      },
-      "timing": {
-       "compile_ms": 0.06104200292611495,
-       "compile_cached": false,
-       "prefill_ms": 784.5108959954814,
-       "decode_ms": 6485.858794017986,
-       "forward_ms": 7270.369690013467,
-       "processor_ms": 60.82751299254596,
-       "observer_ms": 170.42793400469236,
-       "sample_ms": 392.67976397968596,
-       "total_ms": 7894.365942993318,
-       "n_prompt_tokens": 56,
-       "n_new_tokens": 18,
-       "tokens_per_s": 2.406798348720522,
-       "decode_tokens_per_s": 2.775268560672597,
-       "first_token_ms": 824.8366839980008,
-       "torch_threads": 10
-      },
-      "summary": {
-       "n_overridden": 2,
-       "n_argmax_taken": 16,
-       "mean_vocab_kept": 0.8150893866669621,
-       "mean_mass_removed": 0.10127333381159936,
-       "min_n_allowed": 1,
-       "max_stack_depth": 2
-      }
-     },
-     "error": null
-    },
-    "wall_ms": 7906
-   },
-   {
-    "constraint": "json",
-    "seed": 8,
-    "detail": "compact",
-    "request": {
-     "constraint": "json",
-     "seed": 8,
-     "include_steps": false,
-     "force_compile": false
-    },
-    "trace": {
-     "meta": {
-      "mode": "json",
-      "backend": "llguidance",
-      "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
-      "regex": null,
-      "prompt_token_count": 56,
-      "vocab_size": 151936,
-      "max_new_tokens": 160,
-      "temperature": 0.7,
-      "recursive": false,
-      "constraint": "json",
-      "engine_backend": "llguidance",
-      "sampling": {
-       "temperature": 0.7,
-       "top_k": 20,
-       "top_p": 0.8,
-       "seed": 8
-      },
-      "schema_in_prompt": false,
-      "use_chat_template": true,
-      "prompt_rendered": "",
-      "compile_ms": 0.24058399867499247,
-      "compile_cached": false,
-      "include_steps": false
-     },
-     "steps": [],
-     "done": {
-      "text": "{\"Ada Lovelace\":36,\"Lovelace\":36,\"Lovelace\":36}",
-      "parsed": {
-       "Ada Lovelace": 36,
-       "Lovelace": 36
-      },
-      "valid": false,
-      "validation_error": "JSON does not match the schema: Additional properties are not allowed ('Ada Lovelace', 'Lovelace' were unexpected)",
-      "n_steps": 24,
-      "elapsed_s": 9.68590024200239,
-      "stopped_by": "eos",
-      "tokens": [
-       {
-        "token_id": 4913,
-        "token": "{\"",
-        "text": "{\""
-       },
-       {
-        "token_id": 95347,
-        "token": "Ada",
-        "text": "Ada"
-       },
-       {
-        "token_id": 34293,
-        "token": "ĠLov",
-        "text": " Lov"
-       },
-       {
-        "token_id": 301,
-        "token": "el",
-        "text": "el"
-       },
-       {
-        "token_id": 578,
-        "token": "ace",
-        "text": "ace"
-       },
-       {
-        "token_id": 788,
-        "token": "\":",
-        "text": "\":"
-       },
-       {
-        "token_id": 18,
-        "token": "3",
-        "text": "3"
-       },
-       {
-        "token_id": 21,
-        "token": "6",
-        "text": "6"
-       },
-       {
-        "token_id": 1335,
-        "token": ",\"",
-        "text": ",\""
-       },
-       {
-        "token_id": 43,
-        "token": "L",
-        "text": "L"
-       },
-       {
-        "token_id": 43335,
-        "token": "ovel",
-        "text": "ovel"
-       },
-       {
-        "token_id": 578,
-        "token": "ace",
-        "text": "ace"
-       },
-       {
-        "token_id": 788,
-        "token": "\":",
-        "text": "\":"
-       },
-       {
-        "token_id": 18,
-        "token": "3",
-        "text": "3"
-       },
-       {
-        "token_id": 21,
-        "token": "6",
-        "text": "6"
-       },
-       {
-        "token_id": 1335,
-        "token": ",\"",
-        "text": ",\""
-       },
-       {
-        "token_id": 43,
-        "token": "L",
-        "text": "L"
-       },
-       {
-        "token_id": 43335,
-        "token": "ovel",
-        "text": "ovel"
-       },
-       {
-        "token_id": 578,
-        "token": "ace",
-        "text": "ace"
-       },
-       {
-        "token_id": 788,
-        "token": "\":",
-        "text": "\":"
-       },
-       {
-        "token_id": 18,
-        "token": "3",
-        "text": "3"
-       },
-       {
-        "token_id": 21,
-        "token": "6",
-        "text": "6"
-       },
-       {
-        "token_id": 92,
-        "token": "}",
-        "text": "}"
-       }
-      ],
-      "mode": "json",
-      "engine_backend": "llguidance",
-      "stop_reason": "eos",
-      "validation": {
-       "raw_text": "{\"Ada Lovelace\":36,\"Lovelace\":36,\"Lovelace\":36}",
-       "stripped_text": "{\"Ada Lovelace\":36,\"Lovelace\":36,\"Lovelace\":36}",
-       "strip_applied": [],
-       "raw_parse_ok": true,
-       "raw_schema_ok": false,
-       "parse_ok": true,
-       "parse_error": null,
-       "schema_ok": false,
-       "schema_error": {
-        "message": "Additional properties are not allowed ('Ada Lovelace', 'Lovelace' were unexpected)",
-        "validator": "additionalProperties",
-        "path": [],
-        "json_path": "$",
-        "schema_path": [
-         "additionalProperties"
-        ],
-        "validator_value": false
-       },
-       "schema_error_counts": {
-        "required": 3,
-        "additionalProperties": 1,
-        "type": 0,
-        "other": 0
-       },
-       "stop_reason": "eos",
-       "failure_class": "schema_extra_key",
-       "failure_class_stripped": "schema_extra_key",
-       "parsed": {
-        "Ada Lovelace": 36,
-        "Lovelace": 36
-       }
-      },
-      "timing": {
-       "compile_ms": 0.24058399867499247,
-       "compile_cached": false,
-       "prefill_ms": 626.3975920010125,
-       "decode_ms": 8227.53666700737,
-       "forward_ms": 8853.934259008383,
-       "processor_ms": 77.83332703547785,
-       "observer_ms": 225.15746996941743,
-       "sample_ms": 525.8537039844668,
-       "total_ms": 9683.01934399642,
-       "n_prompt_tokens": 56,
-       "n_new_tokens": 23,
-       "tokens_per_s": 2.478627323300072,
-       "decode_tokens_per_s": 2.795490428165526,
-       "first_token_ms": 663.7461819991586,
-       "torch_threads": 10
-      },
-      "summary": {
-       "n_overridden": 2,
-       "n_argmax_taken": 18,
-       "mean_vocab_kept": 0.5243575694151924,
-       "mean_mass_removed": 0.0968477724948212,
-       "min_n_allowed": 1,
-       "max_stack_depth": 1
-      }
-     },
-     "error": null
-    },
-    "wall_ms": 9702
-   },
-   {
-    "constraint": "json",
-    "seed": 9,
-    "detail": "compact",
-    "request": {
-     "constraint": "json",
-     "seed": 9,
-     "include_steps": false,
-     "force_compile": false
-    },
-    "trace": {
-     "meta": {
-      "mode": "json",
-      "backend": "llguidance",
-      "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
-      "regex": null,
-      "prompt_token_count": 56,
-      "vocab_size": 151936,
-      "max_new_tokens": 160,
-      "temperature": 0.7,
-      "recursive": false,
-      "constraint": "json",
-      "engine_backend": "llguidance",
-      "sampling": {
-       "temperature": 0.7,
-       "top_k": 20,
-       "top_p": 0.8,
-       "seed": 9
-      },
-      "schema_in_prompt": false,
-      "use_chat_template": true,
-      "prompt_rendered": "",
-      "compile_ms": 0.08120900020003319,
-      "compile_cached": false,
-      "include_steps": false
-     },
-     "steps": [],
-     "done": {
-      "text": "{\"Ada Lovelace\":36,\"Lovelace\":36,\"Lovelace\":36}",
-      "parsed": {
-       "Ada Lovelace": 36,
-       "Lovelace": 36
-      },
-      "valid": false,
-      "validation_error": "JSON does not match the schema: Additional properties are not allowed ('Ada Lovelace', 'Lovelace' were unexpected)",
-      "n_steps": 24,
-      "elapsed_s": 9.710992095002439,
-      "stopped_by": "eos",
-      "tokens": [
-       {
-        "token_id": 4913,
-        "token": "{\"",
-        "text": "{\""
-       },
-       {
-        "token_id": 95347,
-        "token": "Ada",
-        "text": "Ada"
-       },
-       {
-        "token_id": 34293,
-        "token": "ĠLov",
-        "text": " Lov"
-       },
-       {
-        "token_id": 301,
-        "token": "el",
-        "text": "el"
-       },
-       {
-        "token_id": 578,
-        "token": "ace",
-        "text": "ace"
-       },
-       {
-        "token_id": 788,
-        "token": "\":",
-        "text": "\":"
-       },
-       {
-        "token_id": 18,
-        "token": "3",
-        "text": "3"
-       },
-       {
-        "token_id": 21,
-        "token": "6",
-        "text": "6"
-       },
-       {
-        "token_id": 1335,
-        "token": ",\"",
-        "text": ",\""
-       },
-       {
-        "token_id": 43,
-        "token": "L",
-        "text": "L"
-       },
-       {
-        "token_id": 43335,
-        "token": "ovel",
-        "text": "ovel"
-       },
-       {
-        "token_id": 578,
-        "token": "ace",
-        "text": "ace"
-       },
-       {
-        "token_id": 788,
-        "token": "\":",
-        "text": "\":"
-       },
-       {
-        "token_id": 18,
-        "token": "3",
-        "text": "3"
-       },
-       {
-        "token_id": 21,
-        "token": "6",
-        "text": "6"
-       },
-       {
-        "token_id": 1335,
-        "token": ",\"",
-        "text": ",\""
-       },
-       {
-        "token_id": 43,
-        "token": "L",
-        "text": "L"
-       },
-       {
-        "token_id": 43335,
-        "token": "ovel",
-        "text": "ovel"
-       },
-       {
-        "token_id": 578,
-        "token": "ace",
-        "text": "ace"
-       },
-       {
-        "token_id": 788,
-        "token": "\":",
-        "text": "\":"
-       },
-       {
-        "token_id": 18,
-        "token": "3",
-        "text": "3"
-       },
-       {
-        "token_id": 21,
-        "token": "6",
-        "text": "6"
-       },
-       {
-        "token_id": 92,
-        "token": "}",
-        "text": "}"
-       }
-      ],
-      "mode": "json",
-      "engine_backend": "llguidance",
-      "stop_reason": "eos",
-      "validation": {
-       "raw_text": "{\"Ada Lovelace\":36,\"Lovelace\":36,\"Lovelace\":36}",
-       "stripped_text": "{\"Ada Lovelace\":36,\"Lovelace\":36,\"Lovelace\":36}",
-       "strip_applied": [],
-       "raw_parse_ok": true,
-       "raw_schema_ok": false,
-       "parse_ok": true,
-       "parse_error": null,
-       "schema_ok": false,
-       "schema_error": {
-        "message": "Additional properties are not allowed ('Ada Lovelace', 'Lovelace' were unexpected)",
-        "validator": "additionalProperties",
-        "path": [],
-        "json_path": "$",
-        "schema_path": [
-         "additionalProperties"
-        ],
-        "validator_value": false
-       },
-       "schema_error_counts": {
-        "required": 3,
-        "additionalProperties": 1,
-        "type": 0,
-        "other": 0
-       },
-       "stop_reason": "eos",
-       "failure_class": "schema_extra_key",
-       "failure_class_stripped": "schema_extra_key",
-       "parsed": {
-        "Ada Lovelace": 36,
-        "Lovelace": 36
-       }
-      },
-      "timing": {
-       "compile_ms": 0.08120900020003319,
-       "compile_cached": false,
-       "prefill_ms": 759.3091460003052,
-       "decode_ms": 8133.905778020562,
-       "forward_ms": 8893.214924020867,
-       "processor_ms": 82.00302200566512,
-       "observer_ms": 219.6699689666275,
-       "sample_ms": 513.1278710105107,
-       "total_ms": 9708.09699500387,
-       "n_prompt_tokens": 56,
-       "n_new_tokens": 23,
-       "tokens_per_s": 2.4721838663057696,
-       "decode_tokens_per_s": 2.8276698338638977,
-       "first_token_ms": 795.9016489985515,
-       "torch_threads": 10
-      },
-      "summary": {
-       "n_overridden": 2,
-       "n_argmax_taken": 18,
-       "mean_vocab_kept": 0.5243575694151924,
-       "mean_mass_removed": 0.0968477724948212,
-       "min_n_allowed": 1,
-       "max_stack_depth": 1
-      }
-     },
-     "error": null
-    },
-    "wall_ms": 9732
-   },
-   {
-    "constraint": "json",
-    "seed": 10,
-    "detail": "compact",
-    "request": {
-     "constraint": "json",
-     "seed": 10,
-     "include_steps": false,
-     "force_compile": false
-    },
-    "trace": {
-     "meta": {
-      "mode": "json",
-      "backend": "llguidance",
-      "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
-      "regex": null,
-      "prompt_token_count": 56,
-      "vocab_size": 151936,
-      "max_new_tokens": 160,
-      "temperature": 0.7,
-      "recursive": false,
-      "constraint": "json",
-      "engine_backend": "llguidance",
-      "sampling": {
-       "temperature": 0.7,
-       "top_k": 20,
-       "top_p": 0.8,
-       "seed": 10
-      },
-      "schema_in_prompt": false,
-      "use_chat_template": true,
-      "prompt_rendered": "",
-      "compile_ms": 0.3612529981182888,
-      "compile_cached": false,
-      "include_steps": false
-     },
-     "steps": [],
-     "done": {
-      "text": "{\"person\":[\"Ada Lovelace\"]}",
-      "parsed": {
-       "person": [
-        "Ada Lovelace"
-       ]
-      },
-      "valid": false,
-      "validation_error": "JSON does not match the schema: Additional properties are not allowed ('person' was unexpected)",
-      "n_steps": 10,
-      "elapsed_s": 3.9987043340006494,
-      "stopped_by": "eos",
-      "tokens": [
-       {
-        "token_id": 4913,
-        "token": "{\"",
-        "text": "{\""
-       },
-       {
-        "token_id": 8987,
-        "token": "person",
-        "text": "person"
-       },
-       {
-        "token_id": 788,
-        "token": "\":",
-        "text": "\":"
-       },
-       {
-        "token_id": 1183,
-        "token": "[\"",
-        "text": "[\""
-       },
-       {
-        "token_id": 95347,
-        "token": "Ada",
-        "text": "Ada"
-       },
-       {
-        "token_id": 34293,
-        "token": "ĠLov",
-        "text": " Lov"
-       },
-       {
-        "token_id": 301,
-        "token": "el",
-        "text": "el"
-       },
-       {
-        "token_id": 578,
-        "token": "ace",
-        "text": "ace"
-       },
-       {
-        "token_id": 92446,
-        "token": "\"]}",
-        "text": "\"]}"
-       }
-      ],
-      "mode": "json",
-      "engine_backend": "llguidance",
-      "stop_reason": "eos",
-      "validation": {
-       "raw_text": "{\"person\":[\"Ada Lovelace\"]}",
-       "stripped_text": "{\"person\":[\"Ada Lovelace\"]}",
-       "strip_applied": [],
-       "raw_parse_ok": true,
-       "raw_schema_ok": false,
-       "parse_ok": true,
-       "parse_error": null,
-       "schema_ok": false,
-       "schema_error": {
-        "message": "Additional properties are not allowed ('person' was unexpected)",
-        "validator": "additionalProperties",
-        "path": [],
-        "json_path": "$",
-        "schema_path": [
-         "additionalProperties"
-        ],
-        "validator_value": false
-       },
-       "schema_error_counts": {
-        "required": 3,
-        "additionalProperties": 1,
-        "type": 0,
-        "other": 0
-       },
-       "stop_reason": "eos",
-       "failure_class": "schema_extra_key",
-       "failure_class_stripped": "schema_extra_key",
-       "parsed": {
-        "person": [
-         "Ada Lovelace"
-        ]
-       }
-      },
-      "timing": {
-       "compile_ms": 0.3612529981182888,
-       "compile_cached": false,
-       "prefill_ms": 620.6011910035159,
-       "decode_ms": 3053.887409005256,
-       "forward_ms": 3674.4886000087718,
-       "processor_ms": 32.076763003715314,
-       "observer_ms": 89.15186399099184,
-       "sample_ms": 201.61847199051408,
-       "total_ms": 3997.6969519921113,
-       "n_prompt_tokens": 56,
-       "n_new_tokens": 9,
-       "tokens_per_s": 2.5016662980086197,
-       "decode_tokens_per_s": 2.947063461953751,
-       "first_token_ms": 658.2676179968985,
-       "torch_threads": 10
-      },
-      "summary": {
-       "n_overridden": 2,
-       "n_argmax_taken": 7,
-       "mean_vocab_kept": 0.6776241312131422,
-       "mean_mass_removed": 0.19186859099812423,
-       "min_n_allowed": 1,
-       "max_stack_depth": 2
-      }
-     },
-     "error": null
-    },
-    "wall_ms": 4013
-   },
-   {
-    "constraint": "json",
-    "seed": 11,
-    "detail": "compact",
-    "request": {
-     "constraint": "json",
-     "seed": 11,
-     "include_steps": false,
-     "force_compile": false
-    },
-    "trace": {
-     "meta": {
-      "mode": "json",
-      "backend": "llguidance",
-      "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
-      "regex": null,
-      "prompt_token_count": 56,
-      "vocab_size": 151936,
-      "max_new_tokens": 160,
-      "temperature": 0.7,
-      "recursive": false,
-      "constraint": "json",
-      "engine_backend": "llguidance",
-      "sampling": {
-       "temperature": 0.7,
-       "top_k": 20,
-       "top_p": 0.8,
-       "seed": 11
-      },
-      "schema_in_prompt": false,
-      "use_chat_template": true,
-      "prompt_rendered": "",
-      "compile_ms": 0.06154199945740402,
-      "compile_cached": false,
-      "include_steps": false
-     },
-     "steps": [],
-     "done": {
-      "text": "{}",
-      "parsed": {},
-      "valid": false,
-      "validation_error": "JSON does not match the schema: 'name' is a required property",
-      "n_steps": 2,
-      "elapsed_s": 1.1072261680019437,
-      "stopped_by": "eos",
-      "tokens": [
-       {
-        "token_id": 6257,
-        "token": "{}",
-        "text": "{}"
-       }
-      ],
-      "mode": "json",
-      "engine_backend": "llguidance",
-      "stop_reason": "eos",
-      "validation": {
-       "raw_text": "{}",
-       "stripped_text": "{}",
-       "strip_applied": [],
-       "raw_parse_ok": true,
-       "raw_schema_ok": false,
-       "parse_ok": true,
-       "parse_error": null,
-       "schema_ok": false,
-       "schema_error": {
-        "message": "'name' is a required property",
-        "validator": "required",
-        "path": [],
-        "json_path": "$",
-        "schema_path": [
-         "required"
-        ],
-        "validator_value": [
-         "name",
-         "age",
-         "city"
-        ]
-       },
-       "schema_error_counts": {
-        "required": 3,
-        "additionalProperties": 0,
-        "type": 0,
-        "other": 0
-       },
-       "stop_reason": "eos",
-       "failure_class": "schema_missing_key",
-       "failure_class_stripped": "schema_missing_key",
-       "parsed": {}
-      },
-      "timing": {
-       "compile_ms": 0.06154199945740402,
-       "compile_cached": false,
-       "prefill_ms": 693.9532789983787,
-       "decode_ms": 342.0220230036648,
-       "forward_ms": 1035.9753020020435,
-       "processor_ms": 11.127035002573393,
-       "observer_ms": 19.240049994550645,
-       "sample_ms": 40.70698699797504,
-       "total_ms": 1107.1109159966,
-       "n_prompt_tokens": 56,
-       "n_new_tokens": 1,
-       "tokens_per_s": 1.8066041560357382,
-       "decode_tokens_per_s": 2.92378833157561,
-       "first_token_ms": 734.0180129976943,
-       "torch_threads": 10
-      },
-      "summary": {
-       "n_overridden": 1,
-       "n_argmax_taken": 1,
-       "mean_vocab_kept": 0.000013163437236731255,
-       "mean_mass_removed": 0.4614392867042625,
-       "min_n_allowed": 1,
-       "max_stack_depth": 0
-      }
-     },
-     "error": null
-    },
-    "wall_ms": 1115
-   },
-   {
-    "constraint": "json",
-    "seed": 12,
-    "detail": "compact",
-    "request": {
-     "constraint": "json",
-     "seed": 12,
-     "include_steps": false,
-     "force_compile": false
-    },
-    "trace": {
-     "meta": {
-      "mode": "json",
-      "backend": "llguidance",
-      "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
-      "regex": null,
-      "prompt_token_count": 56,
-      "vocab_size": 151936,
-      "max_new_tokens": 160,
-      "temperature": 0.7,
-      "recursive": false,
-      "constraint": "json",
-      "engine_backend": "llguidance",
-      "sampling": {
-       "temperature": 0.7,
-       "top_k": 20,
-       "top_p": 0.8,
-       "seed": 12
-      },
-      "schema_in_prompt": false,
-      "use_chat_template": true,
-      "prompt_rendered": "",
-      "compile_ms": 0.059251004131510854,
-      "compile_cached": false,
-      "include_steps": false
-     },
-     "steps": [],
-     "done": {
-      "text": "{\"person\":{}}",
-      "parsed": {
-       "person": {}
-      },
-      "valid": false,
-      "validation_error": "JSON does not match the schema: Additional properties are not allowed ('person' was unexpected)",
-      "n_steps": 6,
-      "elapsed_s": 2.774712152997381,
-      "stopped_by": "eos",
-      "tokens": [
-       {
-        "token_id": 4913,
-        "token": "{\"",
-        "text": "{\""
-       },
-       {
-        "token_id": 8987,
-        "token": "person",
-        "text": "person"
-       },
-       {
-        "token_id": 788,
-        "token": "\":",
-        "text": "\":"
-       },
-       {
-        "token_id": 6257,
-        "token": "{}",
-        "text": "{}"
-       },
-       {
-        "token_id": 92,
-        "token": "}",
-        "text": "}"
-       }
-      ],
-      "mode": "json",
-      "engine_backend": "llguidance",
-      "stop_reason": "eos",
-      "validation": {
-       "raw_text": "{\"person\":{}}",
-       "stripped_text": "{\"person\":{}}",
-       "strip_applied": [],
-       "raw_parse_ok": true,
-       "raw_schema_ok": false,
-       "parse_ok": true,
-       "parse_error": null,
-       "schema_ok": false,
-       "schema_error": {
-        "message": "Additional properties are not allowed ('person' was unexpected)",
-        "validator": "additionalProperties",
-        "path": [],
-        "json_path": "$",
-        "schema_path": [
-         "additionalProperties"
-        ],
-        "validator_value": false
-       },
-       "schema_error_counts": {
-        "required": 3,
-        "additionalProperties": 1,
-        "type": 0,
-        "other": 0
-       },
-       "stop_reason": "eos",
-       "failure_class": "schema_extra_key",
-       "failure_class_stripped": "schema_extra_key",
-       "parsed": {
-        "person": {}
-       }
-      },
-      "timing": {
-       "compile_ms": 0.059251004131510854,
-       "compile_cached": false,
-       "prefill_ms": 653.0195399973309,
-       "decode_ms": 1877.6001810037997,
-       "forward_ms": 2530.6197210011305,
-       "processor_ms": 42.377876001410186,
-       "observer_ms": 60.40366499655647,
-       "sample_ms": 121.29287499556085,
-       "total_ms": 2754.7533879987895,
-       "n_prompt_tokens": 56,
-       "n_new_tokens": 5,
-       "tokens_per_s": 2.1781002541886325,
-       "decode_tokens_per_s": 2.6629737526585173,
-       "first_token_ms": 688.4129919999395,
-       "torch_threads": 10
-      },
-      "summary": {
-       "n_overridden": 2,
-       "n_argmax_taken": 4,
-       "mean_vocab_kept": 0.32285633424599836,
-       "mean_mass_removed": 0.32098694659877464,
-       "min_n_allowed": 1,
-       "max_stack_depth": 1
-      }
-     },
-     "error": null
-    },
-    "wall_ms": 2781
-   },
-   {
-    "constraint": "json",
-    "seed": 13,
-    "detail": "compact",
-    "request": {
-     "constraint": "json",
-     "seed": 13,
-     "include_steps": false,
-     "force_compile": false
-    },
-    "trace": {
-     "meta": {
-      "mode": "json",
-      "backend": "llguidance",
-      "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
-      "regex": null,
-      "prompt_token_count": 56,
-      "vocab_size": 151936,
-      "max_new_tokens": 160,
-      "temperature": 0.7,
-      "recursive": false,
-      "constraint": "json",
-      "engine_backend": "llguidance",
-      "sampling": {
-       "temperature": 0.7,
-       "top_k": 20,
-       "top_p": 0.8,
-       "seed": 13
-      },
-      "schema_in_prompt": false,
-      "use_chat_template": true,
-      "prompt_rendered": "",
-      "compile_ms": 0.090667002950795,
-      "compile_cached": false,
-      "include_steps": false
-     },
-     "steps": [],
-     "done": {
-      "text": "{\"Ada Lovelace\":36,\"Lovelace lives in London and writes about analytical engines.\":\"}orte JSON. This text does not contain any person information. The text is a list of facts about Ada Lovelace. The person mentioned is Ada Lovelace, who is an English mathematician, poet, writer, and philosopher. She is known for her work on Charles Babbage's Analytical Engine, which was a theoretical computer that would have performed arithmetic calculations and could be used to create a mechanical general-purpose computer. Ada Lovelace's work on the Analytical Engine was significant because it laid the groundwork for the development of the first programmable electronic computer, the ENIAC, which was created by the United States Bureau of Standards in 1945.",
-      "parsed": null,
-      "valid": false,
-      "validation_error": "not valid JSON: Unterminated string starting at at position 83",
-      "n_steps": 160,
-      "elapsed_s": 61.676883145999454,
-      "stopped_by": "max_new_tokens",
-      "tokens": [
-       {
-        "token_id": 4913,
-        "token": "{\"",
-        "text": "{\""
-       },
-       {
-        "token_id": 95347,
-        "token": "Ada",
-        "text": "Ada"
-       },
-       {
-        "token_id": 34293,
-        "token": "ĠLov",
-        "text": " Lov"
-       },
-       {
-        "token_id": 301,
-        "token": "el",
-        "text": "el"
-       },
-       {
-        "token_id": 578,
-        "token": "ace",
-        "text": "ace"
-       },
-       {
-        "token_id": 788,
-        "token": "\":",
-        "text": "\":"
-       },
-       {
-        "token_id": 18,
-        "token": "3",
-        "text": "3"
-       },
-       {
-        "token_id": 21,
-        "token": "6",
-        "text": "6"
-       },
-       {
-        "token_id": 1335,
-        "token": ",\"",
-        "text": ",\""
-       },
-       {
-        "token_id": 43,
-        "token": "L",
-        "text": "L"
-       },
-       {
-        "token_id": 43335,
-        "token": "ovel",
-        "text": "ovel"
-       },
-       {
-        "token_id": 578,
-        "token": "ace",
-        "text": "ace"
+        "token_id": 11,
+        "token": ",",
+        "text": ","
        },
        {
         "token_id": 6305,
@@ -7221,674 +6790,133 @@
         "text": " engines"
        },
        {
-        "token_id": 1189,
-        "token": ".\"",
-        "text": ".\""
-       },
-       {
-        "token_id": 2974,
-        "token": ":\"",
-        "text": ":\""
+        "token_id": 10040,
+        "token": ".\"Ċ",
+        "text": ".\"\n"
        },
        {
         "token_id": 92,
         "token": "}",
         "text": "}"
-       },
-       {
-        "token_id": 16568,
-        "token": "orte",
-        "text": "orte"
-       },
-       {
-        "token_id": 4718,
-        "token": "ĠJSON",
-        "text": " JSON"
-       },
-       {
-        "token_id": 13,
-        "token": ".",
-        "text": "."
-       },
-       {
-        "token_id": 1096,
-        "token": "ĠThis",
-        "text": " This"
-       },
-       {
-        "token_id": 1467,
-        "token": "Ġtext",
-        "text": " text"
-       },
-       {
-        "token_id": 1558,
-        "token": "Ġdoes",
-        "text": " does"
-       },
-       {
-        "token_id": 537,
-        "token": "Ġnot",
-        "text": " not"
-       },
-       {
-        "token_id": 6644,
-        "token": "Ġcontain",
-        "text": " contain"
-       },
-       {
-        "token_id": 894,
-        "token": "Ġany",
-        "text": " any"
-       },
-       {
-        "token_id": 1697,
-        "token": "Ġperson",
-        "text": " person"
-       },
-       {
-        "token_id": 1995,
-        "token": "Ġinformation",
-        "text": " information"
-       },
-       {
-        "token_id": 13,
-        "token": ".",
-        "text": "."
-       },
-       {
-        "token_id": 576,
-        "token": "ĠThe",
-        "text": " The"
-       },
-       {
-        "token_id": 1467,
-        "token": "Ġtext",
-        "text": " text"
-       },
-       {
-        "token_id": 374,
-        "token": "Ġis",
-        "text": " is"
-       },
-       {
-        "token_id": 264,
-        "token": "Ġa",
-        "text": " a"
-       },
-       {
-        "token_id": 1140,
-        "token": "Ġlist",
-        "text": " list"
-       },
-       {
-        "token_id": 315,
-        "token": "Ġof",
-        "text": " of"
-       },
-       {
-        "token_id": 13064,
-        "token": "Ġfacts",
-        "text": " facts"
-       },
-       {
-        "token_id": 911,
-        "token": "Ġabout",
-        "text": " about"
-       },
-       {
-        "token_id": 51149,
-        "token": "ĠAda",
-        "text": " Ada"
-       },
-       {
-        "token_id": 34293,
-        "token": "ĠLov",
-        "text": " Lov"
-       },
-       {
-        "token_id": 301,
-        "token": "el",
-        "text": "el"
-       },
-       {
-        "token_id": 578,
-        "token": "ace",
-        "text": "ace"
-       },
-       {
-        "token_id": 13,
-        "token": ".",
-        "text": "."
-       },
-       {
-        "token_id": 576,
-        "token": "ĠThe",
-        "text": " The"
-       },
-       {
-        "token_id": 1697,
-        "token": "Ġperson",
-        "text": " person"
-       },
-       {
-        "token_id": 9733,
-        "token": "Ġmentioned",
-        "text": " mentioned"
-       },
-       {
-        "token_id": 374,
-        "token": "Ġis",
-        "text": " is"
-       },
-       {
-        "token_id": 51149,
-        "token": "ĠAda",
-        "text": " Ada"
-       },
-       {
-        "token_id": 34293,
-        "token": "ĠLov",
-        "text": " Lov"
-       },
-       {
-        "token_id": 301,
-        "token": "el",
-        "text": "el"
-       },
-       {
-        "token_id": 578,
-        "token": "ace",
-        "text": "ace"
-       },
-       {
-        "token_id": 11,
-        "token": ",",
-        "text": ","
-       },
-       {
-        "token_id": 879,
-        "token": "Ġwho",
-        "text": " who"
-       },
-       {
-        "token_id": 374,
-        "token": "Ġis",
-        "text": " is"
-       },
-       {
-        "token_id": 458,
-        "token": "Ġan",
-        "text": " an"
-       },
-       {
-        "token_id": 6364,
-        "token": "ĠEnglish",
-        "text": " English"
-       },
-       {
-        "token_id": 20976,
-        "token": "Ġmathematic",
-        "text": " mathematic"
-       },
-       {
-        "token_id": 1103,
-        "token": "ian",
-        "text": "ian"
-       },
-       {
-        "token_id": 11,
-        "token": ",",
-        "text": ","
-       },
-       {
-        "token_id": 39260,
-        "token": "Ġpoet",
-        "text": " poet"
-       },
-       {
-        "token_id": 11,
-        "token": ",",
-        "text": ","
-       },
-       {
-        "token_id": 6916,
-        "token": "Ġwriter",
-        "text": " writer"
-       },
-       {
-        "token_id": 11,
-        "token": ",",
-        "text": ","
-       },
-       {
-        "token_id": 323,
-        "token": "Ġand",
-        "text": " and"
-       },
-       {
-        "token_id": 54375,
-        "token": "Ġphilosopher",
-        "text": " philosopher"
-       },
-       {
-        "token_id": 13,
-        "token": ".",
-        "text": "."
-       },
-       {
-        "token_id": 2932,
-        "token": "ĠShe",
-        "text": " She"
-       },
-       {
-        "token_id": 374,
-        "token": "Ġis",
-        "text": " is"
-       },
-       {
-        "token_id": 3881,
-        "token": "Ġknown",
-        "text": " known"
-       },
-       {
-        "token_id": 369,
-        "token": "Ġfor",
-        "text": " for"
-       },
-       {
-        "token_id": 1059,
-        "token": "Ġher",
-        "text": " her"
-       },
-       {
-        "token_id": 975,
-        "token": "Ġwork",
-        "text": " work"
-       },
-       {
-        "token_id": 389,
-        "token": "Ġon",
-        "text": " on"
-       },
-       {
-        "token_id": 14927,
-        "token": "ĠCharles",
-        "text": " Charles"
-       },
-       {
-        "token_id": 425,
-        "token": "ĠB",
-        "text": " B"
-       },
-       {
-        "token_id": 56489,
-        "token": "abbage",
-        "text": "abbage"
-       },
-       {
-        "token_id": 594,
-        "token": "'s",
-        "text": "'s"
-       },
-       {
-        "token_id": 37427,
-        "token": "ĠAnaly",
-        "text": " Analy"
-       },
-       {
-        "token_id": 34658,
-        "token": "tical",
-        "text": "tical"
-       },
-       {
-        "token_id": 8200,
-        "token": "ĠEngine",
-        "text": " Engine"
-       },
-       {
-        "token_id": 11,
-        "token": ",",
-        "text": ","
-       },
-       {
-        "token_id": 892,
-        "token": "Ġwhich",
-        "text": " which"
-       },
-       {
-        "token_id": 572,
-        "token": "Ġwas",
-        "text": " was"
-       },
-       {
-        "token_id": 264,
-        "token": "Ġa",
-        "text": " a"
-       },
-       {
-        "token_id": 31787,
-        "token": "Ġtheoretical",
-        "text": " theoretical"
-       },
-       {
-        "token_id": 6366,
-        "token": "Ġcomputer",
-        "text": " computer"
-       },
-       {
-        "token_id": 429,
-        "token": "Ġthat",
-        "text": " that"
-       },
-       {
-        "token_id": 1035,
-        "token": "Ġwould",
-        "text": " would"
-       },
-       {
-        "token_id": 614,
-        "token": "Ġhave",
-        "text": " have"
-       },
-       {
-        "token_id": 10660,
-        "token": "Ġperformed",
-        "text": " performed"
-       },
-       {
-        "token_id": 34784,
-        "token": "Ġarithmetic",
-        "text": " arithmetic"
-       },
-       {
-        "token_id": 28117,
-        "token": "Ġcalculations",
-        "text": " calculations"
-       },
-       {
-        "token_id": 323,
-        "token": "Ġand",
-        "text": " and"
-       },
-       {
-        "token_id": 1410,
-        "token": "Ġcould",
-        "text": " could"
-       },
-       {
-        "token_id": 387,
-        "token": "Ġbe",
-        "text": " be"
-       },
-       {
-        "token_id": 1483,
-        "token": "Ġused",
-        "text": " used"
-       },
-       {
-        "token_id": 311,
-        "token": "Ġto",
-        "text": " to"
-       },
-       {
-        "token_id": 1855,
-        "token": "Ġcreate",
-        "text": " create"
-       },
-       {
-        "token_id": 264,
-        "token": "Ġa",
-        "text": " a"
-       },
-       {
-        "token_id": 22148,
-        "token": "Ġmechanical",
-        "text": " mechanical"
-       },
-       {
-        "token_id": 4586,
-        "token": "Ġgeneral",
-        "text": " general"
-       },
-       {
-        "token_id": 58238,
-        "token": "-purpose",
-        "text": "-purpose"
-       },
-       {
-        "token_id": 6366,
-        "token": "Ġcomputer",
-        "text": " computer"
-       },
-       {
-        "token_id": 13,
-        "token": ".",
-        "text": "."
-       },
-       {
-        "token_id": 51149,
-        "token": "ĠAda",
-        "text": " Ada"
-       },
-       {
-        "token_id": 34293,
-        "token": "ĠLov",
-        "text": " Lov"
-       },
-       {
-        "token_id": 301,
-        "token": "el",
-        "text": "el"
-       },
-       {
-        "token_id": 578,
-        "token": "ace",
-        "text": "ace"
-       },
-       {
-        "token_id": 594,
-        "token": "'s",
-        "text": "'s"
-       },
-       {
-        "token_id": 975,
-        "token": "Ġwork",
-        "text": " work"
-       },
-       {
-        "token_id": 389,
-        "token": "Ġon",
-        "text": " on"
-       },
-       {
-        "token_id": 279,
-        "token": "Ġthe",
-        "text": " the"
-       },
-       {
-        "token_id": 37427,
-        "token": "ĠAnaly",
-        "text": " Analy"
-       },
-       {
-        "token_id": 34658,
-        "token": "tical",
-        "text": "tical"
-       },
-       {
-        "token_id": 8200,
-        "token": "ĠEngine",
-        "text": " Engine"
-       },
-       {
-        "token_id": 572,
-        "token": "Ġwas",
-        "text": " was"
-       },
-       {
-        "token_id": 5089,
-        "token": "Ġsignificant",
-        "text": " significant"
-       },
-       {
-        "token_id": 1576,
-        "token": "Ġbecause",
-        "text": " because"
-       },
-       {
-        "token_id": 432,
-        "token": "Ġit",
-        "text": " it"
-       },
-       {
-        "token_id": 17113,
-        "token": "Ġlaid",
-        "text": " laid"
-       },
-       {
-        "token_id": 279,
-        "token": "Ġthe",
-        "text": " the"
-       },
-       {
-        "token_id": 94744,
-        "token": "Ġgroundwork",
-        "text": " groundwork"
-       },
-       {
-        "token_id": 369,
-        "token": "Ġfor",
-        "text": " for"
-       },
-       {
-        "token_id": 279,
-        "token": "Ġthe",
-        "text": " the"
-       },
-       {
-        "token_id": 4401,
-        "token": "Ġdevelopment",
-        "text": " development"
-       },
-       {
-        "token_id": 315,
-        "token": "Ġof",
-        "text": " of"
-       },
-       {
-        "token_id": 279,
-        "token": "Ġthe",
-        "text": " the"
-       },
-       {
-        "token_id": 1156,
-        "token": "Ġfirst",
-        "text": " first"
-       },
-       {
-        "token_id": 55486,
-        "token": "Ġprogramm",
-        "text": " programm"
-       },
-       {
-        "token_id": 480,
-        "token": "able",
-        "text": "able"
-       },
-       {
-        "token_id": 14346,
-        "token": "Ġelectronic",
-        "text": " electronic"
-       },
-       {
-        "token_id": 6366,
-        "token": "Ġcomputer",
-        "text": " computer"
-       },
-       {
-        "token_id": 11,
-        "token": ",",
-        "text": ","
-       },
-       {
-        "token_id": 279,
-        "token": "Ġthe",
-        "text": " the"
-       },
-       {
-        "token_id": 5190,
-        "token": "ĠEN",
-        "text": " EN"
-       },
-       {
-        "token_id": 40,
-        "token": "I",
-        "text": "I"
-       },
-       {
-        "token_id": 1706,
-        "token": "AC",
-        "text": "AC"
-       },
-       {
-        "token_id": 11,
-        "token": ",",
-        "text": ","
-       },
-       {
-        "token_id": 892,
-        "token": "Ġwhich",
-        "text": " which"
-       },
-       {
-        "token_id": 572,
-        "token": "Ġwas",
-        "text": " was"
-       },
-       {
-        "token_id": 3465,
-        "token": "Ġcreated",
-        "text": " created"
-       },
-       {
-        "token_id": 553,
-        "token": "Ġby",
-        "text": " by"
-       },
-       {
-        "token_id": 279,
-        "token": "Ġthe",
-        "text": " the"
-       },
-       {
-        "token_id": 3639,
-        "token": "ĠUnited",
-        "text": " United"
-       },
-       {
-        "token_id": 4180,
-        "token": "ĠStates",
-        "text": " States"
-       },
-       {
-        "token_id": 21802,
-        "token": "ĠBureau",
-        "text": " Bureau"
-       },
-       {
-        "token_id": 315,
-        "token": "Ġof",
-        "text": " of"
-       },
-       {
-        "token_id": 34553,
-        "token": "ĠStandards",
-        "text": " Standards"
-       },
-       {
-        "token_id": 304,
-        "token": "Ġin",
-        "text": " in"
+       }
+      ],
+      "mode": "json",
+      "engine_backend": "llguidance",
+      "stop_reason": "eos",
+      "validation": {
+       "raw_text": "{\n  \"person\": \"Ada Lovelace, 36, lives in London and writes about analytical engines.\"\n}",
+       "stripped_text": "{\n  \"person\": \"Ada Lovelace, 36, lives in London and writes about analytical engines.\"\n}",
+       "strip_applied": [],
+       "raw_parse_ok": true,
+       "raw_schema_ok": false,
+       "parse_ok": true,
+       "parse_error": null,
+       "schema_ok": false,
+       "schema_error": {
+        "message": "Additional properties are not allowed ('person' was unexpected)",
+        "validator": "additionalProperties",
+        "path": [],
+        "json_path": "$",
+        "schema_path": [
+         "additionalProperties"
+        ],
+        "validator_value": false
+       },
+       "schema_error_counts": {
+        "required": 3,
+        "additionalProperties": 1,
+        "type": 0,
+        "other": 0
+       },
+       "stop_reason": "eos",
+       "failure_class": "schema_extra_key",
+       "failure_class_stripped": "schema_extra_key",
+       "parsed": {
+        "person": "Ada Lovelace, 36, lives in London and writes about analytical engines."
+       }
+      },
+      "timing": {
+       "compile_ms": 0.04170800093561411,
+       "compile_cached": false,
+       "prefill_ms": 514.4890890078386,
+       "decode_ms": 6364.026083014323,
+       "forward_ms": 6878.515172022162,
+       "processor_ms": 60.04376207420137,
+       "observer_ms": 178.96240891423076,
+       "sample_ms": 394.03456600848585,
+       "total_ms": 7511.597617020016,
+       "n_prompt_tokens": 56,
+       "n_new_tokens": 25,
+       "tokens_per_s": 3.461333486020114,
+       "decode_tokens_per_s": 3.9283308512398083,
+       "first_token_ms": 541.2203580053756,
+       "torch_threads": 10
+      },
+      "summary": {
+       "n_overridden": 0,
+       "n_argmax_taken": 25,
+       "mean_vocab_kept": 0.7455482267837469,
+       "mean_mass_removed": 0.009206792019136049,
+       "min_n_allowed": 1,
+       "max_stack_depth": 1
+      }
+     },
+     "error": null
+    },
+    "wall_ms": 7519
+   },
+   {
+    "constraint": "json",
+    "seed": 7,
+    "detail": "compact",
+    "request": {
+     "constraint": "json",
+     "seed": 7,
+     "include_steps": false,
+     "force_compile": false
+    },
+    "trace": {
+     "meta": {
+      "mode": "json",
+      "backend": "llguidance",
+      "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+      "regex": null,
+      "prompt_token_count": 56,
+      "vocab_size": 151936,
+      "max_new_tokens": 160,
+      "temperature": 0.7,
+      "recursive": false,
+      "constraint": "json",
+      "engine_backend": "llguidance",
+      "sampling": {
+       "temperature": 0.7,
+       "top_k": 20,
+       "top_p": 0.8,
+       "seed": 7
+      },
+      "schema_in_prompt": false,
+      "use_chat_template": true,
+      "prompt_rendered": "",
+      "compile_ms": 0.04483401426114142,
+      "compile_cached": false,
+      "include_steps": false
+     },
+     "steps": [],
+     "done": {
+      "text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+      "parsed": {
+       "person": "Ada Lovelace"
+      },
+      "valid": false,
+      "validation_error": "JSON does not match the schema: Additional properties are not allowed ('person' was unexpected)",
+      "n_steps": 13,
+      "elapsed_s": 3.84794118499849,
+      "stopped_by": "eos",
+      "tokens": [
+       {
+        "token_id": 515,
+        "token": "{Ċ",
+        "text": "{\n"
        },
        {
         "token_id": 220,
@@ -7896,89 +6924,1229 @@
         "text": " "
        },
        {
-        "token_id": 16,
-        "token": "1",
-        "text": "1"
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
        },
        {
-        "token_id": 24,
-        "token": "9",
-        "text": "9"
+        "token_id": 8987,
+        "token": "person",
+        "text": "person"
        },
        {
-        "token_id": 19,
-        "token": "4",
-        "text": "4"
+        "token_id": 788,
+        "token": "\":",
+        "text": "\":"
        },
        {
-        "token_id": 20,
-        "token": "5",
-        "text": "5"
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
        },
        {
-        "token_id": 13,
-        "token": ".",
-        "text": "."
+        "token_id": 95347,
+        "token": "Ada",
+        "text": "Ada"
+       },
+       {
+        "token_id": 34293,
+        "token": "ĠLov",
+        "text": " Lov"
+       },
+       {
+        "token_id": 301,
+        "token": "el",
+        "text": "el"
+       },
+       {
+        "token_id": 578,
+        "token": "ace",
+        "text": "ace"
+       },
+       {
+        "token_id": 698,
+        "token": "\"Ċ",
+        "text": "\"\n"
+       },
+       {
+        "token_id": 92,
+        "token": "}",
+        "text": "}"
        }
       ],
       "mode": "json",
       "engine_backend": "llguidance",
-      "stop_reason": "max_new_tokens",
+      "stop_reason": "eos",
       "validation": {
-       "raw_text": "{\"Ada Lovelace\":36,\"Lovelace lives in London and writes about analytical engines.\":\"}orte JSON. This text does not contain any person information. The text is a list of facts about Ada Lovelace. The person mentioned is Ada Lovelace, who is an English mathematician, poet, writer, and philosopher. She is known for her work on Charles Babbage's Analytical Engine, which was a theoretical computer that would have performed arithmetic calculations and could be used to create a mechanical general-purpose computer. Ada Lovelace's work on the Analytical Engine was significant because it laid the groundwork for the development of the first programmable electronic computer, the ENIAC, which was created by the United States Bureau of Standards in 1945.",
-       "stripped_text": "{\"Ada Lovelace\":36,\"Lovelace lives in London and writes about analytical engines.\":\"}orte JSON. This text does not contain any person information. The text is a list of facts about Ada Lovelace. The person mentioned is Ada Lovelace, who is an English mathematician, poet, writer, and philosopher. She is known for her work on Charles Babbage's Analytical Engine, which was a theoretical computer that would have performed arithmetic calculations and could be used to create a mechanical general-purpose computer. Ada Lovelace's work on the Analytical Engine was significant because it laid the groundwork for the development of the first programmable electronic computer, the ENIAC, which was created by the United States Bureau of Standards in 1945.",
+       "raw_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+       "stripped_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
        "strip_applied": [],
-       "raw_parse_ok": false,
+       "raw_parse_ok": true,
        "raw_schema_ok": false,
-       "parse_ok": false,
-       "parse_error": {
-        "message": "Unterminated string starting at",
-        "pos": 83,
-        "lineno": 1,
-        "colno": 84
-       },
+       "parse_ok": true,
+       "parse_error": null,
        "schema_ok": false,
-       "schema_error": null,
+       "schema_error": {
+        "message": "Additional properties are not allowed ('person' was unexpected)",
+        "validator": "additionalProperties",
+        "path": [],
+        "json_path": "$",
+        "schema_path": [
+         "additionalProperties"
+        ],
+        "validator_value": false
+       },
        "schema_error_counts": {
-        "required": 0,
-        "additionalProperties": 0,
+        "required": 3,
+        "additionalProperties": 1,
         "type": 0,
         "other": 0
        },
-       "stop_reason": "max_new_tokens",
-       "failure_class": "truncated",
-       "failure_class_stripped": "truncated",
-       "parsed": null
+       "stop_reason": "eos",
+       "failure_class": "schema_extra_key",
+       "failure_class_stripped": "schema_extra_key",
+       "parsed": {
+        "person": "Ada Lovelace"
+       }
       },
       "timing": {
-       "compile_ms": 0.090667002950795,
+       "compile_ms": 0.04483401426114142,
        "compile_cached": false,
-       "prefill_ms": 741.9048599986127,
-       "decode_ms": 55870.68140204792,
-       "forward_ms": 56612.586262046534,
-       "processor_ms": 497.31925395462895,
-       "observer_ms": 1401.8539520257036,
-       "sample_ms": 3125.3924400225515,
-       "total_ms": 61637.24257505237,
+       "prefill_ms": 484.79873000178486,
+       "decode_ms": 3056.1648789589526,
+       "forward_ms": 3540.9636089607375,
+       "processor_ms": 28.593775001354516,
+       "observer_ms": 85.67627704178449,
+       "sample_ms": 191.8136859749211,
+       "total_ms": 3847.0921809930587,
        "n_prompt_tokens": 56,
-       "n_new_tokens": 160,
-       "tokens_per_s": 2.595837008151978,
-       "decode_tokens_per_s": 2.845857541199988,
-       "first_token_ms": 785.4126170059317,
+       "n_new_tokens": 12,
+       "tokens_per_s": 3.3792149738446273,
+       "decode_tokens_per_s": 3.9264897265908187,
+       "first_token_ms": 512.3983350204071,
        "torch_threads": 10
       },
       "summary": {
-       "n_overridden": 10,
-       "n_argmax_taken": 118,
-       "mean_vocab_kept": 0.9375090087273567,
-       "mean_mass_removed": 0.06323678620631709,
-       "min_n_allowed": 3,
+       "n_overridden": 0,
+       "n_argmax_taken": 13,
+       "mean_vocab_kept": 0.5228400824638715,
+       "mean_mass_removed": 0.018389314576712088,
+       "min_n_allowed": 1,
        "max_stack_depth": 1
       }
      },
      "error": null
     },
-    "wall_ms": 61698
+    "wall_ms": 3855
+   },
+   {
+    "constraint": "json",
+    "seed": 8,
+    "detail": "compact",
+    "request": {
+     "constraint": "json",
+     "seed": 8,
+     "include_steps": false,
+     "force_compile": false
+    },
+    "trace": {
+     "meta": {
+      "mode": "json",
+      "backend": "llguidance",
+      "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+      "regex": null,
+      "prompt_token_count": 56,
+      "vocab_size": 151936,
+      "max_new_tokens": 160,
+      "temperature": 0.7,
+      "recursive": false,
+      "constraint": "json",
+      "engine_backend": "llguidance",
+      "sampling": {
+       "temperature": 0.7,
+       "top_k": 20,
+       "top_p": 0.8,
+       "seed": 8
+      },
+      "schema_in_prompt": false,
+      "use_chat_template": true,
+      "prompt_rendered": "",
+      "compile_ms": 0.09650099673308432,
+      "compile_cached": false,
+      "include_steps": false
+     },
+     "steps": [],
+     "done": {
+      "text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+      "parsed": {
+       "person": "Ada Lovelace"
+      },
+      "valid": false,
+      "validation_error": "JSON does not match the schema: Additional properties are not allowed ('person' was unexpected)",
+      "n_steps": 13,
+      "elapsed_s": 3.866825520002749,
+      "stopped_by": "eos",
+      "tokens": [
+       {
+        "token_id": 515,
+        "token": "{Ċ",
+        "text": "{\n"
+       },
+       {
+        "token_id": 220,
+        "token": "Ġ",
+        "text": " "
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 8987,
+        "token": "person",
+        "text": "person"
+       },
+       {
+        "token_id": 788,
+        "token": "\":",
+        "text": "\":"
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 95347,
+        "token": "Ada",
+        "text": "Ada"
+       },
+       {
+        "token_id": 34293,
+        "token": "ĠLov",
+        "text": " Lov"
+       },
+       {
+        "token_id": 301,
+        "token": "el",
+        "text": "el"
+       },
+       {
+        "token_id": 578,
+        "token": "ace",
+        "text": "ace"
+       },
+       {
+        "token_id": 698,
+        "token": "\"Ċ",
+        "text": "\"\n"
+       },
+       {
+        "token_id": 92,
+        "token": "}",
+        "text": "}"
+       }
+      ],
+      "mode": "json",
+      "engine_backend": "llguidance",
+      "stop_reason": "eos",
+      "validation": {
+       "raw_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+       "stripped_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+       "strip_applied": [],
+       "raw_parse_ok": true,
+       "raw_schema_ok": false,
+       "parse_ok": true,
+       "parse_error": null,
+       "schema_ok": false,
+       "schema_error": {
+        "message": "Additional properties are not allowed ('person' was unexpected)",
+        "validator": "additionalProperties",
+        "path": [],
+        "json_path": "$",
+        "schema_path": [
+         "additionalProperties"
+        ],
+        "validator_value": false
+       },
+       "schema_error_counts": {
+        "required": 3,
+        "additionalProperties": 1,
+        "type": 0,
+        "other": 0
+       },
+       "stop_reason": "eos",
+       "failure_class": "schema_extra_key",
+       "failure_class_stripped": "schema_extra_key",
+       "parsed": {
+        "person": "Ada Lovelace"
+       }
+      },
+      "timing": {
+       "compile_ms": 0.09650099673308432,
+       "compile_cached": false,
+       "prefill_ms": 497.1548830071697,
+       "decode_ms": 3050.6131619913504,
+       "forward_ms": 3547.76804499852,
+       "processor_ms": 34.2259940225631,
+       "observer_ms": 86.58728099544533,
+       "sample_ms": 197.3657819762593,
+       "total_ms": 3866.043602989521,
+       "n_prompt_tokens": 56,
+       "n_new_tokens": 12,
+       "tokens_per_s": 3.3626947438827766,
+       "decode_tokens_per_s": 3.9336354243508063,
+       "first_token_ms": 533.5511330049485,
+       "torch_threads": 10
+      },
+      "summary": {
+       "n_overridden": 0,
+       "n_argmax_taken": 13,
+       "mean_vocab_kept": 0.5228400824638715,
+       "mean_mass_removed": 0.018389314576712088,
+       "min_n_allowed": 1,
+       "max_stack_depth": 1
+      }
+     },
+     "error": null
+    },
+    "wall_ms": 3875
+   },
+   {
+    "constraint": "json",
+    "seed": 9,
+    "detail": "compact",
+    "request": {
+     "constraint": "json",
+     "seed": 9,
+     "include_steps": false,
+     "force_compile": false
+    },
+    "trace": {
+     "meta": {
+      "mode": "json",
+      "backend": "llguidance",
+      "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+      "regex": null,
+      "prompt_token_count": 56,
+      "vocab_size": 151936,
+      "max_new_tokens": 160,
+      "temperature": 0.7,
+      "recursive": false,
+      "constraint": "json",
+      "engine_backend": "llguidance",
+      "sampling": {
+       "temperature": 0.7,
+       "top_k": 20,
+       "top_p": 0.8,
+       "seed": 9
+      },
+      "schema_in_prompt": false,
+      "use_chat_template": true,
+      "prompt_rendered": "",
+      "compile_ms": 0.037542005884461105,
+      "compile_cached": false,
+      "include_steps": false
+     },
+     "steps": [],
+     "done": {
+      "text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+      "parsed": {
+       "person": "Ada Lovelace"
+      },
+      "valid": false,
+      "validation_error": "JSON does not match the schema: Additional properties are not allowed ('person' was unexpected)",
+      "n_steps": 13,
+      "elapsed_s": 3.9880627970123896,
+      "stopped_by": "eos",
+      "tokens": [
+       {
+        "token_id": 515,
+        "token": "{Ċ",
+        "text": "{\n"
+       },
+       {
+        "token_id": 220,
+        "token": "Ġ",
+        "text": " "
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 8987,
+        "token": "person",
+        "text": "person"
+       },
+       {
+        "token_id": 788,
+        "token": "\":",
+        "text": "\":"
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 95347,
+        "token": "Ada",
+        "text": "Ada"
+       },
+       {
+        "token_id": 34293,
+        "token": "ĠLov",
+        "text": " Lov"
+       },
+       {
+        "token_id": 301,
+        "token": "el",
+        "text": "el"
+       },
+       {
+        "token_id": 578,
+        "token": "ace",
+        "text": "ace"
+       },
+       {
+        "token_id": 698,
+        "token": "\"Ċ",
+        "text": "\"\n"
+       },
+       {
+        "token_id": 92,
+        "token": "}",
+        "text": "}"
+       }
+      ],
+      "mode": "json",
+      "engine_backend": "llguidance",
+      "stop_reason": "eos",
+      "validation": {
+       "raw_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+       "stripped_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+       "strip_applied": [],
+       "raw_parse_ok": true,
+       "raw_schema_ok": false,
+       "parse_ok": true,
+       "parse_error": null,
+       "schema_ok": false,
+       "schema_error": {
+        "message": "Additional properties are not allowed ('person' was unexpected)",
+        "validator": "additionalProperties",
+        "path": [],
+        "json_path": "$",
+        "schema_path": [
+         "additionalProperties"
+        ],
+        "validator_value": false
+       },
+       "schema_error_counts": {
+        "required": 3,
+        "additionalProperties": 1,
+        "type": 0,
+        "other": 0
+       },
+       "stop_reason": "eos",
+       "failure_class": "schema_extra_key",
+       "failure_class_stripped": "schema_extra_key",
+       "parsed": {
+        "person": "Ada Lovelace"
+       }
+      },
+      "timing": {
+       "compile_ms": 0.037542005884461105,
+       "compile_cached": false,
+       "prefill_ms": 476.4030439982889,
+       "decode_ms": 3204.9914689850993,
+       "forward_ms": 3681.3945129833883,
+       "processor_ms": 29.795237016514875,
+       "observer_ms": 86.11785896937363,
+       "sample_ms": 189.64164100179914,
+       "total_ms": 3986.9867919769604,
+       "n_prompt_tokens": 56,
+       "n_new_tokens": 12,
+       "tokens_per_s": 3.2606384443178733,
+       "decode_tokens_per_s": 3.7441597321318145,
+       "first_token_ms": 500.54055800137576,
+       "torch_threads": 10
+      },
+      "summary": {
+       "n_overridden": 0,
+       "n_argmax_taken": 13,
+       "mean_vocab_kept": 0.5228400824638715,
+       "mean_mass_removed": 0.018389314576712088,
+       "min_n_allowed": 1,
+       "max_stack_depth": 1
+      }
+     },
+     "error": null
+    },
+    "wall_ms": 3993
+   },
+   {
+    "constraint": "json",
+    "seed": 10,
+    "detail": "compact",
+    "request": {
+     "constraint": "json",
+     "seed": 10,
+     "include_steps": false,
+     "force_compile": false
+    },
+    "trace": {
+     "meta": {
+      "mode": "json",
+      "backend": "llguidance",
+      "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+      "regex": null,
+      "prompt_token_count": 56,
+      "vocab_size": 151936,
+      "max_new_tokens": 160,
+      "temperature": 0.7,
+      "recursive": false,
+      "constraint": "json",
+      "engine_backend": "llguidance",
+      "sampling": {
+       "temperature": 0.7,
+       "top_k": 20,
+       "top_p": 0.8,
+       "seed": 10
+      },
+      "schema_in_prompt": false,
+      "use_chat_template": true,
+      "prompt_rendered": "",
+      "compile_ms": 0.04149999585933983,
+      "compile_cached": false,
+      "include_steps": false
+     },
+     "steps": [],
+     "done": {
+      "text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+      "parsed": {
+       "person": "Ada Lovelace"
+      },
+      "valid": false,
+      "validation_error": "JSON does not match the schema: Additional properties are not allowed ('person' was unexpected)",
+      "n_steps": 13,
+      "elapsed_s": 3.8784156299952883,
+      "stopped_by": "eos",
+      "tokens": [
+       {
+        "token_id": 515,
+        "token": "{Ċ",
+        "text": "{\n"
+       },
+       {
+        "token_id": 220,
+        "token": "Ġ",
+        "text": " "
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 8987,
+        "token": "person",
+        "text": "person"
+       },
+       {
+        "token_id": 788,
+        "token": "\":",
+        "text": "\":"
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 95347,
+        "token": "Ada",
+        "text": "Ada"
+       },
+       {
+        "token_id": 34293,
+        "token": "ĠLov",
+        "text": " Lov"
+       },
+       {
+        "token_id": 301,
+        "token": "el",
+        "text": "el"
+       },
+       {
+        "token_id": 578,
+        "token": "ace",
+        "text": "ace"
+       },
+       {
+        "token_id": 698,
+        "token": "\"Ċ",
+        "text": "\"\n"
+       },
+       {
+        "token_id": 92,
+        "token": "}",
+        "text": "}"
+       }
+      ],
+      "mode": "json",
+      "engine_backend": "llguidance",
+      "stop_reason": "eos",
+      "validation": {
+       "raw_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+       "stripped_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+       "strip_applied": [],
+       "raw_parse_ok": true,
+       "raw_schema_ok": false,
+       "parse_ok": true,
+       "parse_error": null,
+       "schema_ok": false,
+       "schema_error": {
+        "message": "Additional properties are not allowed ('person' was unexpected)",
+        "validator": "additionalProperties",
+        "path": [],
+        "json_path": "$",
+        "schema_path": [
+         "additionalProperties"
+        ],
+        "validator_value": false
+       },
+       "schema_error_counts": {
+        "required": 3,
+        "additionalProperties": 1,
+        "type": 0,
+        "other": 0
+       },
+       "stop_reason": "eos",
+       "failure_class": "schema_extra_key",
+       "failure_class_stripped": "schema_extra_key",
+       "parsed": {
+        "person": "Ada Lovelace"
+       }
+      },
+      "timing": {
+       "compile_ms": 0.04149999585933983,
+       "compile_cached": false,
+       "prefill_ms": 503.99781500163954,
+       "decode_ms": 3064.777649982716,
+       "forward_ms": 3568.7754649843555,
+       "processor_ms": 31.15340402291622,
+       "observer_ms": 90.31266497913748,
+       "sample_ms": 187.21725995419547,
+       "total_ms": 3877.500293936464,
+       "n_prompt_tokens": 56,
+       "n_new_tokens": 12,
+       "tokens_per_s": 3.3527113222493568,
+       "decode_tokens_per_s": 3.915455334930309,
+       "first_token_ms": 528.4159539878601,
+       "torch_threads": 10
+      },
+      "summary": {
+       "n_overridden": 0,
+       "n_argmax_taken": 13,
+       "mean_vocab_kept": 0.5228400824638715,
+       "mean_mass_removed": 0.018389314576712088,
+       "min_n_allowed": 1,
+       "max_stack_depth": 1
+      }
+     },
+     "error": null
+    },
+    "wall_ms": 3884
+   },
+   {
+    "constraint": "json",
+    "seed": 11,
+    "detail": "compact",
+    "request": {
+     "constraint": "json",
+     "seed": 11,
+     "include_steps": false,
+     "force_compile": false
+    },
+    "trace": {
+     "meta": {
+      "mode": "json",
+      "backend": "llguidance",
+      "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+      "regex": null,
+      "prompt_token_count": 56,
+      "vocab_size": 151936,
+      "max_new_tokens": 160,
+      "temperature": 0.7,
+      "recursive": false,
+      "constraint": "json",
+      "engine_backend": "llguidance",
+      "sampling": {
+       "temperature": 0.7,
+       "top_k": 20,
+       "top_p": 0.8,
+       "seed": 11
+      },
+      "schema_in_prompt": false,
+      "use_chat_template": true,
+      "prompt_rendered": "",
+      "compile_ms": 0.037999998312443495,
+      "compile_cached": false,
+      "include_steps": false
+     },
+     "steps": [],
+     "done": {
+      "text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+      "parsed": {
+       "person": "Ada Lovelace"
+      },
+      "valid": false,
+      "validation_error": "JSON does not match the schema: Additional properties are not allowed ('person' was unexpected)",
+      "n_steps": 13,
+      "elapsed_s": 3.8378130789933493,
+      "stopped_by": "eos",
+      "tokens": [
+       {
+        "token_id": 515,
+        "token": "{Ċ",
+        "text": "{\n"
+       },
+       {
+        "token_id": 220,
+        "token": "Ġ",
+        "text": " "
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 8987,
+        "token": "person",
+        "text": "person"
+       },
+       {
+        "token_id": 788,
+        "token": "\":",
+        "text": "\":"
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 95347,
+        "token": "Ada",
+        "text": "Ada"
+       },
+       {
+        "token_id": 34293,
+        "token": "ĠLov",
+        "text": " Lov"
+       },
+       {
+        "token_id": 301,
+        "token": "el",
+        "text": "el"
+       },
+       {
+        "token_id": 578,
+        "token": "ace",
+        "text": "ace"
+       },
+       {
+        "token_id": 698,
+        "token": "\"Ċ",
+        "text": "\"\n"
+       },
+       {
+        "token_id": 92,
+        "token": "}",
+        "text": "}"
+       }
+      ],
+      "mode": "json",
+      "engine_backend": "llguidance",
+      "stop_reason": "eos",
+      "validation": {
+       "raw_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+       "stripped_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+       "strip_applied": [],
+       "raw_parse_ok": true,
+       "raw_schema_ok": false,
+       "parse_ok": true,
+       "parse_error": null,
+       "schema_ok": false,
+       "schema_error": {
+        "message": "Additional properties are not allowed ('person' was unexpected)",
+        "validator": "additionalProperties",
+        "path": [],
+        "json_path": "$",
+        "schema_path": [
+         "additionalProperties"
+        ],
+        "validator_value": false
+       },
+       "schema_error_counts": {
+        "required": 3,
+        "additionalProperties": 1,
+        "type": 0,
+        "other": 0
+       },
+       "stop_reason": "eos",
+       "failure_class": "schema_extra_key",
+       "failure_class_stripped": "schema_extra_key",
+       "parsed": {
+        "person": "Ada Lovelace"
+       }
+      },
+      "timing": {
+       "compile_ms": 0.037999998312443495,
+       "compile_cached": false,
+       "prefill_ms": 502.1112690010341,
+       "decode_ms": 3022.4959699698957,
+       "forward_ms": 3524.6072389709298,
+       "processor_ms": 29.84377701068297,
+       "observer_ms": 90.05157902720384,
+       "sample_ms": 192.4092729750555,
+       "total_ms": 3836.9498679821845,
+       "n_prompt_tokens": 56,
+       "n_new_tokens": 12,
+       "tokens_per_s": 3.3881414135349757,
+       "decode_tokens_per_s": 3.970228618739737,
+       "first_token_ms": 528.9337470021565,
+       "torch_threads": 10
+      },
+      "summary": {
+       "n_overridden": 0,
+       "n_argmax_taken": 13,
+       "mean_vocab_kept": 0.5228400824638715,
+       "mean_mass_removed": 0.018389314576712088,
+       "min_n_allowed": 1,
+       "max_stack_depth": 1
+      }
+     },
+     "error": null
+    },
+    "wall_ms": 3841
+   },
+   {
+    "constraint": "json",
+    "seed": 12,
+    "detail": "compact",
+    "request": {
+     "constraint": "json",
+     "seed": 12,
+     "include_steps": false,
+     "force_compile": false
+    },
+    "trace": {
+     "meta": {
+      "mode": "json",
+      "backend": "llguidance",
+      "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+      "regex": null,
+      "prompt_token_count": 56,
+      "vocab_size": 151936,
+      "max_new_tokens": 160,
+      "temperature": 0.7,
+      "recursive": false,
+      "constraint": "json",
+      "engine_backend": "llguidance",
+      "sampling": {
+       "temperature": 0.7,
+       "top_k": 20,
+       "top_p": 0.8,
+       "seed": 12
+      },
+      "schema_in_prompt": false,
+      "use_chat_template": true,
+      "prompt_rendered": "",
+      "compile_ms": 0.035416000173427165,
+      "compile_cached": false,
+      "include_steps": false
+     },
+     "steps": [],
+     "done": {
+      "text": "{\n  \"person\": \"Ada Lovelace, 36, lives in London and writes about analytical engines.\"\n}",
+      "parsed": {
+       "person": "Ada Lovelace, 36, lives in London and writes about analytical engines."
+      },
+      "valid": false,
+      "validation_error": "JSON does not match the schema: Additional properties are not allowed ('person' was unexpected)",
+      "n_steps": 26,
+      "elapsed_s": 7.821473991003586,
+      "stopped_by": "eos",
+      "tokens": [
+       {
+        "token_id": 515,
+        "token": "{Ċ",
+        "text": "{\n"
+       },
+       {
+        "token_id": 220,
+        "token": "Ġ",
+        "text": " "
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 8987,
+        "token": "person",
+        "text": "person"
+       },
+       {
+        "token_id": 788,
+        "token": "\":",
+        "text": "\":"
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 95347,
+        "token": "Ada",
+        "text": "Ada"
+       },
+       {
+        "token_id": 34293,
+        "token": "ĠLov",
+        "text": " Lov"
+       },
+       {
+        "token_id": 301,
+        "token": "el",
+        "text": "el"
+       },
+       {
+        "token_id": 578,
+        "token": "ace",
+        "text": "ace"
+       },
+       {
+        "token_id": 11,
+        "token": ",",
+        "text": ","
+       },
+       {
+        "token_id": 220,
+        "token": "Ġ",
+        "text": " "
+       },
+       {
+        "token_id": 18,
+        "token": "3",
+        "text": "3"
+       },
+       {
+        "token_id": 21,
+        "token": "6",
+        "text": "6"
+       },
+       {
+        "token_id": 11,
+        "token": ",",
+        "text": ","
+       },
+       {
+        "token_id": 6305,
+        "token": "Ġlives",
+        "text": " lives"
+       },
+       {
+        "token_id": 304,
+        "token": "Ġin",
+        "text": " in"
+       },
+       {
+        "token_id": 7148,
+        "token": "ĠLondon",
+        "text": " London"
+       },
+       {
+        "token_id": 323,
+        "token": "Ġand",
+        "text": " and"
+       },
+       {
+        "token_id": 13914,
+        "token": "Ġwrites",
+        "text": " writes"
+       },
+       {
+        "token_id": 911,
+        "token": "Ġabout",
+        "text": " about"
+       },
+       {
+        "token_id": 42964,
+        "token": "Ġanalytical",
+        "text": " analytical"
+       },
+       {
+        "token_id": 21106,
+        "token": "Ġengines",
+        "text": " engines"
+       },
+       {
+        "token_id": 10040,
+        "token": ".\"Ċ",
+        "text": ".\"\n"
+       },
+       {
+        "token_id": 92,
+        "token": "}",
+        "text": "}"
+       }
+      ],
+      "mode": "json",
+      "engine_backend": "llguidance",
+      "stop_reason": "eos",
+      "validation": {
+       "raw_text": "{\n  \"person\": \"Ada Lovelace, 36, lives in London and writes about analytical engines.\"\n}",
+       "stripped_text": "{\n  \"person\": \"Ada Lovelace, 36, lives in London and writes about analytical engines.\"\n}",
+       "strip_applied": [],
+       "raw_parse_ok": true,
+       "raw_schema_ok": false,
+       "parse_ok": true,
+       "parse_error": null,
+       "schema_ok": false,
+       "schema_error": {
+        "message": "Additional properties are not allowed ('person' was unexpected)",
+        "validator": "additionalProperties",
+        "path": [],
+        "json_path": "$",
+        "schema_path": [
+         "additionalProperties"
+        ],
+        "validator_value": false
+       },
+       "schema_error_counts": {
+        "required": 3,
+        "additionalProperties": 1,
+        "type": 0,
+        "other": 0
+       },
+       "stop_reason": "eos",
+       "failure_class": "schema_extra_key",
+       "failure_class_stripped": "schema_extra_key",
+       "parsed": {
+        "person": "Ada Lovelace, 36, lives in London and writes about analytical engines."
+       }
+      },
+      "timing": {
+       "compile_ms": 0.035416000173427165,
+       "compile_cached": false,
+       "prefill_ms": 481.32405598880723,
+       "decode_ms": 6713.300132047152,
+       "forward_ms": 7194.624188035959,
+       "processor_ms": 59.645845045452006,
+       "observer_ms": 176.1236939491937,
+       "sample_ms": 387.923713948112,
+       "total_ms": 7818.3528569788905,
+       "n_prompt_tokens": 56,
+       "n_new_tokens": 25,
+       "tokens_per_s": 3.325523707150122,
+       "decode_tokens_per_s": 3.723950889765524,
+       "first_token_ms": 510.7601219933713,
+       "torch_threads": 10
+      },
+      "summary": {
+       "n_overridden": 0,
+       "n_argmax_taken": 25,
+       "mean_vocab_kept": 0.7455482267837469,
+       "mean_mass_removed": 0.009206792019136049,
+       "min_n_allowed": 1,
+       "max_stack_depth": 1
+      }
+     },
+     "error": null
+    },
+    "wall_ms": 7828
+   },
+   {
+    "constraint": "json",
+    "seed": 13,
+    "detail": "compact",
+    "request": {
+     "constraint": "json",
+     "seed": 13,
+     "include_steps": false,
+     "force_compile": false
+    },
+    "trace": {
+     "meta": {
+      "mode": "json",
+      "backend": "llguidance",
+      "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+      "regex": null,
+      "prompt_token_count": 56,
+      "vocab_size": 151936,
+      "max_new_tokens": 160,
+      "temperature": 0.7,
+      "recursive": false,
+      "constraint": "json",
+      "engine_backend": "llguidance",
+      "sampling": {
+       "temperature": 0.7,
+       "top_k": 20,
+       "top_p": 0.8,
+       "seed": 13
+      },
+      "schema_in_prompt": false,
+      "use_chat_template": true,
+      "prompt_rendered": "",
+      "compile_ms": 0.21179199393372983,
+      "compile_cached": false,
+      "include_steps": false
+     },
+     "steps": [],
+     "done": {
+      "text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+      "parsed": {
+       "person": "Ada Lovelace"
+      },
+      "valid": false,
+      "validation_error": "JSON does not match the schema: Additional properties are not allowed ('person' was unexpected)",
+      "n_steps": 13,
+      "elapsed_s": 3.8052955880120862,
+      "stopped_by": "eos",
+      "tokens": [
+       {
+        "token_id": 515,
+        "token": "{Ċ",
+        "text": "{\n"
+       },
+       {
+        "token_id": 220,
+        "token": "Ġ",
+        "text": " "
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 8987,
+        "token": "person",
+        "text": "person"
+       },
+       {
+        "token_id": 788,
+        "token": "\":",
+        "text": "\":"
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 95347,
+        "token": "Ada",
+        "text": "Ada"
+       },
+       {
+        "token_id": 34293,
+        "token": "ĠLov",
+        "text": " Lov"
+       },
+       {
+        "token_id": 301,
+        "token": "el",
+        "text": "el"
+       },
+       {
+        "token_id": 578,
+        "token": "ace",
+        "text": "ace"
+       },
+       {
+        "token_id": 698,
+        "token": "\"Ċ",
+        "text": "\"\n"
+       },
+       {
+        "token_id": 92,
+        "token": "}",
+        "text": "}"
+       }
+      ],
+      "mode": "json",
+      "engine_backend": "llguidance",
+      "stop_reason": "eos",
+      "validation": {
+       "raw_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+       "stripped_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+       "strip_applied": [],
+       "raw_parse_ok": true,
+       "raw_schema_ok": false,
+       "parse_ok": true,
+       "parse_error": null,
+       "schema_ok": false,
+       "schema_error": {
+        "message": "Additional properties are not allowed ('person' was unexpected)",
+        "validator": "additionalProperties",
+        "path": [],
+        "json_path": "$",
+        "schema_path": [
+         "additionalProperties"
+        ],
+        "validator_value": false
+       },
+       "schema_error_counts": {
+        "required": 3,
+        "additionalProperties": 1,
+        "type": 0,
+        "other": 0
+       },
+       "stop_reason": "eos",
+       "failure_class": "schema_extra_key",
+       "failure_class_stripped": "schema_extra_key",
+       "parsed": {
+        "person": "Ada Lovelace"
+       }
+      },
+      "timing": {
+       "compile_ms": 0.21179199393372983,
+       "compile_cached": false,
+       "prefill_ms": 484.49656199954916,
+       "decode_ms": 3020.3603810077766,
+       "forward_ms": 3504.8569430073258,
+       "processor_ms": 29.81535901199095,
+       "observer_ms": 84.7559039684711,
+       "sample_ms": 184.87004601047374,
+       "total_ms": 3804.5100439921953,
+       "n_prompt_tokens": 56,
+       "n_new_tokens": 12,
+       "tokens_per_s": 3.4171873861812925,
+       "decode_tokens_per_s": 3.9730358256110048,
+       "first_token_ms": 512.5969589862507,
+       "torch_threads": 10
+      },
+      "summary": {
+       "n_overridden": 0,
+       "n_argmax_taken": 13,
+       "mean_vocab_kept": 0.5228400824638715,
+       "mean_mass_removed": 0.018389314576712088,
+       "min_n_allowed": 1,
+       "max_stack_depth": 1
+      }
+     },
+     "error": null
+    },
+    "wall_ms": 3815
    },
    {
     "constraint": "json",
@@ -8012,31 +8180,36 @@
       "schema_in_prompt": false,
       "use_chat_template": true,
       "prompt_rendered": "",
-      "compile_ms": 0.4813369960174896,
+      "compile_ms": 0.03504200140014291,
       "compile_cached": false,
       "include_steps": false
      },
      "steps": [],
      "done": {
-      "text": "{\"person\":[\"Ada Lovelace\",36,\"London\",\"analytical engines\"]}",
+      "text": "{\n  \"person\": \"Ada Lovelace\"\n}",
       "parsed": {
-       "person": [
-        "Ada Lovelace",
-        36,
-        "London",
-        "analytical engines"
-       ]
+       "person": "Ada Lovelace"
       },
       "valid": false,
       "validation_error": "JSON does not match the schema: Additional properties are not allowed ('person' was unexpected)",
-      "n_steps": 19,
-      "elapsed_s": 7.760509242994885,
+      "n_steps": 13,
+      "elapsed_s": 3.879772425003466,
       "stopped_by": "eos",
       "tokens": [
        {
-        "token_id": 4913,
-        "token": "{\"",
-        "text": "{\""
+        "token_id": 515,
+        "token": "{Ċ",
+        "text": "{\n"
+       },
+       {
+        "token_id": 220,
+        "token": "Ġ",
+        "text": " "
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
        },
        {
         "token_id": 8987,
@@ -8049,9 +8222,9 @@
         "text": "\":"
        },
        {
-        "token_id": 1183,
-        "token": "[\"",
-        "text": "[\""
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
        },
        {
         "token_id": 95347,
@@ -8074,62 +8247,22 @@
         "text": "ace"
        },
        {
-        "token_id": 497,
-        "token": "\",",
-        "text": "\","
+        "token_id": 698,
+        "token": "\"Ċ",
+        "text": "\"\n"
        },
        {
-        "token_id": 18,
-        "token": "3",
-        "text": "3"
-       },
-       {
-        "token_id": 21,
-        "token": "6",
-        "text": "6"
-       },
-       {
-        "token_id": 1335,
-        "token": ",\"",
-        "text": ",\""
-       },
-       {
-        "token_id": 39572,
-        "token": "London",
-        "text": "London"
-       },
-       {
-        "token_id": 2198,
-        "token": "\",\"",
-        "text": "\",\""
-       },
-       {
-        "token_id": 43703,
-        "token": "analy",
-        "text": "analy"
-       },
-       {
-        "token_id": 34658,
-        "token": "tical",
-        "text": "tical"
-       },
-       {
-        "token_id": 21106,
-        "token": "Ġengines",
-        "text": " engines"
-       },
-       {
-        "token_id": 92446,
-        "token": "\"]}",
-        "text": "\"]}"
+        "token_id": 92,
+        "token": "}",
+        "text": "}"
        }
       ],
       "mode": "json",
       "engine_backend": "llguidance",
       "stop_reason": "eos",
       "validation": {
-       "raw_text": "{\"person\":[\"Ada Lovelace\",36,\"London\",\"analytical engines\"]}",
-       "stripped_text": "{\"person\":[\"Ada Lovelace\",36,\"London\",\"analytical engines\"]}",
+       "raw_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+       "stripped_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
        "strip_applied": [],
        "raw_parse_ok": true,
        "raw_schema_ok": false,
@@ -8156,43 +8289,38 @@
        "failure_class": "schema_extra_key",
        "failure_class_stripped": "schema_extra_key",
        "parsed": {
-        "person": [
-         "Ada Lovelace",
-         36,
-         "London",
-         "analytical engines"
-        ]
+        "person": "Ada Lovelace"
        }
       },
       "timing": {
-       "compile_ms": 0.4813369960174896,
+       "compile_ms": 0.03504200140014291,
        "compile_cached": false,
-       "prefill_ms": 780.7567109994125,
-       "decode_ms": 6323.908557984396,
-       "forward_ms": 7104.665268983808,
-       "processor_ms": 69.58410399965942,
-       "observer_ms": 180.0107390154153,
-       "sample_ms": 402.97356799419504,
-       "total_ms": 7757.715016989096,
+       "prefill_ms": 504.1820659971563,
+       "decode_ms": 3062.0329370431136,
+       "forward_ms": 3566.21500304027,
+       "processor_ms": 30.120152019662783,
+       "observer_ms": 87.90299297834281,
+       "sample_ms": 194.49269097822253,
+       "total_ms": 3878.765881017898,
        "n_prompt_tokens": 56,
-       "n_new_tokens": 18,
-       "tokens_per_s": 2.449326755361707,
-       "decode_tokens_per_s": 2.846340966975825,
-       "first_token_ms": 833.0283629984478,
+       "n_new_tokens": 12,
+       "tokens_per_s": 3.3516117873485434,
+       "decode_tokens_per_s": 3.918965029679901,
+       "first_token_ms": 531.6046280058799,
        "torch_threads": 10
       },
       "summary": {
-       "n_overridden": 3,
-       "n_argmax_taken": 16,
-       "mean_vocab_kept": 0.6624056389393872,
-       "mean_mass_removed": 0.14870407356974025,
+       "n_overridden": 0,
+       "n_argmax_taken": 13,
+       "mean_vocab_kept": 0.5228400824638715,
+       "mean_mass_removed": 0.018389314576712088,
        "min_n_allowed": 1,
-       "max_stack_depth": 2
+       "max_stack_depth": 1
       }
      },
      "error": null
     },
-    "wall_ms": 7834
+    "wall_ms": 3883
    },
    {
     "constraint": "json",
@@ -8226,32 +8354,89 @@
       "schema_in_prompt": false,
       "use_chat_template": true,
       "prompt_rendered": "",
-      "compile_ms": 0.30979399889474735,
+      "compile_ms": 0.037125006201677024,
       "compile_cached": false,
       "include_steps": false
      },
      "steps": [],
      "done": {
-      "text": "{}",
-      "parsed": {},
+      "text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+      "parsed": {
+       "person": "Ada Lovelace"
+      },
       "valid": false,
-      "validation_error": "JSON does not match the schema: 'name' is a required property",
-      "n_steps": 2,
-      "elapsed_s": 1.0373816870051087,
+      "validation_error": "JSON does not match the schema: Additional properties are not allowed ('person' was unexpected)",
+      "n_steps": 13,
+      "elapsed_s": 3.8636780960077886,
       "stopped_by": "eos",
       "tokens": [
        {
-        "token_id": 6257,
-        "token": "{}",
-        "text": "{}"
+        "token_id": 515,
+        "token": "{Ċ",
+        "text": "{\n"
+       },
+       {
+        "token_id": 220,
+        "token": "Ġ",
+        "text": " "
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 8987,
+        "token": "person",
+        "text": "person"
+       },
+       {
+        "token_id": 788,
+        "token": "\":",
+        "text": "\":"
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 95347,
+        "token": "Ada",
+        "text": "Ada"
+       },
+       {
+        "token_id": 34293,
+        "token": "ĠLov",
+        "text": " Lov"
+       },
+       {
+        "token_id": 301,
+        "token": "el",
+        "text": "el"
+       },
+       {
+        "token_id": 578,
+        "token": "ace",
+        "text": "ace"
+       },
+       {
+        "token_id": 698,
+        "token": "\"Ċ",
+        "text": "\"\n"
+       },
+       {
+        "token_id": 92,
+        "token": "}",
+        "text": "}"
        }
       ],
       "mode": "json",
       "engine_backend": "llguidance",
       "stop_reason": "eos",
       "validation": {
-       "raw_text": "{}",
-       "stripped_text": "{}",
+       "raw_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+       "stripped_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
        "strip_applied": [],
        "raw_parse_ok": true,
        "raw_schema_ok": false,
@@ -8259,59 +8444,57 @@
        "parse_error": null,
        "schema_ok": false,
        "schema_error": {
-        "message": "'name' is a required property",
-        "validator": "required",
+        "message": "Additional properties are not allowed ('person' was unexpected)",
+        "validator": "additionalProperties",
         "path": [],
         "json_path": "$",
         "schema_path": [
-         "required"
+         "additionalProperties"
         ],
-        "validator_value": [
-         "name",
-         "age",
-         "city"
-        ]
+        "validator_value": false
        },
        "schema_error_counts": {
         "required": 3,
-        "additionalProperties": 0,
+        "additionalProperties": 1,
         "type": 0,
         "other": 0
        },
        "stop_reason": "eos",
-       "failure_class": "schema_missing_key",
-       "failure_class_stripped": "schema_missing_key",
-       "parsed": {}
+       "failure_class": "schema_extra_key",
+       "failure_class_stripped": "schema_extra_key",
+       "parsed": {
+        "person": "Ada Lovelace"
+       }
       },
       "timing": {
-       "compile_ms": 0.30979399889474735,
+       "compile_ms": 0.037125006201677024,
        "compile_cached": false,
-       "prefill_ms": 639.0209849996609,
-       "decode_ms": 332.7244999964023,
-       "forward_ms": 971.7454849960632,
-       "processor_ms": 7.454676990164444,
-       "observer_ms": 19.431008011451922,
-       "sample_ms": 38.61618299561087,
-       "total_ms": 1037.5571469921852,
+       "prefill_ms": 485.92344000644516,
+       "decode_ms": 3063.924064001185,
+       "forward_ms": 3549.84750400763,
+       "processor_ms": 28.945691039552912,
+       "observer_ms": 85.87740594521165,
+       "sample_ms": 198.05432700377423,
+       "total_ms": 3862.7620530023705,
        "n_prompt_tokens": 56,
-       "n_new_tokens": 1,
-       "tokens_per_s": 1.9281803845807812,
-       "decode_tokens_per_s": 3.00548952665287,
-       "first_token_ms": 675.9883229970001,
+       "n_new_tokens": 12,
+       "tokens_per_s": 3.365499807086676,
+       "decode_tokens_per_s": 3.9165461510587094,
+       "first_token_ms": 513.9675040118163,
        "torch_threads": 10
       },
       "summary": {
-       "n_overridden": 1,
-       "n_argmax_taken": 1,
-       "mean_vocab_kept": 0.000013163437236731255,
-       "mean_mass_removed": 0.4614392867042625,
+       "n_overridden": 0,
+       "n_argmax_taken": 13,
+       "mean_vocab_kept": 0.5228400824638715,
+       "mean_mass_removed": 0.018389314576712088,
        "min_n_allowed": 1,
-       "max_stack_depth": 0
+       "max_stack_depth": 1
       }
      },
      "error": null
     },
-    "wall_ms": 1050
+    "wall_ms": 3868
    },
    {
     "constraint": "json",
@@ -8345,32 +8528,89 @@
       "schema_in_prompt": false,
       "use_chat_template": true,
       "prompt_rendered": "",
-      "compile_ms": 0.1032090003718622,
+      "compile_ms": 0.03995899169240147,
       "compile_cached": false,
       "include_steps": false
      },
      "steps": [],
      "done": {
-      "text": "{}",
-      "parsed": {},
+      "text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+      "parsed": {
+       "person": "Ada Lovelace"
+      },
       "valid": false,
-      "validation_error": "JSON does not match the schema: 'name' is a required property",
-      "n_steps": 2,
-      "elapsed_s": 1.0452047409999068,
+      "validation_error": "JSON does not match the schema: Additional properties are not allowed ('person' was unexpected)",
+      "n_steps": 13,
+      "elapsed_s": 4.042662837004173,
       "stopped_by": "eos",
       "tokens": [
        {
-        "token_id": 6257,
-        "token": "{}",
-        "text": "{}"
+        "token_id": 515,
+        "token": "{Ċ",
+        "text": "{\n"
+       },
+       {
+        "token_id": 220,
+        "token": "Ġ",
+        "text": " "
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 8987,
+        "token": "person",
+        "text": "person"
+       },
+       {
+        "token_id": 788,
+        "token": "\":",
+        "text": "\":"
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 95347,
+        "token": "Ada",
+        "text": "Ada"
+       },
+       {
+        "token_id": 34293,
+        "token": "ĠLov",
+        "text": " Lov"
+       },
+       {
+        "token_id": 301,
+        "token": "el",
+        "text": "el"
+       },
+       {
+        "token_id": 578,
+        "token": "ace",
+        "text": "ace"
+       },
+       {
+        "token_id": 698,
+        "token": "\"Ċ",
+        "text": "\"\n"
+       },
+       {
+        "token_id": 92,
+        "token": "}",
+        "text": "}"
        }
       ],
       "mode": "json",
       "engine_backend": "llguidance",
       "stop_reason": "eos",
       "validation": {
-       "raw_text": "{}",
-       "stripped_text": "{}",
+       "raw_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+       "stripped_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
        "strip_applied": [],
        "raw_parse_ok": true,
        "raw_schema_ok": false,
@@ -8378,59 +8618,57 @@
        "parse_error": null,
        "schema_ok": false,
        "schema_error": {
-        "message": "'name' is a required property",
-        "validator": "required",
+        "message": "Additional properties are not allowed ('person' was unexpected)",
+        "validator": "additionalProperties",
         "path": [],
         "json_path": "$",
         "schema_path": [
-         "required"
+         "additionalProperties"
         ],
-        "validator_value": [
-         "name",
-         "age",
-         "city"
-        ]
+        "validator_value": false
        },
        "schema_error_counts": {
         "required": 3,
-        "additionalProperties": 0,
+        "additionalProperties": 1,
         "type": 0,
         "other": 0
        },
        "stop_reason": "eos",
-       "failure_class": "schema_missing_key",
-       "failure_class_stripped": "schema_missing_key",
-       "parsed": {}
+       "failure_class": "schema_extra_key",
+       "failure_class_stripped": "schema_extra_key",
+       "parsed": {
+        "person": "Ada Lovelace"
+       }
       },
       "timing": {
-       "compile_ms": 0.1032090003718622,
+       "compile_ms": 0.03995899169240147,
        "compile_cached": false,
-       "prefill_ms": 625.1027219987009,
-       "decode_ms": 348.95727899856865,
-       "forward_ms": 974.0600009972695,
-       "processor_ms": 6.933881995792035,
-       "observer_ms": 19.542384005035274,
-       "sample_ms": 44.18363800505176,
-       "total_ms": 1044.8231140035205,
+       "prefill_ms": 472.6896609936375,
+       "decode_ms": 3248.2154839963187,
+       "forward_ms": 3720.905144989956,
+       "processor_ms": 29.673443001229316,
+       "observer_ms": 84.22569200047292,
+       "sample_ms": 206.8312219926156,
+       "total_ms": 4041.6754609759664,
        "n_prompt_tokens": 56,
-       "n_new_tokens": 1,
-       "tokens_per_s": 1.9143887183751633,
-       "decode_tokens_per_s": 2.8656803000922695,
-       "first_token_ms": 664.5819110053708,
+       "n_new_tokens": 12,
+       "tokens_per_s": 3.216519647458942,
+       "decode_tokens_per_s": 3.6943361852447842,
+       "first_token_ms": 502.9123549902579,
        "torch_threads": 10
       },
       "summary": {
-       "n_overridden": 1,
-       "n_argmax_taken": 1,
-       "mean_vocab_kept": 0.000013163437236731255,
-       "mean_mass_removed": 0.4614392867042625,
+       "n_overridden": 0,
+       "n_argmax_taken": 13,
+       "mean_vocab_kept": 0.5228400824638715,
+       "mean_mass_removed": 0.018389314576712088,
        "min_n_allowed": 1,
-       "max_stack_depth": 0
+       "max_stack_depth": 1
       }
      },
      "error": null
     },
-    "wall_ms": 1053
+    "wall_ms": 4046
    },
    {
     "constraint": "json",
@@ -8464,32 +8702,89 @@
       "schema_in_prompt": false,
       "use_chat_template": true,
       "prompt_rendered": "",
-      "compile_ms": 0.052167000831104815,
+      "compile_ms": 0.060542006394825876,
       "compile_cached": false,
       "include_steps": false
      },
      "steps": [],
      "done": {
-      "text": "{}",
-      "parsed": {},
+      "text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+      "parsed": {
+       "person": "Ada Lovelace"
+      },
       "valid": false,
-      "validation_error": "JSON does not match the schema: 'name' is a required property",
-      "n_steps": 2,
-      "elapsed_s": 1.1296227810016717,
+      "validation_error": "JSON does not match the schema: Additional properties are not allowed ('person' was unexpected)",
+      "n_steps": 13,
+      "elapsed_s": 3.8718442389945267,
       "stopped_by": "eos",
       "tokens": [
        {
-        "token_id": 6257,
-        "token": "{}",
-        "text": "{}"
+        "token_id": 515,
+        "token": "{Ċ",
+        "text": "{\n"
+       },
+       {
+        "token_id": 220,
+        "token": "Ġ",
+        "text": " "
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 8987,
+        "token": "person",
+        "text": "person"
+       },
+       {
+        "token_id": 788,
+        "token": "\":",
+        "text": "\":"
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 95347,
+        "token": "Ada",
+        "text": "Ada"
+       },
+       {
+        "token_id": 34293,
+        "token": "ĠLov",
+        "text": " Lov"
+       },
+       {
+        "token_id": 301,
+        "token": "el",
+        "text": "el"
+       },
+       {
+        "token_id": 578,
+        "token": "ace",
+        "text": "ace"
+       },
+       {
+        "token_id": 698,
+        "token": "\"Ċ",
+        "text": "\"\n"
+       },
+       {
+        "token_id": 92,
+        "token": "}",
+        "text": "}"
        }
       ],
       "mode": "json",
       "engine_backend": "llguidance",
       "stop_reason": "eos",
       "validation": {
-       "raw_text": "{}",
-       "stripped_text": "{}",
+       "raw_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+       "stripped_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
        "strip_applied": [],
        "raw_parse_ok": true,
        "raw_schema_ok": false,
@@ -8497,59 +8792,57 @@
        "parse_error": null,
        "schema_ok": false,
        "schema_error": {
-        "message": "'name' is a required property",
-        "validator": "required",
+        "message": "Additional properties are not allowed ('person' was unexpected)",
+        "validator": "additionalProperties",
         "path": [],
         "json_path": "$",
         "schema_path": [
-         "required"
+         "additionalProperties"
         ],
-        "validator_value": [
-         "name",
-         "age",
-         "city"
-        ]
+        "validator_value": false
        },
        "schema_error_counts": {
         "required": 3,
-        "additionalProperties": 0,
+        "additionalProperties": 1,
         "type": 0,
         "other": 0
        },
        "stop_reason": "eos",
-       "failure_class": "schema_missing_key",
-       "failure_class_stripped": "schema_missing_key",
-       "parsed": {}
+       "failure_class": "schema_extra_key",
+       "failure_class_stripped": "schema_extra_key",
+       "parsed": {
+        "person": "Ada Lovelace"
+       }
       },
       "timing": {
-       "compile_ms": 0.052167000831104815,
+       "compile_ms": 0.060542006394825876,
        "compile_cached": false,
-       "prefill_ms": 636.8715119970147,
-       "decode_ms": 406.22604800591944,
-       "forward_ms": 1043.0975600029342,
-       "processor_ms": 9.688483005447779,
-       "observer_ms": 25.83417799905874,
-       "sample_ms": 50.80505799560342,
-       "total_ms": 1129.4774460038752,
+       "prefill_ms": 465.5004360101884,
+       "decode_ms": 3093.0856320046587,
+       "forward_ms": 3558.586068014847,
+       "processor_ms": 29.155649986932985,
+       "observer_ms": 91.72454303188715,
+       "sample_ms": 191.4385589916492,
+       "total_ms": 3870.9653620317113,
        "n_prompt_tokens": 56,
-       "n_new_tokens": 1,
-       "tokens_per_s": 1.7708121441778084,
-       "decode_tokens_per_s": 2.461683599337845,
-       "first_token_ms": 691.1077600016142,
+       "n_new_tokens": 12,
+       "tokens_per_s": 3.358387923347332,
+       "decode_tokens_per_s": 3.8796210088185252,
+       "first_token_ms": 492.91595701652113,
        "torch_threads": 10
       },
       "summary": {
-       "n_overridden": 1,
-       "n_argmax_taken": 1,
-       "mean_vocab_kept": 0.000013163437236731255,
-       "mean_mass_removed": 0.4614392867042625,
+       "n_overridden": 0,
+       "n_argmax_taken": 13,
+       "mean_vocab_kept": 0.5228400824638715,
+       "mean_mass_removed": 0.018389314576712088,
        "min_n_allowed": 1,
-       "max_stack_depth": 0
+       "max_stack_depth": 1
       }
      },
      "error": null
     },
-    "wall_ms": 1134
+    "wall_ms": 3876
    },
    {
     "constraint": "json",
@@ -8583,32 +8876,154 @@
       "schema_in_prompt": false,
       "use_chat_template": true,
       "prompt_rendered": "",
-      "compile_ms": 0.056208999012596905,
+      "compile_ms": 0.03558400203473866,
       "compile_cached": false,
       "include_steps": false
      },
      "steps": [],
      "done": {
-      "text": "{}",
-      "parsed": {},
+      "text": "{\n  \"person\": \"Ada Lovelace, 36, lives in London and writes about analytical engines.\"\n}",
+      "parsed": {
+       "person": "Ada Lovelace, 36, lives in London and writes about analytical engines."
+      },
       "valid": false,
-      "validation_error": "JSON does not match the schema: 'name' is a required property",
-      "n_steps": 2,
-      "elapsed_s": 1.0898652149990085,
+      "validation_error": "JSON does not match the schema: Additional properties are not allowed ('person' was unexpected)",
+      "n_steps": 26,
+      "elapsed_s": 7.449768267993932,
       "stopped_by": "eos",
       "tokens": [
        {
-        "token_id": 6257,
-        "token": "{}",
-        "text": "{}"
+        "token_id": 515,
+        "token": "{Ċ",
+        "text": "{\n"
+       },
+       {
+        "token_id": 220,
+        "token": "Ġ",
+        "text": " "
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 8987,
+        "token": "person",
+        "text": "person"
+       },
+       {
+        "token_id": 788,
+        "token": "\":",
+        "text": "\":"
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 95347,
+        "token": "Ada",
+        "text": "Ada"
+       },
+       {
+        "token_id": 34293,
+        "token": "ĠLov",
+        "text": " Lov"
+       },
+       {
+        "token_id": 301,
+        "token": "el",
+        "text": "el"
+       },
+       {
+        "token_id": 578,
+        "token": "ace",
+        "text": "ace"
+       },
+       {
+        "token_id": 11,
+        "token": ",",
+        "text": ","
+       },
+       {
+        "token_id": 220,
+        "token": "Ġ",
+        "text": " "
+       },
+       {
+        "token_id": 18,
+        "token": "3",
+        "text": "3"
+       },
+       {
+        "token_id": 21,
+        "token": "6",
+        "text": "6"
+       },
+       {
+        "token_id": 11,
+        "token": ",",
+        "text": ","
+       },
+       {
+        "token_id": 6305,
+        "token": "Ġlives",
+        "text": " lives"
+       },
+       {
+        "token_id": 304,
+        "token": "Ġin",
+        "text": " in"
+       },
+       {
+        "token_id": 7148,
+        "token": "ĠLondon",
+        "text": " London"
+       },
+       {
+        "token_id": 323,
+        "token": "Ġand",
+        "text": " and"
+       },
+       {
+        "token_id": 13914,
+        "token": "Ġwrites",
+        "text": " writes"
+       },
+       {
+        "token_id": 911,
+        "token": "Ġabout",
+        "text": " about"
+       },
+       {
+        "token_id": 42964,
+        "token": "Ġanalytical",
+        "text": " analytical"
+       },
+       {
+        "token_id": 21106,
+        "token": "Ġengines",
+        "text": " engines"
+       },
+       {
+        "token_id": 10040,
+        "token": ".\"Ċ",
+        "text": ".\"\n"
+       },
+       {
+        "token_id": 92,
+        "token": "}",
+        "text": "}"
        }
       ],
       "mode": "json",
       "engine_backend": "llguidance",
       "stop_reason": "eos",
       "validation": {
-       "raw_text": "{}",
-       "stripped_text": "{}",
+       "raw_text": "{\n  \"person\": \"Ada Lovelace, 36, lives in London and writes about analytical engines.\"\n}",
+       "stripped_text": "{\n  \"person\": \"Ada Lovelace, 36, lives in London and writes about analytical engines.\"\n}",
        "strip_applied": [],
        "raw_parse_ok": true,
        "raw_schema_ok": false,
@@ -8616,59 +9031,57 @@
        "parse_error": null,
        "schema_ok": false,
        "schema_error": {
-        "message": "'name' is a required property",
-        "validator": "required",
+        "message": "Additional properties are not allowed ('person' was unexpected)",
+        "validator": "additionalProperties",
         "path": [],
         "json_path": "$",
         "schema_path": [
-         "required"
+         "additionalProperties"
         ],
-        "validator_value": [
-         "name",
-         "age",
-         "city"
-        ]
+        "validator_value": false
        },
        "schema_error_counts": {
         "required": 3,
-        "additionalProperties": 0,
+        "additionalProperties": 1,
         "type": 0,
         "other": 0
        },
        "stop_reason": "eos",
-       "failure_class": "schema_missing_key",
-       "failure_class_stripped": "schema_missing_key",
-       "parsed": {}
+       "failure_class": "schema_extra_key",
+       "failure_class_stripped": "schema_extra_key",
+       "parsed": {
+        "person": "Ada Lovelace, 36, lives in London and writes about analytical engines."
+       }
       },
       "timing": {
-       "compile_ms": 0.056208999012596905,
+       "compile_ms": 0.03558400203473866,
        "compile_cached": false,
-       "prefill_ms": 685.0587599983555,
-       "decode_ms": 336.0586900016642,
-       "forward_ms": 1021.1174500000197,
-       "processor_ms": 6.419211000320502,
-       "observer_ms": 17.566495997016318,
-       "sample_ms": 44.61164100212045,
-       "total_ms": 1089.7710069984896,
+       "prefill_ms": 476.0147940105526,
+       "decode_ms": 6310.462633002317,
+       "forward_ms": 6786.477427012869,
+       "processor_ms": 64.90423400828149,
+       "observer_ms": 174.65931200422347,
+       "sample_ms": 420.03582998586353,
+       "total_ms": 7446.112387013272,
        "n_prompt_tokens": 56,
-       "n_new_tokens": 1,
-       "tokens_per_s": 1.835342608608826,
-       "decode_tokens_per_s": 2.9756707079797513,
-       "first_token_ms": 723.8795279990882,
+       "n_new_tokens": 25,
+       "tokens_per_s": 3.4917716655145763,
+       "decode_tokens_per_s": 3.9616746748892164,
+       "first_token_ms": 505.75169500370976,
        "torch_threads": 10
       },
       "summary": {
-       "n_overridden": 1,
-       "n_argmax_taken": 1,
-       "mean_vocab_kept": 0.000013163437236731255,
-       "mean_mass_removed": 0.4614392867042625,
+       "n_overridden": 0,
+       "n_argmax_taken": 25,
+       "mean_vocab_kept": 0.7455482267837469,
+       "mean_mass_removed": 0.009206792019136049,
        "min_n_allowed": 1,
-       "max_stack_depth": 0
+       "max_stack_depth": 1
       }
      },
      "error": null
     },
-    "wall_ms": 1094
+    "wall_ms": 7455
    },
    {
     "constraint": "json",
@@ -8702,32 +9115,89 @@
       "schema_in_prompt": false,
       "use_chat_template": true,
       "prompt_rendered": "",
-      "compile_ms": 0.049124995712190866,
+      "compile_ms": 0.04895898746326566,
       "compile_cached": false,
       "include_steps": false
      },
      "steps": [],
      "done": {
-      "text": "{}",
-      "parsed": {},
+      "text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+      "parsed": {
+       "person": "Ada Lovelace"
+      },
       "valid": false,
-      "validation_error": "JSON does not match the schema: 'name' is a required property",
-      "n_steps": 2,
-      "elapsed_s": 0.9990374640037771,
+      "validation_error": "JSON does not match the schema: Additional properties are not allowed ('person' was unexpected)",
+      "n_steps": 13,
+      "elapsed_s": 3.939755603001686,
       "stopped_by": "eos",
       "tokens": [
        {
-        "token_id": 6257,
-        "token": "{}",
-        "text": "{}"
+        "token_id": 515,
+        "token": "{Ċ",
+        "text": "{\n"
+       },
+       {
+        "token_id": 220,
+        "token": "Ġ",
+        "text": " "
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 8987,
+        "token": "person",
+        "text": "person"
+       },
+       {
+        "token_id": 788,
+        "token": "\":",
+        "text": "\":"
+       },
+       {
+        "token_id": 330,
+        "token": "Ġ\"",
+        "text": " \""
+       },
+       {
+        "token_id": 95347,
+        "token": "Ada",
+        "text": "Ada"
+       },
+       {
+        "token_id": 34293,
+        "token": "ĠLov",
+        "text": " Lov"
+       },
+       {
+        "token_id": 301,
+        "token": "el",
+        "text": "el"
+       },
+       {
+        "token_id": 578,
+        "token": "ace",
+        "text": "ace"
+       },
+       {
+        "token_id": 698,
+        "token": "\"Ċ",
+        "text": "\"\n"
+       },
+       {
+        "token_id": 92,
+        "token": "}",
+        "text": "}"
        }
       ],
       "mode": "json",
       "engine_backend": "llguidance",
       "stop_reason": "eos",
       "validation": {
-       "raw_text": "{}",
-       "stripped_text": "{}",
+       "raw_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
+       "stripped_text": "{\n  \"person\": \"Ada Lovelace\"\n}",
        "strip_applied": [],
        "raw_parse_ok": true,
        "raw_schema_ok": false,
@@ -8735,59 +9205,57 @@
        "parse_error": null,
        "schema_ok": false,
        "schema_error": {
-        "message": "'name' is a required property",
-        "validator": "required",
+        "message": "Additional properties are not allowed ('person' was unexpected)",
+        "validator": "additionalProperties",
         "path": [],
         "json_path": "$",
         "schema_path": [
-         "required"
+         "additionalProperties"
         ],
-        "validator_value": [
-         "name",
-         "age",
-         "city"
-        ]
+        "validator_value": false
        },
        "schema_error_counts": {
         "required": 3,
-        "additionalProperties": 0,
+        "additionalProperties": 1,
         "type": 0,
         "other": 0
        },
        "stop_reason": "eos",
-       "failure_class": "schema_missing_key",
-       "failure_class_stripped": "schema_missing_key",
-       "parsed": {}
+       "failure_class": "schema_extra_key",
+       "failure_class_stripped": "schema_extra_key",
+       "parsed": {
+        "person": "Ada Lovelace"
+       }
       },
       "timing": {
-       "compile_ms": 0.049124995712190866,
+       "compile_ms": 0.04895898746326566,
        "compile_cached": false,
-       "prefill_ms": 608.8346100004856,
-       "decode_ms": 324.3484839986195,
-       "forward_ms": 933.183093999105,
-       "processor_ms": 6.650504001299851,
-       "observer_ms": 18.21770901005948,
-       "sample_ms": 40.850281991879456,
-       "total_ms": 998.950713998056,
+       "prefill_ms": 494.58691899781115,
+       "decode_ms": 3136.1558539938414,
+       "forward_ms": 3630.7427729916526,
+       "processor_ms": 30.880776976118796,
+       "observer_ms": 86.98345001903363,
+       "sample_ms": 190.07451797369868,
+       "total_ms": 3938.730476947967,
        "n_prompt_tokens": 56,
-       "n_new_tokens": 1,
-       "tokens_per_s": 2.002199237662147,
-       "decode_tokens_per_s": 3.083103665760486,
-       "first_token_ms": 644.196811997972,
+       "n_new_tokens": 12,
+       "tokens_per_s": 3.3005968979008884,
+       "decode_tokens_per_s": 3.8263404494767705,
+       "first_token_ms": 520.875479982351,
        "torch_threads": 10
       },
       "summary": {
-       "n_overridden": 1,
-       "n_argmax_taken": 1,
-       "mean_vocab_kept": 0.000013163437236731255,
-       "mean_mass_removed": 0.4614392867042625,
+       "n_overridden": 0,
+       "n_argmax_taken": 13,
+       "mean_vocab_kept": 0.5228400824638715,
+       "mean_mass_removed": 0.018389314576712088,
        "min_n_allowed": 1,
-       "max_stack_depth": 0
+       "max_stack_depth": 1
       }
      },
      "error": null
     },
-    "wall_ms": 1004
+    "wall_ms": 3946
    },
    {
     "constraint": "schema",
@@ -21749,7 +22217,7 @@
   ]
  },
  "meta": {
-  "recorded_at": "2026-09-08T04:31:36.974Z",
+  "recorded_at": "2026-09-08T13:24:29.679Z",
   "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
   "transformers_version": "5.16.1",
   "torch_version": "2.14.0+cpu",

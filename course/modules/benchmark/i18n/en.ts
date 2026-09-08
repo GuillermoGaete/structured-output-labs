@@ -15,7 +15,7 @@ const ui: ModuleUi = {
   "chartTotal": "Total time per run",
   "chartTotalNote": "dots = runs · bar = median · tick = p90",
   "chartPerToken": "Milliseconds per token (decode)",
-  "chartPerTokenNote": "the forward pass dominates; the mask adds tenths of a ms",
+  "chartPerTokenNote": "the forward pass dominates; the mask adds 1–2 ms per token",
   "chartPrefill": "Prefill (the pass over the prompt)",
   "chartPrefillNote": "median per mode",
   "chartCompile": "Compile and mask (strict)",

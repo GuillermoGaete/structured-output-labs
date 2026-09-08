@@ -45,7 +45,7 @@ const slides = {
         <Bullets
           items={[
             <><b>Prompt only:</b> the schema goes in the text. The model may ignore it: fence, preamble, invented keys, changed types.</>,
-            <><b>JSON mode:</b> valid JSON of any shape is guaranteed. The parser never fails; the schema validator can.</>,
+            <><b>JSON mode:</b> valid JSON of any shape, as long as the model finishes within the budget. The parser does not fail; the schema validator can.</>,
             <><b>Strict (schema):</b> the whole schema is guaranteed. That is M4: a mask over the logits.</>,
           ]}
         />
@@ -90,6 +90,7 @@ const slides = {
     ),
     notes: (
       <ul>
+        <li>Untick “schema inside the prompt”: without it, prompt only emits a fence 20/20 (does not parse) and JSON mode parses 20/20 but with invented keys; strict still passes. With the schema, JSON mode adds nothing: the remaining failures are truncations and the model echoing the $defs.</li>
         <li>Recorded: N runs per mode with the usual model and prompt (T 0.7, top-p 0.8, schema in the prompt).</li>
         <li>Click a row: the raw output with the fence struck through and what the parser or validator says.</li>
         <li>Live: “Run 1 more” makes a real generation. Only one during the talk.</li>
