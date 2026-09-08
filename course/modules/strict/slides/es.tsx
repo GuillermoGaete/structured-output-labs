@@ -107,7 +107,7 @@ const slides = {
         <Bullets
           items={[
             <><b>Sintaxis, no verdad:</b> la máscara fuerza el marco; los valores los sigue inventando el modelo. Cada paso «anulado» es un lugar donde quería otra cosa.</>,
-            <><b>Los motores difieren en los bordes:</b> claves extra, orden, espacios. <code>additionalProperties: false</code> siempre.</>,
+            <><b>Espacios y fronteras de token:</b> una gramática que prohíbe el espacio enmascara el <code>{" \""}</code> que el modelo escribe tras cada dos puntos y lo empuja a <code>null</code>. Los motores difieren en los bordes: <code>additionalProperties: false</code> siempre.</>,
             <><b>Validar igual:</b> un desenrollado con bug puede aceptar lo que un parser rechaza. json.loads + schema después del loop.</>,
             <><b>Fuera de distribución:</b> quitar el 99 % de la masa es un empujón grande. Seguí pidiendo el formato; la restricción es la red de seguridad.</>,
             <><b>Truncamiento:</b> ningún autómata puede forzar una llave de cierre que no entra en el presupuesto de tokens.</>,

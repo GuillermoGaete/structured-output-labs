@@ -1,7 +1,7 @@
 // Record backend responses as fixture files the course loads with no backend.
 //   BACKEND_URL=http://127.0.0.1:7860 node scripts/record-fixtures.mjs tokens [temperature ...]
 // Writes modules/<id>/fixtures/<fixture>.json and regenerates modules/<id>/fixtures/index.ts.
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { compactExperiment } from "./compact-experiment.mjs";
@@ -36,7 +36,11 @@ function compactForward(res) {
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const base = (process.env.BACKEND_URL ?? "http://127.0.0.1:7860").replace(/\/+$/, "");
-const wanted = process.argv.slice(2);
+const args = process.argv.slice(2);
+// `--constraint json[,none]` re-records only those experiment modes and splices them into the existing file.
+const constraintAt = args.indexOf("--constraint");
+const onlyConstraints = constraintAt >= 0 ? (args[constraintAt + 1] ?? "").split(",").filter(Boolean) : null;
+const wanted = args.filter((a, i) => !a.startsWith("--") && i !== constraintAt + 1);
 const modules = wanted.length ? wanted : Object.keys(RECIPES);
 
 async function getJson(path) {
@@ -105,8 +109,12 @@ for (const moduleId of modules) {
     let response;
     let compile;
     if (recipe.kind === "experiment") {
-      const runs = [];
-      for (const constraint of recipe.modes) {
+      const target = join(dir, `${recipe.id}.json`);
+      const previous = onlyConstraints && existsSync(target) ? JSON.parse(readFileSync(target, "utf8")) : null;
+      if (onlyConstraints && !previous) throw new Error(`--constraint needs an existing ${target} to merge into`);
+      const modes = onlyConstraints ? recipe.modes.filter((m) => onlyConstraints.includes(m)) : recipe.modes;
+      const runs = previous ? previous.response.runs.filter((r) => !modes.includes(r.constraint)) : [];
+      for (const constraint of modes) {
         for (let seed = 0; seed < recipe.n; seed++) {
           const includeSteps = seed < recipe.full;
           // The first strict run pays the compile on purpose so the benchmark can show the cold cost.
@@ -127,6 +135,8 @@ for (const moduleId of modules) {
           process.stdout.write(`  ${recipe.id} ${constraint} seed ${seed}: ${done?.validation?.failure_class ?? error} ${Date.now() - t0} ms\n`);
         }
       }
+      const order = (r) => recipe.modes.indexOf(r.constraint) * 1000 + r.seed;
+      runs.sort((a, b) => order(a) - order(b));
       response = { presetId: recipe.presetId, modes: recipe.modes, n: recipe.n, runs };
     } else if (recipe.kind === "generate") {
       const events = await postSse("/generate", request);

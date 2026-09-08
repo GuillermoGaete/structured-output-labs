@@ -131,3 +131,35 @@ def test_compile_reports_constraint(engine: Engine):
     assert json_mode["mode"] == "json" and json_mode["engine_backend"] == "llguidance"
     schema = engine.compile(PERSON["schema"], "auto", "schema")
     assert schema["mode"] == "fsm" and schema["constraint"] == "schema" and schema["token_dfa"]
+
+
+def _mask_after(engine: Engine, resolved: str, pieces: tuple[str, ...]) -> "torch.Tensor":
+    """Scores the grammar leaves after the model has emitted `pieces` (one vocabulary token each)."""
+    import torch
+
+    proc, _, _, _ = engine.build_processor(PERSON["schema"], resolved)
+    proc.reset()
+    tok = engine.tokenizer
+    ids = torch.tensor([tok.encode("x")], dtype=torch.long)
+    scores = torch.zeros(1, engine.vocab_size)
+    out = proc(ids, scores.clone())  # first call: matchers are created, nothing is consumed yet
+    for piece in pieces:
+        piece_id = tok.convert_tokens_to_ids(piece)
+        assert isinstance(piece_id, int) and piece_id >= 0, piece
+        ids = torch.cat([ids, torch.tensor([[piece_id]], dtype=torch.long)], dim=1)
+        out = proc(ids, scores.clone())
+    return out
+
+
+def test_json_mode_keeps_the_models_whitespace_and_the_schema_grammar_stays_compact(engine: Engine):
+    """JSON mode must not forbid whitespace: masking the model's ` "` after every colon pushes it to `null`."""
+    import torch
+
+    tok = engine.tokenizer
+    newline, space, quote = (tok.convert_tokens_to_ids(t) for t in ("Ċ", "Ġ", '"'))
+    free = _mask_after(engine, "json", ("{",))
+    assert torch.isfinite(free[0, quote])
+    assert torch.isfinite(free[0, newline]) and torch.isfinite(free[0, space])
+    compact = _mask_after(engine, "cfg", ("{",))
+    assert torch.isfinite(compact[0, quote])
+    assert torch.isinf(compact[0, newline]) and torch.isinf(compact[0, space])

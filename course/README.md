@@ -37,6 +37,7 @@ Teclas en el deck: ←/→/Espacio navegar · `f` pantalla completa · `p` prese
 | `npm run tokens` | regenera `design/tokens.css` desde `design/tokens.lab.json` |
 | `npm run sync-figures` | copia las figuras SVG/PNG y las fuentes desde `../presentation` |
 | `BACKEND_URL=… node scripts/record-fixtures.mjs [módulo…]` | graba las fixtures (recetas en `scripts/recipes.mjs`) |
+| `node scripts/record-fixtures.mjs no-strict --constraint json` | regraba solo esos modos de los experimentos y los fusiona en la fixture existente |
 | `node scripts/export-deck.mjs strict es` | PDF de un deck (con el dev server corriendo) |
 | `npm run typecheck && npm run lint && npm test && npm run build` | verificación completa |
 

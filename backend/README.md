@@ -31,8 +31,9 @@ decoding step to the web app. This folder is a complete Hugging Face Space (the 
 Every POST accepts `model` (one of `/models`; the default when omitted). A model that is not resident yet answers
 `503` with `Retry-After` and starts loading; poll `/models`.
 
-`constraint` is `schema` (the JSON Schema is enforced), `json` (any JSON object, llguidance with a permissive schema)
-or `none` (prompting only: no processor, the observers still run). With `schema`, `mode` picks the engine: `auto`
+`constraint` is `schema` (the JSON Schema is enforced), `json` (any JSON object, llguidance with a permissive schema
+and free whitespace, like the APIs' JSON mode: forbidding whitespace masks the ` "` the model writes after every colon
+and pushes it to `null`) or `none` (prompting only: no processor, the observers still run). With `schema`, `mode` picks the engine: `auto`
 (FSM unless the schema is recursive), `fsm` (`outlines_core`) or `cfg` (`llguidance`).
 
 `done` carries `validation` (raw vs stripped text, parse/schema errors, `failure_class`: `ok | fence | preamble |

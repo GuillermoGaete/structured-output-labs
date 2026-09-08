@@ -107,7 +107,7 @@ const slides = {
         <Bullets
           items={[
             <><b>Syntax, not truth:</b> the mask forces the frame; the model still invents the values. Every “overridden” step is a place it wanted something else.</>,
-            <><b>Engines disagree at the edges:</b> extra keys, order, whitespace. <code>additionalProperties: false</code>, always.</>,
+            <><b>Whitespace and token boundaries:</b> a grammar that forbids whitespace masks the <code>{" \""}</code> the model writes after every colon and pushes it to <code>null</code>. Engines differ at the edges: <code>additionalProperties: false</code>, always.</>,
             <><b>Validate anyway:</b> a buggy unroller can accept what a parser rejects. json.loads + schema after the loop.</>,
             <><b>Off-distribution:</b> removing 99 % of the mass is a big push. Still prompt for the format; the constraint is the safety net.</>,
             <><b>Truncation:</b> no automaton can force a closing brace that does not fit in the token budget.</>,

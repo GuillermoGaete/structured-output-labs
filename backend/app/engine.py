@@ -275,11 +275,15 @@ class Engine:
                 return int(guides[0].get_state()) if guides else None
 
             return proc, state_getter, (time.perf_counter() - started) * 1000.0, cached
-        # llguidance would otherwise accept unlimited whitespace between JSON
-        # tokens; keep the output compact, the same shape outlines_core's
-        # default `[ ]?` whitespace produces, so both engines are comparable.
+        # JSON mode (`json`) means "any JSON object", the way the APIs' JSON
+        # mode works: whitespace is free, the model keeps its own layout and
+        # the grammar only steps in on fences, preambles and syntax errors.
+        # `whitespace_flexible: False` forbids *all* whitespace in llguidance;
+        # with it, the ` "` the model wants after every colon is masked and
+        # `null` wins by renormalisation — a token-boundary artefact, not a
+        # property of JSON mode. The schema grammar (`cfg`) stays compact.
         grammar_schema = dict(PERMISSIVE_JSON_SCHEMA if resolved == "json" else schema)
-        grammar_schema["x-guidance"] = {"whitespace_flexible": False}
+        grammar_schema["x-guidance"] = {"whitespace_flexible": resolved == "json"}
         proc = self.llg.get_json_schema_logits_processor(json.dumps(grammar_schema))
         return proc, None, (time.perf_counter() - started) * 1000.0, False
 
