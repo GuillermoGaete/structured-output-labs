@@ -11,9 +11,15 @@ An interactive lab for **constrained decoding**: watch a small language model ge
 - **How it works** — the nine presentation figures (tokens → embeddings → transformer → logits → softmax → mask → automaton → observers → FSM vs CFG).
 
 ```
-web/            Next.js app (deploy to Vercel)          ── talks to ──▶  backend/   FastAPI + outlines (deploy to a Hugging Face Space)
-presentation/   HTML/SVG slides → PNG 1920×1080 + SVG
+course/         The interactive course (Next.js 16, es/en): six modules, each with slides and a lab; works offline from recordings
+web/            The original labs (Schema → Automaton, Time Machine)   ── both talk to ──▶  backend/   FastAPI + transformers + outlines
+presentation/   HTML/SVG figures → PNG 1920×1080 + SVG, and the v1 Marp deck
 ```
+
+The course is the current front end: see [`course/README.md`](course/README.md) (routes, scripts, the talk checklist).
+The backend now also serves unconstrained and JSON-mode generation with a validation report and timings, a model
+selector (`MODEL_IDS`), and introspection endpoints (`/tokenize`, `/forward`, `/logits`): see
+[`backend/README.md`](backend/README.md).
 
 ## How the backend instruments the model
 

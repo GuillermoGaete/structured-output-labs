@@ -38,9 +38,12 @@ export function DataSourceProvider({ children }: { children: React.ReactNode }) 
   const [replayDelayMs, setReplayDelayMs] = useState(0);
 
   useEffect(() => {
+    // `?src=live|recorded|auto` pins the source for this page load (a rehearsal tab); storage otherwise.
+    const fromUrl = new URLSearchParams(window.location.search).get("src");
     const stored = readString(STORAGE_KEYS.dataSource);
+    const pick = fromUrl === "live" || fromUrl === "recorded" || fromUrl === "auto" ? fromUrl : stored;
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (stored === "live" || stored === "recorded" || stored === "auto") setModeState(stored);
+    if (pick === "live" || pick === "recorded" || pick === "auto") setModeState(pick);
   }, []);
 
   const setMode = useCallback((next: DataSourceMode) => {
