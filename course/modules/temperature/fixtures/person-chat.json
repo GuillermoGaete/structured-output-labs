@@ -1,0 +1,1961 @@
+{
+ "$schema": "sol-fixture/1",
+ "id": "person-chat",
+ "kind": "logits",
+ "module": "temperature",
+ "title": {
+  "es": "Prompt Person con template · paso 0",
+  "en": "Person prompt with template · step 0"
+ },
+ "recordedAt": "2026-09-08T03:57:55.013Z",
+ "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+ "request": {
+  "prompt": "Extract the person from this text as JSON: Ada Lovelace, 36, lives in London and writes about analytical engines.",
+  "use_chat_template": true,
+  "top_k": 200,
+  "tail_buckets": 64,
+  "full_logits": false
+ },
+ "response": {
+  "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "rendered": "<|im_start|>system\nYou are a JSON generator. Reply with a single JSON object and nothing else.<|im_end|>\n<|im_start|>user\nExtract the person from this text as JSON: Ada Lovelace, 36, lives in London and writes about analytical engines.<|im_end|>\n<|im_start|>assistant\n",
+  "n_tokens": 56,
+  "vocab_size": 151936,
+  "vocab_entries": 151665,
+  "padding_rows_start": 151665,
+  "logsumexp": 24.5063,
+  "max_logit": 24.1276,
+  "min_logit": -14.8799,
+  "entropy_nats": 0.9239,
+  "entropy_bits": 1.3329,
+  "top": [
+   {
+    "rank": 0,
+    "token_id": 515,
+    "token": "{Ċ",
+    "text": "{\n",
+    "logit": 24.1276,
+    "p": 0.6847
+   },
+   {
+    "rank": 1,
+    "token_id": 73594,
+    "token": "```",
+    "text": "```",
+    "logit": 23.0349,
+    "p": 0.2296
+   },
+   {
+    "rank": 2,
+    "token_id": 6257,
+    "token": "{}",
+    "text": "{}",
+    "logit": 21.1092,
+    "p": 0.0335
+   },
+   {
+    "rank": 3,
+    "token_id": 4913,
+    "token": "{\"",
+    "text": "{\"",
+    "logit": 21.0822,
+    "p": 0.0326
+   },
+   {
+    "rank": 4,
+    "token_id": 90,
+    "token": "{",
+    "text": "{",
+    "logit": 20.0073,
+    "p": 0.0111
+   },
+   {
+    "rank": 5,
+    "token_id": 16094,
+    "token": "{}Ċ",
+    "text": "{}\n",
+    "logit": 19.4274,
+    "p": 0.0062
+   },
+   {
+    "rank": 6,
+    "token_id": 13874,
+    "token": "``",
+    "text": "``",
+    "logit": 17.2382,
+    "p": 0.0007
+   },
+   {
+    "rank": 7,
+    "token_id": 22655,
+    "token": "{},",
+    "text": "{},",
+    "logit": 16.5561,
+    "p": 0.0004
+   },
+   {
+    "rank": 8,
+    "token_id": 31483,
+    "token": "{}ĊĊ",
+    "text": "{}\n\n",
+    "logit": 16.1696,
+    "p": 0.0002
+   },
+   {
+    "rank": 9,
+    "token_id": 37790,
+    "token": "{})Ċ",
+    "text": "{})\n",
+    "logit": 16.07,
+    "p": 0.0002
+   },
+   {
+    "rank": 10,
+    "token_id": 38837,
+    "token": "{},Ċ",
+    "text": "{},\n",
+    "logit": 15.8734,
+    "p": 0.0002
+   },
+   {
+    "rank": 11,
+    "token_id": 13608,
+    "token": "{'",
+    "text": "{'",
+    "logit": 15.757,
+    "p": 0.0002
+   },
+   {
+    "rank": 12,
+    "token_id": 28875,
+    "token": "{})",
+    "text": "{})",
+    "logit": 14.8715,
+    "p": 0.0001
+   },
+   {
+    "rank": 13,
+    "token_id": 14129,
+    "token": "\"{",
+    "text": "\"{",
+    "logit": 14.4768,
+    "p": 0
+   },
+   {
+    "rank": 14,
+    "token_id": 44986,
+    "token": "{:",
+    "text": "{:",
+    "logit": 14.2135,
+    "p": 0
+   },
+   {
+    "rank": 15,
+    "token_id": 1,
+    "token": "\"",
+    "text": "\"",
+    "logit": 13.5341,
+    "p": 0
+   },
+   {
+    "rank": 16,
+    "token_id": 341,
+    "token": "Ġ{Ċ",
+    "text": " {\n",
+    "logit": 13.4106,
+    "p": 0
+   },
+   {
+    "rank": 17,
+    "token_id": 5212,
+    "token": "Ġ{\"",
+    "text": " {\"",
+    "logit": 13.3338,
+    "p": 0
+   },
+   {
+    "rank": 18,
+    "token_id": 45982,
+    "token": "{};Ċ",
+    "text": "{};\n",
+    "logit": 13.2227,
+    "p": 0
+   },
+   {
+    "rank": 19,
+    "token_id": 87963,
+    "token": "{}\\",
+    "text": "{}\\",
+    "logit": 12.9418,
+    "p": 0
+   },
+   {
+    "rank": 20,
+    "token_id": 46391,
+    "token": "{}.",
+    "text": "{}.",
+    "logit": 12.8962,
+    "p": 0
+   },
+   {
+    "rank": 21,
+    "token_id": 35702,
+    "token": "{\\",
+    "text": "{\\",
+    "logit": 12.8176,
+    "p": 0
+   },
+   {
+    "rank": 22,
+    "token_id": 1666,
+    "token": "{čĊ",
+    "text": "{\r\n",
+    "logit": 12.6561,
+    "p": 0
+   },
+   {
+    "rank": 23,
+    "token_id": 4257,
+    "token": "{ĊĊ",
+    "text": "{\n\n",
+    "logit": 12.5858,
+    "p": 0
+   },
+   {
+    "rank": 24,
+    "token_id": 12,
+    "token": "-",
+    "text": "-",
+    "logit": 12.5565,
+    "p": 0
+   },
+   {
+    "rank": 25,
+    "token_id": 66365,
+    "token": "{%",
+    "text": "{%",
+    "logit": 12.5531,
+    "p": 0
+   },
+   {
+    "rank": 26,
+    "token_id": 5613,
+    "token": "Ġ{}Ċ",
+    "text": " {}\n",
+    "logit": 12.4182,
+    "p": 0
+   },
+   {
+    "rank": 27,
+    "token_id": 99141,
+    "token": "(\"{\\\"",
+    "text": "(\"{\\\"",
+    "logit": 12.3596,
+    "p": 0
+   },
+   {
+    "rank": 28,
+    "token_id": 63,
+    "token": "`",
+    "text": "`",
+    "logit": 12.3494,
+    "p": 0
+   },
+   {
+    "rank": 29,
+    "token_id": 78134,
+    "token": "{}]",
+    "text": "{}]",
+    "logit": 12.243,
+    "p": 0
+   },
+   {
+    "rank": 30,
+    "token_id": 4,
+    "token": "%",
+    "text": "%",
+    "logit": 12.2365,
+    "p": 0
+   },
+   {
+    "rank": 31,
+    "token_id": 68806,
+    "token": "({})Ċ",
+    "text": "({})\n",
+    "logit": 12.2116,
+    "p": 0
+   },
+   {
+    "rank": 32,
+    "token_id": 42351,
+    "token": "{}\",",
+    "text": "{}\",",
+    "logit": 12.1327,
+    "p": 0
+   },
+   {
+    "rank": 33,
+    "token_id": 532,
+    "token": "}Ċ",
+    "text": "}\n",
+    "logit": 12.0646,
+    "p": 0
+   },
+   {
+    "rank": 34,
+    "token_id": 151643,
+    "token": "<|endoftext|>",
+    "text": "<|endoftext|>",
+    "logit": 12.0395,
+    "p": 0
+   },
+   {
+    "rank": 35,
+    "token_id": 16864,
+    "token": "({\"",
+    "text": "({\"",
+    "logit": 11.9759,
+    "p": 0
+   },
+   {
+    "rank": 36,
+    "token_id": 3989,
+    "token": "`Ċ",
+    "text": "`\n",
+    "logit": 11.9542,
+    "p": 0
+   },
+   {
+    "rank": 37,
+    "token_id": 41446,
+    "token": ">{Ċ",
+    "text": ">{\n",
+    "logit": 11.9414,
+    "p": 0
+   },
+   {
+    "rank": 38,
+    "token_id": 2979,
+    "token": "{{",
+    "text": "{{",
+    "logit": 11.8683,
+    "p": 0
+   },
+   {
+    "rank": 39,
+    "token_id": 60,
+    "token": "]",
+    "text": "]",
+    "logit": 11.8581,
+    "p": 0
+   },
+   {
+    "rank": 40,
+    "token_id": 2236,
+    "token": "json",
+    "text": "json",
+    "logit": 11.8231,
+    "p": 0
+   },
+   {
+    "rank": 41,
+    "token_id": 64238,
+    "token": "{\\\"",
+    "text": "{\\\"",
+    "logit": 11.7973,
+    "p": 0
+   },
+   {
+    "rank": 42,
+    "token_id": 9640,
+    "token": "[Ċ",
+    "text": "[\n",
+    "logit": 11.7232,
+    "p": 0
+   },
+   {
+    "rank": 43,
+    "token_id": 8420,
+    "token": "Here",
+    "text": "Here",
+    "logit": 11.6827,
+    "p": 0
+   },
+   {
+    "rank": 44,
+    "token_id": 4687,
+    "token": "Ġ{}",
+    "text": " {}",
+    "logit": 11.6319,
+    "p": 0
+   },
+   {
+    "rank": 45,
+    "token_id": 110421,
+    "token": "ä¸įåĩºæĿ¥",
+    "text": "不出来",
+    "logit": 11.5887,
+    "p": 0
+   },
+   {
+    "rank": 46,
+    "token_id": 101480,
+    "token": "ä¸įåĩº",
+    "text": "不出",
+    "logit": 11.5057,
+    "p": 0
+   },
+   {
+    "rank": 47,
+    "token_id": 42025,
+    "token": "{}\".",
+    "text": "{}\".",
+    "logit": 11.397,
+    "p": 0
+   },
+   {
+    "rank": 48,
+    "token_id": 15783,
+    "token": "={\"",
+    "text": "={\"",
+    "logit": 11.3348,
+    "p": 0
+   },
+   {
+    "rank": 49,
+    "token_id": 92,
+    "token": "}",
+    "text": "}",
+    "logit": 11.3297,
+    "p": 0
+   },
+   {
+    "rank": 50,
+    "token_id": 921,
+    "token": "]Ċ",
+    "text": "]\n",
+    "logit": 11.2918,
+    "p": 0
+   },
+   {
+    "rank": 51,
+    "token_id": 53430,
+    "token": "(\"{}",
+    "text": "(\"{}",
+    "logit": 11.28,
+    "p": 0
+   },
+   {
+    "rank": 52,
+    "token_id": 3014,
+    "token": "\"\"",
+    "text": "\"\"",
+    "logit": 11.2382,
+    "p": 0
+   },
+   {
+    "rank": 53,
+    "token_id": 54275,
+    "token": "Ġ```",
+    "text": " ```",
+    "logit": 11.1525,
+    "p": 0
+   },
+   {
+    "rank": 54,
+    "token_id": 5370,
+    "token": "JSON",
+    "text": "JSON",
+    "logit": 11.1465,
+    "p": 0
+   },
+   {
+    "rank": 55,
+    "token_id": 12599,
+    "token": "\"\"\"",
+    "text": "\"\"\"",
+    "logit": 11.1063,
+    "p": 0
+   },
+   {
+    "rank": 56,
+    "token_id": 7129,
+    "token": "\"\"\"Ċ",
+    "text": "\"\"\"\n",
+    "logit": 10.9008,
+    "p": 0
+   },
+   {
+    "rank": 57,
+    "token_id": 19999,
+    "token": "{-",
+    "text": "{-",
+    "logit": 10.7814,
+    "p": 0
+   },
+   {
+    "rank": 58,
+    "token_id": 84609,
+    "token": "eyJ",
+    "text": "eyJ",
+    "logit": 10.5932,
+    "p": 0
+   },
+   {
+    "rank": 59,
+    "token_id": 88863,
+    "token": ">{\"",
+    "text": ">{\"",
+    "logit": 10.5372,
+    "p": 0
+   },
+   {
+    "rank": 60,
+    "token_id": 67678,
+    "token": "{/",
+    "text": "{/",
+    "logit": 10.5071,
+    "p": 0
+   },
+   {
+    "rank": 61,
+    "token_id": 2365,
+    "token": "${",
+    "text": "${",
+    "logit": 10.3629,
+    "p": 0
+   },
+   {
+    "rank": 62,
+    "token_id": 262,
+    "token": "ĠĠĠ",
+    "text": "   ",
+    "logit": 10.3246,
+    "p": 0
+   },
+   {
+    "rank": 63,
+    "token_id": 61761,
+    "token": "{id",
+    "text": "{id",
+    "logit": 10.3229,
+    "p": 0
+   },
+   {
+    "rank": 64,
+    "token_id": 87665,
+    "token": "Retrieve",
+    "text": "Retrieve",
+    "logit": 10.2589,
+    "p": 0
+   },
+   {
+    "rank": 65,
+    "token_id": 5097,
+    "token": "Output",
+    "text": "Output",
+    "logit": 10.2207,
+    "p": 0
+   },
+   {
+    "rank": 66,
+    "token_id": 2262,
+    "token": "({Ċ",
+    "text": "({\n",
+    "logit": 10.2136,
+    "p": 0
+   },
+   {
+    "rank": 67,
+    "token_id": 64077,
+    "token": "]>Ċ",
+    "text": "]>\n",
+    "logit": 10.2104,
+    "p": 0
+   },
+   {
+    "rank": 68,
+    "token_id": 10952,
+    "token": "---Ċ",
+    "text": "---\n",
+    "logit": 10.1917,
+    "p": 0
+   },
+   {
+    "rank": 69,
+    "token_id": 5993,
+    "token": "?>Ċ",
+    "text": "?>\n",
+    "logit": 10.1305,
+    "p": 0
+   },
+   {
+    "rank": 70,
+    "token_id": 4064,
+    "token": "None",
+    "text": "None",
+    "logit": 10.1139,
+    "p": 0
+   },
+   {
+    "rank": 71,
+    "token_id": 96270,
+    "token": "\"@",
+    "text": "\"@",
+    "logit": 10.1007,
+    "p": 0
+   },
+   {
+    "rank": 72,
+    "token_id": 87930,
+    "token": "\"\"\".",
+    "text": "\"\"\".",
+    "logit": 10.0343,
+    "p": 0
+   },
+   {
+    "rank": 73,
+    "token_id": 39917,
+    "token": "\"`",
+    "text": "\"`",
+    "logit": 10.0046,
+    "p": 0
+   },
+   {
+    "rank": 74,
+    "token_id": 43375,
+    "token": "JsonObject",
+    "text": "JsonObject",
+    "logit": 9.985,
+    "p": 0
+   },
+   {
+    "rank": 75,
+    "token_id": 17554,
+    "token": "={Ċ",
+    "text": "={\n",
+    "logit": 9.9514,
+    "p": 0
+   },
+   {
+    "rank": 76,
+    "token_id": 10086,
+    "token": "Ġ{}ĊĊ",
+    "text": " {}\n\n",
+    "logit": 9.8142,
+    "p": 0
+   },
+   {
+    "rank": 77,
+    "token_id": 61528,
+    "token": "(`Ċ",
+    "text": "(`\n",
+    "logit": 9.804,
+    "p": 0
+   },
+   {
+    "rank": 78,
+    "token_id": 32531,
+    "token": "{o",
+    "text": "{o",
+    "logit": 9.7874,
+    "p": 0
+   },
+   {
+    "rank": 79,
+    "token_id": 31,
+    "token": "@",
+    "text": "@",
+    "logit": 9.756,
+    "p": 0
+   },
+   {
+    "rank": 80,
+    "token_id": 58,
+    "token": "[",
+    "text": "[",
+    "logit": 9.7477,
+    "p": 0
+   },
+   {
+    "rank": 81,
+    "token_id": 1264,
+    "token": "){Ċ",
+    "text": "){\n",
+    "logit": 9.7246,
+    "p": 0
+   },
+   {
+    "rank": 82,
+    "token_id": 2122,
+    "token": "ret",
+    "text": "ret",
+    "logit": 9.721,
+    "p": 0
+   },
+   {
+    "rank": 83,
+    "token_id": 5541,
+    "token": "}`",
+    "text": "}`",
+    "logit": 9.6625,
+    "p": 0
+   },
+   {
+    "rank": 84,
+    "token_id": 31091,
+    "token": "@Entity",
+    "text": "@Entity",
+    "logit": 9.6511,
+    "p": 0
+   },
+   {
+    "rank": 85,
+    "token_id": 6667,
+    "token": "âĢ¢",
+    "text": "•",
+    "logit": 9.6402,
+    "p": 0
+   },
+   {
+    "rank": 86,
+    "token_id": 1041,
+    "token": "raw",
+    "text": "raw",
+    "logit": 9.6371,
+    "p": 0
+   },
+   {
+    "rank": 87,
+    "token_id": 15170,
+    "token": "}{",
+    "text": "}{",
+    "logit": 9.637,
+    "p": 0
+   },
+   {
+    "rank": 88,
+    "token_id": 7082,
+    "token": "API",
+    "text": "API",
+    "logit": 9.633,
+    "p": 0
+   },
+   {
+    "rank": 89,
+    "token_id": 28434,
+    "token": ".gson",
+    "text": ".gson",
+    "logit": 9.61,
+    "p": 0
+   },
+   {
+    "rank": 90,
+    "token_id": 2753,
+    "token": "No",
+    "text": "No",
+    "logit": 9.5925,
+    "p": 0
+   },
+   {
+    "rank": 91,
+    "token_id": 41233,
+    "token": "Ġ```Ċ",
+    "text": " ```\n",
+    "logit": 9.581,
+    "p": 0
+   },
+   {
+    "rank": 92,
+    "token_id": 1551,
+    "token": "html",
+    "text": "html",
+    "logit": 9.5363,
+    "p": 0
+   },
+   {
+    "rank": 93,
+    "token_id": 52416,
+    "token": "Fetching",
+    "text": "Fetching",
+    "logit": 9.4836,
+    "p": 0
+   },
+   {
+    "rank": 94,
+    "token_id": 31391,
+    "token": "\"%",
+    "text": "\"%",
+    "logit": 9.4703,
+    "p": 0
+   },
+   {
+    "rank": 95,
+    "token_id": 63347,
+    "token": "-{",
+    "text": "-{",
+    "logit": 9.4584,
+    "p": 0
+   },
+   {
+    "rank": 96,
+    "token_id": 8,
+    "token": ")",
+    "text": ")",
+    "logit": 9.4552,
+    "p": 0
+   },
+   {
+    "rank": 97,
+    "token_id": 89262,
+    "token": "\"\"Ċ",
+    "text": "\"\"\n",
+    "logit": 9.4464,
+    "p": 0
+   },
+   {
+    "rank": 98,
+    "token_id": 785,
+    "token": "The",
+    "text": "The",
+    "logit": 9.4379,
+    "p": 0
+   },
+   {
+    "rank": 99,
+    "token_id": 2,
+    "token": "#",
+    "text": "#",
+    "logit": 9.4039,
+    "p": 0
+   },
+   {
+    "rank": 100,
+    "token_id": 1986,
+    "token": "This",
+    "text": "This",
+    "logit": 9.3917,
+    "p": 0
+   },
+   {
+    "rank": 101,
+    "token_id": 11962,
+    "token": "avatar",
+    "text": "avatar",
+    "logit": 9.3872,
+    "p": 0
+   },
+   {
+    "rank": 102,
+    "token_id": 53799,
+    "token": "ffi",
+    "text": "ffi",
+    "logit": 9.3717,
+    "p": 0
+   },
+   {
+    "rank": 103,
+    "token_id": 698,
+    "token": "\"Ċ",
+    "text": "\"\n",
+    "logit": 9.3589,
+    "p": 0
+   },
+   {
+    "rank": 104,
+    "token_id": 197,
+    "token": "ĉ",
+    "text": "\t",
+    "logit": 9.3514,
+    "p": 0
+   },
+   {
+    "rank": 105,
+    "token_id": 19190,
+    "token": "character",
+    "text": "character",
+    "logit": 9.3457,
+    "p": 0
+   },
+   {
+    "rank": 106,
+    "token_id": 59,
+    "token": "\\",
+    "text": "\\",
+    "logit": 9.325,
+    "p": 0
+   },
+   {
+    "rank": 107,
+    "token_id": 15075,
+    "token": "\"\"\"ĊĊ",
+    "text": "\"\"\"\n\n",
+    "logit": 9.2935,
+    "p": 0
+   },
+   {
+    "rank": 108,
+    "token_id": 84274,
+    "token": "``Ċ",
+    "text": "``\n",
+    "logit": 9.252,
+    "p": 0
+   },
+   {
+    "rank": 109,
+    "token_id": 21949,
+    "token": "({},",
+    "text": "({},",
+    "logit": 9.2421,
+    "p": 0
+   },
+   {
+    "rank": 110,
+    "token_id": 14085,
+    "token": "$$",
+    "text": "$$",
+    "logit": 9.2122,
+    "p": 0
+   },
+   {
+    "rank": 111,
+    "token_id": 2921,
+    "token": "null",
+    "text": "null",
+    "logit": 9.1949,
+    "p": 0
+   },
+   {
+    "rank": 112,
+    "token_id": 9749,
+    "token": "\"github",
+    "text": "\"github",
+    "logit": 9.1591,
+    "p": 0
+   },
+   {
+    "rank": 113,
+    "token_id": 42884,
+    "token": "\"encoding",
+    "text": "\"encoding",
+    "logit": 9.1549,
+    "p": 0
+   },
+   {
+    "rank": 114,
+    "token_id": 76025,
+    "token": "{T",
+    "text": "{T",
+    "logit": 9.1369,
+    "p": 0
+   },
+   {
+    "rank": 115,
+    "token_id": 33975,
+    "token": "Human",
+    "text": "Human",
+    "logit": 9.1223,
+    "p": 0
+   },
+   {
+    "rank": 116,
+    "token_id": 34294,
+    "token": "\"-",
+    "text": "\"-",
+    "logit": 9.101,
+    "p": 0
+   },
+   {
+    "rank": 117,
+    "token_id": 691,
+    "token": "data",
+    "text": "data",
+    "logit": 9.0949,
+    "p": 0
+   },
+   {
+    "rank": 118,
+    "token_id": 23493,
+    "token": "extract",
+    "text": "extract",
+    "logit": 9.0814,
+    "p": 0
+   },
+   {
+    "rank": 119,
+    "token_id": 49878,
+    "token": "formatted",
+    "text": "formatted",
+    "logit": 9.0794,
+    "p": 0
+   },
+   {
+    "rank": 120,
+    "token_id": 3276,
+    "token": "*/Ċ",
+    "text": "*/\n",
+    "logit": 9.0738,
+    "p": 0
+   },
+   {
+    "rank": 121,
+    "token_id": 97049,
+    "token": "Ġ\"{\"",
+    "text": " \"{\"",
+    "logit": 9.0632,
+    "p": 0
+   },
+   {
+    "rank": 122,
+    "token_id": 27073,
+    "token": "autom",
+    "text": "autom",
+    "logit": 9.0374,
+    "p": 0
+   },
+   {
+    "rank": 123,
+    "token_id": 7360,
+    "token": "|Ċ",
+    "text": "|\n",
+    "logit": 8.9974,
+    "p": 0
+   },
+   {
+    "rank": 124,
+    "token_id": 51,
+    "token": "T",
+    "text": "T",
+    "logit": 8.9843,
+    "p": 0
+   },
+   {
+    "rank": 125,
+    "token_id": 2068,
+    "token": "api",
+    "text": "api",
+    "logit": 8.9836,
+    "p": 0
+   },
+   {
+    "rank": 126,
+    "token_id": 35503,
+    "token": "Ġ\"{}",
+    "text": " \"{}",
+    "logit": 8.9695,
+    "p": 0
+   },
+   {
+    "rank": 127,
+    "token_id": 7003,
+    "token": "{$",
+    "text": "{$",
+    "logit": 8.9638,
+    "p": 0
+   },
+   {
+    "rank": 128,
+    "token_id": 16930,
+    "token": "+Ċ",
+    "text": "+\n",
+    "logit": 8.9474,
+    "p": 0
+   },
+   {
+    "rank": 129,
+    "token_id": 29133,
+    "token": "\"A",
+    "text": "\"A",
+    "logit": 8.9157,
+    "p": 0
+   },
+   {
+    "rank": 130,
+    "token_id": 1316,
+    "token": "<?",
+    "text": "<?",
+    "logit": 8.913,
+    "p": 0
+   },
+   {
+    "rank": 131,
+    "token_id": 64130,
+    "token": "locals",
+    "text": "locals",
+    "logit": 8.9084,
+    "p": 0
+   },
+   {
+    "rank": 132,
+    "token_id": 54734,
+    "token": "Ġ\"{\\\"",
+    "text": " \"{\\\"",
+    "logit": 8.8951,
+    "p": 0
+   },
+   {
+    "rank": 133,
+    "token_id": 5661,
+    "token": "\\Ċ",
+    "text": "\\\n",
+    "logit": 8.8944,
+    "p": 0
+   },
+   {
+    "rank": 134,
+    "token_id": 38,
+    "token": "G",
+    "text": "G",
+    "logit": 8.8885,
+    "p": 0
+   },
+   {
+    "rank": 135,
+    "token_id": 71703,
+    "token": "Assistant",
+    "text": "Assistant",
+    "logit": 8.8841,
+    "p": 0
+   },
+   {
+    "rank": 136,
+    "token_id": 56080,
+    "token": "-json",
+    "text": "-json",
+    "logit": 8.8816,
+    "p": 0
+   },
+   {
+    "rank": 137,
+    "token_id": 13744,
+    "token": "%Ċ",
+    "text": "%\n",
+    "logit": 8.8753,
+    "p": 0
+   },
+   {
+    "rank": 138,
+    "token_id": 1259,
+    "token": "],Ċ",
+    "text": "],\n",
+    "logit": 8.8664,
+    "p": 0
+   },
+   {
+    "rank": 139,
+    "token_id": 73985,
+    "token": "toJson",
+    "text": "toJson",
+    "logit": 8.8555,
+    "p": 0
+   },
+   {
+    "rank": 140,
+    "token_id": 18081,
+    "token": "\">{",
+    "text": "\">{",
+    "logit": 8.8418,
+    "p": 0
+   },
+   {
+    "rank": 141,
+    "token_id": 31579,
+    "token": "ĠNewtonsoft",
+    "text": " Newtonsoft",
+    "logit": 8.8301,
+    "p": 0
+   },
+   {
+    "rank": 142,
+    "token_id": 340,
+    "token": ")Ċ",
+    "text": ")\n",
+    "logit": 8.8246,
+    "p": 0
+   },
+   {
+    "rank": 143,
+    "token_id": 45340,
+    "token": "{x",
+    "text": "{x",
+    "logit": 8.8219,
+    "p": 0
+   },
+   {
+    "rank": 144,
+    "token_id": 9454,
+    "token": "Yes",
+    "text": "Yes",
+    "logit": 8.7976,
+    "p": 0
+   },
+   {
+    "rank": 145,
+    "token_id": 59221,
+    "token": "{@",
+    "text": "{@",
+    "logit": 8.7962,
+    "p": 0
+   },
+   {
+    "rank": 146,
+    "token_id": 67080,
+    "token": "automation",
+    "text": "automation",
+    "logit": 8.7668,
+    "p": 0
+   },
+   {
+    "rank": 147,
+    "token_id": 47485,
+    "token": "characters",
+    "text": "characters",
+    "logit": 8.7644,
+    "p": 0
+   },
+   {
+    "rank": 148,
+    "token_id": 1533,
+    "token": "export",
+    "text": "export",
+    "logit": 8.7236,
+    "p": 0
+   },
+   {
+    "rank": 149,
+    "token_id": 3225,
+    "token": "ï»¿",
+    "text": "﻿",
+    "logit": 8.7112,
+    "p": 0
+   },
+   {
+    "rank": 150,
+    "token_id": 6913,
+    "token": "-Ċ",
+    "text": "-\n",
+    "logit": 8.6918,
+    "p": 0
+   },
+   {
+    "rank": 151,
+    "token_id": 3087,
+    "token": "event",
+    "text": "event",
+    "logit": 8.6796,
+    "p": 0
+   },
+   {
+    "rank": 152,
+    "token_id": 53632,
+    "token": "{ĊĊĊ",
+    "text": "{\n\n\n",
+    "logit": 8.675,
+    "p": 0
+   },
+   {
+    "rank": 153,
+    "token_id": 13976,
+    "token": "(\"{",
+    "text": "(\"{",
+    "logit": 8.663,
+    "p": 0
+   },
+   {
+    "rank": 154,
+    "token_id": 37588,
+    "token": "BEGIN",
+    "text": "BEGIN",
+    "logit": 8.6542,
+    "p": 0
+   },
+   {
+    "rank": 155,
+    "token_id": 2243,
+    "token": "format",
+    "text": "format",
+    "logit": 8.6538,
+    "p": 0
+   },
+   {
+    "rank": 156,
+    "token_id": 12389,
+    "token": "events",
+    "text": "events",
+    "logit": 8.6531,
+    "p": 0
+   },
+   {
+    "rank": 157,
+    "token_id": 27,
+    "token": "<",
+    "text": "<",
+    "logit": 8.6517,
+    "p": 0
+   },
+   {
+    "rank": 158,
+    "token_id": 1294,
+    "token": "[]",
+    "text": "[]",
+    "logit": 8.6463,
+    "p": 0
+   },
+   {
+    "rank": 159,
+    "token_id": 41561,
+    "token": "@Data",
+    "text": "@Data",
+    "logit": 8.6326,
+    "p": 0
+   },
+   {
+    "rank": 160,
+    "token_id": 38849,
+    "token": "Craft",
+    "text": "Craft",
+    "logit": 8.6269,
+    "p": 0
+   },
+   {
+    "rank": 161,
+    "token_id": 28959,
+    "token": "Extract",
+    "text": "Extract",
+    "logit": 8.5996,
+    "p": 0
+   },
+   {
+    "rank": 162,
+    "token_id": 57676,
+    "token": "\"#",
+    "text": "\"#",
+    "logit": 8.5982,
+    "p": 0
+   },
+   {
+    "rank": 163,
+    "token_id": 397,
+    "token": ">Ċ",
+    "text": ">\n",
+    "logit": 8.595,
+    "p": 0
+   },
+   {
+    "rank": 164,
+    "token_id": 5,
+    "token": "&",
+    "text": "&",
+    "logit": 8.5947,
+    "p": 0
+   },
+   {
+    "rank": 165,
+    "token_id": 48109,
+    "token": "({});Ċ",
+    "text": "({});\n",
+    "logit": 8.5806,
+    "p": 0
+   },
+   {
+    "rank": 166,
+    "token_id": 20705,
+    "token": "Her",
+    "text": "Her",
+    "logit": 8.5792,
+    "p": 0
+   },
+   {
+    "rank": 167,
+    "token_id": 25486,
+    "token": "Embed",
+    "text": "Embed",
+    "logit": 8.5607,
+    "p": 0
+   },
+   {
+    "rank": 168,
+    "token_id": 43,
+    "token": "L",
+    "text": "L",
+    "logit": 8.5589,
+    "p": 0
+   },
+   {
+    "rank": 169,
+    "token_id": 32,
+    "token": "A",
+    "text": "A",
+    "logit": 8.5483,
+    "p": 0
+   },
+   {
+    "rank": 170,
+    "token_id": 93916,
+    "token": "-La",
+    "text": "-La",
+    "logit": 8.5238,
+    "p": 0
+   },
+   {
+    "rank": 171,
+    "token_id": 97756,
+    "token": "fromJson",
+    "text": "fromJson",
+    "logit": 8.5176,
+    "p": 0
+   },
+   {
+    "rank": 172,
+    "token_id": 38214,
+    "token": "Below",
+    "text": "Below",
+    "logit": 8.4856,
+    "p": 0
+   },
+   {
+    "rank": 173,
+    "token_id": 97976,
+    "token": "-No",
+    "text": "-No",
+    "logit": 8.4851,
+    "p": 0
+   },
+   {
+    "rank": 174,
+    "token_id": 53062,
+    "token": "availability",
+    "text": "availability",
+    "logit": 8.4825,
+    "p": 0
+   },
+   {
+    "rank": 175,
+    "token_id": 22043,
+    "token": "Given",
+    "text": "Given",
+    "logit": 8.482,
+    "p": 0
+   },
+   {
+    "rank": 176,
+    "token_id": 4421,
+    "token": "---",
+    "text": "---",
+    "logit": 8.4818,
+    "p": 0
+   },
+   {
+    "rank": 177,
+    "token_id": 1183,
+    "token": "[\"",
+    "text": "[\"",
+    "logit": 8.4705,
+    "p": 0
+   },
+   {
+    "rank": 178,
+    "token_id": 54155,
+    "token": "usterity",
+    "text": "usterity",
+    "logit": 8.4669,
+    "p": 0
+   },
+   {
+    "rank": 179,
+    "token_id": 24126,
+    "token": "'{",
+    "text": "'{",
+    "logit": 8.4564,
+    "p": 0
+   },
+   {
+    "rank": 180,
+    "token_id": 97806,
+    "token": "{*",
+    "text": "{*",
+    "logit": 8.449,
+    "p": 0
+   },
+   {
+    "rank": 181,
+    "token_id": 16984,
+    "token": "Employee",
+    "text": "Employee",
+    "logit": 8.4436,
+    "p": 0
+   },
+   {
+    "rank": 182,
+    "token_id": 10662,
+    "token": "(\"@",
+    "text": "(\"@",
+    "logit": 8.4259,
+    "p": 0
+   },
+   {
+    "rank": 183,
+    "token_id": 7309,
+    "token": ">{",
+    "text": ">{",
+    "logit": 8.4233,
+    "p": 0
+   },
+   {
+    "rank": 184,
+    "token_id": 52108,
+    "token": "[{",
+    "text": "[{",
+    "logit": 8.4201,
+    "p": 0
+   },
+   {
+    "rank": 185,
+    "token_id": 12020,
+    "token": "Ret",
+    "text": "Ret",
+    "logit": 8.4182,
+    "p": 0
+   },
+   {
+    "rank": 186,
+    "token_id": 24166,
+    "token": "serialize",
+    "text": "serialize",
+    "logit": 8.4155,
+    "p": 0
+   },
+   {
+    "rank": 187,
+    "token_id": 32058,
+    "token": "Ġjsonify",
+    "text": " jsonify",
+    "logit": 8.4123,
+    "p": 0
+   },
+   {
+    "rank": 188,
+    "token_id": 87247,
+    "token": "Ġproletariat",
+    "text": " proletariat",
+    "logit": 8.3647,
+    "p": 0
+   },
+   {
+    "rank": 189,
+    "token_id": 47,
+    "token": "P",
+    "text": "P",
+    "logit": 8.3644,
+    "p": 0
+   },
+   {
+    "rank": 190,
+    "token_id": 37713,
+    "token": "Ġ{})",
+    "text": " {})",
+    "logit": 8.3638,
+    "p": 0
+   },
+   {
+    "rank": 191,
+    "token_id": 2147,
+    "token": "context",
+    "text": "context",
+    "logit": 8.3608,
+    "p": 0
+   },
+   {
+    "rank": 192,
+    "token_id": 630,
+    "token": "}ĊĊ",
+    "text": "}\n\n",
+    "logit": 8.3595,
+    "p": 0
+   },
+   {
+    "rank": 193,
+    "token_id": 92729,
+    "token": "\\\":{\\\"",
+    "text": "\\\":{\\\"",
+    "logit": 8.3409,
+    "p": 0
+   },
+   {
+    "rank": 194,
+    "token_id": 8428,
+    "token": "Ġ\"@",
+    "text": " \"@",
+    "logit": 8.3231,
+    "p": 0
+   },
+   {
+    "rank": 195,
+    "token_id": 80076,
+    "token": "TypeError",
+    "text": "TypeError",
+    "logit": 8.3146,
+    "p": 0
+   },
+   {
+    "rank": 196,
+    "token_id": 70221,
+    "token": "Ġpatriarch",
+    "text": " patriarch",
+    "logit": 8.3127,
+    "p": 0
+   },
+   {
+    "rank": 197,
+    "token_id": 18164,
+    "token": ".with",
+    "text": ".with",
+    "logit": 8.3104,
+    "p": 0
+   },
+   {
+    "rank": 198,
+    "token_id": 6045,
+    "token": "amount",
+    "text": "amount",
+    "logit": 8.3074,
+    "p": 0
+   },
+   {
+    "rank": 199,
+    "token_id": 37230,
+    "token": "Ġnevertheless",
+    "text": " nevertheless",
+    "logit": 8.2889,
+    "p": 0
+   }
+  ],
+  "top_mass": 0.999962,
+  "tail": {
+   "n": 151736,
+   "mass": 0.000039,
+   "space": "logit",
+   "buckets": 64,
+   "edges": [
+    -14.8799,
+    -14.5179,
+    -14.1559,
+    -13.794,
+    -13.432,
+    -13.0701,
+    -12.7081,
+    -12.3462,
+    -11.9842,
+    -11.6223,
+    -11.2603,
+    -10.8984,
+    -10.5364,
+    -10.1745,
+    -9.8125,
+    -9.4505,
+    -9.0886,
+    -8.7266,
+    -8.3647,
+    -8.0027,
+    -7.6408,
+    -7.2788,
+    -6.9169,
+    -6.5549,
+    -6.193,
+    -5.831,
+    -5.469,
+    -5.1071,
+    -4.7451,
+    -4.3832,
+    -4.0212,
+    -3.6593,
+    -3.2973,
+    -2.9354,
+    -2.5734,
+    -2.2115,
+    -1.8495,
+    -1.4875,
+    -1.1256,
+    -0.7636,
+    -0.4017,
+    -0.0397,
+    0.3222,
+    0.6842,
+    1.0461,
+    1.4081,
+    1.77,
+    2.132,
+    2.494,
+    2.8559,
+    3.2179,
+    3.5798,
+    3.9418,
+    4.3037,
+    4.6657,
+    5.0276,
+    5.3896,
+    5.7515,
+    6.1135,
+    6.4755,
+    6.8374,
+    7.1994,
+    7.5613,
+    7.9233,
+    8.2852
+   ],
+   "counts": [
+    3,
+    0,
+    1,
+    2,
+    4,
+    1,
+    6,
+    9,
+    7,
+    21,
+    33,
+    41,
+    67,
+    96,
+    112,
+    175,
+    235,
+    329,
+    454,
+    592,
+    799,
+    999,
+    1335,
+    1583,
+    2005,
+    2549,
+    3088,
+    3580,
+    4194,
+    4836,
+    5519,
+    6340,
+    7334,
+    10510,
+    7738,
+    7643,
+    7566,
+    7221,
+    7317,
+    6959,
+    6580,
+    5962,
+    5616,
+    5053,
+    4600,
+    3970,
+    3432,
+    2888,
+    2576,
+    2025,
+    1687,
+    1357,
+    1165,
+    829,
+    654,
+    563,
+    409,
+    325,
+    243,
+    193,
+    105,
+    92,
+    62,
+    47
+   ],
+   "mass_per_bucket": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1e-8,
+    1e-8,
+    2e-8,
+    2e-8,
+    3e-8,
+    4e-8,
+    7e-8,
+    9e-8,
+    1.2e-7,
+    1.6e-7,
+    2.1e-7,
+    2.7e-7,
+    3.6e-7,
+    4.4e-7,
+    5.5e-7,
+    6.6e-7,
+    8.5e-7,
+    9.5e-7,
+    0.00000115,
+    0.00000132,
+    0.00000163,
+    0.00000168,
+    0.00000188,
+    0.00000234,
+    0.00000245,
+    0.00000278,
+    0.00000301,
+    0.00000338,
+    0.00000264,
+    0.00000333,
+    0.00000324,
+    0.00000355
+   ],
+   "logit_mean": [
+    -14.835,
+    0,
+    -13.9011,
+    -13.5411,
+    -13.1772,
+    -13.0348,
+    -12.4602,
+    -12.1282,
+    -11.7512,
+    -11.4467,
+    -11.0764,
+    -10.7156,
+    -10.3424,
+    -9.9819,
+    -9.6316,
+    -9.2712,
+    -8.8861,
+    -8.5351,
+    -8.1797,
+    -7.811,
+    -7.4537,
+    -7.091,
+    -6.7271,
+    -6.3694,
+    -6.0045,
+    -5.6449,
+    -5.2811,
+    -4.925,
+    -4.5614,
+    -4.1994,
+    -3.8367,
+    -3.4748,
+    -3.1108,
+    -2.7889,
+    -2.3925,
+    -2.0317,
+    -1.6673,
+    -1.307,
+    -0.9437,
+    -0.5829,
+    -0.2218,
+    0.1403,
+    0.5024,
+    0.8628,
+    1.2245,
+    1.5818,
+    1.9465,
+    2.3084,
+    2.6709,
+    3.0248,
+    3.391,
+    3.7513,
+    4.1148,
+    4.4815,
+    4.8354,
+    5.2018,
+    5.5661,
+    5.9236,
+    6.2941,
+    6.6403,
+    7.0016,
+    7.3671,
+    7.7337,
+    8.1023
+   ]
+  },
+  "cumulative": {
+   "ranks": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64,
+    128,
+    256,
+    512,
+    1024,
+    2048,
+    4096,
+    8192,
+    16384,
+    32768,
+    65536,
+    131072,
+    151936
+   ],
+   "mass": [
+    0.68473,
+    0.914334,
+    0.980384,
+    0.998781,
+    0.999735,
+    0.99986,
+    0.999931,
+    0.999953,
+    0.999966,
+    0.999975,
+    0.999982,
+    0.999988,
+    0.999992,
+    0.999996,
+    0.999999,
+    1,
+    1.000001,
+    1.000001,
+    1.000001
+   ]
+  },
+  "full_logits": null,
+  "timing_ms": 793.2
+ },
+ "meta": {
+  "recorded_at": "2026-09-08T03:57:55.013Z",
+  "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "transformers_version": "5.16.1",
+  "torch_version": "2.14.0+cpu",
+  "torch_threads": 10,
+  "backend_version": "0.2.0",
+  "hardware": "darwin arm64, 10 threads"
+ }
+}

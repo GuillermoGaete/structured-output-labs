@@ -1,0 +1,1961 @@
+{
+ "$schema": "sol-fixture/1",
+ "id": "capital",
+ "kind": "logits",
+ "module": "temperature",
+ "title": {
+  "es": "«The capital of France is»",
+  "en": "\"The capital of France is\""
+ },
+ "recordedAt": "2026-09-08T03:57:55.013Z",
+ "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+ "request": {
+  "prompt": "The capital of France is",
+  "use_chat_template": false,
+  "top_k": 200,
+  "tail_buckets": 64,
+  "full_logits": false
+ },
+ "response": {
+  "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "rendered": "The capital of France is",
+  "n_tokens": 5,
+  "vocab_size": 151936,
+  "vocab_entries": 151665,
+  "padding_rows_start": 151665,
+  "logsumexp": 18.4141,
+  "max_logit": 17.2173,
+  "min_logit": -14.4945,
+  "entropy_nats": 3.0843,
+  "entropy_bits": 4.4497,
+  "top": [
+   {
+    "rank": 0,
+    "token_id": 12095,
+    "token": "ĠParis",
+    "text": " Paris",
+    "logit": 17.2173,
+    "p": 0.3022
+   },
+   {
+    "rank": 1,
+    "token_id": 32671,
+    "token": "Ġ______",
+    "text": " ______",
+    "logit": 16.3197,
+    "p": 0.1231
+   },
+   {
+    "rank": 2,
+    "token_id": 510,
+    "token": ":Ċ",
+    "text": ":\n",
+    "logit": 15.6955,
+    "p": 0.066
+   },
+   {
+    "rank": 3,
+    "token_id": 1447,
+    "token": ":ĊĊ",
+    "text": ":\n\n",
+    "logit": 15.5711,
+    "p": 0.0583
+   },
+   {
+    "rank": 4,
+    "token_id": 1304,
+    "token": "Ġ__",
+    "text": " __",
+    "logit": 15.3869,
+    "p": 0.0485
+   },
+   {
+    "rank": 5,
+    "token_id": 30743,
+    "token": "Ġ____",
+    "text": " ____",
+    "logit": 15.3036,
+    "p": 0.0446
+   },
+   {
+    "rank": 6,
+    "token_id": 7407,
+    "token": "Ġlocated",
+    "text": " located",
+    "logit": 15.2772,
+    "p": 0.0434
+   },
+   {
+    "rank": 7,
+    "token_id": 279,
+    "token": "Ġthe",
+    "text": " the",
+    "logit": 15.0483,
+    "p": 0.0345
+   },
+   {
+    "rank": 8,
+    "token_id": 320,
+    "token": "Ġ(",
+    "text": " (",
+    "logit": 14.6877,
+    "p": 0.0241
+   },
+   {
+    "rank": 9,
+    "token_id": 508,
+    "token": "Ġ[",
+    "text": " [",
+    "logit": 14.5589,
+    "p": 0.0212
+   },
+   {
+    "rank": 10,
+    "token_id": 25,
+    "token": ":",
+    "text": ":",
+    "logit": 14.4443,
+    "p": 0.0189
+   },
+   {
+    "rank": 11,
+    "token_id": 198,
+    "token": "Ċ",
+    "text": "\n",
+    "logit": 14.3192,
+    "p": 0.0167
+   },
+   {
+    "rank": 12,
+    "token_id": 65892,
+    "token": "Ġ_____",
+    "text": " _____",
+    "logit": 14.2615,
+    "p": 0.0157
+   },
+   {
+    "rank": 13,
+    "token_id": 264,
+    "token": "Ġa",
+    "text": " a",
+    "logit": 14.0332,
+    "p": 0.0125
+   },
+   {
+    "rank": 14,
+    "token_id": 2130,
+    "token": "____",
+    "text": "____",
+    "logit": 13.9591,
+    "p": 0.0116
+   },
+   {
+    "rank": 15,
+    "token_id": 304,
+    "token": "Ġin",
+    "text": " in",
+    "logit": 13.8019,
+    "p": 0.0099
+   },
+   {
+    "rank": 16,
+    "token_id": 271,
+    "token": "ĊĊ",
+    "text": "\n\n",
+    "logit": 13.7967,
+    "p": 0.0099
+   },
+   {
+    "rank": 17,
+    "token_id": 2598,
+    "token": "Ġcalled",
+    "text": " called",
+    "logit": 13.5786,
+    "p": 0.0079
+   },
+   {
+    "rank": 18,
+    "token_id": 624,
+    "token": ".Ċ",
+    "text": ".\n",
+    "logit": 13.3029,
+    "p": 0.006
+   },
+   {
+    "rank": 19,
+    "token_id": 7436,
+    "token": "Ġ___",
+    "text": " ___",
+    "logit": 13.2118,
+    "p": 0.0055
+   },
+   {
+    "rank": 20,
+    "token_id": 537,
+    "token": "Ġnot",
+    "text": " not",
+    "logit": 13.0947,
+    "p": 0.0049
+   },
+   {
+    "rank": 21,
+    "token_id": 3979,
+    "token": "________",
+    "text": "________",
+    "logit": 13.0258,
+    "p": 0.0046
+   },
+   {
+    "rank": 22,
+    "token_id": 3881,
+    "token": "Ġknown",
+    "text": " known",
+    "logit": 12.9334,
+    "p": 0.0042
+   },
+   {
+    "rank": 23,
+    "token_id": 16448,
+    "token": "Ġ.Ċ",
+    "text": " .\n",
+    "logit": 12.9009,
+    "p": 0.004
+   },
+   {
+    "rank": 24,
+    "token_id": 1128,
+    "token": "Ġwhat",
+    "text": " what",
+    "logit": 12.8321,
+    "p": 0.0038
+   },
+   {
+    "rank": 25,
+    "token_id": 28859,
+    "token": "ĠNice",
+    "text": " Nice",
+    "logit": 12.5938,
+    "p": 0.003
+   },
+   {
+    "rank": 26,
+    "token_id": 382,
+    "token": ".ĊĊ",
+    "text": ".\n\n",
+    "logit": 12.586,
+    "p": 0.0029
+   },
+   {
+    "rank": 27,
+    "token_id": 892,
+    "token": "Ġwhich",
+    "text": " which",
+    "logit": 12.5508,
+    "p": 0.0028
+   },
+   {
+    "rank": 28,
+    "token_id": 11,
+    "token": ",",
+    "text": ",",
+    "logit": 12.4592,
+    "p": 0.0026
+   },
+   {
+    "rank": 29,
+    "token_id": 30083,
+    "token": "Ġsituated",
+    "text": " situated",
+    "logit": 12.3764,
+    "p": 0.0024
+   },
+   {
+    "rank": 30,
+    "token_id": 13,
+    "token": ".",
+    "text": ".",
+    "logit": 12.3633,
+    "p": 0.0024
+   },
+   {
+    "rank": 31,
+    "token_id": 220,
+    "token": "Ġ",
+    "text": " ",
+    "logit": 12.3237,
+    "p": 0.0023
+   },
+   {
+    "rank": 32,
+    "token_id": 362,
+    "token": "ĠA",
+    "text": " A",
+    "logit": 12.3061,
+    "p": 0.0022
+   },
+   {
+    "rank": 33,
+    "token_id": 80517,
+    "token": "_____",
+    "text": "_____",
+    "logit": 12.1665,
+    "p": 0.0019
+   },
+   {
+    "rank": 34,
+    "token_id": 5267,
+    "token": "?Ċ",
+    "text": "?\n",
+    "logit": 12.1616,
+    "p": 0.0019
+   },
+   {
+    "rank": 35,
+    "token_id": 55201,
+    "token": "ĠLyon",
+    "text": " Lyon",
+    "logit": 12.0464,
+    "p": 0.0017
+   },
+   {
+    "rank": 36,
+    "token_id": 1181,
+    "token": "Ġits",
+    "text": " its",
+    "logit": 11.9655,
+    "p": 0.0016
+   },
+   {
+    "rank": 37,
+    "token_id": 3545,
+    "token": "Ġoften",
+    "text": " often",
+    "logit": 11.866,
+    "p": 0.0014
+   },
+   {
+    "rank": 38,
+    "token_id": 11136,
+    "token": "Ġtypically",
+    "text": " typically",
+    "logit": 11.8038,
+    "p": 0.0013
+   },
+   {
+    "rank": 39,
+    "token_id": 5023,
+    "token": "Ġcurrently",
+    "text": " currently",
+    "logit": 11.7219,
+    "p": 0.0012
+   },
+   {
+    "rank": 40,
+    "token_id": 425,
+    "token": "ĠB",
+    "text": " B",
+    "logit": 11.6862,
+    "p": 0.0012
+   },
+   {
+    "rank": 41,
+    "token_id": 14512,
+    "token": "Ġ:ĊĊ",
+    "text": " :\n\n",
+    "logit": 11.6744,
+    "p": 0.0012
+   },
+   {
+    "rank": 42,
+    "token_id": 6941,
+    "token": "Ġnamed",
+    "text": " named",
+    "logit": 11.6629,
+    "p": 0.0012
+   },
+   {
+    "rank": 43,
+    "token_id": 1380,
+    "token": "Ġwhere",
+    "text": " where",
+    "logit": 11.6248,
+    "p": 0.0011
+   },
+   {
+    "rank": 44,
+    "token_id": 3070,
+    "token": "Ġ**",
+    "text": " **",
+    "logit": 11.6172,
+    "p": 0.0011
+   },
+   {
+    "rank": 45,
+    "token_id": 659,
+    "token": "Ġ.",
+    "text": " .",
+    "logit": 11.594,
+    "p": 0.0011
+   },
+   {
+    "rank": 46,
+    "token_id": 9625,
+    "token": "ĠFrance",
+    "text": " France",
+    "logit": 11.5708,
+    "p": 0.0011
+   },
+   {
+    "rank": 47,
+    "token_id": 1939,
+    "token": "?ĊĊ",
+    "text": "?\n\n",
+    "logit": 11.5555,
+    "p": 0.0011
+   },
+   {
+    "rank": 48,
+    "token_id": 3118,
+    "token": "Ġbased",
+    "text": " based",
+    "logit": 11.501,
+    "p": 0.001
+   },
+   {
+    "rank": 49,
+    "token_id": 6260,
+    "token": "Ġ:Ċ",
+    "text": " :\n",
+    "logit": 11.4995,
+    "p": 0.001
+   },
+   {
+    "rank": 50,
+    "token_id": 1083,
+    "token": "Ġalso",
+    "text": " also",
+    "logit": 11.4989,
+    "p": 0.001
+   },
+   {
+    "rank": 51,
+    "token_id": 5990,
+    "token": "Ġusually",
+    "text": " usually",
+    "logit": 11.4003,
+    "p": 0.0009
+   },
+   {
+    "rank": 52,
+    "token_id": 14576,
+    "token": "Ġmainly",
+    "text": " mainly",
+    "logit": 11.3191,
+    "p": 0.0008
+   },
+   {
+    "rank": 53,
+    "token_id": 7148,
+    "token": "ĠLondon",
+    "text": " London",
+    "logit": 11.1665,
+    "p": 0.0007
+   },
+   {
+    "rank": 54,
+    "token_id": 1246,
+    "token": "Ġhow",
+    "text": " how",
+    "logit": 11.1138,
+    "p": 0.0007
+   },
+   {
+    "rank": 55,
+    "token_id": 3283,
+    "token": "Ġcity",
+    "text": " city",
+    "logit": 11.0769,
+    "p": 0.0007
+   },
+   {
+    "rank": 56,
+    "token_id": 32805,
+    "token": "Ġ()ĊĊ",
+    "text": " ()\n\n",
+    "logit": 11.0585,
+    "p": 0.0006
+   },
+   {
+    "rank": 57,
+    "token_id": 5798,
+    "token": "Ġbuilt",
+    "text": " built",
+    "logit": 10.9749,
+    "p": 0.0006
+   },
+   {
+    "rank": 58,
+    "token_id": 14205,
+    "token": "ĠSaint",
+    "text": " Saint",
+    "logit": 10.965,
+    "p": 0.0006
+   },
+   {
+    "rank": 59,
+    "token_id": 429,
+    "token": "Ġthat",
+    "text": " that",
+    "logit": 10.9096,
+    "p": 0.0006
+   },
+   {
+    "rank": 60,
+    "token_id": 458,
+    "token": "Ġan",
+    "text": " an",
+    "logit": 10.8939,
+    "p": 0.0005
+   },
+   {
+    "rank": 61,
+    "token_id": 1660,
+    "token": "Ġbeing",
+    "text": " being",
+    "logit": 10.8936,
+    "p": 0.0005
+   },
+   {
+    "rank": 62,
+    "token_id": 83957,
+    "token": "ĠBordeaux",
+    "text": " Bordeaux",
+    "logit": 10.8873,
+    "p": 0.0005
+   },
+   {
+    "rank": 63,
+    "token_id": 1532,
+    "token": "ĠNew",
+    "text": " New",
+    "logit": 10.8759,
+    "p": 0.0005
+   },
+   {
+    "rank": 64,
+    "token_id": 106004,
+    "token": "å·´é»İ",
+    "text": "巴黎",
+    "logit": 10.8443,
+    "p": 0.0005
+   },
+   {
+    "rank": 65,
+    "token_id": 8789,
+    "token": "Ġgenerally",
+    "text": " generally",
+    "logit": 10.8418,
+    "p": 0.0005
+   },
+   {
+    "rank": 66,
+    "token_id": 576,
+    "token": "ĠThe",
+    "text": " The",
+    "logit": 10.7881,
+    "p": 0.0005
+   },
+   {
+    "rank": 67,
+    "token_id": 1865,
+    "token": "Ġmade",
+    "text": " made",
+    "logit": 10.7831,
+    "p": 0.0005
+   },
+   {
+    "rank": 68,
+    "token_id": 1602,
+    "token": "Ġvery",
+    "text": " very",
+    "logit": 10.7729,
+    "p": 0.0005
+   },
+   {
+    "rank": 69,
+    "token_id": 431,
+    "token": "ĠR",
+    "text": " R",
+    "logit": 10.7716,
+    "p": 0.0005
+   },
+   {
+    "rank": 70,
+    "token_id": 15503,
+    "token": "Ġprimarily",
+    "text": " primarily",
+    "logit": 10.7452,
+    "p": 0.0005
+   },
+   {
+    "rank": 71,
+    "token_id": 58,
+    "token": "[",
+    "text": "[",
+    "logit": 10.7308,
+    "p": 0.0005
+   },
+   {
+    "rank": 72,
+    "token_id": 30,
+    "token": "?",
+    "text": "?",
+    "logit": 10.728,
+    "p": 0.0005
+   },
+   {
+    "rank": 73,
+    "token_id": 41383,
+    "token": "____________",
+    "text": "____________",
+    "logit": 10.7234,
+    "p": 0.0005
+   },
+   {
+    "rank": 74,
+    "token_id": 43841,
+    "token": "Ġ__________________",
+    "text": " __________________",
+    "logit": 10.648,
+    "p": 0.0004
+   },
+   {
+    "rank": 75,
+    "token_id": 6762,
+    "token": "Ġ.ĊĊ",
+    "text": " .\n\n",
+    "logit": 10.6281,
+    "p": 0.0004
+   },
+   {
+    "rank": 76,
+    "token_id": 10008,
+    "token": "Ġmostly",
+    "text": " mostly",
+    "logit": 10.5602,
+    "p": 0.0004
+   },
+   {
+    "rank": 77,
+    "token_id": 5326,
+    "token": "Ġwritten",
+    "text": " written",
+    "logit": 10.5373,
+    "p": 0.0004
+   },
+   {
+    "rank": 78,
+    "token_id": 356,
+    "token": "ĠC",
+    "text": " C",
+    "logit": 10.5088,
+    "p": 0.0004
+   },
+   {
+    "rank": 79,
+    "token_id": 4318,
+    "token": "Ġ[[",
+    "text": " [[",
+    "logit": 10.5079,
+    "p": 0.0004
+   },
+   {
+    "rank": 80,
+    "token_id": 444,
+    "token": "ĠL",
+    "text": " L",
+    "logit": 10.4878,
+    "p": 0.0004
+   },
+   {
+    "rank": 81,
+    "token_id": 43464,
+    "token": "ĠNotre",
+    "text": " Notre",
+    "logit": 10.4295,
+    "p": 0.0003
+   },
+   {
+    "rank": 82,
+    "token_id": 37169,
+    "token": "ĠBrussels",
+    "text": " Brussels",
+    "logit": 10.4182,
+    "p": 0.0003
+   },
+   {
+    "rank": 83,
+    "token_id": 481,
+    "token": "Ġ-",
+    "text": " -",
+    "logit": 10.4063,
+    "p": 0.0003
+   },
+   {
+    "rank": 84,
+    "token_id": 44245,
+    "token": "ĠGeneva",
+    "text": " Geneva",
+    "logit": 10.3896,
+    "p": 0.0003
+   },
+   {
+    "rank": 85,
+    "token_id": 716,
+    "token": "Ġ_",
+    "text": " _",
+    "logit": 10.3889,
+    "p": 0.0003
+   },
+   {
+    "rank": 86,
+    "token_id": 13900,
+    "token": "Ġobviously",
+    "text": " obviously",
+    "logit": 10.3875,
+    "p": 0.0003
+   },
+   {
+    "rank": 87,
+    "token_id": 9338,
+    "token": "...Ċ",
+    "text": "...\n",
+    "logit": 10.3731,
+    "p": 0.0003
+   },
+   {
+    "rank": 88,
+    "token_id": 315,
+    "token": "Ġof",
+    "text": " of",
+    "logit": 10.3555,
+    "p": 0.0003
+   },
+   {
+    "rank": 89,
+    "token_id": 1431,
+    "token": "Ġnow",
+    "text": " now",
+    "logit": 10.3502,
+    "p": 0.0003
+   },
+   {
+    "rank": 90,
+    "token_id": 2677,
+    "token": "Ġalways",
+    "text": " always",
+    "logit": 10.3381,
+    "p": 0.0003
+   },
+   {
+    "rank": 91,
+    "token_id": 1429,
+    "token": "Ġmost",
+    "text": " most",
+    "logit": 10.3114,
+    "p": 0.0003
+   },
+   {
+    "rank": 92,
+    "token_id": 5973,
+    "token": "___",
+    "text": "___",
+    "logit": 10.2812,
+    "p": 0.0003
+   },
+   {
+    "rank": 93,
+    "token_id": 87693,
+    "token": "ĠMarseille",
+    "text": " Marseille",
+    "logit": 10.2601,
+    "p": 0.0003
+   },
+   {
+    "rank": 94,
+    "token_id": 825,
+    "token": "Ġone",
+    "text": " one",
+    "logit": 10.251,
+    "p": 0.0003
+   },
+   {
+    "rank": 95,
+    "token_id": 17607,
+    "token": "Ġ?Ċ",
+    "text": " ?\n",
+    "logit": 10.2282,
+    "p": 0.0003
+   },
+   {
+    "rank": 96,
+    "token_id": 1290,
+    "token": "Ġright",
+    "text": " right",
+    "logit": 10.2028,
+    "p": 0.0003
+   },
+   {
+    "rank": 97,
+    "token_id": 518,
+    "token": "Ġat",
+    "text": " at",
+    "logit": 10.1731,
+    "p": 0.0003
+   },
+   {
+    "rank": 98,
+    "token_id": 19846,
+    "token": "ĠBerlin",
+    "text": " Berlin",
+    "logit": 10.1358,
+    "p": 0.0003
+   },
+   {
+    "rank": 99,
+    "token_id": 59108,
+    "token": "ĠÃİ",
+    "text": " Î",
+    "logit": 10.1343,
+    "p": 0.0003
+   },
+   {
+    "rank": 100,
+    "token_id": 36948,
+    "token": "Ġundoubtedly",
+    "text": " undoubtedly",
+    "logit": 10.1342,
+    "p": 0.0003
+   },
+   {
+    "rank": 101,
+    "token_id": 11882,
+    "token": "Ġchosen",
+    "text": " chosen",
+    "logit": 10.1101,
+    "p": 0.0002
+   },
+   {
+    "rank": 102,
+    "token_id": 358,
+    "token": "ĠI",
+    "text": " I",
+    "logit": 10.0958,
+    "p": 0.0002
+   },
+   {
+    "rank": 103,
+    "token_id": 41767,
+    "token": "ĠLocated",
+    "text": " Located",
+    "logit": 10.0922,
+    "p": 0.0002
+   },
+   {
+    "rank": 104,
+    "token_id": 7,
+    "token": "(",
+    "text": "(",
+    "logit": 10.0658,
+    "p": 0.0002
+   },
+   {
+    "rank": 105,
+    "token_id": 28024,
+    "token": "ĠÃī",
+    "text": " É",
+    "logit": 10.0512,
+    "p": 0.0002
+   },
+   {
+    "rank": 106,
+    "token_id": 902,
+    "token": "Ġno",
+    "text": " no",
+    "logit": 10.0475,
+    "p": 0.0002
+   },
+   {
+    "rank": 107,
+    "token_id": 468,
+    "token": "ĠE",
+    "text": " E",
+    "logit": 10.0397,
+    "p": 0.0002
+   },
+   {
+    "rank": 108,
+    "token_id": 311,
+    "token": "Ġto",
+    "text": " to",
+    "logit": 10.0336,
+    "p": 0.0002
+   },
+   {
+    "rank": 109,
+    "token_id": 4311,
+    "token": "ĠCity",
+    "text": " City",
+    "logit": 10.0081,
+    "p": 0.0002
+   },
+   {
+    "rank": 110,
+    "token_id": 21718,
+    "token": "ĠRome",
+    "text": " Rome",
+    "logit": 9.9347,
+    "p": 0.0002
+   },
+   {
+    "rank": 111,
+    "token_id": 4102,
+    "token": "Âł",
+    "text": " ",
+    "logit": 9.9289,
+    "p": 0.0002
+   },
+   {
+    "rank": 112,
+    "token_id": 33711,
+    "token": "Ġ().",
+    "text": " ().",
+    "logit": 9.9089,
+    "p": 0.0002
+   },
+   {
+    "rank": 113,
+    "token_id": 22865,
+    "token": "Ġsurrounded",
+    "text": " surrounded",
+    "logit": 9.9058,
+    "p": 0.0002
+   },
+   {
+    "rank": 114,
+    "token_id": 422,
+    "token": "ĠD",
+    "text": " D",
+    "logit": 9.8801,
+    "p": 0.0002
+   },
+   {
+    "rank": 115,
+    "token_id": 549,
+    "token": "Ġ:",
+    "text": " :",
+    "logit": 9.8652,
+    "p": 0.0002
+   },
+   {
+    "rank": 116,
+    "token_id": 2146,
+    "token": "...ĊĊ",
+    "text": "...\n\n",
+    "logit": 9.8452,
+    "p": 0.0002
+   },
+   {
+    "rank": 117,
+    "token_id": 366,
+    "token": "Ġ<",
+    "text": " <",
+    "logit": 9.8338,
+    "p": 0.0002
+   },
+   {
+    "rank": 118,
+    "token_id": 4512,
+    "token": "Ġdefined",
+    "text": " defined",
+    "logit": 9.8154,
+    "p": 0.0002
+   },
+   {
+    "rank": 119,
+    "token_id": 35242,
+    "token": "Ġtraditionally",
+    "text": " traditionally",
+    "logit": 9.7922,
+    "p": 0.0002
+   },
+   {
+    "rank": 120,
+    "token_id": 6188,
+    "token": "Ġdesigned",
+    "text": " designed",
+    "logit": 9.7902,
+    "p": 0.0002
+   },
+   {
+    "rank": 121,
+    "token_id": 56537,
+    "token": "Ġ_______,",
+    "text": " _______,",
+    "logit": 9.788,
+    "p": 0.0002
+   },
+   {
+    "rank": 122,
+    "token_id": 2806,
+    "token": "ĠNot",
+    "text": " Not",
+    "logit": 9.7864,
+    "p": 0.0002
+   },
+   {
+    "rank": 123,
+    "token_id": 386,
+    "token": "ĠM",
+    "text": " M",
+    "logit": 9.7809,
+    "p": 0.0002
+   },
+   {
+    "rank": 124,
+    "token_id": 389,
+    "token": "Ġon",
+    "text": " on",
+    "logit": 9.7743,
+    "p": 0.0002
+   },
+   {
+    "rank": 125,
+    "token_id": 4183,
+    "token": "ĠNOT",
+    "text": " NOT",
+    "logit": 9.7739,
+    "p": 0.0002
+   },
+   {
+    "rank": 126,
+    "token_id": 8907,
+    "token": "ĠBer",
+    "text": " Ber",
+    "logit": 9.7734,
+    "p": 0.0002
+   },
+   {
+    "rank": 127,
+    "token_id": 6722,
+    "token": "Ġcapital",
+    "text": " capital",
+    "logit": 9.764,
+    "p": 0.0002
+   },
+   {
+    "rank": 128,
+    "token_id": 9795,
+    "token": "ĠMont",
+    "text": " Mont",
+    "logit": 9.7532,
+    "p": 0.0002
+   },
+   {
+    "rank": 129,
+    "token_id": 6635,
+    "token": "Ġdecided",
+    "text": " decided",
+    "logit": 9.7432,
+    "p": 0.0002
+   },
+   {
+    "rank": 130,
+    "token_id": 33576,
+    "token": "ĠãĢĲ",
+    "text": " 【",
+    "logit": 9.6899,
+    "p": 0.0002
+   },
+   {
+    "rank": 131,
+    "token_id": 12668,
+    "token": "Ġ()Ċ",
+    "text": " ()\n",
+    "logit": 9.6642,
+    "p": 0.0002
+   },
+   {
+    "rank": 132,
+    "token_id": 4929,
+    "token": "ĠLa",
+    "text": " La",
+    "logit": 9.6458,
+    "p": 0.0002
+   },
+   {
+    "rank": 133,
+    "token_id": 4167,
+    "token": "Ġ[]Ċ",
+    "text": " []\n",
+    "logit": 9.6323,
+    "p": 0.0002
+   },
+   {
+    "rank": 134,
+    "token_id": 1967,
+    "token": "ĠLe",
+    "text": " Le",
+    "logit": 9.6133,
+    "p": 0.0002
+   },
+   {
+    "rank": 135,
+    "token_id": 3520,
+    "token": "Ġactually",
+    "text": " actually",
+    "logit": 9.5909,
+    "p": 0.0001
+   },
+   {
+    "rank": 136,
+    "token_id": 2308,
+    "token": "ĠNo",
+    "text": " No",
+    "logit": 9.5829,
+    "p": 0.0001
+   },
+   {
+    "rank": 137,
+    "token_id": 6693,
+    "token": "Ġwhose",
+    "text": " whose",
+    "logit": 9.5672,
+    "p": 0.0001
+   },
+   {
+    "rank": 138,
+    "token_id": 738,
+    "token": "Ġset",
+    "text": " set",
+    "logit": 9.5606,
+    "p": 0.0001
+   },
+   {
+    "rank": 139,
+    "token_id": 13570,
+    "token": "Ġwidely",
+    "text": " widely",
+    "logit": 9.5586,
+    "p": 0.0001
+   },
+   {
+    "rank": 140,
+    "token_id": 1657,
+    "token": "Ġmany",
+    "text": " many",
+    "logit": 9.5466,
+    "p": 0.0001
+   },
+   {
+    "rank": 141,
+    "token_id": 1850,
+    "token": "Ġbest",
+    "text": " best",
+    "logit": 9.528,
+    "p": 0.0001
+   },
+   {
+    "rank": 142,
+    "token_id": 24081,
+    "token": "ĠMadrid",
+    "text": " Madrid",
+    "logit": 9.5053,
+    "p": 0.0001
+   },
+   {
+    "rank": 143,
+    "token_id": 31980,
+    "token": ":čĊčĊ",
+    "text": ":\r\n\r\n",
+    "logit": 9.5008,
+    "p": 0.0001
+   },
+   {
+    "rank": 144,
+    "token_id": 1053,
+    "token": "Ġsaid",
+    "text": " said",
+    "logit": 9.496,
+    "p": 0.0001
+   },
+   {
+    "rank": 145,
+    "token_id": 59604,
+    "token": "Paris",
+    "text": "Paris",
+    "logit": 9.4749,
+    "p": 0.0001
+   },
+   {
+    "rank": 146,
+    "token_id": 80196,
+    "token": "Ġheadquartered",
+    "text": " headquartered",
+    "logit": 9.4649,
+    "p": 0.0001
+   },
+   {
+    "rank": 147,
+    "token_id": 4658,
+    "token": "Ġprobably",
+    "text": " probably",
+    "logit": 9.4545,
+    "p": 0.0001
+   },
+   {
+    "rank": 148,
+    "token_id": 2822,
+    "token": "()ĊĊ",
+    "text": "()\n\n",
+    "logit": 9.4213,
+    "p": 0.0001
+   },
+   {
+    "rank": 149,
+    "token_id": 2155,
+    "token": "Ġdifferent",
+    "text": " different",
+    "logit": 9.4118,
+    "p": 0.0001
+   },
+   {
+    "rank": 150,
+    "token_id": 1112,
+    "token": "...",
+    "text": "...",
+    "logit": 9.3931,
+    "p": 0.0001
+   },
+   {
+    "rank": 151,
+    "token_id": 23415,
+    "token": "Ġcomposed",
+    "text": " composed",
+    "logit": 9.3866,
+    "p": 0.0001
+   },
+   {
+    "rank": 152,
+    "token_id": 330,
+    "token": "Ġ\"",
+    "text": " \"",
+    "logit": 9.3651,
+    "p": 0.0001
+   },
+   {
+    "rank": 153,
+    "token_id": 23754,
+    "token": "Ġ?ĊĊ",
+    "text": " ?\n\n",
+    "logit": 9.3592,
+    "p": 0.0001
+   },
+   {
+    "rank": 154,
+    "token_id": 12824,
+    "token": "Ġindeed",
+    "text": " indeed",
+    "logit": 9.3559,
+    "p": 0.0001
+   },
+   {
+    "rank": 155,
+    "token_id": 7838,
+    "token": "Ġcertainly",
+    "text": " certainly",
+    "logit": 9.3542,
+    "p": 0.0001
+   },
+   {
+    "rank": 156,
+    "token_id": 1365,
+    "token": "ĠâĢĵ",
+    "text": " –",
+    "logit": 9.3149,
+    "p": 0.0001
+   },
+   {
+    "rank": 157,
+    "token_id": 2167,
+    "token": "Ġreally",
+    "text": " really",
+    "logit": 9.3101,
+    "p": 0.0001
+   },
+   {
+    "rank": 158,
+    "token_id": 17160,
+    "token": "Ġ***",
+    "text": " ***",
+    "logit": 9.3012,
+    "p": 0.0001
+   },
+   {
+    "rank": 159,
+    "token_id": 5468,
+    "token": "Ġ...ĊĊ",
+    "text": " ...\n\n",
+    "logit": 9.2821,
+    "p": 0.0001
+   },
+   {
+    "rank": 160,
+    "token_id": 2989,
+    "token": "Ġimportant",
+    "text": " important",
+    "logit": 9.267,
+    "p": 0.0001
+   },
+   {
+    "rank": 161,
+    "token_id": 2087,
+    "token": "Ġgoing",
+    "text": " going",
+    "logit": 9.2357,
+    "p": 0.0001
+   },
+   {
+    "rank": 162,
+    "token_id": 51654,
+    "token": "Ġpreferably",
+    "text": " preferably",
+    "logit": 9.2117,
+    "p": 0.0001
+   },
+   {
+    "rank": 163,
+    "token_id": 2669,
+    "token": "Ġalready",
+    "text": " already",
+    "logit": 9.2095,
+    "p": 0.0001
+   },
+   {
+    "rank": 164,
+    "token_id": 12148,
+    "token": "__Ċ",
+    "text": "__\n",
+    "logit": 9.1873,
+    "p": 0.0001
+   },
+   {
+    "rank": 165,
+    "token_id": 32166,
+    "token": "ĠOttawa",
+    "text": " Ottawa",
+    "logit": 9.1855,
+    "p": 0.0001
+   },
+   {
+    "rank": 166,
+    "token_id": 451,
+    "token": "ĠN",
+    "text": " N",
+    "logit": 9.1853,
+    "p": 0.0001
+   },
+   {
+    "rank": 167,
+    "token_id": 17367,
+    "token": "Ġunlikely",
+    "text": " unlikely",
+    "logit": 9.1776,
+    "p": 0.0001
+   },
+   {
+    "rank": 168,
+    "token_id": 393,
+    "token": "ĠP",
+    "text": " P",
+    "logit": 9.1759,
+    "p": 0.0001
+   },
+   {
+    "rank": 169,
+    "token_id": 9223,
+    "token": "Ġborn",
+    "text": " born",
+    "logit": 9.1527,
+    "p": 0.0001
+   },
+   {
+    "rank": 170,
+    "token_id": 4752,
+    "token": "Ġbuilding",
+    "text": " building",
+    "logit": 9.1307,
+    "p": 0.0001
+   },
+   {
+    "rank": 171,
+    "token_id": 1719,
+    "token": "Ġ()",
+    "text": " ()",
+    "logit": 9.1009,
+    "p": 0.0001
+   },
+   {
+    "rank": 172,
+    "token_id": 2399,
+    "token": "Ġ(Ċ",
+    "text": " (\n",
+    "logit": 9.0788,
+    "p": 0.0001
+   },
+   {
+    "rank": 173,
+    "token_id": 1588,
+    "token": "Ġhere",
+    "text": " here",
+    "logit": 9.0775,
+    "p": 0.0001
+   },
+   {
+    "rank": 174,
+    "token_id": 4363,
+    "token": "Ġlikely",
+    "text": " likely",
+    "logit": 9.075,
+    "p": 0.0001
+   },
+   {
+    "rank": 175,
+    "token_id": 15791,
+    "token": "Ġessentially",
+    "text": " essentially",
+    "logit": 9.0573,
+    "p": 0.0001
+   },
+   {
+    "rank": 176,
+    "token_id": 387,
+    "token": "Ġbe",
+    "text": " be",
+    "logit": 9.0552,
+    "p": 0.0001
+   },
+   {
+    "rank": 177,
+    "token_id": 647,
+    "token": "ĠV",
+    "text": " V",
+    "logit": 9.0478,
+    "p": 0.0001
+   },
+   {
+    "rank": 178,
+    "token_id": 328,
+    "token": "ĠS",
+    "text": " S",
+    "logit": 9.0393,
+    "p": 0.0001
+   },
+   {
+    "rank": 179,
+    "token_id": 1753,
+    "token": "Ġmuch",
+    "text": " much",
+    "logit": 9.0182,
+    "p": 0.0001
+   },
+   {
+    "rank": 180,
+    "token_id": 10199,
+    "token": "Ġfilled",
+    "text": " filled",
+    "logit": 9.0167,
+    "p": 0.0001
+   },
+   {
+    "rank": 181,
+    "token_id": 16290,
+    "token": "Ġelected",
+    "text": " elected",
+    "logit": 9.0123,
+    "p": 0.0001
+   },
+   {
+    "rank": 182,
+    "token_id": 50187,
+    "token": "Ġfamously",
+    "text": " famously",
+    "logit": 9.0079,
+    "p": 0.0001
+   },
+   {
+    "rank": 183,
+    "token_id": 937,
+    "token": "Ġ?",
+    "text": " ?",
+    "logit": 8.9962,
+    "p": 0.0001
+   },
+   {
+    "rank": 184,
+    "token_id": 9099,
+    "token": "Ġplaced",
+    "text": " placed",
+    "logit": 8.994,
+    "p": 0.0001
+   },
+   {
+    "rank": 185,
+    "token_id": 40858,
+    "token": "Ġparis",
+    "text": " paris",
+    "logit": 8.991,
+    "p": 0.0001
+   },
+   {
+    "rank": 186,
+    "token_id": 1640,
+    "token": "Ġins",
+    "text": " ins",
+    "logit": 8.9823,
+    "p": 0.0001
+   },
+   {
+    "rank": 187,
+    "token_id": 910,
+    "token": "ĠCh",
+    "text": " Ch",
+    "logit": 8.9725,
+    "p": 0.0001
+   },
+   {
+    "rank": 188,
+    "token_id": 1036,
+    "token": "ĠâĢľ",
+    "text": " “",
+    "logit": 8.9519,
+    "p": 0.0001
+   },
+   {
+    "rank": 189,
+    "token_id": 323,
+    "token": "Ġand",
+    "text": " and",
+    "logit": 8.9433,
+    "p": 0.0001
+   },
+   {
+    "rank": 190,
+    "token_id": 4509,
+    "token": "ĠStr",
+    "text": " Str",
+    "logit": 8.9416,
+    "p": 0.0001
+   },
+   {
+    "rank": 191,
+    "token_id": 103918,
+    "token": "ãĢĶ",
+    "text": "〔",
+    "logit": 8.9399,
+    "p": 0.0001
+   },
+   {
+    "rank": 192,
+    "token_id": 3319,
+    "token": "ĠCal",
+    "text": " Cal",
+    "logit": 8.9204,
+    "p": 0.0001
+   },
+   {
+    "rank": 193,
+    "token_id": 83520,
+    "token": "ĠCannes",
+    "text": " Cannes",
+    "logit": 8.889,
+    "p": 0.0001
+   },
+   {
+    "rank": 194,
+    "token_id": 6509,
+    "token": "Ġconsidered",
+    "text": " considered",
+    "logit": 8.8799,
+    "p": 0.0001
+   },
+   {
+    "rank": 195,
+    "token_id": 16303,
+    "token": "Ġ[...",
+    "text": " [...",
+    "logit": 8.8582,
+    "p": 0.0001
+   },
+   {
+    "rank": 196,
+    "token_id": 563,
+    "token": "__",
+    "text": "__",
+    "logit": 8.8542,
+    "p": 0.0001
+   },
+   {
+    "rank": 197,
+    "token_id": 11615,
+    "token": "ĠLes",
+    "text": " Les",
+    "logit": 8.8423,
+    "p": 0.0001
+   },
+   {
+    "rank": 198,
+    "token_id": 15692,
+    "token": "âĢĭ",
+    "text": "​",
+    "logit": 8.84,
+    "p": 0.0001
+   },
+   {
+    "rank": 199,
+    "token_id": 6233,
+    "token": "Ġbeautiful",
+    "text": " beautiful",
+    "logit": 8.8372,
+    "p": 0.0001
+   }
+  ],
+  "top_mass": 0.980618,
+  "tail": {
+   "n": 151736,
+   "mass": 0.019382,
+   "space": "logit",
+   "buckets": 64,
+   "edges": [
+    -14.4945,
+    -14.13,
+    -13.7654,
+    -13.4009,
+    -13.0364,
+    -12.6718,
+    -12.3073,
+    -11.9427,
+    -11.5782,
+    -11.2136,
+    -10.8491,
+    -10.4846,
+    -10.12,
+    -9.7555,
+    -9.3909,
+    -9.0264,
+    -8.6618,
+    -8.2973,
+    -7.9328,
+    -7.5682,
+    -7.2037,
+    -6.8391,
+    -6.4746,
+    -6.11,
+    -5.7455,
+    -5.381,
+    -5.0164,
+    -4.6519,
+    -4.2873,
+    -3.9228,
+    -3.5583,
+    -3.1937,
+    -2.8292,
+    -2.4646,
+    -2.1001,
+    -1.7355,
+    -1.371,
+    -1.0065,
+    -0.6419,
+    -0.2774,
+    0.0872,
+    0.4517,
+    0.8163,
+    1.1808,
+    1.5453,
+    1.9099,
+    2.2744,
+    2.639,
+    3.0035,
+    3.3681,
+    3.7326,
+    4.0971,
+    4.4617,
+    4.8262,
+    5.1908,
+    5.5553,
+    5.9199,
+    6.2844,
+    6.6489,
+    7.0135,
+    7.378,
+    7.7426,
+    8.1071,
+    8.4717,
+    8.8362
+   ],
+   "counts": [
+    1,
+    0,
+    1,
+    1,
+    2,
+    7,
+    7,
+    13,
+    32,
+    40,
+    69,
+    93,
+    140,
+    190,
+    298,
+    437,
+    558,
+    866,
+    1157,
+    1460,
+    1878,
+    2443,
+    3163,
+    3745,
+    4677,
+    5734,
+    7283,
+    10156,
+    7548,
+    7568,
+    7437,
+    7679,
+    7583,
+    7591,
+    7174,
+    6750,
+    6047,
+    5617,
+    5003,
+    4506,
+    4020,
+    3498,
+    3143,
+    2694,
+    2199,
+    1936,
+    1674,
+    1433,
+    1170,
+    973,
+    778,
+    674,
+    527,
+    479,
+    370,
+    277,
+    214,
+    198,
+    147,
+    117,
+    86,
+    73,
+    58,
+    44
+   ],
+   "mass_per_bucket": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1e-8,
+    1e-8,
+    2e-8,
+    3e-8,
+    6e-8,
+    1e-7,
+    1.8e-7,
+    3.2e-7,
+    5.9e-7,
+    0.00000113,
+    0.00000126,
+    0.00000182,
+    0.00000257,
+    0.00000382,
+    0.00000542,
+    0.00000784,
+    0.00001065,
+    0.00001445,
+    0.00001863,
+    0.00002481,
+    0.00003192,
+    0.00004122,
+    0.00005296,
+    0.00006627,
+    0.00008621,
+    0.00010596,
+    0.00012471,
+    0.00015833,
+    0.00019676,
+    0.00024231,
+    0.00028541,
+    0.00034178,
+    0.00039274,
+    0.00048841,
+    0.00055013,
+    0.00071582,
+    0.00079822,
+    0.00086689,
+    0.0009643,
+    0.00128382,
+    0.00136113,
+    0.00159868,
+    0.00163343,
+    0.00207877,
+    0.00233078,
+    0.00249121
+   ],
+   "logit_mean": [
+    -14.4945,
+    0,
+    -13.4816,
+    -13.1553,
+    -12.7359,
+    -12.5103,
+    -12.0992,
+    -11.7869,
+    -11.351,
+    -11.0326,
+    -10.6402,
+    -10.2831,
+    -9.9144,
+    -9.5555,
+    -9.1977,
+    -8.8338,
+    -8.475,
+    -8.1059,
+    -7.7461,
+    -7.3725,
+    -7.0095,
+    -6.6503,
+    -6.2864,
+    -5.9218,
+    -5.5585,
+    -5.1934,
+    -4.8228,
+    -4.5108,
+    -4.1066,
+    -3.7415,
+    -3.3765,
+    -3.0125,
+    -2.6503,
+    -2.2822,
+    -1.9197,
+    -1.5538,
+    -1.1894,
+    -0.8295,
+    -0.4615,
+    -0.1011,
+    0.2636,
+    0.6268,
+    0.9968,
+    1.3574,
+    1.7233,
+    2.0893,
+    2.452,
+    2.8156,
+    3.182,
+    3.5466,
+    3.9095,
+    4.271,
+    4.636,
+    4.9945,
+    5.362,
+    5.7339,
+    6.0984,
+    6.463,
+    6.8182,
+    7.2073,
+    7.5369,
+    7.9411,
+    8.2855,
+    8.6311
+   ]
+  },
+  "cumulative": {
+   "ranks": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64,
+    128,
+    256,
+    512,
+    1024,
+    2048,
+    4096,
+    8192,
+    16384,
+    32768,
+    65536,
+    131072,
+    151936
+   ],
+   "mass": [
+    0.302171,
+    0.425312,
+    0.549531,
+    0.720516,
+    0.85109,
+    0.920229,
+    0.953896,
+    0.972902,
+    0.983669,
+    0.989923,
+    0.993895,
+    0.996452,
+    0.998109,
+    0.999092,
+    0.999629,
+    0.999883,
+    0.999978,
+    0.999999,
+    0.999999
+   ]
+  },
+  "full_logits": null,
+  "timing_ms": 164.2
+ },
+ "meta": {
+  "recorded_at": "2026-09-08T03:57:55.013Z",
+  "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "transformers_version": "5.16.1",
+  "torch_version": "2.14.0+cpu",
+  "torch_threads": 10,
+  "backend_version": "0.2.0",
+  "hardware": "darwin arm64, 10 threads"
+ }
+}

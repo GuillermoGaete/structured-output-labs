@@ -15,7 +15,23 @@ const tokenize = (id, text, extra = {}, title) => ({
   request: { text, use_chat_template: false, tokenizer: "model", merges: true, ...extra },
 });
 
+const logits = (id, title, request) => ({ id, kind: "logits", title, request });
+
 export const RECIPES = {
+  temperature: [
+    logits("person-chat", { es: "Prompt Person con template · paso 0", en: "Person prompt with template · step 0" }, ({ presets }) => ({
+      prompt: presets.person.prompt, use_chat_template: true, top_k: 200, tail_buckets: 64, full_logits: false,
+    })),
+    logits("tree-chat", { es: "Prompt Tree con template · paso 0", en: "Tree prompt with template · step 0" }, ({ presets }) => ({
+      prompt: presets.tree.prompt, use_chat_template: true, top_k: 200, tail_buckets: 64, full_logits: false,
+    })),
+    logits("capital", { es: "«The capital of France is»", en: "\"The capital of France is\"" }, {
+      prompt: "The capital of France is", use_chat_template: false, top_k: 200, tail_buckets: 64, full_logits: false,
+    }),
+    logits("fibonacci", { es: "«def fibonacci(n):»", en: "\"def fibonacci(n):\"" }, {
+      prompt: "def fibonacci(n):\n    ", use_chat_template: false, top_k: 200, tail_buckets: 64, full_logits: false,
+    }),
+  ],
   tokens: [
     ...Object.entries(TEXTS).flatMap(([key, text]) => [
       tokenize(`${key}`, text),

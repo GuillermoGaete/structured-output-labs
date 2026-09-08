@@ -1,0 +1,1961 @@
+{
+ "$schema": "sol-fixture/1",
+ "id": "fibonacci",
+ "kind": "logits",
+ "module": "temperature",
+ "title": {
+  "es": "«def fibonacci(n):»",
+  "en": "\"def fibonacci(n):\""
+ },
+ "recordedAt": "2026-09-08T03:57:55.013Z",
+ "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+ "request": {
+  "prompt": "def fibonacci(n):\n    ",
+  "use_chat_template": false,
+  "top_k": 200,
+  "tail_buckets": 64,
+  "full_logits": false
+ },
+ "response": {
+  "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "rendered": "def fibonacci(n):\n    ",
+  "n_tokens": 5,
+  "vocab_size": 151936,
+  "vocab_entries": 151665,
+  "padding_rows_start": 151665,
+  "logsumexp": 20.2212,
+  "max_logit": 19.6108,
+  "min_logit": -15.2067,
+  "entropy_nats": 2.2047,
+  "entropy_bits": 3.1806,
+  "top": [
+   {
+    "rank": 0,
+    "token_id": 421,
+    "token": "Ġif",
+    "text": " if",
+    "logit": 19.6108,
+    "p": 0.5431
+   },
+   {
+    "rank": 1,
+    "token_id": 264,
+    "token": "Ġa",
+    "text": " a",
+    "logit": 17.8043,
+    "p": 0.0892
+   },
+   {
+    "rank": 2,
+    "token_id": 671,
+    "token": "Ġ#",
+    "text": " #",
+    "logit": 17.5993,
+    "p": 0.0727
+   },
+   {
+    "rank": 3,
+    "token_id": 4210,
+    "token": "Ġ\"\"\"",
+    "text": " \"\"\"",
+    "logit": 17.0919,
+    "p": 0.0437
+   },
+   {
+    "rank": 4,
+    "token_id": 3190,
+    "token": "Ġ\"\"\"Ċ",
+    "text": " \"\"\"\n",
+    "logit": 16.9993,
+    "p": 0.0399
+   },
+   {
+    "rank": 5,
+    "token_id": 15801,
+    "token": "Ġfib",
+    "text": " fib",
+    "logit": 16.866,
+    "p": 0.0349
+   },
+   {
+    "rank": 6,
+    "token_id": 75698,
+    "token": "Ġfibonacci",
+    "text": " fibonacci",
+    "logit": 16.3801,
+    "p": 0.0215
+   },
+   {
+    "rank": 7,
+    "token_id": 282,
+    "token": "Ġf",
+    "text": " f",
+    "logit": 15.9962,
+    "p": 0.0146
+   },
+   {
+    "rank": 8,
+    "token_id": 11456,
+    "token": "Ġ'''",
+    "text": " '''",
+    "logit": 15.6858,
+    "p": 0.0107
+   },
+   {
+    "rank": 9,
+    "token_id": 1102,
+    "token": "Ġresult",
+    "text": " result",
+    "logit": 15.1997,
+    "p": 0.0066
+   },
+   {
+    "rank": 10,
+    "token_id": 1629,
+    "token": "Ġnum",
+    "text": " num",
+    "logit": 15.1857,
+    "p": 0.0065
+   },
+   {
+    "rank": 11,
+    "token_id": 11166,
+    "token": "Ġ'''Ċ",
+    "text": " '''\n",
+    "logit": 15.1098,
+    "p": 0.006
+   },
+   {
+    "rank": 12,
+    "token_id": 856,
+    "token": "Ġx",
+    "text": " x",
+    "logit": 14.928,
+    "p": 0.005
+   },
+   {
+    "rank": 13,
+    "token_id": 470,
+    "token": "Ġreturn",
+    "text": " return",
+    "logit": 14.9068,
+    "p": 0.0049
+   },
+   {
+    "rank": 14,
+    "token_id": 8500,
+    "token": "Ġsequence",
+    "text": " sequence",
+    "logit": 14.8471,
+    "p": 0.0046
+   },
+   {
+    "rank": 15,
+    "token_id": 707,
+    "token": "Ġdef",
+    "text": " def",
+    "logit": 14.846,
+    "p": 0.0046
+   },
+   {
+    "rank": 16,
+    "token_id": 2890,
+    "token": "Ġarr",
+    "text": " arr",
+    "logit": 14.7903,
+    "p": 0.0044
+   },
+   {
+    "rank": 17,
+    "token_id": 1156,
+    "token": "Ġfirst",
+    "text": " first",
+    "logit": 14.7725,
+    "p": 0.0043
+   },
+   {
+    "rank": 18,
+    "token_id": 1140,
+    "token": "Ġlist",
+    "text": " list",
+    "logit": 14.6002,
+    "p": 0.0036
+   },
+   {
+    "rank": 19,
+    "token_id": 600,
+    "token": "Ġi",
+    "text": " i",
+    "logit": 14.5581,
+    "p": 0.0035
+   },
+   {
+    "rank": 20,
+    "token_id": 1173,
+    "token": "Ġprint",
+    "text": " print",
+    "logit": 14.4966,
+    "p": 0.0033
+   },
+   {
+    "rank": 21,
+    "token_id": 2629,
+    "token": "Ġsum",
+    "text": " sum",
+    "logit": 14.4727,
+    "p": 0.0032
+   },
+   {
+    "rank": 22,
+    "token_id": 308,
+    "token": "Ġn",
+    "text": " n",
+    "logit": 14.435,
+    "p": 0.0031
+   },
+   {
+    "rank": 23,
+    "token_id": 2060,
+    "token": "Ġassert",
+    "text": " assert",
+    "logit": 14.2634,
+    "p": 0.0026
+   },
+   {
+    "rank": 24,
+    "token_id": 743,
+    "token": "ĉif",
+    "text": "\tif",
+    "logit": 14.1653,
+    "p": 0.0023
+   },
+   {
+    "rank": 25,
+    "token_id": 434,
+    "token": "ĠF",
+    "text": " F",
+    "logit": 14.0594,
+    "p": 0.0021
+   },
+   {
+    "rank": 26,
+    "token_id": 326,
+    "token": "Ġl",
+    "text": " l",
+    "logit": 13.8307,
+    "p": 0.0017
+   },
+   {
+    "rank": 27,
+    "token_id": 1760,
+    "token": "Ġcount",
+    "text": " count",
+    "logit": 13.8035,
+    "p": 0.0016
+   },
+   {
+    "rank": 28,
+    "token_id": 10307,
+    "token": "Ġnums",
+    "text": " nums",
+    "logit": 13.7629,
+    "p": 0.0016
+   },
+   {
+    "rank": 29,
+    "token_id": 592,
+    "token": "Ġres",
+    "text": " res",
+    "logit": 13.7525,
+    "p": 0.0016
+   },
+   {
+    "rank": 30,
+    "token_id": 3681,
+    "token": "Ġprevious",
+    "text": " previous",
+    "logit": 13.693,
+    "p": 0.0015
+   },
+   {
+    "rank": 31,
+    "token_id": 42464,
+    "token": "ĠFib",
+    "text": " Fib",
+    "logit": 13.6713,
+    "p": 0.0014
+   },
+   {
+    "rank": 32,
+    "token_id": 18845,
+    "token": "Ġlst",
+    "text": " lst",
+    "logit": 13.6514,
+    "p": 0.0014
+   },
+   {
+    "rank": 33,
+    "token_id": 5109,
+    "token": "Ġnumbers",
+    "text": " numbers",
+    "logit": 13.5447,
+    "p": 0.0013
+   },
+   {
+    "rank": 34,
+    "token_id": 197,
+    "token": "ĉ",
+    "text": "\t",
+    "logit": 13.4953,
+    "p": 0.0012
+   },
+   {
+    "rank": 35,
+    "token_id": 362,
+    "token": "ĠA",
+    "text": " A",
+    "logit": 13.4235,
+    "p": 0.0011
+   },
+   {
+    "rank": 36,
+    "token_id": 12981,
+    "token": "Ġseq",
+    "text": " seq",
+    "logit": 13.3185,
+    "p": 0.001
+   },
+   {
+    "rank": 37,
+    "token_id": 1430,
+    "token": "Ġtry",
+    "text": " try",
+    "logit": 13.1987,
+    "p": 0.0009
+   },
+   {
+    "rank": 38,
+    "token_id": 11323,
+    "token": "ĉa",
+    "text": "\ta",
+    "logit": 13.1963,
+    "p": 0.0009
+   },
+   {
+    "rank": 39,
+    "token_id": 8099,
+    "token": "Ġans",
+    "text": " ans",
+    "logit": 13.1392,
+    "p": 0.0008
+   },
+   {
+    "rank": 40,
+    "token_id": 1334,
+    "token": "Ġarray",
+    "text": " array",
+    "logit": 13.1117,
+    "p": 0.0008
+   },
+   {
+    "rank": 41,
+    "token_id": 1372,
+    "token": "Ġnumber",
+    "text": " number",
+    "logit": 13.1066,
+    "p": 0.0008
+   },
+   {
+    "rank": 42,
+    "token_id": 1393,
+    "token": "Ġwhile",
+    "text": " while",
+    "logit": 13.0936,
+    "p": 0.0008
+   },
+   {
+    "rank": 43,
+    "token_id": 12431,
+    "token": "Ġ\"\"\"ĊĊ",
+    "text": " \"\"\"\n\n",
+    "logit": 13.0487,
+    "p": 0.0008
+   },
+   {
+    "rank": 44,
+    "token_id": 1494,
+    "token": "Ġpass",
+    "text": " pass",
+    "logit": 13.0274,
+    "p": 0.0008
+   },
+   {
+    "rank": 45,
+    "token_id": 14124,
+    "token": "Ġlista",
+    "text": " lista",
+    "logit": 13.0057,
+    "p": 0.0007
+   },
+   {
+    "rank": 46,
+    "token_id": 1482,
+    "token": "Ġcurrent",
+    "text": " current",
+    "logit": 12.8591,
+    "p": 0.0006
+   },
+   {
+    "rank": 47,
+    "token_id": 2730,
+    "token": "Ġtemp",
+    "text": " temp",
+    "logit": 12.8167,
+    "p": 0.0006
+   },
+   {
+    "rank": 48,
+    "token_id": 259,
+    "token": "Ġt",
+    "text": " t",
+    "logit": 12.7812,
+    "p": 0.0006
+   },
+   {
+    "rank": 49,
+    "token_id": 2790,
+    "token": "Ġtotal",
+    "text": " total",
+    "logit": 12.7629,
+    "p": 0.0006
+   },
+   {
+    "rank": 50,
+    "token_id": 330,
+    "token": "Ġ\"",
+    "text": " \"",
+    "logit": 12.7053,
+    "p": 0.0005
+   },
+   {
+    "rank": 51,
+    "token_id": 2112,
+    "token": "Ġret",
+    "text": " ret",
+    "logit": 12.6823,
+    "p": 0.0005
+   },
+   {
+    "rank": 52,
+    "token_id": 7872,
+    "token": "Ġprev",
+    "text": " prev",
+    "logit": 12.6507,
+    "p": 0.0005
+   },
+   {
+    "rank": 53,
+    "token_id": 369,
+    "token": "Ġfor",
+    "text": " for",
+    "logit": 12.5633,
+    "p": 0.0005
+   },
+   {
+    "rank": 54,
+    "token_id": 7540,
+    "token": "Ġyield",
+    "text": " yield",
+    "logit": 12.5454,
+    "p": 0.0005
+   },
+   {
+    "rank": 55,
+    "token_id": 595,
+    "token": "Ġk",
+    "text": " k",
+    "logit": 12.4863,
+    "p": 0.0004
+   },
+   {
+    "rank": 56,
+    "token_id": 6500,
+    "token": "Ġcache",
+    "text": " cache",
+    "logit": 12.4103,
+    "p": 0.0004
+   },
+   {
+    "rank": 57,
+    "token_id": 274,
+    "token": "Ġs",
+    "text": " s",
+    "logit": 12.3749,
+    "p": 0.0004
+   },
+   {
+    "rank": 58,
+    "token_id": 1159,
+    "token": "Ġimport",
+    "text": " import",
+    "logit": 12.2973,
+    "p": 0.0004
+   },
+   {
+    "rank": 59,
+    "token_id": 508,
+    "token": "Ġ[",
+    "text": " [",
+    "logit": 12.2809,
+    "p": 0.0004
+   },
+   {
+    "rank": 60,
+    "token_id": 444,
+    "token": "ĠL",
+    "text": " L",
+    "logit": 12.2363,
+    "p": 0.0003
+   },
+   {
+    "rank": 61,
+    "token_id": 44732,
+    "token": "Ġ'''ĊĊ",
+    "text": " '''\n\n",
+    "logit": 12.2351,
+    "p": 0.0003
+   },
+   {
+    "rank": 62,
+    "token_id": 26192,
+    "token": "Ġresultado",
+    "text": " resultado",
+    "logit": 12.1676,
+    "p": 0.0003
+   },
+   {
+    "rank": 63,
+    "token_id": 2856,
+    "token": "Ġinitial",
+    "text": " initial",
+    "logit": 12.1644,
+    "p": 0.0003
+   },
+   {
+    "rank": 64,
+    "token_id": 79683,
+    "token": "ĠFibonacci",
+    "text": " Fibonacci",
+    "logit": 12.1584,
+    "p": 0.0003
+   },
+   {
+    "rank": 65,
+    "token_id": 5168,
+    "token": "Ġfn",
+    "text": " fn",
+    "logit": 12.1417,
+    "p": 0.0003
+   },
+   {
+    "rank": 66,
+    "token_id": 350,
+    "token": "ĠT",
+    "text": " T",
+    "logit": 12.1088,
+    "p": 0.0003
+   },
+   {
+    "rank": 67,
+    "token_id": 272,
+    "token": "Ġc",
+    "text": " c",
+    "logit": 12.1063,
+    "p": 0.0003
+   },
+   {
+    "rank": 68,
+    "token_id": 52962,
+    "token": "Ġfactorial",
+    "text": " factorial",
+    "logit": 12.1024,
+    "p": 0.0003
+   },
+   {
+    "rank": 69,
+    "token_id": 2097,
+    "token": "Ġfact",
+    "text": " fact",
+    "logit": 12.0922,
+    "p": 0.0003
+   },
+   {
+    "rank": 70,
+    "token_id": 1191,
+    "token": "Ġstart",
+    "text": " start",
+    "logit": 12.0909,
+    "p": 0.0003
+   },
+   {
+    "rank": 71,
+    "token_id": 4013,
+    "token": "Ġseries",
+    "text": " series",
+    "logit": 12.0845,
+    "p": 0.0003
+   },
+   {
+    "rank": 72,
+    "token_id": 21438,
+    "token": "Ġmemo",
+    "text": " memo",
+    "logit": 12.084,
+    "p": 0.0003
+   },
+   {
+    "rank": 73,
+    "token_id": 796,
+    "token": "Ġar",
+    "text": " ar",
+    "logit": 12.0756,
+    "p": 0.0003
+   },
+   {
+    "rank": 74,
+    "token_id": 1273,
+    "token": "Ġtest",
+    "text": " test",
+    "logit": 12.0572,
+    "p": 0.0003
+   },
+   {
+    "rank": 75,
+    "token_id": 3793,
+    "token": "Ġterms",
+    "text": " terms",
+    "logit": 12.047,
+    "p": 0.0003
+   },
+   {
+    "rank": 76,
+    "token_id": 3644,
+    "token": "Ġglobal",
+    "text": " global",
+    "logit": 12.0424,
+    "p": 0.0003
+   },
+   {
+    "rank": 77,
+    "token_id": 458,
+    "token": "Ġan",
+    "text": " an",
+    "logit": 12.0044,
+    "p": 0.0003
+   },
+   {
+    "rank": 78,
+    "token_id": 40280,
+    "token": "Ġlis",
+    "text": " lis",
+    "logit": 11.981,
+    "p": 0.0003
+   },
+   {
+    "rank": 79,
+    "token_id": 1395,
+    "token": "Ġrec",
+    "text": " rec",
+    "logit": 11.9802,
+    "p": 0.0003
+   },
+   {
+    "rank": 80,
+    "token_id": 502,
+    "token": "Ġj",
+    "text": " j",
+    "logit": 11.9304,
+    "p": 0.0003
+   },
+   {
+    "rank": 81,
+    "token_id": 1790,
+    "token": "Ġnext",
+    "text": " next",
+    "logit": 11.8847,
+    "p": 0.0002
+   },
+   {
+    "rank": 82,
+    "token_id": 897,
+    "token": "Ġvalue",
+    "text": " value",
+    "logit": 11.8322,
+    "p": 0.0002
+   },
+   {
+    "rank": 83,
+    "token_id": 51313,
+    "token": "Ġsuma",
+    "text": " suma",
+    "logit": 11.7762,
+    "p": 0.0002
+   },
+   {
+    "rank": 84,
+    "token_id": 262,
+    "token": "ĠĠĠ",
+    "text": "   ",
+    "logit": 11.7573,
+    "p": 0.0002
+   },
+   {
+    "rank": 85,
+    "token_id": 504,
+    "token": "Ġfrom",
+    "text": " from",
+    "logit": 11.6912,
+    "p": 0.0002
+   },
+   {
+    "rank": 86,
+    "token_id": 11329,
+    "token": "Ġdp",
+    "text": " dp",
+    "logit": 11.6706,
+    "p": 0.0002
+   },
+   {
+    "rank": 87,
+    "token_id": 293,
+    "token": "Ġb",
+    "text": " b",
+    "logit": 11.6663,
+    "p": 0.0002
+   },
+   {
+    "rank": 88,
+    "token_id": 1166,
+    "token": "ĉf",
+    "text": "\tf",
+    "logit": 11.6493,
+    "p": 0.0002
+   },
+   {
+    "rank": 89,
+    "token_id": 1922,
+    "token": "Ġindex",
+    "text": " index",
+    "logit": 11.6281,
+    "p": 0.0002
+   },
+   {
+    "rank": 90,
+    "token_id": 296,
+    "token": "Ġm",
+    "text": " m",
+    "logit": 11.6208,
+    "p": 0.0002
+   },
+   {
+    "rank": 91,
+    "token_id": 74022,
+    "token": "Ġ\"***",
+    "text": " \"***",
+    "logit": 11.5442,
+    "p": 0.0002
+   },
+   {
+    "rank": 92,
+    "token_id": 1029,
+    "token": "Ġacc",
+    "text": " acc",
+    "logit": 11.5406,
+    "p": 0.0002
+   },
+   {
+    "rank": 93,
+    "token_id": 1537,
+    "token": "Ġlast",
+    "text": " last",
+    "logit": 11.5237,
+    "p": 0.0002
+   },
+   {
+    "rank": 94,
+    "token_id": 4647,
+    "token": "Ġterm",
+    "text": " term",
+    "logit": 11.5125,
+    "p": 0.0002
+   },
+   {
+    "rank": 95,
+    "token_id": 2310,
+    "token": "Ġold",
+    "text": " old",
+    "logit": 11.4933,
+    "p": 0.0002
+   },
+   {
+    "rank": 96,
+    "token_id": 5546,
+    "token": "Ġcounter",
+    "text": " counter",
+    "logit": 11.4634,
+    "p": 0.0002
+   },
+   {
+    "rank": 97,
+    "token_id": 2218,
+    "token": "Ġfa",
+    "text": " fa",
+    "logit": 11.46,
+    "p": 0.0002
+   },
+   {
+    "rank": 98,
+    "token_id": 7168,
+    "token": "Ġzero",
+    "text": " zero",
+    "logit": 11.4345,
+    "p": 0.0002
+   },
+   {
+    "rank": 99,
+    "token_id": 715,
+    "token": "ĠĊ",
+    "text": " \n",
+    "logit": 11.4319,
+    "p": 0.0002
+   },
+   {
+    "rank": 100,
+    "token_id": 847,
+    "token": "Ġmy",
+    "text": " my",
+    "logit": 11.4085,
+    "p": 0.0001
+   },
+   {
+    "rank": 101,
+    "token_id": 281,
+    "token": "Ġp",
+    "text": " p",
+    "logit": 11.4033,
+    "p": 0.0001
+   },
+   {
+    "rank": 102,
+    "token_id": 501,
+    "token": "Ġnew",
+    "text": " new",
+    "logit": 11.3758,
+    "p": 0.0001
+   },
+   {
+    "rank": 103,
+    "token_id": 1932,
+    "token": "Ġmax",
+    "text": " max",
+    "logit": 11.3629,
+    "p": 0.0001
+   },
+   {
+    "rank": 104,
+    "token_id": 451,
+    "token": "ĠN",
+    "text": " N",
+    "logit": 11.3299,
+    "p": 0.0001
+   },
+   {
+    "rank": 105,
+    "token_id": 1044,
+    "token": "Ġval",
+    "text": " val",
+    "logit": 11.2765,
+    "p": 0.0001
+   },
+   {
+    "rank": 106,
+    "token_id": 2802,
+    "token": "Ġrow",
+    "text": " row",
+    "logit": 11.2727,
+    "p": 0.0001
+   },
+   {
+    "rank": 107,
+    "token_id": 55129,
+    "token": "Ġnth",
+    "text": " nth",
+    "logit": 11.269,
+    "p": 0.0001
+   },
+   {
+    "rank": 108,
+    "token_id": 4226,
+    "token": "Ġanswer",
+    "text": " answer",
+    "logit": 11.264,
+    "p": 0.0001
+   },
+   {
+    "rank": 109,
+    "token_id": 220,
+    "token": "Ġ",
+    "text": " ",
+    "logit": 11.2401,
+    "p": 0.0001
+   },
+   {
+    "rank": 110,
+    "token_id": 25927,
+    "token": "Ġluc",
+    "text": " luc",
+    "logit": 11.2252,
+    "p": 0.0001
+   },
+   {
+    "rank": 111,
+    "token_id": 16600,
+    "token": "Ġ###",
+    "text": " ###",
+    "logit": 11.2236,
+    "p": 0.0001
+   },
+   {
+    "rank": 112,
+    "token_id": 825,
+    "token": "Ġone",
+    "text": " one",
+    "logit": 11.1922,
+    "p": 0.0001
+   },
+   {
+    "rank": 113,
+    "token_id": 75043,
+    "token": "Ġhasil",
+    "text": " hasil",
+    "logit": 11.1898,
+    "p": 0.0001
+   },
+   {
+    "rank": 114,
+    "token_id": 12727,
+    "token": "ĉF",
+    "text": "\tF",
+    "logit": 11.1662,
+    "p": 0.0001
+   },
+   {
+    "rank": 115,
+    "token_id": 57759,
+    "token": "Ġsoma",
+    "text": " soma",
+    "logit": 11.1623,
+    "p": 0.0001
+   },
+   {
+    "rank": 116,
+    "token_id": 364,
+    "token": "Ġ'",
+    "text": " '",
+    "logit": 11.141,
+    "p": 0.0001
+   },
+   {
+    "rank": 117,
+    "token_id": 5651,
+    "token": "Ġtab",
+    "text": " tab",
+    "logit": 11.1372,
+    "p": 0.0001
+   },
+   {
+    "rank": 118,
+    "token_id": 34259,
+    "token": "Ġsumm",
+    "text": " summ",
+    "logit": 11.1371,
+    "p": 0.0001
+   },
+   {
+    "rank": 119,
+    "token_id": 1416,
+    "token": "ĠIf",
+    "text": " If",
+    "logit": 11.1215,
+    "p": 0.0001
+   },
+   {
+    "rank": 120,
+    "token_id": 3059,
+    "token": "Ġresults",
+    "text": " results",
+    "logit": 11.1156,
+    "p": 0.0001
+   },
+   {
+    "rank": 121,
+    "token_id": 18788,
+    "token": "'''",
+    "text": "'''",
+    "logit": 11.1128,
+    "p": 0.0001
+   },
+   {
+    "rank": 122,
+    "token_id": 5517,
+    "token": "Ġmat",
+    "text": " mat",
+    "logit": 11.1113,
+    "p": 0.0001
+   },
+   {
+    "rank": 123,
+    "token_id": 821,
+    "token": "Ġdata",
+    "text": " data",
+    "logit": 11.0971,
+    "p": 0.0001
+   },
+   {
+    "rank": 124,
+    "token_id": 7129,
+    "token": "\"\"\"Ċ",
+    "text": "\"\"\"\n",
+    "logit": 11.0941,
+    "p": 0.0001
+   },
+   {
+    "rank": 125,
+    "token_id": 1599,
+    "token": "ĠX",
+    "text": " X",
+    "logit": 11.0765,
+    "p": 0.0001
+   },
+   {
+    "rank": 126,
+    "token_id": 700,
+    "token": "Ġout",
+    "text": " out",
+    "logit": 11.0126,
+    "p": 0.0001
+   },
+   {
+    "rank": 127,
+    "token_id": 63548,
+    "token": "Ġrecur",
+    "text": " recur",
+    "logit": 10.9569,
+    "p": 0.0001
+   },
+   {
+    "rank": 128,
+    "token_id": 1591,
+    "token": "Ġ\"\"",
+    "text": " \"\"",
+    "logit": 10.9565,
+    "p": 0.0001
+   },
+   {
+    "rank": 129,
+    "token_id": 5512,
+    "token": "ĠFirst",
+    "text": " First",
+    "logit": 10.938,
+    "p": 0.0001
+   },
+   {
+    "rank": 130,
+    "token_id": 72921,
+    "token": "Ġary",
+    "text": " ary",
+    "logit": 10.9328,
+    "p": 0.0001
+   },
+   {
+    "rank": 131,
+    "token_id": 19597,
+    "token": "Ġls",
+    "text": " ls",
+    "logit": 10.9316,
+    "p": 0.0001
+   },
+   {
+    "rank": 132,
+    "token_id": 1965,
+    "token": "Ġtable",
+    "text": " table",
+    "logit": 10.9046,
+    "p": 0.0001
+   },
+   {
+    "rank": 133,
+    "token_id": 1977,
+    "token": "Ġsay",
+    "text": " say",
+    "logit": 10.8915,
+    "p": 0.0001
+   },
+   {
+    "rank": 134,
+    "token_id": 32878,
+    "token": "Ġserie",
+    "text": " serie",
+    "logit": 10.8708,
+    "p": 0.0001
+   },
+   {
+    "rank": 135,
+    "token_id": 32924,
+    "token": "Ġliste",
+    "text": " liste",
+    "logit": 10.8653,
+    "p": 0.0001
+   },
+   {
+    "rank": 136,
+    "token_id": 9804,
+    "token": "Ġcurr",
+    "text": " curr",
+    "logit": 10.847,
+    "p": 0.0001
+   },
+   {
+    "rank": 137,
+    "token_id": 50182,
+    "token": "ĠFn",
+    "text": " Fn",
+    "logit": 10.8452,
+    "p": 0.0001
+   },
+   {
+    "rank": 138,
+    "token_id": 7704,
+    "token": "Ġ##",
+    "text": " ##",
+    "logit": 10.8415,
+    "p": 0.0001
+   },
+   {
+    "rank": 139,
+    "token_id": 2750,
+    "token": "Ġvalues",
+    "text": " values",
+    "logit": 10.8394,
+    "p": 0.0001
+   },
+   {
+    "rank": 140,
+    "token_id": 898,
+    "token": "Ġli",
+    "text": " li",
+    "logit": 10.8196,
+    "p": 0.0001
+   },
+   {
+    "rank": 141,
+    "token_id": 1147,
+    "token": "Ġz",
+    "text": " z",
+    "logit": 10.8089,
+    "p": 0.0001
+   },
+   {
+    "rank": 142,
+    "token_id": 4174,
+    "token": "Ġtmp",
+    "text": " tmp",
+    "logit": 10.7991,
+    "p": 0.0001
+   },
+   {
+    "rank": 143,
+    "token_id": 294,
+    "token": "Ġd",
+    "text": " d",
+    "logit": 10.7841,
+    "p": 0.0001
+   },
+   {
+    "rank": 144,
+    "token_id": 705,
+    "token": "Ġup",
+    "text": " up",
+    "logit": 10.7577,
+    "p": 0.0001
+   },
+   {
+    "rank": 145,
+    "token_id": 855,
+    "token": "Ġpre",
+    "text": " pre",
+    "logit": 10.7558,
+    "p": 0.0001
+   },
+   {
+    "rank": 146,
+    "token_id": 29009,
+    "token": "Ġaa",
+    "text": " aa",
+    "logit": 10.7516,
+    "p": 0.0001
+   },
+   {
+    "rank": 147,
+    "token_id": 4568,
+    "token": "Ġlim",
+    "text": " lim",
+    "logit": 10.7363,
+    "p": 0.0001
+   },
+   {
+    "rank": 148,
+    "token_id": 17324,
+    "token": "Ġak",
+    "text": " ak",
+    "logit": 10.7306,
+    "p": 0.0001
+   },
+   {
+    "rank": 149,
+    "token_id": 348,
+    "token": "Ġv",
+    "text": " v",
+    "logit": 10.7193,
+    "p": 0.0001
+   },
+   {
+    "rank": 150,
+    "token_id": 8116,
+    "token": "ĠSum",
+    "text": " Sum",
+    "logit": 10.6855,
+    "p": 0.0001
+   },
+   {
+    "rank": 151,
+    "token_id": 14116,
+    "token": "Ġvalor",
+    "text": " valor",
+    "logit": 10.6686,
+    "p": 0.0001
+   },
+   {
+    "rank": 152,
+    "token_id": 7857,
+    "token": "Ġnumer",
+    "text": " numer",
+    "logit": 10.6508,
+    "p": 0.0001
+   },
+   {
+    "rank": 153,
+    "token_id": 20050,
+    "token": "Ġnumero",
+    "text": " numero",
+    "logit": 10.6455,
+    "p": 0.0001
+   },
+   {
+    "rank": 154,
+    "token_id": 9363,
+    "token": "Ġfactors",
+    "text": " factors",
+    "logit": 10.639,
+    "p": 0.0001
+   },
+   {
+    "rank": 155,
+    "token_id": 435,
+    "token": "Ġr",
+    "text": " r",
+    "logit": 10.6363,
+    "p": 0.0001
+   },
+   {
+    "rank": 156,
+    "token_id": 1422,
+    "token": "Ġfr",
+    "text": " fr",
+    "logit": 10.6307,
+    "p": 0.0001
+   },
+   {
+    "rank": 157,
+    "token_id": 8210,
+    "token": "Ġtal",
+    "text": " tal",
+    "logit": 10.6223,
+    "p": 0.0001
+   },
+   {
+    "rank": 158,
+    "token_id": 9559,
+    "token": "ĉresult",
+    "text": "\tresult",
+    "logit": 10.6079,
+    "p": 0.0001
+   },
+   {
+    "rank": 159,
+    "token_id": 575,
+    "token": "Ġu",
+    "text": " u",
+    "logit": 10.6069,
+    "p": 0.0001
+   },
+   {
+    "rank": 160,
+    "token_id": 25563,
+    "token": "Ġfc",
+    "text": " fc",
+    "logit": 10.5726,
+    "p": 0.0001
+   },
+   {
+    "rank": 161,
+    "token_id": 716,
+    "token": "Ġ_",
+    "text": " _",
+    "logit": 10.5641,
+    "p": 0.0001
+   },
+   {
+    "rank": 162,
+    "token_id": 853,
+    "token": "ĉreturn",
+    "text": "\treturn",
+    "logit": 10.5557,
+    "p": 0.0001
+   },
+   {
+    "rank": 163,
+    "token_id": 1590,
+    "token": "Ġfinal",
+    "text": " final",
+    "logit": 10.5421,
+    "p": 0.0001
+   },
+   {
+    "rank": 164,
+    "token_id": 320,
+    "token": "Ġ(",
+    "text": " (",
+    "logit": 10.4926,
+    "p": 0.0001
+   },
+   {
+    "rank": 165,
+    "token_id": 1875,
+    "token": "Ġfin",
+    "text": " fin",
+    "logit": 10.4825,
+    "p": 0.0001
+   },
+   {
+    "rank": 166,
+    "token_id": 13195,
+    "token": "Ġcnt",
+    "text": " cnt",
+    "logit": 10.4483,
+    "p": 0.0001
+   },
+   {
+    "rank": 167,
+    "token_id": 342,
+    "token": "Ġg",
+    "text": " g",
+    "logit": 10.4406,
+    "p": 0.0001
+   },
+   {
+    "rank": 168,
+    "token_id": 279,
+    "token": "Ġthe",
+    "text": " the",
+    "logit": 10.4389,
+    "p": 0.0001
+   },
+   {
+    "rank": 169,
+    "token_id": 2930,
+    "token": "Ġinit",
+    "text": " init",
+    "logit": 10.438,
+    "p": 0.0001
+   },
+   {
+    "rank": 170,
+    "token_id": 9541,
+    "token": "Ġ#Ċ",
+    "text": " #\n",
+    "logit": 10.4311,
+    "p": 0.0001
+   },
+   {
+    "rank": 171,
+    "token_id": 1406,
+    "token": "ĊĊĊ",
+    "text": "\n\n\n",
+    "logit": 10.4247,
+    "p": 0.0001
+   },
+   {
+    "rank": 172,
+    "token_id": 2550,
+    "token": "Ġoutput",
+    "text": " output",
+    "logit": 10.413,
+    "p": 0.0001
+   },
+   {
+    "rank": 173,
+    "token_id": 379,
+    "token": "Ġy",
+    "text": " y",
+    "logit": 10.4089,
+    "p": 0.0001
+   },
+   {
+    "rank": 174,
+    "token_id": 9570,
+    "token": "Ġfab",
+    "text": " fab",
+    "logit": 10.3942,
+    "p": 0.0001
+   },
+   {
+    "rank": 175,
+    "token_id": 257,
+    "token": "ĠĠĠĠ",
+    "text": "    ",
+    "logit": 10.3582,
+    "p": 0.0001
+   },
+   {
+    "rank": 176,
+    "token_id": 11256,
+    "token": "Ġsequ",
+    "text": " sequ",
+    "logit": 10.3506,
+    "p": 0.0001
+   },
+   {
+    "rank": 177,
+    "token_id": 8168,
+    "token": "Ġfactor",
+    "text": " factor",
+    "logit": 10.3477,
+    "p": 0.0001
+   },
+   {
+    "rank": 178,
+    "token_id": 4081,
+    "token": "Ġgen",
+    "text": " gen",
+    "logit": 10.3461,
+    "p": 0.0001
+   },
+   {
+    "rank": 179,
+    "token_id": 14687,
+    "token": "'''Ċ",
+    "text": "'''\n",
+    "logit": 10.326,
+    "p": 0.0001
+   },
+   {
+    "rank": 180,
+    "token_id": 3019,
+    "token": "Ġstep",
+    "text": " step",
+    "logit": 10.3233,
+    "p": 0.0001
+   },
+   {
+    "rank": 181,
+    "token_id": 353,
+    "token": "Ġ*",
+    "text": " *",
+    "logit": 10.3109,
+    "p": 0
+   },
+   {
+    "rank": 182,
+    "token_id": 1562,
+    "token": "Ġtem",
+    "text": " tem",
+    "logit": 10.301,
+    "p": 0
+   },
+   {
+    "rank": 183,
+    "token_id": 2331,
+    "token": "Ġbase",
+    "text": " base",
+    "logit": 10.2862,
+    "p": 0
+   },
+   {
+    "rank": 184,
+    "token_id": 3084,
+    "token": "Ġlength",
+    "text": " length",
+    "logit": 10.2829,
+    "p": 0
+   },
+   {
+    "rank": 185,
+    "token_id": 12599,
+    "token": "\"\"\"",
+    "text": "\"\"\"",
+    "logit": 10.2782,
+    "p": 0
+   },
+   {
+    "rank": 186,
+    "token_id": 902,
+    "token": "Ġno",
+    "text": " no",
+    "logit": 10.274,
+    "p": 0
+   },
+   {
+    "rank": 187,
+    "token_id": 328,
+    "token": "ĠS",
+    "text": " S",
+    "logit": 10.2584,
+    "p": 0
+   },
+   {
+    "rank": 188,
+    "token_id": 1946,
+    "token": "Ġinput",
+    "text": " input",
+    "logit": 10.2517,
+    "p": 0
+   },
+   {
+    "rank": 189,
+    "token_id": 8619,
+    "token": "Ġfs",
+    "text": " fs",
+    "logit": 10.2432,
+    "p": 0
+   },
+   {
+    "rank": 190,
+    "token_id": 4147,
+    "token": "Ġbuffer",
+    "text": " buffer",
+    "logit": 10.2195,
+    "p": 0
+   },
+   {
+    "rank": 191,
+    "token_id": 5383,
+    "token": "Ġpattern",
+    "text": " pattern",
+    "logit": 10.1848,
+    "p": 0
+   },
+   {
+    "rank": 192,
+    "token_id": 10250,
+    "token": "Ġprime",
+    "text": " prime",
+    "logit": 10.1726,
+    "p": 0
+   },
+   {
+    "rank": 193,
+    "token_id": 28871,
+    "token": "ĠSequence",
+    "text": " Sequence",
+    "logit": 10.1459,
+    "p": 0
+   },
+   {
+    "rank": 194,
+    "token_id": 56312,
+    "token": "Ġaccumulator",
+    "text": " accumulator",
+    "logit": 10.1344,
+    "p": 0
+   },
+   {
+    "rank": 195,
+    "token_id": 448,
+    "token": "Ġwith",
+    "text": " with",
+    "logit": 10.1234,
+    "p": 0
+   },
+   {
+    "rank": 196,
+    "token_id": 1779,
+    "token": "Ġcheck",
+    "text": " check",
+    "logit": 10.1229,
+    "p": 0
+   },
+   {
+    "rank": 197,
+    "token_id": 30819,
+    "token": "Ġrecursive",
+    "text": " recursive",
+    "logit": 10.1165,
+    "p": 0
+   },
+   {
+    "rank": 198,
+    "token_id": 2086,
+    "token": "Ġsecond",
+    "text": " second",
+    "logit": 10.1113,
+    "p": 0
+   },
+   {
+    "rank": 199,
+    "token_id": 14621,
+    "token": "ĊĊĊĊĊ",
+    "text": "\n\n\n\n\n",
+    "logit": 10.1078,
+    "p": 0
+   }
+  ],
+  "top_mass": 0.988125,
+  "tail": {
+   "n": 151736,
+   "mass": 0.011874,
+   "space": "logit",
+   "buckets": 64,
+   "edges": [
+    -15.2067,
+    -14.8113,
+    -14.4159,
+    -14.0206,
+    -13.6252,
+    -13.2298,
+    -12.8344,
+    -12.4391,
+    -12.0437,
+    -11.6483,
+    -11.2529,
+    -10.8576,
+    -10.4622,
+    -10.0668,
+    -9.6714,
+    -9.2761,
+    -8.8807,
+    -8.4853,
+    -8.0899,
+    -7.6946,
+    -7.2992,
+    -6.9038,
+    -6.5084,
+    -6.1131,
+    -5.7177,
+    -5.3223,
+    -4.9269,
+    -4.5316,
+    -4.1362,
+    -3.7408,
+    -3.3454,
+    -2.9501,
+    -2.5547,
+    -2.1593,
+    -1.7639,
+    -1.3686,
+    -0.9732,
+    -0.5778,
+    -0.1824,
+    0.2129,
+    0.6083,
+    1.0037,
+    1.3991,
+    1.7944,
+    2.1898,
+    2.5852,
+    2.9806,
+    3.3759,
+    3.7713,
+    4.1667,
+    4.5621,
+    4.9574,
+    5.3528,
+    5.7482,
+    6.1436,
+    6.5389,
+    6.9343,
+    7.3297,
+    7.7251,
+    8.1204,
+    8.5158,
+    8.9112,
+    9.3066,
+    9.7019,
+    10.0973
+   ],
+   "counts": [
+    1,
+    1,
+    3,
+    0,
+    2,
+    1,
+    0,
+    6,
+    4,
+    5,
+    5,
+    10,
+    19,
+    19,
+    24,
+    51,
+    64,
+    80,
+    135,
+    220,
+    300,
+    423,
+    633,
+    895,
+    1298,
+    1674,
+    2331,
+    3087,
+    4132,
+    5323,
+    7376,
+    11184,
+    8491,
+    8694,
+    8866,
+    9019,
+    9076,
+    8575,
+    8159,
+    7568,
+    6929,
+    6152,
+    5407,
+    4403,
+    3864,
+    3264,
+    2689,
+    2245,
+    1827,
+    1456,
+    1252,
+    957,
+    795,
+    615,
+    509,
+    401,
+    311,
+    254,
+    190,
+    139,
+    127,
+    92,
+    64,
+    40
+   ],
+   "mass_per_bucket": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1e-8,
+    2e-8,
+    3e-8,
+    7e-8,
+    1.3e-7,
+    2.6e-7,
+    5.3e-7,
+    0.00000114,
+    0.00000134,
+    0.00000203,
+    0.00000308,
+    0.00000465,
+    0.00000694,
+    0.00000975,
+    0.00001375,
+    0.00001891,
+    0.00002571,
+    0.0000339,
+    0.00004419,
+    0.00005332,
+    0.00006961,
+    0.00008707,
+    0.00010653,
+    0.00013221,
+    0.00015977,
+    0.00018986,
+    0.00024158,
+    0.00027286,
+    0.00033754,
+    0.00038798,
+    0.00047808,
+    0.00056181,
+    0.00063999,
+    0.00077371,
+    0.00087607,
+    0.00092726,
+    0.00127699,
+    0.00137395,
+    0.00142891,
+    0.00133286
+   ],
+   "logit_mean": [
+    -15.2067,
+    -14.7224,
+    -14.3211,
+    0,
+    -13.3923,
+    -13.1854,
+    0,
+    -12.2267,
+    -11.732,
+    -11.4338,
+    -11.0752,
+    -10.7163,
+    -10.269,
+    -9.8703,
+    -9.4154,
+    -9.0827,
+    -8.6893,
+    -8.2766,
+    -7.8752,
+    -7.4733,
+    -7.0916,
+    -6.6977,
+    -6.3013,
+    -5.9078,
+    -5.5055,
+    -5.1149,
+    -4.7169,
+    -4.3268,
+    -3.9303,
+    -3.5339,
+    -3.1339,
+    -2.79,
+    -2.3547,
+    -1.9624,
+    -1.5673,
+    -1.172,
+    -0.7772,
+    -0.3799,
+    0.0136,
+    0.4071,
+    0.8025,
+    1.1981,
+    1.5924,
+    1.9857,
+    2.3826,
+    2.7754,
+    3.1705,
+    3.567,
+    3.9626,
+    4.362,
+    4.7536,
+    5.1442,
+    5.5427,
+    5.9389,
+    6.3366,
+    6.7366,
+    7.1212,
+    7.5125,
+    7.9273,
+    8.2971,
+    8.706,
+    9.1033,
+    9.5052,
+    9.9058
+   ]
+  },
+  "cumulative": {
+   "ranks": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64,
+    128,
+    256,
+    512,
+    1024,
+    2048,
+    4096,
+    8192,
+    16384,
+    32768,
+    65536,
+    131072,
+    151936
+   ],
+   "mass": [
+    0.543108,
+    0.632306,
+    0.748717,
+    0.859591,
+    0.908648,
+    0.950301,
+    0.971795,
+    0.983554,
+    0.989867,
+    0.993446,
+    0.995898,
+    0.997556,
+    0.998635,
+    0.999301,
+    0.999685,
+    0.999887,
+    0.999976,
+    0.999999,
+    0.999999
+   ]
+  },
+  "full_logits": null,
+  "timing_ms": 172.5
+ },
+ "meta": {
+  "recorded_at": "2026-09-08T03:57:55.013Z",
+  "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "transformers_version": "5.16.1",
+  "torch_version": "2.14.0+cpu",
+  "torch_threads": 10,
+  "backend_version": "0.2.0",
+  "hardware": "darwin arm64, 10 threads"
+ }
+}

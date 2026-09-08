@@ -1,0 +1,1961 @@
+{
+ "$schema": "sol-fixture/1",
+ "id": "tree-chat",
+ "kind": "logits",
+ "module": "temperature",
+ "title": {
+  "es": "Prompt Tree con template · paso 0",
+  "en": "Tree prompt with template · step 0"
+ },
+ "recordedAt": "2026-09-08T03:57:55.013Z",
+ "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+ "request": {
+  "prompt": "Write a small tree as JSON: the root has value 1 and two children with values 2 and 3; the node with value 2 has one child with value 4.",
+  "use_chat_template": true,
+  "top_k": 200,
+  "tail_buckets": 64,
+  "full_logits": false
+ },
+ "response": {
+  "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "rendered": "<|im_start|>system\nYou are a JSON generator. Reply with a single JSON object and nothing else.<|im_end|>\n<|im_start|>user\nWrite a small tree as JSON: the root has value 1 and two children with values 2 and 3; the node with value 2 has one child with value 4.<|im_end|>\n<|im_start|>assistant\n",
+  "n_tokens": 67,
+  "vocab_size": 151936,
+  "vocab_entries": 151665,
+  "padding_rows_start": 151665,
+  "logsumexp": 26.3993,
+  "max_logit": 26.3713,
+  "min_logit": -13.307,
+  "entropy_nats": 0.1409,
+  "entropy_bits": 0.2032,
+  "top": [
+   {
+    "rank": 0,
+    "token_id": 73594,
+    "token": "```",
+    "text": "```",
+    "logit": 26.3713,
+    "p": 0.9723
+   },
+   {
+    "rank": 1,
+    "token_id": 515,
+    "token": "{Ċ",
+    "text": "{\n",
+    "logit": 22.6371,
+    "p": 0.0232
+   },
+   {
+    "rank": 2,
+    "token_id": 13874,
+    "token": "``",
+    "text": "``",
+    "logit": 20.89,
+    "p": 0.004
+   },
+   {
+    "rank": 3,
+    "token_id": 4913,
+    "token": "{\"",
+    "text": "{\"",
+    "logit": 17.5214,
+    "p": 0.0001
+   },
+   {
+    "rank": 4,
+    "token_id": 90,
+    "token": "{",
+    "text": "{",
+    "logit": 16.7228,
+    "p": 0.0001
+   },
+   {
+    "rank": 5,
+    "token_id": 8420,
+    "token": "Here",
+    "text": "Here",
+    "logit": 16.655,
+    "p": 0.0001
+   },
+   {
+    "rank": 6,
+    "token_id": 16094,
+    "token": "{}Ċ",
+    "text": "{}\n",
+    "logit": 15.7587,
+    "p": 0
+   },
+   {
+    "rank": 7,
+    "token_id": 6257,
+    "token": "{}",
+    "text": "{}",
+    "logit": 15.4483,
+    "p": 0
+   },
+   {
+    "rank": 8,
+    "token_id": 54275,
+    "token": "Ġ```",
+    "text": " ```",
+    "logit": 15.0281,
+    "p": 0
+   },
+   {
+    "rank": 9,
+    "token_id": 37790,
+    "token": "{})Ċ",
+    "text": "{})\n",
+    "logit": 14.3615,
+    "p": 0
+   },
+   {
+    "rank": 10,
+    "token_id": 28875,
+    "token": "{})",
+    "text": "{})",
+    "logit": 13.9896,
+    "p": 0
+   },
+   {
+    "rank": 11,
+    "token_id": 3989,
+    "token": "`Ċ",
+    "text": "`\n",
+    "logit": 13.5801,
+    "p": 0
+   },
+   {
+    "rank": 12,
+    "token_id": 63,
+    "token": "`",
+    "text": "`",
+    "logit": 13.5686,
+    "p": 0
+   },
+   {
+    "rank": 13,
+    "token_id": 7129,
+    "token": "\"\"\"Ċ",
+    "text": "\"\"\"\n",
+    "logit": 13.3609,
+    "p": 0
+   },
+   {
+    "rank": 14,
+    "token_id": 2236,
+    "token": "json",
+    "text": "json",
+    "logit": 13.022,
+    "p": 0
+   },
+   {
+    "rank": 15,
+    "token_id": 12599,
+    "token": "\"\"\"",
+    "text": "\"\"\"",
+    "logit": 13.0164,
+    "p": 0
+   },
+   {
+    "rank": 16,
+    "token_id": 151643,
+    "token": "<|endoftext|>",
+    "text": "<|endoftext|>",
+    "logit": 12.9489,
+    "p": 0
+   },
+   {
+    "rank": 17,
+    "token_id": 4257,
+    "token": "{ĊĊ",
+    "text": "{\n\n",
+    "logit": 12.7801,
+    "p": 0
+   },
+   {
+    "rank": 18,
+    "token_id": 197,
+    "token": "ĉ",
+    "text": "\t",
+    "logit": 12.7742,
+    "p": 0
+   },
+   {
+    "rank": 19,
+    "token_id": 9640,
+    "token": "[Ċ",
+    "text": "[\n",
+    "logit": 12.7218,
+    "p": 0
+   },
+   {
+    "rank": 20,
+    "token_id": 262,
+    "token": "ĠĠĠ",
+    "text": "   ",
+    "logit": 12.6934,
+    "p": 0
+   },
+   {
+    "rank": 21,
+    "token_id": 14129,
+    "token": "\"{",
+    "text": "\"{",
+    "logit": 12.5533,
+    "p": 0
+   },
+   {
+    "rank": 22,
+    "token_id": 31483,
+    "token": "{}ĊĊ",
+    "text": "{}\n\n",
+    "logit": 12.5341,
+    "p": 0
+   },
+   {
+    "rank": 23,
+    "token_id": 341,
+    "token": "Ġ{Ċ",
+    "text": " {\n",
+    "logit": 12.5043,
+    "p": 0
+   },
+   {
+    "rank": 24,
+    "token_id": 44986,
+    "token": "{:",
+    "text": "{:",
+    "logit": 12.4374,
+    "p": 0
+   },
+   {
+    "rank": 25,
+    "token_id": 38837,
+    "token": "{},Ċ",
+    "text": "{},\n",
+    "logit": 12.3561,
+    "p": 0
+   },
+   {
+    "rank": 26,
+    "token_id": 1264,
+    "token": "){Ċ",
+    "text": "){\n",
+    "logit": 12.3161,
+    "p": 0
+   },
+   {
+    "rank": 27,
+    "token_id": 8,
+    "token": ")",
+    "text": ")",
+    "logit": 12.2768,
+    "p": 0
+   },
+   {
+    "rank": 28,
+    "token_id": 13608,
+    "token": "{'",
+    "text": "{'",
+    "logit": 12.2347,
+    "p": 0
+   },
+   {
+    "rank": 29,
+    "token_id": 10952,
+    "token": "---Ċ",
+    "text": "---\n",
+    "logit": 12.1649,
+    "p": 0
+   },
+   {
+    "rank": 30,
+    "token_id": 22655,
+    "token": "{},",
+    "text": "{},",
+    "logit": 12.1101,
+    "p": 0
+   },
+   {
+    "rank": 31,
+    "token_id": 39814,
+    "token": "Sure",
+    "text": "Sure",
+    "logit": 12.0964,
+    "p": 0
+   },
+   {
+    "rank": 32,
+    "token_id": 1986,
+    "token": "This",
+    "text": "This",
+    "logit": 12.0526,
+    "p": 0
+   },
+   {
+    "rank": 33,
+    "token_id": 95456,
+    "token": "Certainly",
+    "text": "Certainly",
+    "logit": 11.9997,
+    "p": 0
+   },
+   {
+    "rank": 34,
+    "token_id": 5370,
+    "token": "JSON",
+    "text": "JSON",
+    "logit": 11.9252,
+    "p": 0
+   },
+   {
+    "rank": 35,
+    "token_id": 41233,
+    "token": "Ġ```Ċ",
+    "text": " ```\n",
+    "logit": 11.8358,
+    "p": 0
+   },
+   {
+    "rank": 36,
+    "token_id": 785,
+    "token": "The",
+    "text": "The",
+    "logit": 11.7924,
+    "p": 0
+   },
+   {
+    "rank": 37,
+    "token_id": 3276,
+    "token": "*/Ċ",
+    "text": "*/\n",
+    "logit": 11.7691,
+    "p": 0
+   },
+   {
+    "rank": 38,
+    "token_id": 340,
+    "token": ")Ċ",
+    "text": ")\n",
+    "logit": 11.6964,
+    "p": 0
+   },
+   {
+    "rank": 39,
+    "token_id": 1666,
+    "token": "{čĊ",
+    "text": "{\r\n",
+    "logit": 11.6724,
+    "p": 0
+   },
+   {
+    "rank": 40,
+    "token_id": 1249,
+    "token": "To",
+    "text": "To",
+    "logit": 11.6299,
+    "p": 0
+   },
+   {
+    "rank": 41,
+    "token_id": 99141,
+    "token": "(\"{\\\"",
+    "text": "(\"{\\\"",
+    "logit": 11.6297,
+    "p": 0
+   },
+   {
+    "rank": 42,
+    "token_id": 37588,
+    "token": "BEGIN",
+    "text": "BEGIN",
+    "logit": 11.5932,
+    "p": 0
+   },
+   {
+    "rank": 43,
+    "token_id": 24166,
+    "token": "serialize",
+    "text": "serialize",
+    "logit": 11.5585,
+    "p": 0
+   },
+   {
+    "rank": 44,
+    "token_id": 2753,
+    "token": "No",
+    "text": "No",
+    "logit": 11.545,
+    "p": 0
+   },
+   {
+    "rank": 45,
+    "token_id": 101480,
+    "token": "ä¸įåĩº",
+    "text": "不出",
+    "logit": 11.5269,
+    "p": 0
+   },
+   {
+    "rank": 46,
+    "token_id": 5692,
+    "token": "ĠHere",
+    "text": " Here",
+    "logit": 11.4358,
+    "p": 0
+   },
+   {
+    "rank": 47,
+    "token_id": 15075,
+    "token": "\"\"\"ĊĊ",
+    "text": "\"\"\"\n\n",
+    "logit": 11.4224,
+    "p": 0
+   },
+   {
+    "rank": 48,
+    "token_id": 3014,
+    "token": "\"\"",
+    "text": "\"\"",
+    "logit": 11.3942,
+    "p": 0
+   },
+   {
+    "rank": 49,
+    "token_id": 41446,
+    "token": ">{Ċ",
+    "text": ">{\n",
+    "logit": 11.393,
+    "p": 0
+   },
+   {
+    "rank": 50,
+    "token_id": 2663,
+    "token": "#endif",
+    "text": "#endif",
+    "logit": 11.294,
+    "p": 0
+   },
+   {
+    "rank": 51,
+    "token_id": 286,
+    "token": "ĠĠĠĠĠĠĠ",
+    "text": "       ",
+    "logit": 11.2742,
+    "p": 0
+   },
+   {
+    "rank": 52,
+    "token_id": 46391,
+    "token": "{}.",
+    "text": "{}.",
+    "logit": 11.2135,
+    "p": 0
+   },
+   {
+    "rank": 53,
+    "token_id": 38214,
+    "token": "Below",
+    "text": "Below",
+    "logit": 11.1588,
+    "p": 0
+   },
+   {
+    "rank": 54,
+    "token_id": 12,
+    "token": "-",
+    "text": "-",
+    "logit": 11.1413,
+    "p": 0
+   },
+   {
+    "rank": 55,
+    "token_id": 9454,
+    "token": "Yes",
+    "text": "Yes",
+    "logit": 11.0936,
+    "p": 0
+   },
+   {
+    "rank": 56,
+    "token_id": 1,
+    "token": "\"",
+    "text": "\"",
+    "logit": 11.0852,
+    "p": 0
+   },
+   {
+    "rank": 57,
+    "token_id": 322,
+    "token": "//",
+    "text": "//",
+    "logit": 11.0474,
+    "p": 0
+   },
+   {
+    "rank": 58,
+    "token_id": 84609,
+    "token": "eyJ",
+    "text": "eyJ",
+    "logit": 11.0353,
+    "p": 0
+   },
+   {
+    "rank": 59,
+    "token_id": 22043,
+    "token": "Given",
+    "text": "Given",
+    "logit": 11.0331,
+    "p": 0
+   },
+   {
+    "rank": 60,
+    "token_id": 7360,
+    "token": "|Ċ",
+    "text": "|\n",
+    "logit": 10.9918,
+    "p": 0
+   },
+   {
+    "rank": 61,
+    "token_id": 84274,
+    "token": "``Ċ",
+    "text": "``\n",
+    "logit": 10.8728,
+    "p": 0
+   },
+   {
+    "rank": 62,
+    "token_id": 1316,
+    "token": "<?",
+    "text": "<?",
+    "logit": 10.7733,
+    "p": 0
+   },
+   {
+    "rank": 63,
+    "token_id": 5212,
+    "token": "Ġ{\"",
+    "text": " {\"",
+    "logit": 10.7576,
+    "p": 0
+   },
+   {
+    "rank": 64,
+    "token_id": 5661,
+    "token": "\\Ċ",
+    "text": "\\\n",
+    "logit": 10.7102,
+    "p": 0
+   },
+   {
+    "rank": 65,
+    "token_id": 66365,
+    "token": "{%",
+    "text": "{%",
+    "logit": 10.6087,
+    "p": 0
+   },
+   {
+    "rank": 66,
+    "token_id": 60,
+    "token": "]",
+    "text": "]",
+    "logit": 10.6075,
+    "p": 0
+   },
+   {
+    "rank": 67,
+    "token_id": 2132,
+    "token": "It",
+    "text": "It",
+    "logit": 10.5491,
+    "p": 0
+   },
+   {
+    "rank": 68,
+    "token_id": 1747,
+    "token": "/**Ċ",
+    "text": "/**\n",
+    "logit": 10.4854,
+    "p": 0
+   },
+   {
+    "rank": 69,
+    "token_id": 44364,
+    "token": "---ĊĊ",
+    "text": "---\n\n",
+    "logit": 10.4403,
+    "p": 0
+   },
+   {
+    "rank": 70,
+    "token_id": 32881,
+    "token": "`)",
+    "text": "`)",
+    "logit": 10.4142,
+    "p": 0
+   },
+   {
+    "rank": 71,
+    "token_id": 2610,
+    "token": "You",
+    "text": "You",
+    "logit": 10.4069,
+    "p": 0
+   },
+   {
+    "rank": 72,
+    "token_id": 16864,
+    "token": "({\"",
+    "text": "({\"",
+    "logit": 10.343,
+    "p": 0
+   },
+   {
+    "rank": 73,
+    "token_id": 5613,
+    "token": "Ġ{}Ċ",
+    "text": " {}\n",
+    "logit": 10.2701,
+    "p": 0
+   },
+   {
+    "rank": 74,
+    "token_id": 9344,
+    "token": "tree",
+    "text": "tree",
+    "logit": 10.1235,
+    "p": 0
+   },
+   {
+    "rank": 75,
+    "token_id": 3966,
+    "token": "One",
+    "text": "One",
+    "logit": 10.1054,
+    "p": 0
+   },
+   {
+    "rank": 76,
+    "token_id": 54734,
+    "token": "Ġ\"{\\\"",
+    "text": " \"{\\\"",
+    "logit": 10.1042,
+    "p": 0
+   },
+   {
+    "rank": 77,
+    "token_id": 6269,
+    "token": "Enter",
+    "text": "Enter",
+    "logit": 10.0834,
+    "p": 0
+   },
+   {
+    "rank": 78,
+    "token_id": 1572,
+    "token": "ĉĊ",
+    "text": "\t\n",
+    "logit": 10.0412,
+    "p": 0
+   },
+   {
+    "rank": 79,
+    "token_id": 21396,
+    "token": "Great",
+    "text": "Great",
+    "logit": 9.9391,
+    "p": 0
+   },
+   {
+    "rank": 80,
+    "token_id": 4352,
+    "token": "module",
+    "text": "module",
+    "logit": 9.9174,
+    "p": 0
+   },
+   {
+    "rank": 81,
+    "token_id": 39917,
+    "token": "\"`",
+    "text": "\"`",
+    "logit": 9.9145,
+    "p": 0
+   },
+   {
+    "rank": 82,
+    "token_id": 29349,
+    "token": "Ġunto",
+    "text": " unto",
+    "logit": 9.9052,
+    "p": 0
+   },
+   {
+    "rank": 83,
+    "token_id": 474,
+    "token": "import",
+    "text": "import",
+    "logit": 9.8945,
+    "p": 0
+   },
+   {
+    "rank": 84,
+    "token_id": 691,
+    "token": "data",
+    "text": "data",
+    "logit": 9.8922,
+    "p": 0
+   },
+   {
+    "rank": 85,
+    "token_id": 65259,
+    "token": ")d",
+    "text": ")d",
+    "logit": 9.8757,
+    "p": 0
+   },
+   {
+    "rank": 86,
+    "token_id": 256,
+    "token": "ĠĠ",
+    "text": "  ",
+    "logit": 9.8744,
+    "p": 0
+   },
+   {
+    "rank": 87,
+    "token_id": 37175,
+    "token": "Consider",
+    "text": "Consider",
+    "logit": 9.8263,
+    "p": 0
+   },
+   {
+    "rank": 88,
+    "token_id": 61528,
+    "token": "(`Ċ",
+    "text": "(`\n",
+    "logit": 9.8191,
+    "p": 0
+   },
+   {
+    "rank": 89,
+    "token_id": 2262,
+    "token": "({Ċ",
+    "text": "({\n",
+    "logit": 9.8181,
+    "p": 0
+   },
+   {
+    "rank": 90,
+    "token_id": 19324,
+    "token": "`ĊĊ",
+    "text": "`\n\n",
+    "logit": 9.8146,
+    "p": 0
+   },
+   {
+    "rank": 91,
+    "token_id": 7837,
+    "token": "structure",
+    "text": "structure",
+    "logit": 9.8095,
+    "p": 0
+   },
+   {
+    "rank": 92,
+    "token_id": 1533,
+    "token": "export",
+    "text": "export",
+    "logit": 9.7979,
+    "p": 0
+   },
+   {
+    "rank": 93,
+    "token_id": 24712,
+    "token": "consider",
+    "text": "consider",
+    "logit": 9.7684,
+    "p": 0
+   },
+   {
+    "rank": 94,
+    "token_id": 3862,
+    "token": "There",
+    "text": "There",
+    "logit": 9.7672,
+    "p": 0
+   },
+   {
+    "rank": 95,
+    "token_id": 38915,
+    "token": "(\"\\\"",
+    "text": "(\"\\\"",
+    "logit": 9.7606,
+    "p": 0
+   },
+   {
+    "rank": 96,
+    "token_id": 6180,
+    "token": "encode",
+    "text": "encode",
+    "logit": 9.748,
+    "p": 0
+   },
+   {
+    "rank": 97,
+    "token_id": 70285,
+    "token": "|{Ċ",
+    "text": "|{\n",
+    "logit": 9.7341,
+    "p": 0
+   },
+   {
+    "rank": 98,
+    "token_id": 6098,
+    "token": "){",
+    "text": "){",
+    "logit": 9.7315,
+    "p": 0
+   },
+   {
+    "rank": 99,
+    "token_id": 16485,
+    "token": "Available",
+    "text": "Available",
+    "logit": 9.7181,
+    "p": 0
+   },
+   {
+    "rank": 100,
+    "token_id": 4323,
+    "token": ".json",
+    "text": ".json",
+    "logit": 9.7178,
+    "p": 0
+   },
+   {
+    "rank": 101,
+    "token_id": 71986,
+    "token": "Nested",
+    "text": "Nested",
+    "logit": 9.7098,
+    "p": 0
+   },
+   {
+    "rank": 102,
+    "token_id": 87930,
+    "token": "\"\"\".",
+    "text": "\"\"\".",
+    "logit": 9.7016,
+    "p": 0
+   },
+   {
+    "rank": 103,
+    "token_id": 47602,
+    "token": "Ġembargo",
+    "text": " embargo",
+    "logit": 9.6947,
+    "p": 0
+   },
+   {
+    "rank": 104,
+    "token_id": 5097,
+    "token": "Output",
+    "text": "Output",
+    "logit": 9.6702,
+    "p": 0
+   },
+   {
+    "rank": 105,
+    "token_id": 532,
+    "token": "}Ċ",
+    "text": "}\n",
+    "logit": 9.6682,
+    "p": 0
+   },
+   {
+    "rank": 106,
+    "token_id": 46094,
+    "token": "structures",
+    "text": "structures",
+    "logit": 9.6335,
+    "p": 0
+   },
+   {
+    "rank": 107,
+    "token_id": 32,
+    "token": "A",
+    "text": "A",
+    "logit": 9.5405,
+    "p": 0
+   },
+   {
+    "rank": 108,
+    "token_id": 33027,
+    "token": ".attach",
+    "text": ".attach",
+    "logit": 9.5328,
+    "p": 0
+   },
+   {
+    "rank": 109,
+    "token_id": 6667,
+    "token": "âĢ¢",
+    "text": "•",
+    "logit": 9.5247,
+    "p": 0
+   },
+   {
+    "rank": 110,
+    "token_id": 123883,
+    "token": "à¸¶",
+    "text": "ึ",
+    "logit": 9.5194,
+    "p": 0
+   },
+   {
+    "rank": 111,
+    "token_id": 1313,
+    "token": "type",
+    "text": "type",
+    "logit": 9.5016,
+    "p": 0
+   },
+   {
+    "rank": 112,
+    "token_id": 921,
+    "token": "]Ċ",
+    "text": "]\n",
+    "logit": 9.4872,
+    "p": 0
+   },
+   {
+    "rank": 113,
+    "token_id": 91,
+    "token": "|",
+    "text": "|",
+    "logit": 9.4753,
+    "p": 0
+   },
+   {
+    "rank": 114,
+    "token_id": 44622,
+    "token": "`:",
+    "text": "`:",
+    "logit": 9.475,
+    "p": 0
+   },
+   {
+    "rank": 115,
+    "token_id": 2979,
+    "token": "{{",
+    "text": "{{",
+    "logit": 9.4471,
+    "p": 0
+   },
+   {
+    "rank": 116,
+    "token_id": 59,
+    "token": "\\",
+    "text": "\\",
+    "logit": 9.4285,
+    "p": 0
+   },
+   {
+    "rank": 117,
+    "token_id": 3225,
+    "token": "ï»¿",
+    "text": "﻿",
+    "logit": 9.4238,
+    "p": 0
+   },
+   {
+    "rank": 118,
+    "token_id": 1040,
+    "token": "class",
+    "text": "class",
+    "logit": 9.3814,
+    "p": 0
+   },
+   {
+    "rank": 119,
+    "token_id": 6739,
+    "token": "here",
+    "text": "here",
+    "logit": 9.3756,
+    "p": 0
+   },
+   {
+    "rank": 120,
+    "token_id": 11578,
+    "token": "Ok",
+    "text": "Ok",
+    "logit": 9.3668,
+    "p": 0
+   },
+   {
+    "rank": 121,
+    "token_id": 92,
+    "token": "}",
+    "text": "}",
+    "logit": 9.3599,
+    "p": 0
+   },
+   {
+    "rank": 122,
+    "token_id": 35702,
+    "token": "{\\",
+    "text": "{\\",
+    "logit": 9.3521,
+    "p": 0
+   },
+   {
+    "rank": 123,
+    "token_id": 59221,
+    "token": "{@",
+    "text": "{@",
+    "logit": 9.3348,
+    "p": 0
+   },
+   {
+    "rank": 124,
+    "token_id": 43375,
+    "token": "JsonObject",
+    "text": "JsonObject",
+    "logit": 9.2766,
+    "p": 0
+   },
+   {
+    "rank": 125,
+    "token_id": 5183,
+    "token": "den",
+    "text": "den",
+    "logit": 9.2757,
+    "p": 0
+   },
+   {
+    "rank": 126,
+    "token_id": 1066,
+    "token": "ĠĠĠĠĊ",
+    "text": "    \n",
+    "logit": 9.258,
+    "p": 0
+   },
+   {
+    "rank": 127,
+    "token_id": 12798,
+    "token": "){ĊĊ",
+    "text": "){\n\n",
+    "logit": 9.243,
+    "p": 0
+   },
+   {
+    "rank": 128,
+    "token_id": 71486,
+    "token": "Alright",
+    "text": "Alright",
+    "logit": 9.233,
+    "p": 0
+   },
+   {
+    "rank": 129,
+    "token_id": 74068,
+    "token": "ietf",
+    "text": "ietf",
+    "logit": 9.2192,
+    "p": 0
+   },
+   {
+    "rank": 130,
+    "token_id": 32058,
+    "token": "Ġjsonify",
+    "text": " jsonify",
+    "logit": 9.1952,
+    "p": 0
+   },
+   {
+    "rank": 131,
+    "token_id": 220,
+    "token": "Ġ",
+    "text": " ",
+    "logit": 9.1918,
+    "p": 0
+   },
+   {
+    "rank": 132,
+    "token_id": 29414,
+    "token": "rpc",
+    "text": "rpc",
+    "logit": 9.1763,
+    "p": 0
+   },
+   {
+    "rank": 133,
+    "token_id": 93217,
+    "token": "okay",
+    "text": "okay",
+    "logit": 9.1761,
+    "p": 0
+   },
+   {
+    "rank": 134,
+    "token_id": 23822,
+    "token": "atabases",
+    "text": "atabases",
+    "logit": 9.1758,
+    "p": 0
+   },
+   {
+    "rank": 135,
+    "token_id": 480,
+    "token": "able",
+    "text": "able",
+    "logit": 9.1701,
+    "p": 0
+   },
+   {
+    "rank": 136,
+    "token_id": 1437,
+    "token": "ify",
+    "text": "ify",
+    "logit": 9.135,
+    "p": 0
+   },
+   {
+    "rank": 137,
+    "token_id": 1041,
+    "token": "raw",
+    "text": "raw",
+    "logit": 9.1048,
+    "p": 0
+   },
+   {
+    "rank": 138,
+    "token_id": 37230,
+    "token": "Ġnevertheless",
+    "text": " nevertheless",
+    "logit": 9.0815,
+    "p": 0
+   },
+   {
+    "rank": 139,
+    "token_id": 88595,
+    "token": "Ġdane",
+    "text": " dane",
+    "logit": 9.059,
+    "p": 0
+   },
+   {
+    "rank": 140,
+    "token_id": 26840,
+    "token": "###Ċ",
+    "text": "###\n",
+    "logit": 9.0571,
+    "p": 0
+   },
+   {
+    "rank": 141,
+    "token_id": 67678,
+    "token": "{/",
+    "text": "{/",
+    "logit": 9.0348,
+    "p": 0
+   },
+   {
+    "rank": 142,
+    "token_id": 1454,
+    "token": "Error",
+    "text": "Error",
+    "logit": 9.0304,
+    "p": 0
+   },
+   {
+    "rank": 143,
+    "token_id": 68806,
+    "token": "({})Ċ",
+    "text": "({})\n",
+    "logit": 9.0277,
+    "p": 0
+   },
+   {
+    "rank": 144,
+    "token_id": 4064,
+    "token": "None",
+    "text": "None",
+    "logit": 9.0228,
+    "p": 0
+   },
+   {
+    "rank": 145,
+    "token_id": 1024,
+    "token": "const",
+    "text": "const",
+    "logit": 9.0073,
+    "p": 0
+   },
+   {
+    "rank": 146,
+    "token_id": 3522,
+    "token": "Empty",
+    "text": "Empty",
+    "logit": 9.002,
+    "p": 0
+   },
+   {
+    "rank": 147,
+    "token_id": 2,
+    "token": "#",
+    "text": "#",
+    "logit": 8.9763,
+    "p": 0
+   },
+   {
+    "rank": 148,
+    "token_id": 16,
+    "token": "1",
+    "text": "1",
+    "logit": 8.9648,
+    "p": 0
+   },
+   {
+    "rank": 149,
+    "token_id": 5993,
+    "token": "?>Ċ",
+    "text": "?>\n",
+    "logit": 8.9591,
+    "p": 0
+   },
+   {
+    "rank": 150,
+    "token_id": 14687,
+    "token": "'''Ċ",
+    "text": "'''\n",
+    "logit": 8.9292,
+    "p": 0
+   },
+   {
+    "rank": 151,
+    "token_id": 5541,
+    "token": "}`",
+    "text": "}`",
+    "logit": 8.9274,
+    "p": 0
+   },
+   {
+    "rank": 152,
+    "token_id": 78134,
+    "token": "{}]",
+    "text": "{}]",
+    "logit": 8.9138,
+    "p": 0
+   },
+   {
+    "rank": 153,
+    "token_id": 929,
+    "token": "Type",
+    "text": "Type",
+    "logit": 8.9047,
+    "p": 0
+   },
+   {
+    "rank": 154,
+    "token_id": 65,
+    "token": "b",
+    "text": "b",
+    "logit": 8.8928,
+    "p": 0
+   },
+   {
+    "rank": 155,
+    "token_id": 43523,
+    "token": "Indeed",
+    "text": "Indeed",
+    "logit": 8.8889,
+    "p": 0
+   },
+   {
+    "rank": 156,
+    "token_id": 49237,
+    "token": ")`Ċ",
+    "text": ")`\n",
+    "logit": 8.8833,
+    "p": 0
+   },
+   {
+    "rank": 157,
+    "token_id": 33975,
+    "token": "Human",
+    "text": "Human",
+    "logit": 8.8632,
+    "p": 0
+   },
+   {
+    "rank": 158,
+    "token_id": 28587,
+    "token": "`.",
+    "text": "`.",
+    "logit": 8.8584,
+    "p": 0
+   },
+   {
+    "rank": 159,
+    "token_id": 10061,
+    "token": "Let",
+    "text": "Let",
+    "logit": 8.8483,
+    "p": 0
+   },
+   {
+    "rank": 160,
+    "token_id": 2152,
+    "token": "no",
+    "text": "no",
+    "logit": 8.8464,
+    "p": 0
+   },
+   {
+    "rank": 161,
+    "token_id": 6818,
+    "token": "respond",
+    "text": "respond",
+    "logit": 8.8419,
+    "p": 0
+   },
+   {
+    "rank": 162,
+    "token_id": 334,
+    "token": "**",
+    "text": "**",
+    "logit": 8.8356,
+    "p": 0
+   },
+   {
+    "rank": 163,
+    "token_id": 2121,
+    "token": "As",
+    "text": "As",
+    "logit": 8.8135,
+    "p": 0
+   },
+   {
+    "rank": 164,
+    "token_id": 14085,
+    "token": "$$",
+    "text": "$$",
+    "logit": 8.8119,
+    "p": 0
+   },
+   {
+    "rank": 165,
+    "token_id": 257,
+    "token": "ĠĠĠĠ",
+    "text": "    ",
+    "logit": 8.8053,
+    "p": 0
+   },
+   {
+    "rank": 166,
+    "token_id": 32313,
+    "token": "Okay",
+    "text": "Okay",
+    "logit": 8.8031,
+    "p": 0
+   },
+   {
+    "rank": 167,
+    "token_id": 6641,
+    "token": "ccording",
+    "text": "ccording",
+    "logit": 8.8013,
+    "p": 0
+   },
+   {
+    "rank": 168,
+    "token_id": 52098,
+    "token": "Ġ'{\"",
+    "text": " '{\"",
+    "logit": 8.8001,
+    "p": 0
+   },
+   {
+    "rank": 169,
+    "token_id": 45982,
+    "token": "{};Ċ",
+    "text": "{};\n",
+    "logit": 8.7963,
+    "p": 0
+   },
+   {
+    "rank": 170,
+    "token_id": 13,
+    "token": ".",
+    "text": ".",
+    "logit": 8.7866,
+    "p": 0
+   },
+   {
+    "rank": 171,
+    "token_id": 42351,
+    "token": "{}\",",
+    "text": "{}\",",
+    "logit": 8.7836,
+    "p": 0
+   },
+   {
+    "rank": 172,
+    "token_id": 21500,
+    "token": "curacy",
+    "text": "curacy",
+    "logit": 8.7815,
+    "p": 0
+   },
+   {
+    "rank": 173,
+    "token_id": 103246,
+    "token": "æİĢ",
+    "text": "掀",
+    "logit": 8.7804,
+    "p": 0
+   },
+   {
+    "rank": 174,
+    "token_id": 38521,
+    "token": "Ġrecession",
+    "text": " recession",
+    "logit": 8.7793,
+    "p": 0
+   },
+   {
+    "rank": 175,
+    "token_id": 1149,
+    "token": "let",
+    "text": "let",
+    "logit": 8.7613,
+    "p": 0
+   },
+   {
+    "rank": 176,
+    "token_id": 414,
+    "token": "ĠĠĠĠĠ",
+    "text": "     ",
+    "logit": 8.7595,
+    "p": 0
+   },
+   {
+    "rank": 177,
+    "token_id": 3087,
+    "token": "event",
+    "text": "event",
+    "logit": 8.755,
+    "p": 0
+   },
+   {
+    "rank": 178,
+    "token_id": 1183,
+    "token": "[\"",
+    "text": "[\"",
+    "logit": 8.7467,
+    "p": 0
+   },
+   {
+    "rank": 179,
+    "token_id": 13543,
+    "token": "<!",
+    "text": "<!",
+    "logit": 8.7226,
+    "p": 0
+   },
+   {
+    "rank": 180,
+    "token_id": 3925,
+    "token": "OK",
+    "text": "OK",
+    "logit": 8.7054,
+    "p": 0
+   },
+   {
+    "rank": 181,
+    "token_id": 24183,
+    "token": "`)Ċ",
+    "text": "`)\n",
+    "logit": 8.6852,
+    "p": 0
+   },
+   {
+    "rank": 182,
+    "token_id": 2972,
+    "token": "client",
+    "text": "client",
+    "logit": 8.6617,
+    "p": 0
+   },
+   {
+    "rank": 183,
+    "token_id": 4310,
+    "token": "require",
+    "text": "require",
+    "logit": 8.6516,
+    "p": 0
+   },
+   {
+    "rank": 184,
+    "token_id": 698,
+    "token": "\"Ċ",
+    "text": "\"\n",
+    "logit": 8.6479,
+    "p": 0
+   },
+   {
+    "rank": 185,
+    "token_id": 17413,
+    "token": "commit",
+    "text": "commit",
+    "logit": 8.6474,
+    "p": 0
+   },
+   {
+    "rank": 186,
+    "token_id": 17894,
+    "token": ":{Ċ",
+    "text": ":{\n",
+    "logit": 8.6473,
+    "p": 0
+   },
+   {
+    "rank": 187,
+    "token_id": 28715,
+    "token": "Based",
+    "text": "Based",
+    "logit": 8.6406,
+    "p": 0
+   },
+   {
+    "rank": 188,
+    "token_id": 82086,
+    "token": ".toJSONString",
+    "text": ".toJSONString",
+    "logit": 8.6182,
+    "p": 0
+   },
+   {
+    "rank": 189,
+    "token_id": 64077,
+    "token": "]>Ċ",
+    "text": "]>\n",
+    "logit": 8.6087,
+    "p": 0
+   },
+   {
+    "rank": 190,
+    "token_id": 5014,
+    "token": "Json",
+    "text": "Json",
+    "logit": 8.6078,
+    "p": 0
+   },
+   {
+    "rank": 191,
+    "token_id": 46186,
+    "token": ")`",
+    "text": ")`",
+    "logit": 8.6048,
+    "p": 0
+   },
+   {
+    "rank": 192,
+    "token_id": 12051,
+    "token": "eed",
+    "text": "eed",
+    "logit": 8.6047,
+    "p": 0
+   },
+   {
+    "rank": 193,
+    "token_id": 2623,
+    "token": "Not",
+    "text": "Not",
+    "logit": 8.602,
+    "p": 0
+   },
+   {
+    "rank": 194,
+    "token_id": 134260,
+    "token": "ãģ¾ãģĦ",
+    "text": "まい",
+    "logit": 8.5967,
+    "p": 0
+   },
+   {
+    "rank": 195,
+    "token_id": 8477,
+    "token": "dict",
+    "text": "dict",
+    "logit": 8.5931,
+    "p": 0
+   },
+   {
+    "rank": 196,
+    "token_id": 88863,
+    "token": ">{\"",
+    "text": ">{\"",
+    "logit": 8.5636,
+    "p": 0
+   },
+   {
+    "rank": 197,
+    "token_id": 1950,
+    "token": "enter",
+    "text": "enter",
+    "logit": 8.5516,
+    "p": 0
+   },
+   {
+    "rank": 198,
+    "token_id": 7287,
+    "token": ")-",
+    "text": ")-",
+    "logit": 8.5412,
+    "p": 0
+   },
+   {
+    "rank": 199,
+    "token_id": 97457,
+    "token": "Structured",
+    "text": "Structured",
+    "logit": 8.5281,
+    "p": 0
+   }
+  ],
+  "top_mass": 0.999992,
+  "tail": {
+   "n": 151736,
+   "mass": 0.000008,
+   "space": "logit",
+   "buckets": 64,
+   "edges": [
+    -13.307,
+    -12.9659,
+    -12.6248,
+    -12.2836,
+    -11.9425,
+    -11.6014,
+    -11.2603,
+    -10.9192,
+    -10.578,
+    -10.2369,
+    -9.8958,
+    -9.5547,
+    -9.2135,
+    -8.8724,
+    -8.5313,
+    -8.1902,
+    -7.849,
+    -7.5079,
+    -7.1668,
+    -6.8257,
+    -6.4846,
+    -6.1434,
+    -5.8023,
+    -5.4612,
+    -5.1201,
+    -4.7789,
+    -4.4378,
+    -4.0967,
+    -3.7556,
+    -3.4144,
+    -3.0733,
+    -2.7322,
+    -2.3911,
+    -2.05,
+    -1.7088,
+    -1.3677,
+    -1.0266,
+    -0.6855,
+    -0.3443,
+    -0.0032,
+    0.3379,
+    0.679,
+    1.0201,
+    1.3613,
+    1.7024,
+    2.0435,
+    2.3846,
+    2.7258,
+    3.0669,
+    3.408,
+    3.7491,
+    4.0903,
+    4.4314,
+    4.7725,
+    5.1136,
+    5.4547,
+    5.7959,
+    6.137,
+    6.4781,
+    6.8192,
+    7.1604,
+    7.5015,
+    7.8426,
+    8.1837,
+    8.5249
+   ],
+   "counts": [
+    5,
+    2,
+    3,
+    10,
+    13,
+    10,
+    21,
+    20,
+    42,
+    40,
+    76,
+    93,
+    121,
+    195,
+    254,
+    365,
+    412,
+    574,
+    734,
+    995,
+    1216,
+    1572,
+    1822,
+    2316,
+    2723,
+    3172,
+    3864,
+    4519,
+    5169,
+    5774,
+    6742,
+    10018,
+    7137,
+    7188,
+    7179,
+    7203,
+    7045,
+    6851,
+    6514,
+    6205,
+    5793,
+    5417,
+    4963,
+    4205,
+    3804,
+    3285,
+    2957,
+    2606,
+    2180,
+    1726,
+    1415,
+    1134,
+    947,
+    743,
+    565,
+    426,
+    322,
+    284,
+    232,
+    173,
+    118,
+    88,
+    74,
+    65
+   ],
+   "mass_per_bucket": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1e-8,
+    1e-8,
+    1e-8,
+    1e-8,
+    2e-8,
+    3e-8,
+    3e-8,
+    4e-8,
+    6e-8,
+    7e-8,
+    9e-8,
+    1e-7,
+    1.3e-7,
+    1.6e-7,
+    1.9e-7,
+    2.1e-7,
+    2.4e-7,
+    2.7e-7,
+    3.2e-7,
+    3.5e-7,
+    3.8e-7,
+    4e-7,
+    4.3e-7,
+    5.4e-7,
+    6.2e-7,
+    6.4e-7,
+    6.2e-7,
+    6.5e-7,
+    7.8e-7,
+    9.5e-7
+   ],
+   "logit_mean": [
+    -13.1836,
+    -12.7737,
+    -12.5565,
+    -12.1382,
+    -11.7776,
+    -11.4258,
+    -11.0949,
+    -10.7469,
+    -10.4074,
+    -10.0399,
+    -9.7131,
+    -9.3671,
+    -9.0399,
+    -8.6923,
+    -8.357,
+    -8.0039,
+    -7.6728,
+    -7.3343,
+    -6.9892,
+    -6.6482,
+    -6.309,
+    -5.9698,
+    -5.6267,
+    -5.2859,
+    -4.9445,
+    -4.6017,
+    -4.2628,
+    -3.9209,
+    -3.5828,
+    -3.241,
+    -2.8992,
+    -2.5848,
+    -2.2236,
+    -1.8803,
+    -1.5378,
+    -1.1974,
+    -0.857,
+    -0.5168,
+    -0.1756,
+    0.1629,
+    0.5061,
+    0.8464,
+    1.1897,
+    1.5253,
+    1.8733,
+    2.204,
+    2.5503,
+    2.8904,
+    3.2368,
+    3.5746,
+    3.9088,
+    4.2539,
+    4.5896,
+    4.9293,
+    5.2792,
+    5.6161,
+    5.9561,
+    6.3133,
+    6.6482,
+    6.9858,
+    7.3255,
+    7.6696,
+    8.0247,
+    8.3538
+   ]
+  },
+  "cumulative": {
+   "ranks": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64,
+    128,
+    256,
+    512,
+    1024,
+    2048,
+    4096,
+    8192,
+    16384,
+    32768,
+    65536,
+    131072,
+    151936
+   ],
+   "mass": [
+    0.972346,
+    0.995577,
+    0.999766,
+    0.999928,
+    0.99996,
+    0.999975,
+    0.999986,
+    0.99999,
+    0.999992,
+    0.999994,
+    0.999996,
+    0.999997,
+    0.999998,
+    0.999999,
+    1,
+    1,
+    1,
+    1,
+    1
+   ]
+  },
+  "full_logits": null,
+  "timing_ms": 328.5
+ },
+ "meta": {
+  "recorded_at": "2026-09-08T03:57:55.013Z",
+  "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "transformers_version": "5.16.1",
+  "torch_version": "2.14.0+cpu",
+  "torch_threads": 10,
+  "backend_version": "0.2.0",
+  "hardware": "darwin arm64, 10 threads"
+ }
+}
