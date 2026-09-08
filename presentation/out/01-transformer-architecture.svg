@@ -24,16 +24,20 @@
   <!-- stage 1: tokens -->
   <g font-family="IBM Plex Mono, monospace" font-size="24">
     <text x="96" y="330" font-size="22" fill="#7C8599" font-family="IBM Plex Sans, sans-serif">1 · Tokens</text>
-    <rect x="96" y="352" width="70" height="46" rx="8" fill="#171A22" stroke="#2A2F3C"></rect>
-    <text x="131" y="383" text-anchor="middle" fill="#ECEFF4">Ada</text>
-    <rect x="96" y="410" width="70" height="46" rx="8" fill="#171A22" stroke="#2A2F3C"></rect>
-    <text x="131" y="441" text-anchor="middle" fill="#ECEFF4">␠is</text>
-    <rect x="96" y="468" width="70" height="46" rx="8" fill="#171A22" stroke="#2A2F3C"></rect>
-    <text x="131" y="499" text-anchor="middle" fill="#ECEFF4">␠36</text>
-    <rect x="96" y="526" width="70" height="46" rx="8" fill="#171A22" stroke="#2A2F3C"></rect>
-    <text x="131" y="557" text-anchor="middle" fill="#ECEFF4">.</text>
-    <rect x="96" y="584" width="70" height="46" rx="8" fill="#171A22" stroke="#2DD4BF" stroke-width="2"></rect>
-    <text x="131" y="615" text-anchor="middle" fill="#2DD4BF">{</text>
+    <rect x="96" y="352" width="70" height="34" rx="8" fill="#171A22" stroke="#2A2F3C"></rect>
+    <text x="131" y="376" text-anchor="middle" font-size="20" fill="#ECEFF4">Ada</text>
+    <rect x="96" y="392" width="70" height="34" rx="8" fill="#171A22" stroke="#2A2F3C"></rect>
+    <text x="131" y="416" text-anchor="middle" font-size="20" fill="#ECEFF4">␠is</text>
+    <rect x="96" y="432" width="70" height="34" rx="8" fill="#171A22" stroke="#2A2F3C"></rect>
+    <text x="131" y="456" text-anchor="middle" font-size="20" fill="#ECEFF4">␠</text>
+    <rect x="96" y="472" width="70" height="34" rx="8" fill="#171A22" stroke="#2A2F3C"></rect>
+    <text x="131" y="496" text-anchor="middle" font-size="20" fill="#ECEFF4">3</text>
+    <rect x="96" y="512" width="70" height="34" rx="8" fill="#171A22" stroke="#2A2F3C"></rect>
+    <text x="131" y="536" text-anchor="middle" font-size="20" fill="#ECEFF4">6</text>
+    <rect x="96" y="552" width="70" height="34" rx="8" fill="#171A22" stroke="#2A2F3C"></rect>
+    <text x="131" y="576" text-anchor="middle" font-size="20" fill="#ECEFF4">.</text>
+    <rect x="96" y="592" width="70" height="34" rx="8" fill="#171A22" stroke="#2DD4BF" stroke-width="2"></rect>
+    <text x="131" y="616" text-anchor="middle" font-size="20" fill="#2DD4BF">{</text>
     <text x="96" y="672" font-size="20" fill="#7C8599" font-family="IBM Plex Sans, sans-serif">token ids</text>
   </g>
   <line x1="176" y1="490" x2="236" y2="490" stroke="#AEB6C7" stroke-width="2" marker-end="url(#arrow)"></line>
@@ -48,7 +52,7 @@
       <rect x="272" y="488" width="146" height="8" rx="2"></rect><rect x="272" y="502" width="146" height="8" rx="2"></rect><rect x="272" y="516" width="146" height="8" rx="2"></rect>
       <rect x="272" y="546" width="146" height="8" rx="2"></rect><rect x="272" y="560" width="146" height="8" rx="2"></rect><rect x="272" y="574" width="146" height="8" rx="2"></rect>
     </g>
-    <text x="345" y="612" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="20" fill="#AEB6C7">5 × 896</text>
+    <text x="345" y="612" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="20" fill="#AEB6C7">7 × 896</text>
     <text x="250" y="672" font-size="20" fill="#7C8599">one vector per token,</text>
     <text x="250" y="700" font-size="20" fill="#7C8599">rotary positions</text>
   </g>

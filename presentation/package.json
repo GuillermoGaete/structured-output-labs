@@ -3,9 +3,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node build.mjs"
+    "build": "node build.mjs",
+    "deck": "marp deck.md -o deck.html",
+    "deck:pdf": "marp deck.md --pdf --allow-local-files -o out/deck.pdf"
   },
   "devDependencies": {
+    "@marp-team/marp-cli": "^4.5.1",
     "playwright": "^1.62.1"
   }
 }

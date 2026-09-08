@@ -1,6 +1,8 @@
 import Image from "next/image";
 
 const FIGURES = [
+  { file: "00a-tokens-not-characters", title: "Tokens, not characters", body: "The same JSON as 26 characters and as the 13 byte-level BPE tokens the model actually reads. A token can straddle a JSON boundary, and this vocabulary spells digits one per token." },
+  { file: "00b-embedding-table", title: "A token is a row in a table", body: "The embedding table has one learned vector per vocabulary slot. A look-up on the way in; on the way out the same tied table gives one logit per row." },
   { file: "01-transformer-architecture", title: "Transformer architecture", body: "Tokens become vectors, N blocks of attention and MLP refine them on the residual stream, and the last vector is projected onto the vocabulary." },
   { file: "02-output-layer", title: "The output layer", body: "One matrix multiplication turns a hidden vector of size d into one score per vocabulary entry: the logits." },
   { file: "03-logits-to-probabilities", title: "Logits → probabilities", body: "Softmax exponentiates and normalises. Temperature scales the logits first." },

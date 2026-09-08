@@ -79,17 +79,17 @@
 
   <g>
     <rect x="720" y="640" width="530" height="180" rx="12" fill="#171A22" stroke="#D95926"></rect>
-    <text x="744" y="676" font-size="20" fill="#D95926">Allowed at state 7 · 1,126 tokens</text>
+    <text x="744" y="676" font-size="20" fill="#D95926">Allowed at state 7 · 13 tokens</text>
     <g font-family="IBM Plex Mono, monospace" font-size="22" fill="#ECEFF4">
-      <text x="744" y="718">0  1  2  …  9   12   36   100   1985</text>
-      <text x="744" y="754">2024   360   77   ␠3   ␠36   ␠2000</text>
+      <text x="744" y="718">0  1  2  3  4  5  6  7  8  9</text>
+      <text x="744" y="754">␠   -   ␠-<tspan font-family="IBM Plex Sans, sans-serif" font-size="16" fill="#7C8599">        one token per digit in this vocabulary</tspan></text>
     </g>
     <text x="744" y="796" font-size="18" fill="#7C8599">every token whose characters keep the regex alive</text>
 
     <rect x="1290" y="640" width="534" height="180" rx="12" fill="#171A22" stroke="#4A4F5C"></rect>
-    <text x="1314" y="676" font-size="20" fill="#7C8599">Forbidden · the other 150,810 tokens</text>
+    <text x="1314" y="676" font-size="20" fill="#7C8599">Forbidden · the other 151,923 tokens</text>
     <g font-family="IBM Plex Mono, monospace" font-size="22" fill="#7C8599">
-      <text x="1314" y="718" text-decoration="line-through">"36"   thirty   ␠"   null   ␠-   ⏎</text>
+      <text x="1314" y="718" text-decoration="line-through">"36"   thirty   ␠"   null   true   ⏎</text>
       <text x="1314" y="754" text-decoration="line-through">years   Ada   {   }   ⟨eos⟩   …</text>
     </g>
     <text x="1314" y="796" font-size="18" fill="#7C8599">logit → −∞, probability → 0</text>

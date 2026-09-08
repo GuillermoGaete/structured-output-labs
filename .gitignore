@@ -25,3 +25,6 @@ npm-debug.log*
 
 # Presentation build scratch (rendered outputs in presentation/out are committed)
 presentation/.tmp/
+# Marp deck renders (npm run deck / deck:pdf)
+presentation/deck.html
+presentation/out/deck.pdf

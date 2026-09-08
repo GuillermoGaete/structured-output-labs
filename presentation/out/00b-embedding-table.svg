@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg class="slide" viewBox="0 0 1920 1080" width="1920" height="1080" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The embedding table E with 151,936 rows and 896 columns: on the way in, a token id selects one row, which becomes the token's vector; on the way out, the same table is multiplied by the final hidden vector h to give one logit per row, because in Qwen2.5-0.5B the input embedding and the LM head are the same tied tensor">
+<style>@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: block; src: url('../fonts/IBMPlexMono-400.woff2') format('woff2'); }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 500; font-display: block; src: url('../fonts/IBMPlexMono-500.woff2') format('woff2'); }
+@font-face { font-family: 'IBM Plex Sans'; font-style: normal; font-weight: 400; font-display: block; src: url('../fonts/IBMPlexSans-400.woff2') format('woff2'); }
+@font-face { font-family: 'IBM Plex Sans'; font-style: normal; font-weight: 500; font-display: block; src: url('../fonts/IBMPlexSans-500.woff2') format('woff2'); }
+@font-face { font-family: 'IBM Plex Sans'; font-style: normal; font-weight: 600; font-display: block; src: url('../fonts/IBMPlexSans-600.woff2') format('woff2'); }
+</style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#AEB6C7"></path>
+    </marker>
+  </defs>
+  <rect width="1920" height="1080" fill="#0E1016"></rect>
+
+  <text x="96" y="92" font-family="IBM Plex Mono, monospace" font-size="22" fill="#7C8599" letter-spacing="2">00b · EMBEDDINGS</text>
+  <text x="96" y="152" font-size="52" font-weight="600" fill="#ECEFF4">A token is a row in a table</text>
+  <text x="96" y="196" font-size="26" fill="#AEB6C7">E holds one learned vector of 896 numbers for each of the 151,936 vocabulary slots. A look-up on the way in, one dot product per row on the way out.</text>
+
+  <!-- ENTERING -->
+  <text x="96" y="262" font-size="24" font-weight="600" fill="#ECEFF4">1 · Entering the model</text>
+  <text x="96" y="290" font-size="18" fill="#7C8599">E[token_id] is a row read. No arithmetic.</text>
+
+  <!-- token box -->
+  <g>
+    <rect x="96" y="470" width="110" height="70" rx="8" fill="#171A22" stroke="#2A2F3C"></rect>
+    <text x="151" y="500" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#ECEFF4">Ada</text>
+    <text x="151" y="527" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="14" fill="#7C8599">id 95347</text>
+    <line x1="210" y1="505" x2="250" y2="505" stroke="#AEB6C7" stroke-width="2" marker-end="url(#arrow)"></line>
+  </g>
+
+  <!-- matrix E -->
+  <g>
+    <text x="430" y="336" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="26" fill="#ECEFF4">E</text>
+    <text x="430" y="364" text-anchor="middle" font-size="18" fill="#7C8599">ℝ^(151,936 × 896)</text>
+    <rect x="260" y="380" width="340" height="330" rx="8" fill="#171A22" stroke="#2A2F3C"></rect>
+    <g font-family="IBM Plex Mono, monospace" font-size="16" fill="#AEB6C7">
+      <rect x="276" y="396" width="308" height="30" rx="4" fill="#1E2330"></rect>
+      <text x="288" y="417" fill="#ECEFF4">4913 · {"</text><text x="576" y="417" text-anchor="end">0.4 … 1.3</text>
+      <rect x="276" y="432" width="308" height="30" rx="4" fill="#1E2330"></rect>
+      <text x="288" y="453" fill="#ECEFF4">330 · Ġ"</text><text x="576" y="453" text-anchor="end">-0.2 … 0.1</text>
+      <rect x="276" y="490" width="308" height="30" rx="4" fill="#163B3A" stroke="#2DD4BF"></rect>
+      <text x="288" y="511" fill="#2DD4BF">95347 · Ada</text><text x="576" y="511" text-anchor="end" fill="#2DD4BF">0.8 … 0.6</text>
+      <rect x="276" y="548" width="308" height="30" rx="4" fill="#1E2330"></rect>
+      <text x="288" y="569" fill="#ECEFF4">424 · age</text><text x="576" y="569" text-anchor="end">-1.1 … 0.8</text>
+      <text x="430" y="612" text-anchor="middle" font-size="24" fill="#7C8599">⋮</text>
+      <rect x="276" y="636" width="308" height="30" rx="4" fill="#1E2330"></rect>
+      <text x="288" y="657" fill="#ECEFF4">151645 · ⟨eos⟩</text><text x="576" y="657" text-anchor="end">0.1 … -0.2</text>
+    </g>
+    <text x="430" y="690" text-anchor="middle" font-size="16" fill="#7C8599">151,936 rows · 896 columns</text>
+    <text x="430" y="746" text-anchor="middle" font-size="18" fill="#7C8599">271 of the rows are padding:</text>
+    <text x="430" y="770" text-anchor="middle" font-size="18" fill="#7C8599">the tokenizer has 151,665 entries</text>
+  </g>
+
+  <line x1="600" y1="505" x2="644" y2="505" stroke="#2DD4BF" stroke-width="2" marker-end="url(#arrow)"></line>
+
+  <!-- the pulled-out vector -->
+  <g>
+    <text x="680" y="336" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="26" fill="#ECEFF4">E[95347]</text>
+    <text x="680" y="364" text-anchor="middle" font-size="18" fill="#7C8599">ℝ^896 · the vector for Ada</text>
+    <rect x="650" y="380" width="60" height="330" rx="8" fill="#171A22" stroke="#2DD4BF"></rect>
+    <g font-family="IBM Plex Mono, monospace" font-size="17" fill="#2DD4BF" text-anchor="middle">
+      <text x="680" y="412">0.81</text><text x="680" y="442">-1.52</text><text x="680" y="472">0.06</text><text x="680" y="502">1.97</text><text x="680" y="532">-0.33</text>
+      <text x="680" y="570" fill="#7C8599">⋮</text>
+      <text x="680" y="610">0.44</text><text x="680" y="640">-0.90</text><text x="680" y="670">0.58</text><text x="680" y="700">-0.12</text>
+    </g>
+    <text x="680" y="746" text-anchor="middle" font-size="18" fill="#7C8599">what block 1 reads,</text>
+    <text x="680" y="770" text-anchor="middle" font-size="18" fill="#7C8599">plus a position</text>
+  </g>
+
+  <!-- NUMBERS PANEL -->
+  <rect x="750" y="380" width="340" height="330" rx="12" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="774" y="422" font-size="20" fill="#7C8599">The table by the numbers</text>
+  <text x="774" y="470" font-family="IBM Plex Mono, monospace" font-size="28" fill="#ECEFF4">151,936 × 896</text>
+  <text x="774" y="502" font-size="19" fill="#AEB6C7">= 136,134,656 numbers</text>
+  <text x="774" y="556" font-family="IBM Plex Mono, monospace" font-size="28" fill="#ECEFF4">27.6%</text>
+  <text x="774" y="588" font-size="19" fill="#AEB6C7">of the 494,032,768 parameters</text>
+  <text x="774" y="632" font-size="18" fill="#AEB6C7">learned, not designed:</text>
+  <text x="774" y="656" font-size="18" fill="#AEB6C7">tokens used in similar</text>
+  <text x="774" y="680" font-size="18" fill="#AEB6C7">places end up with similar rows</text>
+
+  <!-- LEAVING -->
+  <text x="1150" y="262" font-size="24" font-weight="600" fill="#ECEFF4">2 · Leaving the model</text>
+  <text x="1150" y="290" font-size="18" fill="#7C8599">The same table, read the other way: h against every row.</text>
+
+  <!-- h vector -->
+  <g>
+    <text x="1180" y="336" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="26" fill="#ECEFF4">h</text>
+    <text x="1180" y="364" text-anchor="middle" font-size="18" fill="#7C8599">ℝ^896 · last position</text>
+    <rect x="1150" y="380" width="60" height="330" rx="8" fill="#171A22" stroke="#2A2F3C"></rect>
+    <g font-family="IBM Plex Mono, monospace" font-size="17" fill="#2DD4BF" text-anchor="middle">
+      <text x="1180" y="412">0.31</text><text x="1180" y="442">-1.20</text><text x="1180" y="472">0.08</text><text x="1180" y="502">2.44</text><text x="1180" y="532">-0.57</text>
+      <text x="1180" y="570" fill="#7C8599">⋮</text>
+      <text x="1180" y="610">0.92</text><text x="1180" y="640">-0.03</text><text x="1180" y="670">1.15</text><text x="1180" y="700">-0.66</text>
+    </g>
+    <text x="1180" y="746" text-anchor="middle" font-size="18" fill="#7C8599">after block 24</text>
+    <text x="1180" y="770" text-anchor="middle" font-size="18" fill="#7C8599">and the final RMSNorm</text>
+  </g>
+
+  <text x="1240" y="552" text-anchor="middle" font-size="44" fill="#AEB6C7">·</text>
+
+  <!-- the same matrix, mirrored role -->
+  <g>
+    <text x="1420" y="336" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="26" fill="#ECEFF4">W_U = E</text>
+    <text x="1420" y="364" text-anchor="middle" font-size="18" fill="#7C8599">the same 151,936 × 896 table</text>
+    <rect x="1270" y="380" width="300" height="330" rx="8" fill="#171A22" stroke="#2A2F3C"></rect>
+    <g font-family="IBM Plex Mono, monospace" font-size="16" fill="#AEB6C7">
+      <rect x="1286" y="396" width="268" height="30" rx="4" fill="#1E2330"></rect>
+      <text x="1298" y="417" fill="#ECEFF4">4913 · {"</text><text x="1546" y="417" text-anchor="end">· h = 13.8</text>
+      <rect x="1286" y="432" width="268" height="30" rx="4" fill="#1E2330"></rect>
+      <text x="1298" y="453" fill="#ECEFF4">330 · Ġ"</text><text x="1546" y="453" text-anchor="end">· h = 2.1</text>
+      <rect x="1286" y="490" width="268" height="30" rx="4" fill="#163B3A" stroke="#2DD4BF"></rect>
+      <text x="1298" y="511" fill="#2DD4BF">95347 · Ada</text><text x="1546" y="511" text-anchor="end" fill="#2DD4BF">· h = 9.1</text>
+      <rect x="1286" y="548" width="268" height="30" rx="4" fill="#1E2330"></rect>
+      <text x="1298" y="569" fill="#ECEFF4">424 · age</text><text x="1546" y="569" text-anchor="end">· h = 1.4</text>
+      <text x="1420" y="612" text-anchor="middle" font-size="24" fill="#7C8599">⋮</text>
+      <rect x="1286" y="636" width="268" height="30" rx="4" fill="#1E2330"></rect>
+      <text x="1298" y="657" fill="#ECEFF4">151645 · ⟨eos⟩</text><text x="1546" y="657" text-anchor="end">· h = -3.0</text>
+    </g>
+    <text x="1420" y="690" text-anchor="middle" font-size="16" fill="#7C8599">one dot product per row</text>
+    <text x="1420" y="746" text-anchor="middle" font-size="18" fill="#7C8599">tie_word_embeddings = true</text>
+    <text x="1420" y="770" text-anchor="middle" font-size="18" fill="#7C8599">one tensor, verified</text>
+  </g>
+
+  <text x="1606" y="552" text-anchor="middle" font-size="44" fill="#AEB6C7">=</text>
+
+  <!-- z logits -->
+  <g>
+    <text x="1720" y="336" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="26" fill="#ECEFF4">z</text>
+    <text x="1720" y="364" text-anchor="middle" font-size="18" fill="#7C8599">ℝ^151,936 · the logits</text>
+    <rect x="1640" y="380" width="160" height="330" rx="8" fill="#171A22" stroke="#2A2F3C"></rect>
+    <g fill="#3987E5" opacity="0.5">
+      <rect x="1656" y="404" width="76" height="18" rx="2"></rect><rect x="1656" y="440" width="14" height="18" rx="2"></rect><rect x="1656" y="498" width="52" height="18" rx="2"></rect><rect x="1656" y="556" width="10" height="18" rx="2"></rect><rect x="1656" y="644" width="3" height="18" rx="2"></rect>
+    </g>
+    <g font-family="IBM Plex Mono, monospace" font-size="17" text-anchor="end" fill="#3987E5">
+      <text x="1784" y="417">13.8</text><text x="1784" y="453">2.1</text><text x="1784" y="511" fill="#2DD4BF">9.1</text><text x="1784" y="569">1.4</text>
+      <text x="1720" y="612" text-anchor="middle" font-size="24" fill="#7C8599">⋮</text>
+      <text x="1784" y="657">-3.0</text>
+    </g>
+    <text x="1720" y="746" text-anchor="middle" font-size="18" fill="#7C8599">one score per row;</text>
+    <text x="1720" y="770" text-anchor="middle" font-size="18" fill="#7C8599">figure 02 continues</text>
+  </g>
+
+  <!-- footer -->
+  <rect x="96" y="860" width="1728" height="120" rx="12" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="128" y="906" font-size="26" font-weight="600" fill="#ECEFF4">The vocabulary enters and leaves through the same table.</text>
+  <text x="128" y="946" font-size="24" fill="#AEB6C7">A logit is: how much does h look like the embedding of token i? Structured output crosses out rows of this table before softmax.</text>
+</svg>

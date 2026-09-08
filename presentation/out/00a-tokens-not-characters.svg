@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg class="slide" viewBox="0 0 1920 1080" width="1920" height="1080" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The same JSON object shown as 26 characters and as the 13 byte-level BPE tokens Qwen2.5 splits it into, with token ids; call-outs show that a brace and a quote merge into one token, that a quote and a colon straddle the key/value boundary, and that a space followed by 36 is three tokens; a panel explains BPE merges and the glyphs for space, newline and tab">
+<style>@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: block; src: url('../fonts/IBMPlexMono-400.woff2') format('woff2'); }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 500; font-display: block; src: url('../fonts/IBMPlexMono-500.woff2') format('woff2'); }
+@font-face { font-family: 'IBM Plex Sans'; font-style: normal; font-weight: 400; font-display: block; src: url('../fonts/IBMPlexSans-400.woff2') format('woff2'); }
+@font-face { font-family: 'IBM Plex Sans'; font-style: normal; font-weight: 500; font-display: block; src: url('../fonts/IBMPlexSans-500.woff2') format('woff2'); }
+@font-face { font-family: 'IBM Plex Sans'; font-style: normal; font-weight: 600; font-display: block; src: url('../fonts/IBMPlexSans-600.woff2') format('woff2'); }
+</style>
+  <rect width="1920" height="1080" fill="#0E1016"></rect>
+
+  <text x="96" y="92" font-family="IBM Plex Mono, monospace" font-size="22" fill="#7C8599" letter-spacing="2">00a · TOKENIZATION</text>
+  <text x="96" y="152" font-size="52" font-weight="600" fill="#ECEFF4">Tokens, not characters</text>
+  <text x="96" y="196" font-size="26" fill="#AEB6C7">The same JSON, seen by you and seen by the model. Qwen2.5 tokenizer: byte-level BPE, 151,665 entries. Split taken from the real tokenizer.</text>
+
+  <text x="96" y="256" font-size="24" font-weight="600" fill="#ECEFF4">1 · What you see <tspan fill="#7C8599" font-weight="400">· 26 characters</tspan></text>
+  <rect x="96" y="270" width="60" height="54" rx="6" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="126" y="305" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#ECEFF4">{</text>
+  <rect x="162" y="270" width="60" height="54" rx="6" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="192" y="305" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#ECEFF4">"</text>
+  <rect x="228" y="270" width="60" height="54" rx="6" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="258" y="305" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#ECEFF4">n</text>
+  <rect x="294" y="270" width="60" height="54" rx="6" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="324" y="305" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#ECEFF4">a</text>
+  <rect x="360" y="270" width="60" height="54" rx="6" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="390" y="305" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#ECEFF4">m</text>
+  <rect x="426" y="270" width="60" height="54" rx="6" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="456" y="305" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#ECEFF4">e</text>
+  <rect x="492" y="270" width="60" height="54" rx="6" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="522" y="305" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#ECEFF4">"</text>
+  <rect x="558" y="270" width="60" height="54" rx="6" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="588" y="305" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#ECEFF4">:</text>
+  <rect x="624" y="270" width="60" height="54" rx="6" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="654" y="305" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#7C8599">␠</text>
+  <rect x="690" y="270" width="60" height="54" rx="6" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="720" y="305" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#ECEFF4">"</text>
+  <rect x="756" y="270" width="60" height="54" rx="6" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="786" y="305" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#ECEFF4">A</text>
+  <rect x="822" y="270" width="60" height="54" rx="6" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="852" y="305" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#ECEFF4">d</text>
+  <rect x="888" y="270" width="60" height="54" rx="6" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="918" y="305" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#ECEFF4">a</text>
+  <rect x="954" y="270" width="60" height="54" rx="6" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="984" y="305" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#ECEFF4">"</text>
+  <rect x="1020" y="270" width="60" height="54" rx="6" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="1050" y="305" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#ECEFF4">,</text>
+  <rect x="1086" y="270" width="60" height="54" rx="6" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="1116" y="305" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#7C8599">␠</text>
+  <rect x="1152" y="270" width="60" height="54" rx="6" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="1182" y="305" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#ECEFF4">"</text>
+  <rect x="1218" y="270" width="60" height="54" rx="6" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="1248" y="305" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#ECEFF4">a</text>
+  <rect x="1284" y="270" width="60" height="54" rx="6" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="1314" y="305" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#ECEFF4">g</text>
+  <rect x="1350" y="270" width="60" height="54" rx="6" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="1380" y="305" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#ECEFF4">e</text>
+  <rect x="1416" y="270" width="60" height="54" rx="6" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="1446" y="305" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#ECEFF4">"</text>
+  <rect x="1482" y="270" width="60" height="54" rx="6" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="1512" y="305" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#ECEFF4">:</text>
+  <rect x="1548" y="270" width="60" height="54" rx="6" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="1578" y="305" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#7C8599">␠</text>
+  <rect x="1614" y="270" width="60" height="54" rx="6" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="1644" y="305" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#ECEFF4">3</text>
+  <rect x="1680" y="270" width="60" height="54" rx="6" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="1710" y="305" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#ECEFF4">6</text>
+  <rect x="1746" y="270" width="60" height="54" rx="6" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="1776" y="305" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="24" fill="#ECEFF4">}</text>
+  <text x="96" y="376" font-size="24" font-weight="600" fill="#ECEFF4">2 · What the model sees <tspan fill="#7C8599" font-weight="400">· 13 tokens, one colour each, raw vocabulary string and id</tspan></text>
+  <rect x="96" y="390" width="126" height="80" rx="6" fill="#FDE68A"></rect>
+  <text x="159" y="425" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="26" fill="#000000">{"</text>
+  <text x="159" y="455" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="14" fill="#1F2937">4913</text>
+  <rect x="228" y="390" width="258" height="80" rx="6" fill="#BBF7D0"></rect>
+  <text x="357" y="425" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="26" fill="#000000">name</text>
+  <text x="357" y="455" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="14" fill="#1F2937">606</text>
+  <rect x="492" y="390" width="126" height="80" rx="6" fill="#BFDBFE"></rect>
+  <text x="555" y="425" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="26" fill="#000000">":</text>
+  <text x="555" y="455" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="14" fill="#1F2937">788</text>
+  <rect x="624" y="390" width="126" height="80" rx="6" fill="#FBCFE8"></rect>
+  <text x="687" y="425" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="26" fill="#000000">Ġ"</text>
+  <text x="687" y="455" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="14" fill="#1F2937">330</text>
+  <rect x="756" y="390" width="192" height="80" rx="6" fill="#DDD6FE"></rect>
+  <text x="852" y="425" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="26" fill="#000000">Ada</text>
+  <text x="852" y="455" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="14" fill="#1F2937">95347</text>
+  <rect x="954" y="390" width="126" height="80" rx="6" fill="#FED7AA"></rect>
+  <text x="1017" y="425" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="26" fill="#000000">",</text>
+  <text x="1017" y="455" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="14" fill="#1F2937">497</text>
+  <rect x="1086" y="390" width="126" height="80" rx="6" fill="#FDE68A"></rect>
+  <text x="1149" y="425" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="26" fill="#000000">Ġ"</text>
+  <text x="1149" y="455" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="14" fill="#1F2937">330</text>
+  <rect x="1218" y="390" width="192" height="80" rx="6" fill="#BBF7D0"></rect>
+  <text x="1314" y="425" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="26" fill="#000000">age</text>
+  <text x="1314" y="455" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="14" fill="#1F2937">424</text>
+  <rect x="1416" y="390" width="126" height="80" rx="6" fill="#BFDBFE"></rect>
+  <text x="1479" y="425" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="26" fill="#000000">":</text>
+  <text x="1479" y="455" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="14" fill="#1F2937">788</text>
+  <rect x="1548" y="390" width="60" height="80" rx="6" fill="#FBCFE8"></rect>
+  <text x="1578" y="425" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="26" fill="#000000">Ġ</text>
+  <text x="1578" y="455" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="14" fill="#1F2937">220</text>
+  <rect x="1614" y="390" width="60" height="80" rx="6" fill="#DDD6FE"></rect>
+  <text x="1644" y="425" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="26" fill="#000000">3</text>
+  <text x="1644" y="455" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="14" fill="#1F2937">18</text>
+  <rect x="1680" y="390" width="60" height="80" rx="6" fill="#FED7AA"></rect>
+  <text x="1710" y="425" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="26" fill="#000000">6</text>
+  <text x="1710" y="455" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="14" fill="#1F2937">21</text>
+  <rect x="1746" y="390" width="60" height="80" rx="6" fill="#FDE68A"></rect>
+  <text x="1776" y="425" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="26" fill="#000000">}</text>
+  <text x="1776" y="455" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="14" fill="#1F2937">92</text>
+  <line x1="159" y1="470" x2="266" y2="502" stroke="#4A4F5C" stroke-width="2"></line>
+  <rect x="96" y="502" width="340" height="82" rx="10" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="116" y="536" font-size="20" fill="#ECEFF4"><tspan font-family="IBM Plex Mono, monospace">{"</tspan> is one token</text>
+  <text x="116" y="565" font-size="18" fill="#7C8599">brace and quote, merged together</text>
+  <line x1="555" y1="470" x2="646" y2="502" stroke="#4A4F5C" stroke-width="2"></line>
+  <rect x="456" y="502" width="380" height="82" rx="10" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="476" y="536" font-size="20" fill="#ECEFF4"><tspan font-family="IBM Plex Mono, monospace">":</tspan> straddles the key/value boundary</text>
+  <text x="476" y="565" font-size="18" fill="#7C8599">one edge in the automaton, not two</text>
+  <line x1="1644" y1="470" x2="1604" y2="502" stroke="#4A4F5C" stroke-width="2"></line>
+  <rect x="1384" y="502" width="440" height="82" rx="10" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="1404" y="536" font-size="20" fill="#ECEFF4"><tspan font-family="IBM Plex Mono, monospace">␠36</tspan> is three tokens</text>
+  <text x="1404" y="565" font-size="18" fill="#7C8599">a space, then one token per digit</text>
+
+  <rect x="96" y="616" width="1050" height="214" rx="12" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="120" y="652" font-size="20" fill="#7C8599">How the vocabulary was built · byte-level BPE</text>
+  <g font-size="19" fill="#AEB6C7">
+    <text x="120" y="692">start from the 256 byte values</text>
+    <text x="120" y="722">merge the most frequent adjacent pair into a new entry; repeat</text>
+    <text x="120" y="752">151,387 merges later: 151,643 entries, plus 22 special tokens</text>
+    <text x="120" y="782">the model only ever sees the ids; the strings live in the tokenizer</text>
+  </g>
+  <g font-family="IBM Plex Mono, monospace" font-size="18">
+    <text x="760" y="680" fill="#7C8599" font-family="IBM Plex Sans, sans-serif" font-size="16">the entry for " is"</text>
+    <rect x="760" y="692" width="34" height="30" rx="4" fill="#1E2330" stroke="#2A2F3C"></rect><text x="777" y="713" text-anchor="middle" fill="#ECEFF4">Ġ</text>
+    <rect x="800" y="692" width="34" height="30" rx="4" fill="#1E2330" stroke="#2A2F3C"></rect><text x="817" y="713" text-anchor="middle" fill="#ECEFF4">i</text>
+    <rect x="840" y="692" width="34" height="30" rx="4" fill="#1E2330" stroke="#2A2F3C"></rect><text x="857" y="713" text-anchor="middle" fill="#ECEFF4">s</text>
+    <text x="900" y="713" fill="#7C8599" font-family="IBM Plex Sans, sans-serif" font-size="16">three bytes</text>
+    <rect x="760" y="732" width="34" height="30" rx="4" fill="#1E2330" stroke="#2A2F3C"></rect><text x="777" y="753" text-anchor="middle" fill="#ECEFF4">Ġ</text>
+    <rect x="800" y="732" width="74" height="30" rx="4" fill="#1E2330" stroke="#2A2F3C"></rect><text x="837" y="753" text-anchor="middle" fill="#ECEFF4">is</text>
+    <text x="900" y="753" fill="#7C8599" font-family="IBM Plex Sans, sans-serif" font-size="16">merge #29: i + s</text>
+    <rect x="760" y="772" width="114" height="30" rx="4" fill="#1E2330" stroke="#2DD4BF"></rect><text x="817" y="793" text-anchor="middle" fill="#2DD4BF">Ġis</text>
+    <text x="900" y="793" fill="#7C8599" font-family="IBM Plex Sans, sans-serif" font-size="16">merge #118: Ġ + is → id 374</text>
+  </g>
+
+  <rect x="1170" y="616" width="654" height="214" rx="12" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="1194" y="652" font-size="20" fill="#7C8599">The glyphs</text>
+  <g font-size="19" fill="#AEB6C7">
+    <text x="1194" y="692"><tspan font-family="IBM Plex Mono, monospace" fill="#ECEFF4">Ġ</tspan> = a leading space (byte 0x20)</text>
+    <text x="1194" y="722"><tspan font-family="IBM Plex Mono, monospace" fill="#ECEFF4">Ċ</tspan> = newline · <tspan font-family="IBM Plex Mono, monospace" fill="#ECEFF4">ĉ</tspan> = tab</text>
+    <text x="1194" y="752">only in the string form of the vocabulary</text>
+    <text x="1194" y="782">print a raw token and you see them; the model never does</text>
+  </g>
+
+  <rect x="96" y="860" width="1728" height="120" rx="12" fill="#171A22" stroke="#2A2F3C"></rect>
+  <text x="128" y="906" font-size="26" font-weight="600" fill="#ECEFF4">The model reads and writes whole tokens. So must anything that constrains it.</text>
+  <text x="128" y="946" font-size="24" fill="#AEB6C7">The automaton runs over tokens, not characters: <tspan font-family="IBM Plex Mono, monospace">":</tspan> is one edge, not two (figure 05).</text>
+</svg>

@@ -8,7 +8,7 @@ An interactive lab for **constrained decoding**: watch a small language model ge
 - **Time Machine** — generate with the model and scrub through every token: the model's *original* top-K vs the *forced*
   top-K, how much of the vocabulary survived the mask, how much probability mass was removed, the automaton state, the
   nesting depth. Final JSON rendered with one pastel background per token.
-- **How it works** — the seven presentation figures (transformer → logits → softmax → mask → automaton → observers → FSM vs CFG).
+- **How it works** — the nine presentation figures (tokens → embeddings → transformer → logits → softmax → mask → automaton → observers → FSM vs CFG).
 
 ```
 web/            Next.js app (deploy to Vercel)          ── talks to ──▶  backend/   FastAPI + outlines (deploy to a Hugging Face Space)
@@ -72,8 +72,15 @@ Details in [`backend/README.md`](backend/README.md).
 cd presentation && npm install && npx playwright install chromium && npm run build
 ```
 
+The talk itself lives next to the figures: [`presentation/TALK.md`](presentation/TALK.md) is the outline (timing, the one
+idea per block, demo clicks, risks, pre-talk checklist) and [`presentation/deck.md`](presentation/deck.md) is the
+[Marp](https://marp.app) deck that embeds the figures. `npm run deck` renders it to `presentation/deck.html` (open it
+in a browser, `p` for presenter notes); `npm run deck:pdf` writes `presentation/out/deck.pdf`.
+
 | # | Figure |
 |---|--------|
+| 00a | Tokens, not characters: the same JSON as 26 characters and 13 tokens |
+| 00b | Embeddings: a token is a row in a table, and the LM head is the same table |
 | 01 | Decoder-only transformer, end to end |
 | 02 | The output layer: one dot product per vocabulary entry |
 | 03 | Logits → probabilities (softmax, temperature) |
