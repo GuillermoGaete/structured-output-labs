@@ -1,0 +1,684 @@
+{
+ "$schema": "sol-fixture/1",
+ "id": "numbers",
+ "kind": "tokenize",
+ "module": "tokens",
+ "title": {
+  "es": "In 1985 she paid 12.50 for 3 tickets and",
+  "en": "In 1985 she paid 12.50 for 3 tickets and"
+ },
+ "recordedAt": "2026-09-08T03:55:21.490Z",
+ "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+ "request": {
+  "text": "In 1985 she paid 12.50 for 3 tickets and arrived 36 minutes late.",
+  "use_chat_template": false,
+  "tokenizer": "model",
+  "merges": true
+ },
+ "response": {
+  "tokenizer": "model",
+  "tokenizer_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "text": "In 1985 she paid 12.50 for 3 tickets and arrived 36 minutes late.",
+  "rendered": "In 1985 she paid 12.50 for 3 tickets and arrived 36 minutes late.",
+  "use_chat_template": false,
+  "n_chars": 65,
+  "n_bytes": 65,
+  "n_utf16": 65,
+  "n_tokens": 26,
+  "vocab_entries": 151665,
+  "vocab_size": 151936,
+  "segments": null,
+  "tokens": [
+   {
+    "i": 0,
+    "id": 641,
+    "token": "In",
+    "text": "In",
+    "start": 0,
+    "end": 2,
+    "byte_start": 0,
+    "byte_end": 2,
+    "utf16_start": 0,
+    "utf16_end": 2,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 1,
+    "id": 220,
+    "token": "Ġ",
+    "text": " ",
+    "start": 2,
+    "end": 3,
+    "byte_start": 2,
+    "byte_end": 3,
+    "utf16_start": 2,
+    "utf16_end": 3,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 2,
+    "id": 16,
+    "token": "1",
+    "text": "1",
+    "start": 3,
+    "end": 4,
+    "byte_start": 3,
+    "byte_end": 4,
+    "utf16_start": 3,
+    "utf16_end": 4,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 3,
+    "id": 24,
+    "token": "9",
+    "text": "9",
+    "start": 4,
+    "end": 5,
+    "byte_start": 4,
+    "byte_end": 5,
+    "utf16_start": 4,
+    "utf16_end": 5,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 4,
+    "id": 23,
+    "token": "8",
+    "text": "8",
+    "start": 5,
+    "end": 6,
+    "byte_start": 5,
+    "byte_end": 6,
+    "utf16_start": 5,
+    "utf16_end": 6,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 5,
+    "id": 20,
+    "token": "5",
+    "text": "5",
+    "start": 6,
+    "end": 7,
+    "byte_start": 6,
+    "byte_end": 7,
+    "utf16_start": 6,
+    "utf16_end": 7,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 6,
+    "id": 1340,
+    "token": "Ġshe",
+    "text": " she",
+    "start": 7,
+    "end": 11,
+    "byte_start": 7,
+    "byte_end": 11,
+    "utf16_start": 7,
+    "utf16_end": 11,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 7,
+    "id": 7171,
+    "token": "Ġpaid",
+    "text": " paid",
+    "start": 11,
+    "end": 16,
+    "byte_start": 11,
+    "byte_end": 16,
+    "utf16_start": 11,
+    "utf16_end": 16,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 8,
+    "id": 220,
+    "token": "Ġ",
+    "text": " ",
+    "start": 16,
+    "end": 17,
+    "byte_start": 16,
+    "byte_end": 17,
+    "utf16_start": 16,
+    "utf16_end": 17,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 9,
+    "id": 16,
+    "token": "1",
+    "text": "1",
+    "start": 17,
+    "end": 18,
+    "byte_start": 17,
+    "byte_end": 18,
+    "utf16_start": 17,
+    "utf16_end": 18,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 10,
+    "id": 17,
+    "token": "2",
+    "text": "2",
+    "start": 18,
+    "end": 19,
+    "byte_start": 18,
+    "byte_end": 19,
+    "utf16_start": 18,
+    "utf16_end": 19,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 11,
+    "id": 13,
+    "token": ".",
+    "text": ".",
+    "start": 19,
+    "end": 20,
+    "byte_start": 19,
+    "byte_end": 20,
+    "utf16_start": 19,
+    "utf16_end": 20,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 12,
+    "id": 20,
+    "token": "5",
+    "text": "5",
+    "start": 20,
+    "end": 21,
+    "byte_start": 20,
+    "byte_end": 21,
+    "utf16_start": 20,
+    "utf16_end": 21,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 13,
+    "id": 15,
+    "token": "0",
+    "text": "0",
+    "start": 21,
+    "end": 22,
+    "byte_start": 21,
+    "byte_end": 22,
+    "utf16_start": 21,
+    "utf16_end": 22,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 14,
+    "id": 369,
+    "token": "Ġfor",
+    "text": " for",
+    "start": 22,
+    "end": 26,
+    "byte_start": 22,
+    "byte_end": 26,
+    "utf16_start": 22,
+    "utf16_end": 26,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 15,
+    "id": 220,
+    "token": "Ġ",
+    "text": " ",
+    "start": 26,
+    "end": 27,
+    "byte_start": 26,
+    "byte_end": 27,
+    "utf16_start": 26,
+    "utf16_end": 27,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 16,
+    "id": 18,
+    "token": "3",
+    "text": "3",
+    "start": 27,
+    "end": 28,
+    "byte_start": 27,
+    "byte_end": 28,
+    "utf16_start": 27,
+    "utf16_end": 28,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 17,
+    "id": 14403,
+    "token": "Ġtickets",
+    "text": " tickets",
+    "start": 28,
+    "end": 36,
+    "byte_start": 28,
+    "byte_end": 36,
+    "utf16_start": 28,
+    "utf16_end": 36,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 18,
+    "id": 323,
+    "token": "Ġand",
+    "text": " and",
+    "start": 36,
+    "end": 40,
+    "byte_start": 36,
+    "byte_end": 40,
+    "utf16_start": 36,
+    "utf16_end": 40,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 19,
+    "id": 11465,
+    "token": "Ġarrived",
+    "text": " arrived",
+    "start": 40,
+    "end": 48,
+    "byte_start": 40,
+    "byte_end": 48,
+    "utf16_start": 40,
+    "utf16_end": 48,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 20,
+    "id": 220,
+    "token": "Ġ",
+    "text": " ",
+    "start": 48,
+    "end": 49,
+    "byte_start": 48,
+    "byte_end": 49,
+    "utf16_start": 48,
+    "utf16_end": 49,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 21,
+    "id": 18,
+    "token": "3",
+    "text": "3",
+    "start": 49,
+    "end": 50,
+    "byte_start": 49,
+    "byte_end": 50,
+    "utf16_start": 49,
+    "utf16_end": 50,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 22,
+    "id": 21,
+    "token": "6",
+    "text": "6",
+    "start": 50,
+    "end": 51,
+    "byte_start": 50,
+    "byte_end": 51,
+    "utf16_start": 50,
+    "utf16_end": 51,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 23,
+    "id": 4420,
+    "token": "Ġminutes",
+    "text": " minutes",
+    "start": 51,
+    "end": 59,
+    "byte_start": 51,
+    "byte_end": 59,
+    "utf16_start": 51,
+    "utf16_end": 59,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 24,
+    "id": 3309,
+    "token": "Ġlate",
+    "text": " late",
+    "start": 59,
+    "end": 64,
+    "byte_start": 59,
+    "byte_end": 64,
+    "utf16_start": 59,
+    "utf16_end": 64,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 25,
+    "id": 13,
+    "token": ".",
+    "text": ".",
+    "start": 64,
+    "end": 65,
+    "byte_start": 64,
+    "byte_end": 65,
+    "utf16_start": 64,
+    "utf16_end": 65,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   }
+  ],
+  "merges": {
+   "n_merges_total": 151387,
+   "pieces": [
+    {
+     "piece": "In",
+     "start": 0,
+     "end": 2,
+     "symbols": [
+      "I",
+      "n"
+     ],
+     "steps": [
+      {
+       "rank": 385,
+       "pair": [
+        "I",
+        "n"
+       ],
+       "result": [
+        "In"
+       ]
+      }
+     ],
+     "final": [
+      "In"
+     ],
+     "final_ids": [
+      641
+     ]
+    },
+    {
+     "piece": "Ġ",
+     "start": 2,
+     "end": 3,
+     "symbols": [
+      "Ġ"
+     ],
+     "steps": [],
+     "final": [
+      "Ġ"
+     ],
+     "final_ids": [
+      220
+     ]
+    },
+    {
+     "piece": "1",
+     "start": 3,
+     "end": 4,
+     "symbols": [
+      "1"
+     ],
+     "steps": [],
+     "final": [
+      "1"
+     ],
+     "final_ids": [
+      16
+     ]
+    },
+    {
+     "piece": "9",
+     "start": 4,
+     "end": 5,
+     "symbols": [
+      "9"
+     ],
+     "steps": [],
+     "final": [
+      "9"
+     ],
+     "final_ids": [
+      24
+     ]
+    },
+    {
+     "piece": "8",
+     "start": 5,
+     "end": 6,
+     "symbols": [
+      "8"
+     ],
+     "steps": [],
+     "final": [
+      "8"
+     ],
+     "final_ids": [
+      23
+     ]
+    },
+    {
+     "piece": "5",
+     "start": 6,
+     "end": 7,
+     "symbols": [
+      "5"
+     ],
+     "steps": [],
+     "final": [
+      "5"
+     ],
+     "final_ids": [
+      20
+     ]
+    },
+    {
+     "piece": "Ġshe",
+     "start": 7,
+     "end": 11,
+     "symbols": [
+      "Ġ",
+      "s",
+      "h",
+      "e"
+     ],
+     "steps": [
+      {
+       "rank": 18,
+       "pair": [
+        "Ġ",
+        "s"
+       ],
+       "result": [
+        "Ġs",
+        "h",
+        "e"
+       ]
+      },
+      {
+       "rank": 127,
+       "pair": [
+        "h",
+        "e"
+       ],
+       "result": [
+        "Ġs",
+        "he"
+       ]
+      },
+      {
+       "rank": 1084,
+       "pair": [
+        "Ġs",
+        "he"
+       ],
+       "result": [
+        "Ġshe"
+       ]
+      }
+     ],
+     "final": [
+      "Ġshe"
+     ],
+     "final_ids": [
+      1340
+     ]
+    },
+    {
+     "piece": "Ġpaid",
+     "start": 11,
+     "end": 16,
+     "symbols": [
+      "Ġ",
+      "p",
+      "a",
+      "i",
+      "d"
+     ],
+     "steps": [
+      {
+       "rank": 25,
+       "pair": [
+        "Ġ",
+        "p"
+       ],
+       "result": [
+        "Ġp",
+        "a",
+        "i",
+        "d"
+       ]
+      },
+      {
+       "rank": 51,
+       "pair": [
+        "i",
+        "d"
+       ],
+       "result": [
+        "Ġp",
+        "a",
+        "id"
+       ]
+      },
+      {
+       "rank": 3523,
+       "pair": [
+        "a",
+        "id"
+       ],
+       "result": [
+        "Ġp",
+        "aid"
+       ]
+      },
+      {
+       "rank": 6915,
+       "pair": [
+        "Ġp",
+        "aid"
+       ],
+       "result": [
+        "Ġpaid"
+       ]
+      }
+     ],
+     "final": [
+      "Ġpaid"
+     ],
+     "final_ids": [
+      7171
+     ]
+    }
+   ]
+  }
+ },
+ "meta": {
+  "recorded_at": "2026-09-08T03:55:21.490Z",
+  "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "transformers_version": "5.16.1",
+  "torch_version": "2.14.0+cpu",
+  "torch_threads": 10,
+  "backend_version": "0.2.0",
+  "hardware": "darwin arm64, 10 threads"
+ }
+}

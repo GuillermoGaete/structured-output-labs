@@ -1,0 +1,1029 @@
+{
+ "$schema": "sol-fixture/1",
+ "id": "person-prompt",
+ "kind": "tokenize",
+ "module": "tokens",
+ "title": {
+  "es": "Prompt Person sin template",
+  "en": "Person prompt without the template"
+ },
+ "recordedAt": "2026-09-08T03:55:21.490Z",
+ "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+ "request": {
+  "text": "Extract the person from this text as JSON: Ada Lovelace, 36, lives in London and writes about analytical engines.",
+  "use_chat_template": false,
+  "tokenizer": "model",
+  "merges": true
+ },
+ "response": {
+  "tokenizer": "model",
+  "tokenizer_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "text": "Extract the person from this text as JSON: Ada Lovelace, 36, lives in London and writes about analytical engines.",
+  "rendered": "Extract the person from this text as JSON: Ada Lovelace, 36, lives in London and writes about analytical engines.",
+  "use_chat_template": false,
+  "n_chars": 113,
+  "n_bytes": 113,
+  "n_utf16": 113,
+  "n_tokens": 27,
+  "vocab_entries": 151665,
+  "vocab_size": 151936,
+  "segments": null,
+  "tokens": [
+   {
+    "i": 0,
+    "id": 28959,
+    "token": "Extract",
+    "text": "Extract",
+    "start": 0,
+    "end": 7,
+    "byte_start": 0,
+    "byte_end": 7,
+    "utf16_start": 0,
+    "utf16_end": 7,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 1,
+    "id": 279,
+    "token": "Ġthe",
+    "text": " the",
+    "start": 7,
+    "end": 11,
+    "byte_start": 7,
+    "byte_end": 11,
+    "utf16_start": 7,
+    "utf16_end": 11,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 2,
+    "id": 1697,
+    "token": "Ġperson",
+    "text": " person",
+    "start": 11,
+    "end": 18,
+    "byte_start": 11,
+    "byte_end": 18,
+    "utf16_start": 11,
+    "utf16_end": 18,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 3,
+    "id": 504,
+    "token": "Ġfrom",
+    "text": " from",
+    "start": 18,
+    "end": 23,
+    "byte_start": 18,
+    "byte_end": 23,
+    "utf16_start": 18,
+    "utf16_end": 23,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 4,
+    "id": 419,
+    "token": "Ġthis",
+    "text": " this",
+    "start": 23,
+    "end": 28,
+    "byte_start": 23,
+    "byte_end": 28,
+    "utf16_start": 23,
+    "utf16_end": 28,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 5,
+    "id": 1467,
+    "token": "Ġtext",
+    "text": " text",
+    "start": 28,
+    "end": 33,
+    "byte_start": 28,
+    "byte_end": 33,
+    "utf16_start": 28,
+    "utf16_end": 33,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 6,
+    "id": 438,
+    "token": "Ġas",
+    "text": " as",
+    "start": 33,
+    "end": 36,
+    "byte_start": 33,
+    "byte_end": 36,
+    "utf16_start": 33,
+    "utf16_end": 36,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 7,
+    "id": 4718,
+    "token": "ĠJSON",
+    "text": " JSON",
+    "start": 36,
+    "end": 41,
+    "byte_start": 36,
+    "byte_end": 41,
+    "utf16_start": 36,
+    "utf16_end": 41,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 8,
+    "id": 25,
+    "token": ":",
+    "text": ":",
+    "start": 41,
+    "end": 42,
+    "byte_start": 41,
+    "byte_end": 42,
+    "utf16_start": 41,
+    "utf16_end": 42,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 9,
+    "id": 51149,
+    "token": "ĠAda",
+    "text": " Ada",
+    "start": 42,
+    "end": 46,
+    "byte_start": 42,
+    "byte_end": 46,
+    "utf16_start": 42,
+    "utf16_end": 46,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 10,
+    "id": 34293,
+    "token": "ĠLov",
+    "text": " Lov",
+    "start": 46,
+    "end": 50,
+    "byte_start": 46,
+    "byte_end": 50,
+    "utf16_start": 46,
+    "utf16_end": 50,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 11,
+    "id": 301,
+    "token": "el",
+    "text": "el",
+    "start": 50,
+    "end": 52,
+    "byte_start": 50,
+    "byte_end": 52,
+    "utf16_start": 50,
+    "utf16_end": 52,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 12,
+    "id": 578,
+    "token": "ace",
+    "text": "ace",
+    "start": 52,
+    "end": 55,
+    "byte_start": 52,
+    "byte_end": 55,
+    "utf16_start": 52,
+    "utf16_end": 55,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 13,
+    "id": 11,
+    "token": ",",
+    "text": ",",
+    "start": 55,
+    "end": 56,
+    "byte_start": 55,
+    "byte_end": 56,
+    "utf16_start": 55,
+    "utf16_end": 56,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 14,
+    "id": 220,
+    "token": "Ġ",
+    "text": " ",
+    "start": 56,
+    "end": 57,
+    "byte_start": 56,
+    "byte_end": 57,
+    "utf16_start": 56,
+    "utf16_end": 57,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 15,
+    "id": 18,
+    "token": "3",
+    "text": "3",
+    "start": 57,
+    "end": 58,
+    "byte_start": 57,
+    "byte_end": 58,
+    "utf16_start": 57,
+    "utf16_end": 58,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 16,
+    "id": 21,
+    "token": "6",
+    "text": "6",
+    "start": 58,
+    "end": 59,
+    "byte_start": 58,
+    "byte_end": 59,
+    "utf16_start": 58,
+    "utf16_end": 59,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 17,
+    "id": 11,
+    "token": ",",
+    "text": ",",
+    "start": 59,
+    "end": 60,
+    "byte_start": 59,
+    "byte_end": 60,
+    "utf16_start": 59,
+    "utf16_end": 60,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 18,
+    "id": 6305,
+    "token": "Ġlives",
+    "text": " lives",
+    "start": 60,
+    "end": 66,
+    "byte_start": 60,
+    "byte_end": 66,
+    "utf16_start": 60,
+    "utf16_end": 66,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 19,
+    "id": 304,
+    "token": "Ġin",
+    "text": " in",
+    "start": 66,
+    "end": 69,
+    "byte_start": 66,
+    "byte_end": 69,
+    "utf16_start": 66,
+    "utf16_end": 69,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 20,
+    "id": 7148,
+    "token": "ĠLondon",
+    "text": " London",
+    "start": 69,
+    "end": 76,
+    "byte_start": 69,
+    "byte_end": 76,
+    "utf16_start": 69,
+    "utf16_end": 76,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 21,
+    "id": 323,
+    "token": "Ġand",
+    "text": " and",
+    "start": 76,
+    "end": 80,
+    "byte_start": 76,
+    "byte_end": 80,
+    "utf16_start": 76,
+    "utf16_end": 80,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 22,
+    "id": 13914,
+    "token": "Ġwrites",
+    "text": " writes",
+    "start": 80,
+    "end": 87,
+    "byte_start": 80,
+    "byte_end": 87,
+    "utf16_start": 80,
+    "utf16_end": 87,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 23,
+    "id": 911,
+    "token": "Ġabout",
+    "text": " about",
+    "start": 87,
+    "end": 93,
+    "byte_start": 87,
+    "byte_end": 93,
+    "utf16_start": 87,
+    "utf16_end": 93,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 24,
+    "id": 42964,
+    "token": "Ġanalytical",
+    "text": " analytical",
+    "start": 93,
+    "end": 104,
+    "byte_start": 93,
+    "byte_end": 104,
+    "utf16_start": 93,
+    "utf16_end": 104,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 25,
+    "id": 21106,
+    "token": "Ġengines",
+    "text": " engines",
+    "start": 104,
+    "end": 112,
+    "byte_start": 104,
+    "byte_end": 112,
+    "utf16_start": 104,
+    "utf16_end": 112,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 26,
+    "id": 13,
+    "token": ".",
+    "text": ".",
+    "start": 112,
+    "end": 113,
+    "byte_start": 112,
+    "byte_end": 113,
+    "utf16_start": 112,
+    "utf16_end": 113,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   }
+  ],
+  "merges": {
+   "n_merges_total": 151387,
+   "pieces": [
+    {
+     "piece": "Extract",
+     "start": 0,
+     "end": 7,
+     "symbols": [
+      "E",
+      "x",
+      "t",
+      "r",
+      "a",
+      "c",
+      "t"
+     ],
+     "steps": [
+      {
+       "rank": 46,
+       "pair": [
+        "c",
+        "t"
+       ],
+       "result": [
+        "E",
+        "x",
+        "t",
+        "r",
+        "a",
+        "ct"
+       ]
+      },
+      {
+       "rank": 120,
+       "pair": [
+        "t",
+        "r"
+       ],
+       "result": [
+        "E",
+        "x",
+        "tr",
+        "a",
+        "ct"
+       ]
+      },
+      {
+       "rank": 275,
+       "pair": [
+        "a",
+        "ct"
+       ],
+       "result": [
+        "E",
+        "x",
+        "tr",
+        "act"
+       ]
+      },
+      {
+       "rank": 584,
+       "pair": [
+        "E",
+        "x"
+       ],
+       "result": [
+        "Ex",
+        "tr",
+        "act"
+       ]
+      },
+      {
+       "rank": 1888,
+       "pair": [
+        "tr",
+        "act"
+       ],
+       "result": [
+        "Ex",
+        "tract"
+       ]
+      },
+      {
+       "rank": 28703,
+       "pair": [
+        "Ex",
+        "tract"
+       ],
+       "result": [
+        "Extract"
+       ]
+      }
+     ],
+     "final": [
+      "Extract"
+     ],
+     "final_ids": [
+      28959
+     ]
+    },
+    {
+     "piece": "Ġthe",
+     "start": 7,
+     "end": 11,
+     "symbols": [
+      "Ġ",
+      "t",
+      "h",
+      "e"
+     ],
+     "steps": [
+      {
+       "rank": 3,
+       "pair": [
+        "Ġ",
+        "t"
+       ],
+       "result": [
+        "Ġt",
+        "h",
+        "e"
+       ]
+      },
+      {
+       "rank": 14,
+       "pair": [
+        "Ġt",
+        "h"
+       ],
+       "result": [
+        "Ġth",
+        "e"
+       ]
+      },
+      {
+       "rank": 23,
+       "pair": [
+        "Ġth",
+        "e"
+       ],
+       "result": [
+        "Ġthe"
+       ]
+      }
+     ],
+     "final": [
+      "Ġthe"
+     ],
+     "final_ids": [
+      279
+     ]
+    },
+    {
+     "piece": "Ġperson",
+     "start": 11,
+     "end": 18,
+     "symbols": [
+      "Ġ",
+      "p",
+      "e",
+      "r",
+      "s",
+      "o",
+      "n"
+     ],
+     "steps": [
+      {
+       "rank": 5,
+       "pair": [
+        "e",
+        "r"
+       ],
+       "result": [
+        "Ġ",
+        "p",
+        "er",
+        "s",
+        "o",
+        "n"
+       ]
+      },
+      {
+       "rank": 7,
+       "pair": [
+        "o",
+        "n"
+       ],
+       "result": [
+        "Ġ",
+        "p",
+        "er",
+        "s",
+        "on"
+       ]
+      },
+      {
+       "rank": 25,
+       "pair": [
+        "Ġ",
+        "p"
+       ],
+       "result": [
+        "Ġp",
+        "er",
+        "s",
+        "on"
+       ]
+      },
+      {
+       "rank": 132,
+       "pair": [
+        "er",
+        "s"
+       ],
+       "result": [
+        "Ġp",
+        "ers",
+        "on"
+       ]
+      },
+      {
+       "rank": 1014,
+       "pair": [
+        "ers",
+        "on"
+       ],
+       "result": [
+        "Ġp",
+        "erson"
+       ]
+      },
+      {
+       "rank": 1441,
+       "pair": [
+        "Ġp",
+        "erson"
+       ],
+       "result": [
+        "Ġperson"
+       ]
+      }
+     ],
+     "final": [
+      "Ġperson"
+     ],
+     "final_ids": [
+      1697
+     ]
+    },
+    {
+     "piece": "Ġfrom",
+     "start": 18,
+     "end": 23,
+     "symbols": [
+      "Ġ",
+      "f",
+      "r",
+      "o",
+      "m"
+     ],
+     "steps": [
+      {
+       "rank": 26,
+       "pair": [
+        "Ġ",
+        "f"
+       ],
+       "result": [
+        "Ġf",
+        "r",
+        "o",
+        "m"
+       ]
+      },
+      {
+       "rank": 43,
+       "pair": [
+        "r",
+        "o"
+       ],
+       "result": [
+        "Ġf",
+        "ro",
+        "m"
+       ]
+      },
+      {
+       "rank": 185,
+       "pair": [
+        "ro",
+        "m"
+       ],
+       "result": [
+        "Ġf",
+        "rom"
+       ]
+      },
+      {
+       "rank": 248,
+       "pair": [
+        "Ġf",
+        "rom"
+       ],
+       "result": [
+        "Ġfrom"
+       ]
+      }
+     ],
+     "final": [
+      "Ġfrom"
+     ],
+     "final_ids": [
+      504
+     ]
+    },
+    {
+     "piece": "Ġthis",
+     "start": 23,
+     "end": 28,
+     "symbols": [
+      "Ġ",
+      "t",
+      "h",
+      "i",
+      "s"
+     ],
+     "steps": [
+      {
+       "rank": 3,
+       "pair": [
+        "Ġ",
+        "t"
+       ],
+       "result": [
+        "Ġt",
+        "h",
+        "i",
+        "s"
+       ]
+      },
+      {
+       "rank": 14,
+       "pair": [
+        "Ġt",
+        "h"
+       ],
+       "result": [
+        "Ġth",
+        "i",
+        "s"
+       ]
+      },
+      {
+       "rank": 29,
+       "pair": [
+        "i",
+        "s"
+       ],
+       "result": [
+        "Ġth",
+        "is"
+       ]
+      },
+      {
+       "rank": 163,
+       "pair": [
+        "Ġth",
+        "is"
+       ],
+       "result": [
+        "Ġthis"
+       ]
+      }
+     ],
+     "final": [
+      "Ġthis"
+     ],
+     "final_ids": [
+      419
+     ]
+    },
+    {
+     "piece": "Ġtext",
+     "start": 28,
+     "end": 33,
+     "symbols": [
+      "Ġ",
+      "t",
+      "e",
+      "x",
+      "t"
+     ],
+     "steps": [
+      {
+       "rank": 3,
+       "pair": [
+        "Ġ",
+        "t"
+       ],
+       "result": [
+        "Ġt",
+        "e",
+        "x",
+        "t"
+       ]
+      },
+      {
+       "rank": 71,
+       "pair": [
+        "e",
+        "x"
+       ],
+       "result": [
+        "Ġt",
+        "ex",
+        "t"
+       ]
+      },
+      {
+       "rank": 171,
+       "pair": [
+        "ex",
+        "t"
+       ],
+       "result": [
+        "Ġt",
+        "ext"
+       ]
+      },
+      {
+       "rank": 1211,
+       "pair": [
+        "Ġt",
+        "ext"
+       ],
+       "result": [
+        "Ġtext"
+       ]
+      }
+     ],
+     "final": [
+      "Ġtext"
+     ],
+     "final_ids": [
+      1467
+     ]
+    },
+    {
+     "piece": "Ġas",
+     "start": 33,
+     "end": 36,
+     "symbols": [
+      "Ġ",
+      "a",
+      "s"
+     ],
+     "steps": [
+      {
+       "rank": 8,
+       "pair": [
+        "Ġ",
+        "a"
+       ],
+       "result": [
+        "Ġa",
+        "s"
+       ]
+      },
+      {
+       "rank": 182,
+       "pair": [
+        "Ġa",
+        "s"
+       ],
+       "result": [
+        "Ġas"
+       ]
+      }
+     ],
+     "final": [
+      "Ġas"
+     ],
+     "final_ids": [
+      438
+     ]
+    },
+    {
+     "piece": "ĠJSON",
+     "start": 36,
+     "end": 41,
+     "symbols": [
+      "Ġ",
+      "J",
+      "S",
+      "O",
+      "N"
+     ],
+     "steps": [
+      {
+       "rank": 363,
+       "pair": [
+        "Ġ",
+        "J"
+       ],
+       "result": [
+        "ĠJ",
+        "S",
+        "O",
+        "N"
+       ]
+      },
+      {
+       "rank": 455,
+       "pair": [
+        "O",
+        "N"
+       ],
+       "result": [
+        "ĠJ",
+        "S",
+        "ON"
+       ]
+      },
+      {
+       "rank": 2447,
+       "pair": [
+        "S",
+        "ON"
+       ],
+       "result": [
+        "ĠJ",
+        "SON"
+       ]
+      },
+      {
+       "rank": 4462,
+       "pair": [
+        "ĠJ",
+        "SON"
+       ],
+       "result": [
+        "ĠJSON"
+       ]
+      }
+     ],
+     "final": [
+      "ĠJSON"
+     ],
+     "final_ids": [
+      4718
+     ]
+    }
+   ]
+  }
+ },
+ "meta": {
+  "recorded_at": "2026-09-08T03:55:21.490Z",
+  "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "transformers_version": "5.16.1",
+  "torch_version": "2.14.0+cpu",
+  "torch_threads": 10,
+  "backend_version": "0.2.0",
+  "hardware": "darwin arm64, 10 threads"
+ }
+}

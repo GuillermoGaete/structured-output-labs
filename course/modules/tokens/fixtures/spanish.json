@@ -1,0 +1,924 @@
+{
+ "$schema": "sol-fixture/1",
+ "id": "spanish",
+ "kind": "tokenize",
+ "module": "tokens",
+ "title": {
+  "es": "El español paga más tokens: mañana, niño",
+  "en": "El español paga más tokens: mañana, niño"
+ },
+ "recordedAt": "2026-09-08T03:55:21.490Z",
+ "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+ "request": {
+  "text": "El español paga más tokens: mañana, niño, ¿qué tal?, año 2024 🙂",
+  "use_chat_template": false,
+  "tokenizer": "model",
+  "merges": true
+ },
+ "response": {
+  "tokenizer": "model",
+  "tokenizer_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "text": "El español paga más tokens: mañana, niño, ¿qué tal?, año 2024 🙂",
+  "rendered": "El español paga más tokens: mañana, niño, ¿qué tal?, año 2024 🙂",
+  "use_chat_template": false,
+  "n_chars": 63,
+  "n_bytes": 73,
+  "n_utf16": 64,
+  "n_tokens": 22,
+  "vocab_entries": 151665,
+  "vocab_size": 151936,
+  "segments": null,
+  "tokens": [
+   {
+    "i": 0,
+    "id": 6582,
+    "token": "El",
+    "text": "El",
+    "start": 0,
+    "end": 2,
+    "byte_start": 0,
+    "byte_end": 2,
+    "utf16_start": 0,
+    "utf16_end": 2,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 1,
+    "id": 69888,
+    "token": "ĠespaÃ±ol",
+    "text": " español",
+    "start": 2,
+    "end": 10,
+    "byte_start": 2,
+    "byte_end": 11,
+    "utf16_start": 2,
+    "utf16_end": 10,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 2,
+    "id": 281,
+    "token": "Ġp",
+    "text": " p",
+    "start": 10,
+    "end": 12,
+    "byte_start": 11,
+    "byte_end": 13,
+    "utf16_start": 10,
+    "utf16_end": 12,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 3,
+    "id": 12466,
+    "token": "aga",
+    "text": "aga",
+    "start": 12,
+    "end": 15,
+    "byte_start": 13,
+    "byte_end": 16,
+    "utf16_start": 12,
+    "utf16_end": 15,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 4,
+    "id": 10918,
+    "token": "ĠmÃ¡s",
+    "text": " más",
+    "start": 15,
+    "end": 19,
+    "byte_start": 16,
+    "byte_end": 21,
+    "utf16_start": 15,
+    "utf16_end": 19,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 5,
+    "id": 11211,
+    "token": "Ġtokens",
+    "text": " tokens",
+    "start": 19,
+    "end": 26,
+    "byte_start": 21,
+    "byte_end": 28,
+    "utf16_start": 19,
+    "utf16_end": 26,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 6,
+    "id": 25,
+    "token": ":",
+    "text": ":",
+    "start": 26,
+    "end": 27,
+    "byte_start": 28,
+    "byte_end": 29,
+    "utf16_start": 26,
+    "utf16_end": 27,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 7,
+    "id": 95516,
+    "token": "ĠmaÃ±ana",
+    "text": " mañana",
+    "start": 27,
+    "end": 34,
+    "byte_start": 29,
+    "byte_end": 37,
+    "utf16_start": 27,
+    "utf16_end": 34,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 8,
+    "id": 11,
+    "token": ",",
+    "text": ",",
+    "start": 34,
+    "end": 35,
+    "byte_start": 37,
+    "byte_end": 38,
+    "utf16_start": 34,
+    "utf16_end": 35,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 9,
+    "id": 141339,
+    "token": "ĠniÃ±o",
+    "text": " niño",
+    "start": 35,
+    "end": 40,
+    "byte_start": 38,
+    "byte_end": 44,
+    "utf16_start": 35,
+    "utf16_end": 40,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 10,
+    "id": 11,
+    "token": ",",
+    "text": ",",
+    "start": 40,
+    "end": 41,
+    "byte_start": 44,
+    "byte_end": 45,
+    "utf16_start": 40,
+    "utf16_end": 41,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 11,
+    "id": 28286,
+    "token": "ĠÂ¿",
+    "text": " ¿",
+    "start": 41,
+    "end": 43,
+    "byte_start": 45,
+    "byte_end": 48,
+    "utf16_start": 41,
+    "utf16_end": 43,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 12,
+    "id": 63491,
+    "token": "quÃ©",
+    "text": "qué",
+    "start": 43,
+    "end": 46,
+    "byte_start": 48,
+    "byte_end": 52,
+    "utf16_start": 43,
+    "utf16_end": 46,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 13,
+    "id": 8210,
+    "token": "Ġtal",
+    "text": " tal",
+    "start": 46,
+    "end": 50,
+    "byte_start": 52,
+    "byte_end": 56,
+    "utf16_start": 46,
+    "utf16_end": 50,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 14,
+    "id": 12622,
+    "token": "?,",
+    "text": "?,",
+    "start": 50,
+    "end": 52,
+    "byte_start": 56,
+    "byte_end": 58,
+    "utf16_start": 50,
+    "utf16_end": 52,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 15,
+    "id": 35816,
+    "token": "ĠaÃ±o",
+    "text": " año",
+    "start": 52,
+    "end": 56,
+    "byte_start": 58,
+    "byte_end": 63,
+    "utf16_start": 52,
+    "utf16_end": 56,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 16,
+    "id": 220,
+    "token": "Ġ",
+    "text": " ",
+    "start": 56,
+    "end": 57,
+    "byte_start": 63,
+    "byte_end": 64,
+    "utf16_start": 56,
+    "utf16_end": 57,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 17,
+    "id": 17,
+    "token": "2",
+    "text": "2",
+    "start": 57,
+    "end": 58,
+    "byte_start": 64,
+    "byte_end": 65,
+    "utf16_start": 57,
+    "utf16_end": 58,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 18,
+    "id": 15,
+    "token": "0",
+    "text": "0",
+    "start": 58,
+    "end": 59,
+    "byte_start": 65,
+    "byte_end": 66,
+    "utf16_start": 58,
+    "utf16_end": 59,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 19,
+    "id": 17,
+    "token": "2",
+    "text": "2",
+    "start": 59,
+    "end": 60,
+    "byte_start": 66,
+    "byte_end": 67,
+    "utf16_start": 59,
+    "utf16_end": 60,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 20,
+    "id": 19,
+    "token": "4",
+    "text": "4",
+    "start": 60,
+    "end": 61,
+    "byte_start": 67,
+    "byte_end": 68,
+    "utf16_start": 60,
+    "utf16_end": 61,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 21,
+    "id": 27484,
+    "token": "ĠðŁĻĤ",
+    "text": " 🙂",
+    "start": 61,
+    "end": 63,
+    "byte_start": 68,
+    "byte_end": 73,
+    "utf16_start": 61,
+    "utf16_end": 64,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   }
+  ],
+  "merges": {
+   "n_merges_total": 151387,
+   "pieces": [
+    {
+     "piece": "El",
+     "start": 0,
+     "end": 2,
+     "symbols": [
+      "E",
+      "l"
+     ],
+     "steps": [
+      {
+       "rank": 6326,
+       "pair": [
+        "E",
+        "l"
+       ],
+       "result": [
+        "El"
+       ]
+      }
+     ],
+     "final": [
+      "El"
+     ],
+     "final_ids": [
+      6582
+     ]
+    },
+    {
+     "piece": "ĠespaÃ±ol",
+     "start": 2,
+     "end": 10,
+     "symbols": [
+      "Ġ",
+      "e",
+      "s",
+      "p",
+      "a",
+      "Ã",
+      "±",
+      "o",
+      "l"
+     ],
+     "steps": [
+      {
+       "rank": 32,
+       "pair": [
+        "e",
+        "s"
+       ],
+       "result": [
+        "Ġ",
+        "es",
+        "p",
+        "a",
+        "Ã",
+        "±",
+        "o",
+        "l"
+       ]
+      },
+      {
+       "rank": 81,
+       "pair": [
+        "o",
+        "l"
+       ],
+       "result": [
+        "Ġ",
+        "es",
+        "p",
+        "a",
+        "Ã",
+        "±",
+        "ol"
+       ]
+      },
+      {
+       "rank": 1275,
+       "pair": [
+        "Ġ",
+        "es"
+       ],
+       "result": [
+        "Ġes",
+        "p",
+        "a",
+        "Ã",
+        "±",
+        "ol"
+       ]
+      },
+      {
+       "rank": 5397,
+       "pair": [
+        "Ã",
+        "±"
+       ],
+       "result": [
+        "Ġes",
+        "p",
+        "a",
+        "Ã±",
+        "ol"
+       ]
+      },
+      {
+       "rank": 6339,
+       "pair": [
+        "p",
+        "a"
+       ],
+       "result": [
+        "Ġes",
+        "pa",
+        "Ã±",
+        "ol"
+       ]
+      },
+      {
+       "rank": 35355,
+       "pair": [
+        "Ġes",
+        "pa"
+       ],
+       "result": [
+        "Ġespa",
+        "Ã±",
+        "ol"
+       ]
+      },
+      {
+       "rank": 49119,
+       "pair": [
+        "Ġespa",
+        "Ã±"
+       ],
+       "result": [
+        "ĠespaÃ±",
+        "ol"
+       ]
+      },
+      {
+       "rank": 69632,
+       "pair": [
+        "ĠespaÃ±",
+        "ol"
+       ],
+       "result": [
+        "ĠespaÃ±ol"
+       ]
+      }
+     ],
+     "final": [
+      "ĠespaÃ±ol"
+     ],
+     "final_ids": [
+      69888
+     ]
+    },
+    {
+     "piece": "Ġpaga",
+     "start": 10,
+     "end": 15,
+     "symbols": [
+      "Ġ",
+      "p",
+      "a",
+      "g",
+      "a"
+     ],
+     "steps": [
+      {
+       "rank": 25,
+       "pair": [
+        "Ġ",
+        "p"
+       ],
+       "result": [
+        "Ġp",
+        "a",
+        "g",
+        "a"
+       ]
+      },
+      {
+       "rank": 95,
+       "pair": [
+        "a",
+        "g"
+       ],
+       "result": [
+        "Ġp",
+        "ag",
+        "a"
+       ]
+      },
+      {
+       "rank": 12210,
+       "pair": [
+        "ag",
+        "a"
+       ],
+       "result": [
+        "Ġp",
+        "aga"
+       ]
+      }
+     ],
+     "final": [
+      "Ġp",
+      "aga"
+     ],
+     "final_ids": [
+      281,
+      12466
+     ]
+    },
+    {
+     "piece": "ĠmÃ¡s",
+     "start": 15,
+     "end": 19,
+     "symbols": [
+      "Ġ",
+      "m",
+      "Ã",
+      "¡",
+      "s"
+     ],
+     "steps": [
+      {
+       "rank": 40,
+       "pair": [
+        "Ġ",
+        "m"
+       ],
+       "result": [
+        "Ġm",
+        "Ã",
+        "¡",
+        "s"
+       ]
+      },
+      {
+       "rank": 1697,
+       "pair": [
+        "Ã",
+        "¡"
+       ],
+       "result": [
+        "Ġm",
+        "Ã¡",
+        "s"
+       ]
+      },
+      {
+       "rank": 6805,
+       "pair": [
+        "Ã¡",
+        "s"
+       ],
+       "result": [
+        "Ġm",
+        "Ã¡s"
+       ]
+      },
+      {
+       "rank": 10662,
+       "pair": [
+        "Ġm",
+        "Ã¡s"
+       ],
+       "result": [
+        "ĠmÃ¡s"
+       ]
+      }
+     ],
+     "final": [
+      "ĠmÃ¡s"
+     ],
+     "final_ids": [
+      10918
+     ]
+    },
+    {
+     "piece": "Ġtokens",
+     "start": 19,
+     "end": 26,
+     "symbols": [
+      "Ġ",
+      "t",
+      "o",
+      "k",
+      "e",
+      "n",
+      "s"
+     ],
+     "steps": [
+      {
+       "rank": 3,
+       "pair": [
+        "Ġ",
+        "t"
+       ],
+       "result": [
+        "Ġt",
+        "o",
+        "k",
+        "e",
+        "n",
+        "s"
+       ]
+      },
+      {
+       "rank": 12,
+       "pair": [
+        "e",
+        "n"
+       ],
+       "result": [
+        "Ġt",
+        "o",
+        "k",
+        "en",
+        "s"
+       ]
+      },
+      {
+       "rank": 55,
+       "pair": [
+        "Ġt",
+        "o"
+       ],
+       "result": [
+        "Ġto",
+        "k",
+        "en",
+        "s"
+       ]
+      },
+      {
+       "rank": 468,
+       "pair": [
+        "en",
+        "s"
+       ],
+       "result": [
+        "Ġto",
+        "k",
+        "ens"
+       ]
+      },
+      {
+       "rank": 9372,
+       "pair": [
+        "Ġto",
+        "k"
+       ],
+       "result": [
+        "Ġtok",
+        "ens"
+       ]
+      },
+      {
+       "rank": 10955,
+       "pair": [
+        "Ġtok",
+        "ens"
+       ],
+       "result": [
+        "Ġtokens"
+       ]
+      }
+     ],
+     "final": [
+      "Ġtokens"
+     ],
+     "final_ids": [
+      11211
+     ]
+    },
+    {
+     "piece": ":",
+     "start": 26,
+     "end": 27,
+     "symbols": [
+      ":"
+     ],
+     "steps": [],
+     "final": [
+      ":"
+     ],
+     "final_ids": [
+      25
+     ]
+    },
+    {
+     "piece": "ĠmaÃ±ana",
+     "start": 27,
+     "end": 34,
+     "symbols": [
+      "Ġ",
+      "m",
+      "a",
+      "Ã",
+      "±",
+      "a",
+      "n",
+      "a"
+     ],
+     "steps": [
+      {
+       "rank": 20,
+       "pair": [
+        "a",
+        "n"
+       ],
+       "result": [
+        "Ġ",
+        "m",
+        "a",
+        "Ã",
+        "±",
+        "an",
+        "a"
+       ]
+      },
+      {
+       "rank": 40,
+       "pair": [
+        "Ġ",
+        "m"
+       ],
+       "result": [
+        "Ġm",
+        "a",
+        "Ã",
+        "±",
+        "an",
+        "a"
+       ]
+      },
+      {
+       "rank": 3106,
+       "pair": [
+        "an",
+        "a"
+       ],
+       "result": [
+        "Ġm",
+        "a",
+        "Ã",
+        "±",
+        "ana"
+       ]
+      },
+      {
+       "rank": 5397,
+       "pair": [
+        "Ã",
+        "±"
+       ],
+       "result": [
+        "Ġm",
+        "a",
+        "Ã±",
+        "ana"
+       ]
+      },
+      {
+       "rank": 7235,
+       "pair": [
+        "Ġm",
+        "a"
+       ],
+       "result": [
+        "Ġma",
+        "Ã±",
+        "ana"
+       ]
+      },
+      {
+       "rank": 86828,
+       "pair": [
+        "Ã±",
+        "ana"
+       ],
+       "result": [
+        "Ġma",
+        "Ã±ana"
+       ]
+      },
+      {
+       "rank": 95260,
+       "pair": [
+        "Ġma",
+        "Ã±ana"
+       ],
+       "result": [
+        "ĠmaÃ±ana"
+       ]
+      }
+     ],
+     "final": [
+      "ĠmaÃ±ana"
+     ],
+     "final_ids": [
+      95516
+     ]
+    },
+    {
+     "piece": ",",
+     "start": 34,
+     "end": 35,
+     "symbols": [
+      ","
+     ],
+     "steps": [],
+     "final": [
+      ","
+     ],
+     "final_ids": [
+      11
+     ]
+    }
+   ]
+  }
+ },
+ "meta": {
+  "recorded_at": "2026-09-08T03:55:21.490Z",
+  "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "transformers_version": "5.16.1",
+  "torch_version": "2.14.0+cpu",
+  "torch_threads": 10,
+  "backend_version": "0.2.0",
+  "hardware": "darwin arm64, 10 threads"
+ }
+}

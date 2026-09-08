@@ -1,0 +1,1519 @@
+{
+ "$schema": "sol-fixture/1",
+ "id": "person-prompt-template",
+ "kind": "tokenize",
+ "module": "tokens",
+ "title": {
+  "es": "Prompt Person con chat template",
+  "en": "Person prompt with the chat template"
+ },
+ "recordedAt": "2026-09-08T03:55:21.490Z",
+ "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+ "request": {
+  "text": "Extract the person from this text as JSON: Ada Lovelace, 36, lives in London and writes about analytical engines.",
+  "use_chat_template": true,
+  "tokenizer": "model",
+  "merges": true
+ },
+ "response": {
+  "tokenizer": "model",
+  "tokenizer_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "text": "Extract the person from this text as JSON: Ada Lovelace, 36, lives in London and writes about analytical engines.",
+  "rendered": "<|im_start|>system\nYou are a JSON generator. Reply with a single JSON object and nothing else.<|im_end|>\n<|im_start|>user\nExtract the person from this text as JSON: Ada Lovelace, 36, lives in London and writes about analytical engines.<|im_end|>\n<|im_start|>assistant\n",
+  "use_chat_template": true,
+  "n_chars": 268,
+  "n_bytes": 268,
+  "n_utf16": 268,
+  "n_tokens": 56,
+  "vocab_entries": 151665,
+  "vocab_size": 151936,
+  "segments": [
+   {
+    "role": "template",
+    "start": 0,
+    "end": 19
+   },
+   {
+    "role": "system",
+    "start": 19,
+    "end": 94
+   },
+   {
+    "role": "template",
+    "start": 94,
+    "end": 122
+   },
+   {
+    "role": "user",
+    "start": 122,
+    "end": 235
+   },
+   {
+    "role": "template",
+    "start": 235,
+    "end": 268
+   }
+  ],
+  "tokens": [
+   {
+    "i": 0,
+    "id": 151644,
+    "token": "<|im_start|>",
+    "text": "<|im_start|>",
+    "start": 0,
+    "end": 12,
+    "byte_start": 0,
+    "byte_end": 12,
+    "utf16_start": 0,
+    "utf16_end": 12,
+    "is_special": true,
+    "is_template": true,
+    "segment": "template",
+    "partial_utf8": false
+   },
+   {
+    "i": 1,
+    "id": 8948,
+    "token": "system",
+    "text": "system",
+    "start": 12,
+    "end": 18,
+    "byte_start": 12,
+    "byte_end": 18,
+    "utf16_start": 12,
+    "utf16_end": 18,
+    "is_special": false,
+    "is_template": true,
+    "segment": "template",
+    "partial_utf8": false
+   },
+   {
+    "i": 2,
+    "id": 198,
+    "token": "Ċ",
+    "text": "\n",
+    "start": 18,
+    "end": 19,
+    "byte_start": 18,
+    "byte_end": 19,
+    "utf16_start": 18,
+    "utf16_end": 19,
+    "is_special": false,
+    "is_template": true,
+    "segment": "template",
+    "partial_utf8": false
+   },
+   {
+    "i": 3,
+    "id": 2610,
+    "token": "You",
+    "text": "You",
+    "start": 19,
+    "end": 22,
+    "byte_start": 19,
+    "byte_end": 22,
+    "utf16_start": 19,
+    "utf16_end": 22,
+    "is_special": false,
+    "is_template": true,
+    "segment": "system",
+    "partial_utf8": false
+   },
+   {
+    "i": 4,
+    "id": 525,
+    "token": "Ġare",
+    "text": " are",
+    "start": 22,
+    "end": 26,
+    "byte_start": 22,
+    "byte_end": 26,
+    "utf16_start": 22,
+    "utf16_end": 26,
+    "is_special": false,
+    "is_template": true,
+    "segment": "system",
+    "partial_utf8": false
+   },
+   {
+    "i": 5,
+    "id": 264,
+    "token": "Ġa",
+    "text": " a",
+    "start": 26,
+    "end": 28,
+    "byte_start": 26,
+    "byte_end": 28,
+    "utf16_start": 26,
+    "utf16_end": 28,
+    "is_special": false,
+    "is_template": true,
+    "segment": "system",
+    "partial_utf8": false
+   },
+   {
+    "i": 6,
+    "id": 4718,
+    "token": "ĠJSON",
+    "text": " JSON",
+    "start": 28,
+    "end": 33,
+    "byte_start": 28,
+    "byte_end": 33,
+    "utf16_start": 28,
+    "utf16_end": 33,
+    "is_special": false,
+    "is_template": true,
+    "segment": "system",
+    "partial_utf8": false
+   },
+   {
+    "i": 7,
+    "id": 13823,
+    "token": "Ġgenerator",
+    "text": " generator",
+    "start": 33,
+    "end": 43,
+    "byte_start": 33,
+    "byte_end": 43,
+    "utf16_start": 33,
+    "utf16_end": 43,
+    "is_special": false,
+    "is_template": true,
+    "segment": "system",
+    "partial_utf8": false
+   },
+   {
+    "i": 8,
+    "id": 13,
+    "token": ".",
+    "text": ".",
+    "start": 43,
+    "end": 44,
+    "byte_start": 43,
+    "byte_end": 44,
+    "utf16_start": 43,
+    "utf16_end": 44,
+    "is_special": false,
+    "is_template": true,
+    "segment": "system",
+    "partial_utf8": false
+   },
+   {
+    "i": 9,
+    "id": 17841,
+    "token": "ĠReply",
+    "text": " Reply",
+    "start": 44,
+    "end": 50,
+    "byte_start": 44,
+    "byte_end": 50,
+    "utf16_start": 44,
+    "utf16_end": 50,
+    "is_special": false,
+    "is_template": true,
+    "segment": "system",
+    "partial_utf8": false
+   },
+   {
+    "i": 10,
+    "id": 448,
+    "token": "Ġwith",
+    "text": " with",
+    "start": 50,
+    "end": 55,
+    "byte_start": 50,
+    "byte_end": 55,
+    "utf16_start": 50,
+    "utf16_end": 55,
+    "is_special": false,
+    "is_template": true,
+    "segment": "system",
+    "partial_utf8": false
+   },
+   {
+    "i": 11,
+    "id": 264,
+    "token": "Ġa",
+    "text": " a",
+    "start": 55,
+    "end": 57,
+    "byte_start": 55,
+    "byte_end": 57,
+    "utf16_start": 55,
+    "utf16_end": 57,
+    "is_special": false,
+    "is_template": true,
+    "segment": "system",
+    "partial_utf8": false
+   },
+   {
+    "i": 12,
+    "id": 3175,
+    "token": "Ġsingle",
+    "text": " single",
+    "start": 57,
+    "end": 64,
+    "byte_start": 57,
+    "byte_end": 64,
+    "utf16_start": 57,
+    "utf16_end": 64,
+    "is_special": false,
+    "is_template": true,
+    "segment": "system",
+    "partial_utf8": false
+   },
+   {
+    "i": 13,
+    "id": 4718,
+    "token": "ĠJSON",
+    "text": " JSON",
+    "start": 64,
+    "end": 69,
+    "byte_start": 64,
+    "byte_end": 69,
+    "utf16_start": 64,
+    "utf16_end": 69,
+    "is_special": false,
+    "is_template": true,
+    "segment": "system",
+    "partial_utf8": false
+   },
+   {
+    "i": 14,
+    "id": 1633,
+    "token": "Ġobject",
+    "text": " object",
+    "start": 69,
+    "end": 76,
+    "byte_start": 69,
+    "byte_end": 76,
+    "utf16_start": 69,
+    "utf16_end": 76,
+    "is_special": false,
+    "is_template": true,
+    "segment": "system",
+    "partial_utf8": false
+   },
+   {
+    "i": 15,
+    "id": 323,
+    "token": "Ġand",
+    "text": " and",
+    "start": 76,
+    "end": 80,
+    "byte_start": 76,
+    "byte_end": 80,
+    "utf16_start": 76,
+    "utf16_end": 80,
+    "is_special": false,
+    "is_template": true,
+    "segment": "system",
+    "partial_utf8": false
+   },
+   {
+    "i": 16,
+    "id": 4302,
+    "token": "Ġnothing",
+    "text": " nothing",
+    "start": 80,
+    "end": 88,
+    "byte_start": 80,
+    "byte_end": 88,
+    "utf16_start": 80,
+    "utf16_end": 88,
+    "is_special": false,
+    "is_template": true,
+    "segment": "system",
+    "partial_utf8": false
+   },
+   {
+    "i": 17,
+    "id": 770,
+    "token": "Ġelse",
+    "text": " else",
+    "start": 88,
+    "end": 93,
+    "byte_start": 88,
+    "byte_end": 93,
+    "utf16_start": 88,
+    "utf16_end": 93,
+    "is_special": false,
+    "is_template": true,
+    "segment": "system",
+    "partial_utf8": false
+   },
+   {
+    "i": 18,
+    "id": 13,
+    "token": ".",
+    "text": ".",
+    "start": 93,
+    "end": 94,
+    "byte_start": 93,
+    "byte_end": 94,
+    "utf16_start": 93,
+    "utf16_end": 94,
+    "is_special": false,
+    "is_template": true,
+    "segment": "system",
+    "partial_utf8": false
+   },
+   {
+    "i": 19,
+    "id": 151645,
+    "token": "<|im_end|>",
+    "text": "<|im_end|>",
+    "start": 94,
+    "end": 104,
+    "byte_start": 94,
+    "byte_end": 104,
+    "utf16_start": 94,
+    "utf16_end": 104,
+    "is_special": true,
+    "is_template": true,
+    "segment": "template",
+    "partial_utf8": false
+   },
+   {
+    "i": 20,
+    "id": 198,
+    "token": "Ċ",
+    "text": "\n",
+    "start": 104,
+    "end": 105,
+    "byte_start": 104,
+    "byte_end": 105,
+    "utf16_start": 104,
+    "utf16_end": 105,
+    "is_special": false,
+    "is_template": true,
+    "segment": "template",
+    "partial_utf8": false
+   },
+   {
+    "i": 21,
+    "id": 151644,
+    "token": "<|im_start|>",
+    "text": "<|im_start|>",
+    "start": 105,
+    "end": 117,
+    "byte_start": 105,
+    "byte_end": 117,
+    "utf16_start": 105,
+    "utf16_end": 117,
+    "is_special": true,
+    "is_template": true,
+    "segment": "template",
+    "partial_utf8": false
+   },
+   {
+    "i": 22,
+    "id": 872,
+    "token": "user",
+    "text": "user",
+    "start": 117,
+    "end": 121,
+    "byte_start": 117,
+    "byte_end": 121,
+    "utf16_start": 117,
+    "utf16_end": 121,
+    "is_special": false,
+    "is_template": true,
+    "segment": "template",
+    "partial_utf8": false
+   },
+   {
+    "i": 23,
+    "id": 198,
+    "token": "Ċ",
+    "text": "\n",
+    "start": 121,
+    "end": 122,
+    "byte_start": 121,
+    "byte_end": 122,
+    "utf16_start": 121,
+    "utf16_end": 122,
+    "is_special": false,
+    "is_template": true,
+    "segment": "template",
+    "partial_utf8": false
+   },
+   {
+    "i": 24,
+    "id": 28959,
+    "token": "Extract",
+    "text": "Extract",
+    "start": 122,
+    "end": 129,
+    "byte_start": 122,
+    "byte_end": 129,
+    "utf16_start": 122,
+    "utf16_end": 129,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 25,
+    "id": 279,
+    "token": "Ġthe",
+    "text": " the",
+    "start": 129,
+    "end": 133,
+    "byte_start": 129,
+    "byte_end": 133,
+    "utf16_start": 129,
+    "utf16_end": 133,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 26,
+    "id": 1697,
+    "token": "Ġperson",
+    "text": " person",
+    "start": 133,
+    "end": 140,
+    "byte_start": 133,
+    "byte_end": 140,
+    "utf16_start": 133,
+    "utf16_end": 140,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 27,
+    "id": 504,
+    "token": "Ġfrom",
+    "text": " from",
+    "start": 140,
+    "end": 145,
+    "byte_start": 140,
+    "byte_end": 145,
+    "utf16_start": 140,
+    "utf16_end": 145,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 28,
+    "id": 419,
+    "token": "Ġthis",
+    "text": " this",
+    "start": 145,
+    "end": 150,
+    "byte_start": 145,
+    "byte_end": 150,
+    "utf16_start": 145,
+    "utf16_end": 150,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 29,
+    "id": 1467,
+    "token": "Ġtext",
+    "text": " text",
+    "start": 150,
+    "end": 155,
+    "byte_start": 150,
+    "byte_end": 155,
+    "utf16_start": 150,
+    "utf16_end": 155,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 30,
+    "id": 438,
+    "token": "Ġas",
+    "text": " as",
+    "start": 155,
+    "end": 158,
+    "byte_start": 155,
+    "byte_end": 158,
+    "utf16_start": 155,
+    "utf16_end": 158,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 31,
+    "id": 4718,
+    "token": "ĠJSON",
+    "text": " JSON",
+    "start": 158,
+    "end": 163,
+    "byte_start": 158,
+    "byte_end": 163,
+    "utf16_start": 158,
+    "utf16_end": 163,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 32,
+    "id": 25,
+    "token": ":",
+    "text": ":",
+    "start": 163,
+    "end": 164,
+    "byte_start": 163,
+    "byte_end": 164,
+    "utf16_start": 163,
+    "utf16_end": 164,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 33,
+    "id": 51149,
+    "token": "ĠAda",
+    "text": " Ada",
+    "start": 164,
+    "end": 168,
+    "byte_start": 164,
+    "byte_end": 168,
+    "utf16_start": 164,
+    "utf16_end": 168,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 34,
+    "id": 34293,
+    "token": "ĠLov",
+    "text": " Lov",
+    "start": 168,
+    "end": 172,
+    "byte_start": 168,
+    "byte_end": 172,
+    "utf16_start": 168,
+    "utf16_end": 172,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 35,
+    "id": 301,
+    "token": "el",
+    "text": "el",
+    "start": 172,
+    "end": 174,
+    "byte_start": 172,
+    "byte_end": 174,
+    "utf16_start": 172,
+    "utf16_end": 174,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 36,
+    "id": 578,
+    "token": "ace",
+    "text": "ace",
+    "start": 174,
+    "end": 177,
+    "byte_start": 174,
+    "byte_end": 177,
+    "utf16_start": 174,
+    "utf16_end": 177,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 37,
+    "id": 11,
+    "token": ",",
+    "text": ",",
+    "start": 177,
+    "end": 178,
+    "byte_start": 177,
+    "byte_end": 178,
+    "utf16_start": 177,
+    "utf16_end": 178,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 38,
+    "id": 220,
+    "token": "Ġ",
+    "text": " ",
+    "start": 178,
+    "end": 179,
+    "byte_start": 178,
+    "byte_end": 179,
+    "utf16_start": 178,
+    "utf16_end": 179,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 39,
+    "id": 18,
+    "token": "3",
+    "text": "3",
+    "start": 179,
+    "end": 180,
+    "byte_start": 179,
+    "byte_end": 180,
+    "utf16_start": 179,
+    "utf16_end": 180,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 40,
+    "id": 21,
+    "token": "6",
+    "text": "6",
+    "start": 180,
+    "end": 181,
+    "byte_start": 180,
+    "byte_end": 181,
+    "utf16_start": 180,
+    "utf16_end": 181,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 41,
+    "id": 11,
+    "token": ",",
+    "text": ",",
+    "start": 181,
+    "end": 182,
+    "byte_start": 181,
+    "byte_end": 182,
+    "utf16_start": 181,
+    "utf16_end": 182,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 42,
+    "id": 6305,
+    "token": "Ġlives",
+    "text": " lives",
+    "start": 182,
+    "end": 188,
+    "byte_start": 182,
+    "byte_end": 188,
+    "utf16_start": 182,
+    "utf16_end": 188,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 43,
+    "id": 304,
+    "token": "Ġin",
+    "text": " in",
+    "start": 188,
+    "end": 191,
+    "byte_start": 188,
+    "byte_end": 191,
+    "utf16_start": 188,
+    "utf16_end": 191,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 44,
+    "id": 7148,
+    "token": "ĠLondon",
+    "text": " London",
+    "start": 191,
+    "end": 198,
+    "byte_start": 191,
+    "byte_end": 198,
+    "utf16_start": 191,
+    "utf16_end": 198,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 45,
+    "id": 323,
+    "token": "Ġand",
+    "text": " and",
+    "start": 198,
+    "end": 202,
+    "byte_start": 198,
+    "byte_end": 202,
+    "utf16_start": 198,
+    "utf16_end": 202,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 46,
+    "id": 13914,
+    "token": "Ġwrites",
+    "text": " writes",
+    "start": 202,
+    "end": 209,
+    "byte_start": 202,
+    "byte_end": 209,
+    "utf16_start": 202,
+    "utf16_end": 209,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 47,
+    "id": 911,
+    "token": "Ġabout",
+    "text": " about",
+    "start": 209,
+    "end": 215,
+    "byte_start": 209,
+    "byte_end": 215,
+    "utf16_start": 209,
+    "utf16_end": 215,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 48,
+    "id": 42964,
+    "token": "Ġanalytical",
+    "text": " analytical",
+    "start": 215,
+    "end": 226,
+    "byte_start": 215,
+    "byte_end": 226,
+    "utf16_start": 215,
+    "utf16_end": 226,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 49,
+    "id": 21106,
+    "token": "Ġengines",
+    "text": " engines",
+    "start": 226,
+    "end": 234,
+    "byte_start": 226,
+    "byte_end": 234,
+    "utf16_start": 226,
+    "utf16_end": 234,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 50,
+    "id": 13,
+    "token": ".",
+    "text": ".",
+    "start": 234,
+    "end": 235,
+    "byte_start": 234,
+    "byte_end": 235,
+    "utf16_start": 234,
+    "utf16_end": 235,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 51,
+    "id": 151645,
+    "token": "<|im_end|>",
+    "text": "<|im_end|>",
+    "start": 235,
+    "end": 245,
+    "byte_start": 235,
+    "byte_end": 245,
+    "utf16_start": 235,
+    "utf16_end": 245,
+    "is_special": true,
+    "is_template": true,
+    "segment": "template",
+    "partial_utf8": false
+   },
+   {
+    "i": 52,
+    "id": 198,
+    "token": "Ċ",
+    "text": "\n",
+    "start": 245,
+    "end": 246,
+    "byte_start": 245,
+    "byte_end": 246,
+    "utf16_start": 245,
+    "utf16_end": 246,
+    "is_special": false,
+    "is_template": true,
+    "segment": "template",
+    "partial_utf8": false
+   },
+   {
+    "i": 53,
+    "id": 151644,
+    "token": "<|im_start|>",
+    "text": "<|im_start|>",
+    "start": 246,
+    "end": 258,
+    "byte_start": 246,
+    "byte_end": 258,
+    "utf16_start": 246,
+    "utf16_end": 258,
+    "is_special": true,
+    "is_template": true,
+    "segment": "template",
+    "partial_utf8": false
+   },
+   {
+    "i": 54,
+    "id": 77091,
+    "token": "assistant",
+    "text": "assistant",
+    "start": 258,
+    "end": 267,
+    "byte_start": 258,
+    "byte_end": 267,
+    "utf16_start": 258,
+    "utf16_end": 267,
+    "is_special": false,
+    "is_template": true,
+    "segment": "template",
+    "partial_utf8": false
+   },
+   {
+    "i": 55,
+    "id": 198,
+    "token": "Ċ",
+    "text": "\n",
+    "start": 267,
+    "end": 268,
+    "byte_start": 267,
+    "byte_end": 268,
+    "utf16_start": 267,
+    "utf16_end": 268,
+    "is_special": false,
+    "is_template": true,
+    "segment": "template",
+    "partial_utf8": false
+   }
+  ],
+  "merges": {
+   "n_merges_total": 151387,
+   "pieces": [
+    {
+     "piece": "Extract",
+     "start": 0,
+     "end": 7,
+     "symbols": [
+      "E",
+      "x",
+      "t",
+      "r",
+      "a",
+      "c",
+      "t"
+     ],
+     "steps": [
+      {
+       "rank": 46,
+       "pair": [
+        "c",
+        "t"
+       ],
+       "result": [
+        "E",
+        "x",
+        "t",
+        "r",
+        "a",
+        "ct"
+       ]
+      },
+      {
+       "rank": 120,
+       "pair": [
+        "t",
+        "r"
+       ],
+       "result": [
+        "E",
+        "x",
+        "tr",
+        "a",
+        "ct"
+       ]
+      },
+      {
+       "rank": 275,
+       "pair": [
+        "a",
+        "ct"
+       ],
+       "result": [
+        "E",
+        "x",
+        "tr",
+        "act"
+       ]
+      },
+      {
+       "rank": 584,
+       "pair": [
+        "E",
+        "x"
+       ],
+       "result": [
+        "Ex",
+        "tr",
+        "act"
+       ]
+      },
+      {
+       "rank": 1888,
+       "pair": [
+        "tr",
+        "act"
+       ],
+       "result": [
+        "Ex",
+        "tract"
+       ]
+      },
+      {
+       "rank": 28703,
+       "pair": [
+        "Ex",
+        "tract"
+       ],
+       "result": [
+        "Extract"
+       ]
+      }
+     ],
+     "final": [
+      "Extract"
+     ],
+     "final_ids": [
+      28959
+     ]
+    },
+    {
+     "piece": "Ġthe",
+     "start": 7,
+     "end": 11,
+     "symbols": [
+      "Ġ",
+      "t",
+      "h",
+      "e"
+     ],
+     "steps": [
+      {
+       "rank": 3,
+       "pair": [
+        "Ġ",
+        "t"
+       ],
+       "result": [
+        "Ġt",
+        "h",
+        "e"
+       ]
+      },
+      {
+       "rank": 14,
+       "pair": [
+        "Ġt",
+        "h"
+       ],
+       "result": [
+        "Ġth",
+        "e"
+       ]
+      },
+      {
+       "rank": 23,
+       "pair": [
+        "Ġth",
+        "e"
+       ],
+       "result": [
+        "Ġthe"
+       ]
+      }
+     ],
+     "final": [
+      "Ġthe"
+     ],
+     "final_ids": [
+      279
+     ]
+    },
+    {
+     "piece": "Ġperson",
+     "start": 11,
+     "end": 18,
+     "symbols": [
+      "Ġ",
+      "p",
+      "e",
+      "r",
+      "s",
+      "o",
+      "n"
+     ],
+     "steps": [
+      {
+       "rank": 5,
+       "pair": [
+        "e",
+        "r"
+       ],
+       "result": [
+        "Ġ",
+        "p",
+        "er",
+        "s",
+        "o",
+        "n"
+       ]
+      },
+      {
+       "rank": 7,
+       "pair": [
+        "o",
+        "n"
+       ],
+       "result": [
+        "Ġ",
+        "p",
+        "er",
+        "s",
+        "on"
+       ]
+      },
+      {
+       "rank": 25,
+       "pair": [
+        "Ġ",
+        "p"
+       ],
+       "result": [
+        "Ġp",
+        "er",
+        "s",
+        "on"
+       ]
+      },
+      {
+       "rank": 132,
+       "pair": [
+        "er",
+        "s"
+       ],
+       "result": [
+        "Ġp",
+        "ers",
+        "on"
+       ]
+      },
+      {
+       "rank": 1014,
+       "pair": [
+        "ers",
+        "on"
+       ],
+       "result": [
+        "Ġp",
+        "erson"
+       ]
+      },
+      {
+       "rank": 1441,
+       "pair": [
+        "Ġp",
+        "erson"
+       ],
+       "result": [
+        "Ġperson"
+       ]
+      }
+     ],
+     "final": [
+      "Ġperson"
+     ],
+     "final_ids": [
+      1697
+     ]
+    },
+    {
+     "piece": "Ġfrom",
+     "start": 18,
+     "end": 23,
+     "symbols": [
+      "Ġ",
+      "f",
+      "r",
+      "o",
+      "m"
+     ],
+     "steps": [
+      {
+       "rank": 26,
+       "pair": [
+        "Ġ",
+        "f"
+       ],
+       "result": [
+        "Ġf",
+        "r",
+        "o",
+        "m"
+       ]
+      },
+      {
+       "rank": 43,
+       "pair": [
+        "r",
+        "o"
+       ],
+       "result": [
+        "Ġf",
+        "ro",
+        "m"
+       ]
+      },
+      {
+       "rank": 185,
+       "pair": [
+        "ro",
+        "m"
+       ],
+       "result": [
+        "Ġf",
+        "rom"
+       ]
+      },
+      {
+       "rank": 248,
+       "pair": [
+        "Ġf",
+        "rom"
+       ],
+       "result": [
+        "Ġfrom"
+       ]
+      }
+     ],
+     "final": [
+      "Ġfrom"
+     ],
+     "final_ids": [
+      504
+     ]
+    },
+    {
+     "piece": "Ġthis",
+     "start": 23,
+     "end": 28,
+     "symbols": [
+      "Ġ",
+      "t",
+      "h",
+      "i",
+      "s"
+     ],
+     "steps": [
+      {
+       "rank": 3,
+       "pair": [
+        "Ġ",
+        "t"
+       ],
+       "result": [
+        "Ġt",
+        "h",
+        "i",
+        "s"
+       ]
+      },
+      {
+       "rank": 14,
+       "pair": [
+        "Ġt",
+        "h"
+       ],
+       "result": [
+        "Ġth",
+        "i",
+        "s"
+       ]
+      },
+      {
+       "rank": 29,
+       "pair": [
+        "i",
+        "s"
+       ],
+       "result": [
+        "Ġth",
+        "is"
+       ]
+      },
+      {
+       "rank": 163,
+       "pair": [
+        "Ġth",
+        "is"
+       ],
+       "result": [
+        "Ġthis"
+       ]
+      }
+     ],
+     "final": [
+      "Ġthis"
+     ],
+     "final_ids": [
+      419
+     ]
+    },
+    {
+     "piece": "Ġtext",
+     "start": 28,
+     "end": 33,
+     "symbols": [
+      "Ġ",
+      "t",
+      "e",
+      "x",
+      "t"
+     ],
+     "steps": [
+      {
+       "rank": 3,
+       "pair": [
+        "Ġ",
+        "t"
+       ],
+       "result": [
+        "Ġt",
+        "e",
+        "x",
+        "t"
+       ]
+      },
+      {
+       "rank": 71,
+       "pair": [
+        "e",
+        "x"
+       ],
+       "result": [
+        "Ġt",
+        "ex",
+        "t"
+       ]
+      },
+      {
+       "rank": 171,
+       "pair": [
+        "ex",
+        "t"
+       ],
+       "result": [
+        "Ġt",
+        "ext"
+       ]
+      },
+      {
+       "rank": 1211,
+       "pair": [
+        "Ġt",
+        "ext"
+       ],
+       "result": [
+        "Ġtext"
+       ]
+      }
+     ],
+     "final": [
+      "Ġtext"
+     ],
+     "final_ids": [
+      1467
+     ]
+    },
+    {
+     "piece": "Ġas",
+     "start": 33,
+     "end": 36,
+     "symbols": [
+      "Ġ",
+      "a",
+      "s"
+     ],
+     "steps": [
+      {
+       "rank": 8,
+       "pair": [
+        "Ġ",
+        "a"
+       ],
+       "result": [
+        "Ġa",
+        "s"
+       ]
+      },
+      {
+       "rank": 182,
+       "pair": [
+        "Ġa",
+        "s"
+       ],
+       "result": [
+        "Ġas"
+       ]
+      }
+     ],
+     "final": [
+      "Ġas"
+     ],
+     "final_ids": [
+      438
+     ]
+    },
+    {
+     "piece": "ĠJSON",
+     "start": 36,
+     "end": 41,
+     "symbols": [
+      "Ġ",
+      "J",
+      "S",
+      "O",
+      "N"
+     ],
+     "steps": [
+      {
+       "rank": 363,
+       "pair": [
+        "Ġ",
+        "J"
+       ],
+       "result": [
+        "ĠJ",
+        "S",
+        "O",
+        "N"
+       ]
+      },
+      {
+       "rank": 455,
+       "pair": [
+        "O",
+        "N"
+       ],
+       "result": [
+        "ĠJ",
+        "S",
+        "ON"
+       ]
+      },
+      {
+       "rank": 2447,
+       "pair": [
+        "S",
+        "ON"
+       ],
+       "result": [
+        "ĠJ",
+        "SON"
+       ]
+      },
+      {
+       "rank": 4462,
+       "pair": [
+        "ĠJ",
+        "SON"
+       ],
+       "result": [
+        "ĠJSON"
+       ]
+      }
+     ],
+     "final": [
+      "ĠJSON"
+     ],
+     "final_ids": [
+      4718
+     ]
+    }
+   ]
+  }
+ },
+ "meta": {
+  "recorded_at": "2026-09-08T03:55:21.490Z",
+  "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "transformers_version": "5.16.1",
+  "torch_version": "2.14.0+cpu",
+  "torch_threads": 10,
+  "backend_version": "0.2.0",
+  "hardware": "darwin arm64, 10 threads"
+ }
+}

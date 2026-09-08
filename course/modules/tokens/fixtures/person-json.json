@@ -1,0 +1,521 @@
+{
+ "$schema": "sol-fixture/1",
+ "id": "person-json",
+ "kind": "tokenize",
+ "module": "tokens",
+ "title": {
+  "es": "{\"name\": \"Ada\", \"age\": 36}",
+  "en": "{\"name\": \"Ada\", \"age\": 36}"
+ },
+ "recordedAt": "2026-09-08T03:55:21.490Z",
+ "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+ "request": {
+  "text": "{\"name\": \"Ada\", \"age\": 36}",
+  "use_chat_template": false,
+  "tokenizer": "model",
+  "merges": true
+ },
+ "response": {
+  "tokenizer": "model",
+  "tokenizer_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "text": "{\"name\": \"Ada\", \"age\": 36}",
+  "rendered": "{\"name\": \"Ada\", \"age\": 36}",
+  "use_chat_template": false,
+  "n_chars": 26,
+  "n_bytes": 26,
+  "n_utf16": 26,
+  "n_tokens": 13,
+  "vocab_entries": 151665,
+  "vocab_size": 151936,
+  "segments": null,
+  "tokens": [
+   {
+    "i": 0,
+    "id": 4913,
+    "token": "{\"",
+    "text": "{\"",
+    "start": 0,
+    "end": 2,
+    "byte_start": 0,
+    "byte_end": 2,
+    "utf16_start": 0,
+    "utf16_end": 2,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 1,
+    "id": 606,
+    "token": "name",
+    "text": "name",
+    "start": 2,
+    "end": 6,
+    "byte_start": 2,
+    "byte_end": 6,
+    "utf16_start": 2,
+    "utf16_end": 6,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 2,
+    "id": 788,
+    "token": "\":",
+    "text": "\":",
+    "start": 6,
+    "end": 8,
+    "byte_start": 6,
+    "byte_end": 8,
+    "utf16_start": 6,
+    "utf16_end": 8,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 3,
+    "id": 330,
+    "token": "Ġ\"",
+    "text": " \"",
+    "start": 8,
+    "end": 10,
+    "byte_start": 8,
+    "byte_end": 10,
+    "utf16_start": 8,
+    "utf16_end": 10,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 4,
+    "id": 95347,
+    "token": "Ada",
+    "text": "Ada",
+    "start": 10,
+    "end": 13,
+    "byte_start": 10,
+    "byte_end": 13,
+    "utf16_start": 10,
+    "utf16_end": 13,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 5,
+    "id": 497,
+    "token": "\",",
+    "text": "\",",
+    "start": 13,
+    "end": 15,
+    "byte_start": 13,
+    "byte_end": 15,
+    "utf16_start": 13,
+    "utf16_end": 15,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 6,
+    "id": 330,
+    "token": "Ġ\"",
+    "text": " \"",
+    "start": 15,
+    "end": 17,
+    "byte_start": 15,
+    "byte_end": 17,
+    "utf16_start": 15,
+    "utf16_end": 17,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 7,
+    "id": 424,
+    "token": "age",
+    "text": "age",
+    "start": 17,
+    "end": 20,
+    "byte_start": 17,
+    "byte_end": 20,
+    "utf16_start": 17,
+    "utf16_end": 20,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 8,
+    "id": 788,
+    "token": "\":",
+    "text": "\":",
+    "start": 20,
+    "end": 22,
+    "byte_start": 20,
+    "byte_end": 22,
+    "utf16_start": 20,
+    "utf16_end": 22,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 9,
+    "id": 220,
+    "token": "Ġ",
+    "text": " ",
+    "start": 22,
+    "end": 23,
+    "byte_start": 22,
+    "byte_end": 23,
+    "utf16_start": 22,
+    "utf16_end": 23,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 10,
+    "id": 18,
+    "token": "3",
+    "text": "3",
+    "start": 23,
+    "end": 24,
+    "byte_start": 23,
+    "byte_end": 24,
+    "utf16_start": 23,
+    "utf16_end": 24,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 11,
+    "id": 21,
+    "token": "6",
+    "text": "6",
+    "start": 24,
+    "end": 25,
+    "byte_start": 24,
+    "byte_end": 25,
+    "utf16_start": 24,
+    "utf16_end": 25,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 12,
+    "id": 92,
+    "token": "}",
+    "text": "}",
+    "start": 25,
+    "end": 26,
+    "byte_start": 25,
+    "byte_end": 26,
+    "utf16_start": 25,
+    "utf16_end": 26,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   }
+  ],
+  "merges": {
+   "n_merges_total": 151387,
+   "pieces": [
+    {
+     "piece": "{\"",
+     "start": 0,
+     "end": 2,
+     "symbols": [
+      "{",
+      "\""
+     ],
+     "steps": [
+      {
+       "rank": 4657,
+       "pair": [
+        "{",
+        "\""
+       ],
+       "result": [
+        "{\""
+       ]
+      }
+     ],
+     "final": [
+      "{\""
+     ],
+     "final_ids": [
+      4913
+     ]
+    },
+    {
+     "piece": "name",
+     "start": 2,
+     "end": 6,
+     "symbols": [
+      "n",
+      "a",
+      "m",
+      "e"
+     ],
+     "steps": [
+      {
+       "rank": 53,
+       "pair": [
+        "a",
+        "m"
+       ],
+       "result": [
+        "n",
+        "am",
+        "e"
+       ]
+      },
+      {
+       "rank": 117,
+       "pair": [
+        "am",
+        "e"
+       ],
+       "result": [
+        "n",
+        "ame"
+       ]
+      },
+      {
+       "rank": 350,
+       "pair": [
+        "n",
+        "ame"
+       ],
+       "result": [
+        "name"
+       ]
+      }
+     ],
+     "final": [
+      "name"
+     ],
+     "final_ids": [
+      606
+     ]
+    },
+    {
+     "piece": "\":",
+     "start": 6,
+     "end": 8,
+     "symbols": [
+      "\"",
+      ":"
+     ],
+     "steps": [
+      {
+       "rank": 532,
+       "pair": [
+        "\"",
+        ":"
+       ],
+       "result": [
+        "\":"
+       ]
+      }
+     ],
+     "final": [
+      "\":"
+     ],
+     "final_ids": [
+      788
+     ]
+    },
+    {
+     "piece": "Ġ\"",
+     "start": 8,
+     "end": 10,
+     "symbols": [
+      "Ġ",
+      "\""
+     ],
+     "steps": [
+      {
+       "rank": 74,
+       "pair": [
+        "Ġ",
+        "\""
+       ],
+       "result": [
+        "Ġ\""
+       ]
+      }
+     ],
+     "final": [
+      "Ġ\""
+     ],
+     "final_ids": [
+      330
+     ]
+    },
+    {
+     "piece": "Ada",
+     "start": 10,
+     "end": 13,
+     "symbols": [
+      "A",
+      "d",
+      "a"
+     ],
+     "steps": [
+      {
+       "rank": 2333,
+       "pair": [
+        "A",
+        "d"
+       ],
+       "result": [
+        "Ad",
+        "a"
+       ]
+      },
+      {
+       "rank": 95091,
+       "pair": [
+        "Ad",
+        "a"
+       ],
+       "result": [
+        "Ada"
+       ]
+      }
+     ],
+     "final": [
+      "Ada"
+     ],
+     "final_ids": [
+      95347
+     ]
+    },
+    {
+     "piece": "\",",
+     "start": 13,
+     "end": 15,
+     "symbols": [
+      "\"",
+      ","
+     ],
+     "steps": [
+      {
+       "rank": 241,
+       "pair": [
+        "\"",
+        ","
+       ],
+       "result": [
+        "\","
+       ]
+      }
+     ],
+     "final": [
+      "\","
+     ],
+     "final_ids": [
+      497
+     ]
+    },
+    {
+     "piece": "Ġ\"",
+     "start": 15,
+     "end": 17,
+     "symbols": [
+      "Ġ",
+      "\""
+     ],
+     "steps": [
+      {
+       "rank": 74,
+       "pair": [
+        "Ġ",
+        "\""
+       ],
+       "result": [
+        "Ġ\""
+       ]
+      }
+     ],
+     "final": [
+      "Ġ\""
+     ],
+     "final_ids": [
+      330
+     ]
+    },
+    {
+     "piece": "age",
+     "start": 17,
+     "end": 20,
+     "symbols": [
+      "a",
+      "g",
+      "e"
+     ],
+     "steps": [
+      {
+       "rank": 95,
+       "pair": [
+        "a",
+        "g"
+       ],
+       "result": [
+        "ag",
+        "e"
+       ]
+      },
+      {
+       "rank": 168,
+       "pair": [
+        "ag",
+        "e"
+       ],
+       "result": [
+        "age"
+       ]
+      }
+     ],
+     "final": [
+      "age"
+     ],
+     "final_ids": [
+      424
+     ]
+    }
+   ]
+  }
+ },
+ "meta": {
+  "recorded_at": "2026-09-08T03:55:21.490Z",
+  "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "transformers_version": "5.16.1",
+  "torch_version": "2.14.0+cpu",
+  "torch_threads": 10,
+  "backend_version": "0.2.0",
+  "hardware": "darwin arm64, 10 threads"
+ }
+}

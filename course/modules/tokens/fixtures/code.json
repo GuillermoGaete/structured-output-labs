@@ -1,0 +1,922 @@
+{
+ "$schema": "sol-fixture/1",
+ "id": "code",
+ "kind": "tokenize",
+ "module": "tokens",
+ "title": {
+  "es": "def fibonacci(n):\n    return n if n < 2 ",
+  "en": "def fibonacci(n):\n    return n if n < 2 "
+ },
+ "recordedAt": "2026-09-08T03:55:21.490Z",
+ "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+ "request": {
+  "text": "def fibonacci(n):\n    return n if n < 2 else fibonacci(n - 1) + fibonacci(n - 2)",
+  "use_chat_template": false,
+  "tokenizer": "model",
+  "merges": true
+ },
+ "response": {
+  "tokenizer": "model",
+  "tokenizer_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "text": "def fibonacci(n):\n    return n if n < 2 else fibonacci(n - 1) + fibonacci(n - 2)",
+  "rendered": "def fibonacci(n):\n    return n if n < 2 else fibonacci(n - 1) + fibonacci(n - 2)",
+  "use_chat_template": false,
+  "n_chars": 80,
+  "n_bytes": 80,
+  "n_utf16": 80,
+  "n_tokens": 26,
+  "vocab_entries": 151665,
+  "vocab_size": 151936,
+  "segments": null,
+  "tokens": [
+   {
+    "i": 0,
+    "id": 750,
+    "token": "def",
+    "text": "def",
+    "start": 0,
+    "end": 3,
+    "byte_start": 0,
+    "byte_end": 3,
+    "utf16_start": 0,
+    "utf16_end": 3,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 1,
+    "id": 75698,
+    "token": "Ġfibonacci",
+    "text": " fibonacci",
+    "start": 3,
+    "end": 13,
+    "byte_start": 3,
+    "byte_end": 13,
+    "utf16_start": 3,
+    "utf16_end": 13,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 2,
+    "id": 1445,
+    "token": "(n",
+    "text": "(n",
+    "start": 13,
+    "end": 15,
+    "byte_start": 13,
+    "byte_end": 15,
+    "utf16_start": 13,
+    "utf16_end": 15,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 3,
+    "id": 982,
+    "token": "):Ċ",
+    "text": "):\n",
+    "start": 15,
+    "end": 18,
+    "byte_start": 15,
+    "byte_end": 18,
+    "utf16_start": 15,
+    "utf16_end": 18,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 4,
+    "id": 262,
+    "token": "ĠĠĠ",
+    "text": "   ",
+    "start": 18,
+    "end": 21,
+    "byte_start": 18,
+    "byte_end": 21,
+    "utf16_start": 18,
+    "utf16_end": 21,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 5,
+    "id": 470,
+    "token": "Ġreturn",
+    "text": " return",
+    "start": 21,
+    "end": 28,
+    "byte_start": 21,
+    "byte_end": 28,
+    "utf16_start": 21,
+    "utf16_end": 28,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 6,
+    "id": 308,
+    "token": "Ġn",
+    "text": " n",
+    "start": 28,
+    "end": 30,
+    "byte_start": 28,
+    "byte_end": 30,
+    "utf16_start": 28,
+    "utf16_end": 30,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 7,
+    "id": 421,
+    "token": "Ġif",
+    "text": " if",
+    "start": 30,
+    "end": 33,
+    "byte_start": 30,
+    "byte_end": 33,
+    "utf16_start": 30,
+    "utf16_end": 33,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 8,
+    "id": 308,
+    "token": "Ġn",
+    "text": " n",
+    "start": 33,
+    "end": 35,
+    "byte_start": 33,
+    "byte_end": 35,
+    "utf16_start": 33,
+    "utf16_end": 35,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 9,
+    "id": 366,
+    "token": "Ġ<",
+    "text": " <",
+    "start": 35,
+    "end": 37,
+    "byte_start": 35,
+    "byte_end": 37,
+    "utf16_start": 35,
+    "utf16_end": 37,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 10,
+    "id": 220,
+    "token": "Ġ",
+    "text": " ",
+    "start": 37,
+    "end": 38,
+    "byte_start": 37,
+    "byte_end": 38,
+    "utf16_start": 37,
+    "utf16_end": 38,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 11,
+    "id": 17,
+    "token": "2",
+    "text": "2",
+    "start": 38,
+    "end": 39,
+    "byte_start": 38,
+    "byte_end": 39,
+    "utf16_start": 38,
+    "utf16_end": 39,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 12,
+    "id": 770,
+    "token": "Ġelse",
+    "text": " else",
+    "start": 39,
+    "end": 44,
+    "byte_start": 39,
+    "byte_end": 44,
+    "utf16_start": 39,
+    "utf16_end": 44,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 13,
+    "id": 75698,
+    "token": "Ġfibonacci",
+    "text": " fibonacci",
+    "start": 44,
+    "end": 54,
+    "byte_start": 44,
+    "byte_end": 54,
+    "utf16_start": 44,
+    "utf16_end": 54,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 14,
+    "id": 1445,
+    "token": "(n",
+    "text": "(n",
+    "start": 54,
+    "end": 56,
+    "byte_start": 54,
+    "byte_end": 56,
+    "utf16_start": 54,
+    "utf16_end": 56,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 15,
+    "id": 481,
+    "token": "Ġ-",
+    "text": " -",
+    "start": 56,
+    "end": 58,
+    "byte_start": 56,
+    "byte_end": 58,
+    "utf16_start": 56,
+    "utf16_end": 58,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 16,
+    "id": 220,
+    "token": "Ġ",
+    "text": " ",
+    "start": 58,
+    "end": 59,
+    "byte_start": 58,
+    "byte_end": 59,
+    "utf16_start": 58,
+    "utf16_end": 59,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 17,
+    "id": 16,
+    "token": "1",
+    "text": "1",
+    "start": 59,
+    "end": 60,
+    "byte_start": 59,
+    "byte_end": 60,
+    "utf16_start": 59,
+    "utf16_end": 60,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 18,
+    "id": 8,
+    "token": ")",
+    "text": ")",
+    "start": 60,
+    "end": 61,
+    "byte_start": 60,
+    "byte_end": 61,
+    "utf16_start": 60,
+    "utf16_end": 61,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 19,
+    "id": 488,
+    "token": "Ġ+",
+    "text": " +",
+    "start": 61,
+    "end": 63,
+    "byte_start": 61,
+    "byte_end": 63,
+    "utf16_start": 61,
+    "utf16_end": 63,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 20,
+    "id": 75698,
+    "token": "Ġfibonacci",
+    "text": " fibonacci",
+    "start": 63,
+    "end": 73,
+    "byte_start": 63,
+    "byte_end": 73,
+    "utf16_start": 63,
+    "utf16_end": 73,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 21,
+    "id": 1445,
+    "token": "(n",
+    "text": "(n",
+    "start": 73,
+    "end": 75,
+    "byte_start": 73,
+    "byte_end": 75,
+    "utf16_start": 73,
+    "utf16_end": 75,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 22,
+    "id": 481,
+    "token": "Ġ-",
+    "text": " -",
+    "start": 75,
+    "end": 77,
+    "byte_start": 75,
+    "byte_end": 77,
+    "utf16_start": 75,
+    "utf16_end": 77,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 23,
+    "id": 220,
+    "token": "Ġ",
+    "text": " ",
+    "start": 77,
+    "end": 78,
+    "byte_start": 77,
+    "byte_end": 78,
+    "utf16_start": 77,
+    "utf16_end": 78,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 24,
+    "id": 17,
+    "token": "2",
+    "text": "2",
+    "start": 78,
+    "end": 79,
+    "byte_start": 78,
+    "byte_end": 79,
+    "utf16_start": 78,
+    "utf16_end": 79,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   },
+   {
+    "i": 25,
+    "id": 8,
+    "token": ")",
+    "text": ")",
+    "start": 79,
+    "end": 80,
+    "byte_start": 79,
+    "byte_end": 80,
+    "utf16_start": 79,
+    "utf16_end": 80,
+    "is_special": false,
+    "is_template": false,
+    "segment": "user",
+    "partial_utf8": false
+   }
+  ],
+  "merges": {
+   "n_merges_total": 151387,
+   "pieces": [
+    {
+     "piece": "def",
+     "start": 0,
+     "end": 3,
+     "symbols": [
+      "d",
+      "e",
+      "f"
+     ],
+     "steps": [
+      {
+       "rank": 194,
+       "pair": [
+        "d",
+        "e"
+       ],
+       "result": [
+        "de",
+        "f"
+       ]
+      },
+      {
+       "rank": 494,
+       "pair": [
+        "de",
+        "f"
+       ],
+       "result": [
+        "def"
+       ]
+      }
+     ],
+     "final": [
+      "def"
+     ],
+     "final_ids": [
+      750
+     ]
+    },
+    {
+     "piece": "Ġfibonacci",
+     "start": 3,
+     "end": 13,
+     "symbols": [
+      "Ġ",
+      "f",
+      "i",
+      "b",
+      "o",
+      "n",
+      "a",
+      "c",
+      "c",
+      "i"
+     ],
+     "steps": [
+      {
+       "rank": 7,
+       "pair": [
+        "o",
+        "n"
+       ],
+       "result": [
+        "Ġ",
+        "f",
+        "i",
+        "b",
+        "on",
+        "a",
+        "c",
+        "c",
+        "i"
+       ]
+      },
+      {
+       "rank": 26,
+       "pair": [
+        "Ġ",
+        "f"
+       ],
+       "result": [
+        "Ġf",
+        "i",
+        "b",
+        "on",
+        "a",
+        "c",
+        "c",
+        "i"
+       ]
+      },
+      {
+       "rank": 323,
+       "pair": [
+        "i",
+        "b"
+       ],
+       "result": [
+        "Ġf",
+        "ib",
+        "on",
+        "a",
+        "c",
+        "c",
+        "i"
+       ]
+      },
+      {
+       "rank": 324,
+       "pair": [
+        "a",
+        "c"
+       ],
+       "result": [
+        "Ġf",
+        "ib",
+        "on",
+        "ac",
+        "c",
+        "i"
+       ]
+      },
+      {
+       "rank": 4219,
+       "pair": [
+        "ac",
+        "c"
+       ],
+       "result": [
+        "Ġf",
+        "ib",
+        "on",
+        "acc",
+        "i"
+       ]
+      },
+      {
+       "rank": 15545,
+       "pair": [
+        "Ġf",
+        "ib"
+       ],
+       "result": [
+        "Ġfib",
+        "on",
+        "acc",
+        "i"
+       ]
+      },
+      {
+       "rank": 34347,
+       "pair": [
+        "acc",
+        "i"
+       ],
+       "result": [
+        "Ġfib",
+        "on",
+        "acci"
+       ]
+      },
+      {
+       "rank": 39089,
+       "pair": [
+        "on",
+        "acci"
+       ],
+       "result": [
+        "Ġfib",
+        "onacci"
+       ]
+      },
+      {
+       "rank": 75442,
+       "pair": [
+        "Ġfib",
+        "onacci"
+       ],
+       "result": [
+        "Ġfibonacci"
+       ]
+      }
+     ],
+     "final": [
+      "Ġfibonacci"
+     ],
+     "final_ids": [
+      75698
+     ]
+    },
+    {
+     "piece": "(n",
+     "start": 13,
+     "end": 15,
+     "symbols": [
+      "(",
+      "n"
+     ],
+     "steps": [
+      {
+       "rank": 1189,
+       "pair": [
+        "(",
+        "n"
+       ],
+       "result": [
+        "(n"
+       ]
+      }
+     ],
+     "final": [
+      "(n"
+     ],
+     "final_ids": [
+      1445
+     ]
+    },
+    {
+     "piece": "):Ċ",
+     "start": 15,
+     "end": 18,
+     "symbols": [
+      ")",
+      ":",
+      "Ċ"
+     ],
+     "steps": [
+      {
+       "rank": 254,
+       "pair": [
+        ":",
+        "Ċ"
+       ],
+       "result": [
+        ")",
+        ":Ċ"
+       ]
+      },
+      {
+       "rank": 726,
+       "pair": [
+        ")",
+        ":Ċ"
+       ],
+       "result": [
+        "):Ċ"
+       ]
+      }
+     ],
+     "final": [
+      "):Ċ"
+     ],
+     "final_ids": [
+      982
+     ]
+    },
+    {
+     "piece": "ĠĠĠ",
+     "start": 18,
+     "end": 21,
+     "symbols": [
+      "Ġ",
+      "Ġ",
+      "Ġ"
+     ],
+     "steps": [
+      {
+       "rank": 0,
+       "pair": [
+        "Ġ",
+        "Ġ"
+       ],
+       "result": [
+        "ĠĠ",
+        "Ġ"
+       ]
+      },
+      {
+       "rank": 6,
+       "pair": [
+        "ĠĠ",
+        "Ġ"
+       ],
+       "result": [
+        "ĠĠĠ"
+       ]
+      }
+     ],
+     "final": [
+      "ĠĠĠ"
+     ],
+     "final_ids": [
+      262
+     ]
+    },
+    {
+     "piece": "Ġreturn",
+     "start": 21,
+     "end": 28,
+     "symbols": [
+      "Ġ",
+      "r",
+      "e",
+      "t",
+      "u",
+      "r",
+      "n"
+     ],
+     "steps": [
+      {
+       "rank": 9,
+       "pair": [
+        "r",
+        "e"
+       ],
+       "result": [
+        "Ġ",
+        "re",
+        "t",
+        "u",
+        "r",
+        "n"
+       ]
+      },
+      {
+       "rank": 56,
+       "pair": [
+        "Ġ",
+        "re"
+       ],
+       "result": [
+        "Ġre",
+        "t",
+        "u",
+        "r",
+        "n"
+       ]
+      },
+      {
+       "rank": 68,
+       "pair": [
+        "u",
+        "r"
+       ],
+       "result": [
+        "Ġre",
+        "t",
+        "ur",
+        "n"
+       ]
+      },
+      {
+       "rank": 143,
+       "pair": [
+        "ur",
+        "n"
+       ],
+       "result": [
+        "Ġre",
+        "t",
+        "urn"
+       ]
+      },
+      {
+       "rank": 156,
+       "pair": [
+        "t",
+        "urn"
+       ],
+       "result": [
+        "Ġre",
+        "turn"
+       ]
+      },
+      {
+       "rank": 214,
+       "pair": [
+        "Ġre",
+        "turn"
+       ],
+       "result": [
+        "Ġreturn"
+       ]
+      }
+     ],
+     "final": [
+      "Ġreturn"
+     ],
+     "final_ids": [
+      470
+     ]
+    },
+    {
+     "piece": "Ġn",
+     "start": 28,
+     "end": 30,
+     "symbols": [
+      "Ġ",
+      "n"
+     ],
+     "steps": [
+      {
+       "rank": 52,
+       "pair": [
+        "Ġ",
+        "n"
+       ],
+       "result": [
+        "Ġn"
+       ]
+      }
+     ],
+     "final": [
+      "Ġn"
+     ],
+     "final_ids": [
+      308
+     ]
+    },
+    {
+     "piece": "Ġif",
+     "start": 30,
+     "end": 33,
+     "symbols": [
+      "Ġ",
+      "i",
+      "f"
+     ],
+     "steps": [
+      {
+       "rank": 77,
+       "pair": [
+        "i",
+        "f"
+       ],
+       "result": [
+        "Ġ",
+        "if"
+       ]
+      },
+      {
+       "rank": 165,
+       "pair": [
+        "Ġ",
+        "if"
+       ],
+       "result": [
+        "Ġif"
+       ]
+      }
+     ],
+     "final": [
+      "Ġif"
+     ],
+     "final_ids": [
+      421
+     ]
+    }
+   ]
+  }
+ },
+ "meta": {
+  "recorded_at": "2026-09-08T03:55:21.490Z",
+  "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "transformers_version": "5.16.1",
+  "torch_version": "2.14.0+cpu",
+  "torch_threads": 10,
+  "backend_version": "0.2.0",
+  "hardware": "darwin arm64, 10 threads"
+ }
+}
