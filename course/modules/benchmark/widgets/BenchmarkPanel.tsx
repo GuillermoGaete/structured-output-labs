@@ -46,7 +46,7 @@ export function BenchmarkPanel({ runs, modes, ui, compact = false }: { runs: Run
           </div>
         ))}
       </div>
-      <div className={`grid gap-6 ${compact ? "md:grid-cols-2" : "md:grid-cols-2"}`}>
+      <div className="grid gap-6 md:grid-cols-2">
         <BoxPlot rows={summaries.map((s) => ({ label: label(s.mode), stat: s.totalMs, color: MODE_COLOR[s.mode] }))} format={fmtMs} title={ui.chartTotal} note={ui.chartTotalNote} locale={locale} />
         <BoxPlot rows={summaries.map((s) => ({ label: label(s.mode), stat: s.msPerToken, color: MODE_COLOR[s.mode] }))} format={fmtMs} title={ui.chartPerToken} note={ui.chartPerTokenNote} locale={locale} />
         {!compact && <GroupedBars rows={summaries.map((s) => ({ label: label(s.mode), value: s.prefillMs.median, color: MODE_COLOR[s.mode] }))} format={fmtMs} title={ui.chartPrefill} note={ui.chartPrefillNote} locale={locale} />}
@@ -63,7 +63,7 @@ export function BenchmarkPanel({ runs, modes, ui, compact = false }: { runs: Run
             locale={locale}
           />
         )}
-        {timeline.length > 0 && <LatencyTimeline series={timeline} title={ui.chartTimeline} note={ui.chartTimelineNote} locale={locale} />}
+        {!compact && timeline.length > 0 && <LatencyTimeline series={timeline} title={ui.chartTimeline} note={ui.chartTimelineNote} locale={locale} />}
       </div>
     </div>
   );

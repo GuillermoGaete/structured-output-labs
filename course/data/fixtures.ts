@@ -32,8 +32,10 @@ export interface RecordedExperimentRun {
   constraint: "none" | "json" | "schema";
   seed: number;
   detail: "full" | "compact";
-  request: GenerateRequest;
-  trace: { meta: Meta | null; steps: Step[]; done: Done | null; error: string | null };
+  /** Only what differs from the fixture's request (see scripts/compact-experiment.mjs). */
+  request: Partial<GenerateRequest> & { constraint: "none" | "json" | "schema"; seed: number };
+  /** Steps may lack partial_text and, outside strict mode, the top-K lists; the loader restores what it can. */
+  trace: { meta: Meta | null; steps: (Omit<Step, "partial_text"> & { partial_text?: string })[]; done: Done | null; error: string | null };
   wall_ms: number;
 }
 

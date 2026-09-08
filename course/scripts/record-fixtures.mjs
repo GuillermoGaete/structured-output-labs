@@ -4,6 +4,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { compactExperiment } from "./compact-experiment.mjs";
 import { RECIPES } from "./recipes.mjs";
 
 // Same PRNG as lib/prng.ts, so the browser can regenerate the recorded draws from (seed, step).
@@ -167,6 +168,7 @@ for (const moduleId of modules) {
       meta,
     };
     const out = join(dir, `${recipe.id}.json`);
+    if (recipe.kind === "experiment") compactExperiment(file);
     writeFileSync(out, JSON.stringify(file, null, 1) + "\n");
     const size = readFileSync(out).length;
     entries.push({ id: recipe.id, kind: recipe.kind, title: recipe.title });

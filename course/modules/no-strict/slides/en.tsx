@@ -83,8 +83,8 @@ const slides = {
       <>
         <Eyebrow>M3 · Structured output without strict mode</Eyebrow>
         <Claim>The same prompt, the same temperature, a different seed</Claim>
-        <Widget zoom={1.3}>
-          <ExperimentWidget modes={["plain", "json_mode"]} preset="invoice" ui={ui} rows={5} />
+        <Widget zoom={1.25}>
+          <ExperimentWidget modes={["plain", "json_mode"]} preset="invoice" ui={ui} rows={3} />
         </Widget>
       </>
     ),
