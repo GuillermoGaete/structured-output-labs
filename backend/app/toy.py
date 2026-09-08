@@ -16,6 +16,16 @@ from tokenizers import Tokenizer, models, pre_tokenizers, decoders, trainers
 from transformers import PreTrainedTokenizerFast, Qwen2Config, Qwen2ForCausalLM
 
 EOS = "<|endoftext|>"
+IM_START = "<|im_start|>"
+IM_END = "<|im_end|>"
+# The same ChatML shape Qwen2.5 uses, so /tokenize's template segments and
+# `use_chat_template` are exercised by the tests without downloading anything.
+CHAT_TEMPLATE = (
+    "{% for message in messages %}"
+    "{{ '<|im_start|>' + message['role'] + '\n' + message['content'] + '<|im_end|>' + '\n' }}"
+    "{% endfor %}"
+    "{% if add_generation_prompt %}{{ '<|im_start|>assistant\n' }}{% endif %}"
+)
 
 
 def _corpus(seed: int = 0, n: int = 400) -> list[str]:
@@ -48,6 +58,8 @@ def build_toy_tokenizer(vocab_size: int = 700) -> PreTrainedTokenizerFast:
     )
     tok.train_from_iterator(_corpus(), trainer=trainer)
     fast = PreTrainedTokenizerFast(tokenizer_object=tok, eos_token=EOS, pad_token=EOS, bos_token=None)
+    fast.add_special_tokens({"additional_special_tokens": [IM_START, IM_END]})
+    fast.chat_template = CHAT_TEMPLATE
     return fast
 
 

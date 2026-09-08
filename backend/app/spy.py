@@ -12,10 +12,34 @@ records the comparison for the current step.
 from __future__ import annotations
 
 import math
-from typing import Callable
+import time
+from typing import Any, Callable
 
 import torch
 from transformers import LogitsProcessor
+
+
+class TimedProcessor(LogitsProcessor):
+    """Wrap the constraint processor so the time the mask costs per step is measurable."""
+
+    def __init__(self, inner: Any) -> None:
+        self.inner = inner
+        self.last_ms = 0.0
+        self.total_ms = 0.0
+
+    def reset(self) -> None:
+        self.last_ms = 0.0
+        self.total_ms = 0.0
+        reset = getattr(self.inner, "reset", None)
+        if callable(reset):
+            reset()
+
+    def __call__(self, input_ids: torch.LongTensor, scores: torch.FloatTensor) -> torch.FloatTensor:
+        started = time.perf_counter()
+        out = self.inner(input_ids, scores)
+        self.last_ms = (time.perf_counter() - started) * 1000.0
+        self.total_ms += self.last_ms
+        return out
 
 
 class PreMaskObserver(LogitsProcessor):
@@ -81,12 +105,14 @@ class MasterObserver(LogitsProcessor):
             except Exception:  # pragma: no cover - defensive, the getter reaches into outlines internals
                 state = None
 
+        argmax_raw = int(torch.argmax(raw).item())
         self.records.append(
             {
                 "n_allowed": n_allowed,
                 "vocab_size": int(raw.numel()),
                 "mass_removed": mass_removed,
-                "argmax_raw": int(torch.argmax(raw).item()),
+                "argmax_raw": argmax_raw,
+                "argmax_allowed": bool(allowed[argmax_raw].item()),
                 "top_original": [(int(t), float(p), bool(allowed[t])) for p, t in zip(raw_p.tolist(), raw_ids.tolist())],
                 "top_forced": [(int(t), float(p), True) for p, t in zip(forced_p.tolist(), forced_ids.tolist()) if p > 0],
                 "p_raw": p_raw,
