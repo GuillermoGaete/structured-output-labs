@@ -168,6 +168,14 @@ textarea.input {
   resize: vertical;
   line-height: 1.45;
 }
+/* `.input` is unlayered, so it beats Tailwind's width utilities. These two are
+   the escape hatch for the small controls that must size to their content. */
+.input-fit {
+  width: auto;
+}
+.input-num {
+  width: 4rem;
+}
 
 /* A compact fact: a number, a state, a warning. Replaces the sentences this app used to print. */
 .chip {

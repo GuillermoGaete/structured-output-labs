@@ -133,7 +133,7 @@ export function SchemaEditor({ state, update, pydantic, disabled = false }: Prop
               <label className="inline-flex items-center gap-1.5 text-xs">
                 <span className="text-muted">Model</span>
                 <select
-                  className="input w-auto py-0.5 px-1.5 text-xs"
+                  className="input input-fit py-0.5 px-1.5 text-xs"
                   value={state.pydanticModel ?? pydantic.root ?? ""}
                   onChange={(e) => update({ pydanticModel: e.target.value })}
                   disabled={disabled}
@@ -235,11 +235,11 @@ export function SchemaEditor({ state, update, pydantic, disabled = false }: Prop
 
       <div className="flex flex-col gap-2">
         <span className="eyebrow">Display</span>
-        <div className="grid grid-cols-[auto_1fr] items-center gap-x-3 gap-y-2 text-xs">
-          <label className="col-span-2 inline-flex items-center gap-1.5">
-            <span className="text-muted">Decimals</span>
+        <div className="flex flex-col gap-2 text-xs">
+          <label className="flex items-center gap-2">
+            <span className="w-20 text-muted">Decimals</span>
             <select
-              className="input w-auto py-0.5 px-1.5 text-xs"
+              className="input input-fit py-0.5 px-1.5 text-xs"
               value={state.pctDigits}
               onChange={(e) => update({ pctDigits: Number(e.target.value) })}
               aria-label="Decimals shown on probabilities"
@@ -251,27 +251,30 @@ export function SchemaEditor({ state, update, pydantic, disabled = false }: Prop
               ))}
             </select>
           </label>
-          <button
-            type="button"
-            className="btn col-span-2 justify-self-start py-0.5 px-2 text-xs"
-            onClick={() => update({ logBars: !state.logBars })}
-            title="Log scale keeps tiny probabilities visible"
-          >
-            {state.logBars ? "log bars" : "linear bars"}
-          </button>
-          <label className="col-span-2 inline-flex items-center gap-1.5">
-            <span className="text-muted">Top-K</span>
+          <label className="flex items-center gap-2">
+            <span className="w-20 text-muted">Top-K</span>
             <input
               type="number"
               min={1}
               max={20}
-              className="input w-14 py-0.5 px-1.5 text-xs tabular-nums"
+              className="input input-num py-0.5 px-1.5 text-xs tabular-nums"
               value={state.topK}
               onChange={(e) => update({ topK: Math.min(Math.max(Number(e.target.value) || 1, 1), 20) })}
               aria-label="Entries per top-K list"
               title="Applies to the next run; max 20"
             />
             <span className="text-muted">next run</span>
+          </label>
+          <label className="flex items-center gap-2">
+            <span className="w-20 text-muted">Bars</span>
+            <button
+              type="button"
+              className="btn py-0.5 px-2 text-xs"
+              onClick={() => update({ logBars: !state.logBars })}
+              title="Log scale keeps tiny probabilities visible"
+            >
+              {state.logBars ? "log" : "linear"}
+            </button>
           </label>
         </div>
       </div>
