@@ -3,6 +3,11 @@
 Each preset is a Pydantic model (the way the original notebook defined them)
 plus a prompt. The JSON schema is derived from the model, so what the UI shows
 is exactly what `outlines` compiles.
+
+`model_source` is the same model as pasteable source, so the UI can open in
+Pydantic mode. `tests/test_pydantic_schema.py` asserts that running it back
+through `pydantic_schema.from_pydantic` reproduces `schema` exactly, which is
+what keeps the two from drifting.
 """
 
 from __future__ import annotations
@@ -58,12 +63,59 @@ class TreeNode(BaseModel):
 TreeNode.model_rebuild()
 
 
+FORBID = '    model_config = ConfigDict(extra="forbid")'
+
+PERSON_SOURCE = f"""from pydantic import BaseModel, ConfigDict, Field
+
+
+class Person(BaseModel):
+{FORBID}
+
+    name: str = Field(max_length=24)
+    age: int
+    city: str = Field(max_length=24)
+"""
+
+INVOICE_SOURCE = f"""from pydantic import BaseModel, ConfigDict, Field
+
+
+class LineItem(BaseModel):
+{FORBID}
+
+    sku: str = Field(max_length=12)
+    qty: int
+    unit_price: float
+
+
+class Invoice(BaseModel):
+{FORBID}
+
+    invoice_id: str = Field(max_length=12)
+    customer: str = Field(max_length=24)
+    items: list[LineItem]
+    paid: bool
+"""
+
+TREE_SOURCE = f'''from pydantic import BaseModel, ConfigDict
+
+
+class TreeNode(BaseModel):
+    """A recursive schema: every node holds a list of nodes."""
+
+{FORBID}
+
+    value: int
+    children: list["TreeNode"]
+'''
+
+
 PRESETS: dict[str, dict[str, Any]] = {
     "person": {
         "id": "person",
         "name": "Person (flat)",
         "description": "Three scalar fields. Compiles to a plain regex and a small finite-state machine.",
         "schema": Person.model_json_schema(),
+        "model_source": PERSON_SOURCE,
         "prompt": "Extract the person from this text as JSON: "
         "Ada Lovelace, 36, lives in London and writes about analytical engines.",
     },
@@ -72,6 +124,7 @@ PRESETS: dict[str, dict[str, Any]] = {
         "name": "Invoice (nested)",
         "description": "An object with an array of objects inside. Still finite: the FSM just gets bigger.",
         "schema": Invoice.model_json_schema(),
+        "model_source": INVOICE_SOURCE,
         "prompt": "Turn this order into an invoice JSON: "
         "customer Grace Hopper bought 2 units of SKU COB-1 at 12.5 each and 1 unit of SKU LSP-9 at 99.0; the invoice is unpaid.",
     },
@@ -80,6 +133,7 @@ PRESETS: dict[str, dict[str, Any]] = {
         "name": "Tree (recursive)",
         "description": "The schema references itself. A regex can only unroll a few levels; a grammar can nest forever.",
         "schema": TreeNode.model_json_schema(),
+        "model_source": TREE_SOURCE,
         "prompt": "Write a small tree as JSON: the root has value 1 and two children with values 2 and 3; "
         "the node with value 2 has one child with value 4.",
     },

@@ -1,4 +1,4 @@
-import type { CompilePayload, GenerateEvent, GenerateRequest, Health, ModeRequest, Preset } from "./types";
+import type { CompilePayload, GenerateEvent, GenerateRequest, Health, ModeRequest, Preset, PydanticError, PydanticSchema } from "./types";
 
 const STORAGE_KEY = "sol.backendUrl";
 export const DEFAULT_BACKEND_URL = (process.env.NEXT_PUBLIC_BACKEND_URL ?? "").replace(/\/+$/, "");
@@ -61,6 +61,32 @@ export async function compileSchema(base: string, schema: Record<string, unknown
     throw new Error(detail || `/compile returned ${res.status}`);
   }
   return (await res.json()) as CompilePayload;
+}
+
+/** Raised by `schemaFromPydantic` when the converter rejects the source. */
+export class PydanticSourceError extends Error {
+  line: number | null;
+
+  constructor(detail: PydanticError) {
+    super(detail.message);
+    this.name = "PydanticSourceError";
+    this.line = detail.line;
+  }
+}
+
+/** Pydantic source -> the JSON Schema pydantic derives from it. The server parses it, never runs it. */
+export async function schemaFromPydantic(base: string, source: string, model?: string | null): Promise<PydanticSchema> {
+  const res = await fetch(`${base}/schema/from-pydantic`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ source, model: model ?? null }),
+  });
+  if (res.status === 400) {
+    const body = (await res.json().catch(() => null)) as { detail?: PydanticError } | null;
+    throw new PydanticSourceError(body?.detail ?? { message: "the source was rejected", line: null });
+  }
+  if (!res.ok) throw new Error(`/schema/from-pydantic returned ${res.status}`);
+  return (await res.json()) as PydanticSchema;
 }
 
 /**

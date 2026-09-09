@@ -24,6 +24,23 @@ export interface Preset {
   description: string;
   schema: Record<string, unknown>;
   prompt: string;
+  /** The same model as pasteable Pydantic source. Absent on older backends. */
+  model_source?: string;
+}
+
+/** POST /schema/from-pydantic: what pydantic's own model_json_schema() produced. */
+export interface PydanticSchema {
+  root: string;
+  models: string[];
+  enums: string[];
+  schema: Record<string, unknown>;
+  warnings: string[];
+}
+
+/** A rejection from the converter: the reason and, when known, the offending line. */
+export interface PydanticError {
+  message: string;
+  line: number | null;
 }
 
 export interface GraphNode {
@@ -109,7 +126,7 @@ export interface Done {
   validation_error: string | null;
   n_steps: number;
   elapsed_s: number;
-  stopped_by: "eos" | "max_new_tokens";
+  stopped_by: "eos" | "max_new_tokens" | "stopped";
   tokens: { token_id: number; token: string; text: string }[];
 }
 

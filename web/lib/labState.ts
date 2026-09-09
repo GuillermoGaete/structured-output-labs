@@ -4,14 +4,21 @@ import { useCallback, useEffect, useState } from "react";
 import { FALLBACK_PRESETS } from "./presets";
 import type { ModeRequest } from "./types";
 
+/** Where the schema comes from: a pasted Pydantic model, or JSON Schema typed directly. */
+export type SourceKind = "pydantic" | "schema";
+
 export interface LabState {
   presetId: string;
+  sourceKind: SourceKind;
+  /** Pydantic source; the backend derives the schema from it. */
+  pydanticText: string;
+  /** Which class in that source to compile, when it defines several. */
+  pydanticModel: string | null;
   schemaText: string;
   prompt: string;
   mode: ModeRequest;
   maxNewTokens: number;
   temperature: number;
-  seed: number | null;
   /** Decimals shown on probabilities. */
   pctDigits: number;
   /** Entries per top-K list (sent to the backend on the next run, max 20). */
@@ -24,18 +31,20 @@ const KEY = "sol.lab";
 
 const initial: LabState = {
   presetId: "person",
+  sourceKind: "pydantic",
+  pydanticText: FALLBACK_PRESETS[0].model_source ?? "",
+  pydanticModel: null,
   schemaText: JSON.stringify(FALLBACK_PRESETS[0].schema, null, 2),
   prompt: FALLBACK_PRESETS[0].prompt,
   mode: "auto",
   maxNewTokens: 120,
   temperature: 0,
-  seed: null,
   pctDigits: 1,
   topK: 8,
   logBars: false,
 };
 
-/** Schema, prompt and knobs shared by the labs and remembered per browser. */
+/** Schema, prompt and knobs, remembered per browser. */
 export function useLabState(): [LabState, (patch: Partial<LabState>) => void] {
   const [state, setState] = useState<LabState>(initial);
   const [hydrated, setHydrated] = useState(false);

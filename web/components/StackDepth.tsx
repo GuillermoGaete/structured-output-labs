@@ -35,7 +35,7 @@ export function StackDepth({ steps, current }: { steps: Step[]; current: number 
           token {Math.max(n - 1, 0)}
         </text>
       </svg>
-      <figcaption className="text-xs text-muted">Open <code>{"{"}</code> and <code>[</code> brackets at each step. A regex cannot count these; a grammar can.</figcaption>
+      <figcaption className="text-xs text-muted" title="Unclosed { and [ at each step. A regex cannot count these; a grammar can.">nesting depth</figcaption>
     </figure>
   );
 }

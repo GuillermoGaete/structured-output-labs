@@ -33,8 +33,9 @@ export function BackendStatusPill({ compact = false }: { compact?: boolean }) {
   );
 }
 
+/** Backend URL field. The status itself is the pill; failures show the raw error, not an explanation. */
 export function BackendSettings() {
-  const { url, setUrl, phase, health, lastError, refresh } = useBackend();
+  const { url, setUrl, phase, lastError, refresh } = useBackend();
   const [draft, setDraft] = useState(url);
   // Reset the draft when the stored URL changes (React's "adjust state while rendering" pattern).
   const [seenUrl, setSeenUrl] = useState(url);
@@ -43,34 +44,8 @@ export function BackendSettings() {
     setDraft(url);
   }
 
-  const explain = (() => {
-    switch (phase) {
-      case "unset":
-        return "Paste the URL of your Hugging Face Space (for example https://your-name-structured-output-labs.hf.space) or http://127.0.0.1:7860 when running docker compose locally. The labs need it for every request.";
-      case "checking":
-        return "Contacting the backend…";
-      case "waking":
-        return "The Space is up but the model is still loading. On a free CPU Space the first boot downloads the weights and takes a few minutes; a sleeping Space wakes in about a minute.";
-      case "online":
-        return `Connected. Model ${health?.model_id}${health?.load_time_s ? ` loaded in ${health.load_time_s}s` : ""}; vocabulary of ${health?.vocab_size?.toLocaleString("en-US")} tokens.`;
-      case "error":
-        return `The backend started but could not load the model: ${lastError}. Check the MODEL_ID variable in the Space settings.`;
-      case "offline":
-        return `Could not reach ${url}: ${lastError}. If the Space is asleep, opening its page in a browser wakes it up.`;
-    }
-  })();
-
   return (
-    <div className="panel p-4 flex flex-col gap-3">
-      <div className="flex items-center justify-between gap-3 flex-wrap">
-        <div className="flex flex-col gap-1">
-          <span className="eyebrow">Backend</span>
-          <BackendStatusPill />
-        </div>
-        <button className="btn" onClick={refresh} type="button">
-          Re-check
-        </button>
-      </div>
+    <div className="flex flex-col gap-2">
       <form
         className="flex gap-2 flex-wrap"
         onSubmit={(e) => {
@@ -82,15 +57,18 @@ export function BackendSettings() {
           className="input flex-1 min-w-[240px] font-mono text-[13px]"
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
-          placeholder="https://<user>-<space>.hf.space"
+          placeholder="http://127.0.0.1:7860"
           aria-label="Backend URL"
           spellCheck={false}
         />
         <button className="btn btn-primary" type="submit">
-          Use this URL
+          Use
+        </button>
+        <button className="btn" onClick={refresh} type="button">
+          Re-check
         </button>
       </form>
-      <p className="text-sm text-ink-2 max-w-prose">{explain}</p>
+      {lastError && (phase === "offline" || phase === "error") && <p className="font-mono text-xs text-critical break-all">{lastError}</p>}
     </div>
   );
 }

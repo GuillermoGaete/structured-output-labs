@@ -24,6 +24,7 @@ from sse_starlette.sse import EventSourceResponse
 
 from .engine import DEFAULT_MODEL_ID, Engine, engine_from_env
 from .presets import PRESETS
+from .pydantic_schema import MAX_SOURCE_CHARS, BadModel, from_pydantic
 
 MAX_NEW_TOKENS_CAP = int(os.environ.get("MAX_NEW_TOKENS_CAP", "200"))
 
@@ -74,6 +75,13 @@ class CompileRequest(BaseModel):
     mode: Literal["auto", "fsm", "cfg"] = "auto"
 
     model_config = {"populate_by_name": True}
+
+
+class PydanticRequest(BaseModel):
+    """A pasted Pydantic model. The source is parsed, never executed."""
+
+    source: str = Field(min_length=1, max_length=MAX_SOURCE_CHARS)
+    model: str | None = Field(default=None, max_length=200)
 
 
 class GenerateRequest(CompileRequest):
@@ -130,6 +138,20 @@ def compile_schema(req: CompileRequest) -> dict[str, Any]:
         return engine.compile(req.schema_, req.mode)
     except Exception as exc:
         raise HTTPException(status_code=400, detail=f"{type(exc).__name__}: {exc}") from exc
+
+
+@app.post("/schema/from-pydantic")
+def schema_from_pydantic(req: PydanticRequest) -> dict[str, Any]:
+    """Pydantic source -> `model_json_schema()`, the first step of the pipeline.
+
+    Nothing in `source` is executed: it is parsed with `ast`, checked against an
+    allowlist of classes, annotations and `Field()` keywords, and rebuilt with
+    `pydantic.create_model`. See `app/pydantic_schema.py`.
+    """
+    try:
+        return from_pydantic(req.source, req.model)
+    except BadModel as exc:
+        raise HTTPException(status_code=400, detail=exc.to_dict()) from exc
 
 
 @app.post("/generate")

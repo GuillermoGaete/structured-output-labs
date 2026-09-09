@@ -30,7 +30,7 @@ export function StackView({ step }: { step: Step }) {
   const closer = top === "{" ? "}" : top === "[" ? "]" : null;
   const rows = [...stack].reverse();
   return (
-    <div className="grid md:grid-cols-[180px_1fr] gap-6 items-start">
+    <div className="flex flex-col gap-2">
       <figure className="flex flex-col gap-2">
         <figcaption className="eyebrow">Parser stack · depth {stack.length}</figcaption>
         <div className="flex flex-col gap-1 min-h-[96px]">
@@ -46,26 +46,7 @@ export function StackView({ step }: { step: Step }) {
           ))}
         </div>
       </figure>
-      <div className="flex flex-col gap-2 text-sm text-ink-2 max-w-prose">
-        <p>
-          The CFG engine (llguidance) has no automaton state to report: it keeps a parser stack instead. The stack above is
-          recomputed from the text so far, which is exactly the memory a regex does not have.
-        </p>
-        <p>
-          {closer ? (
-            <>
-              Top of the stack is <code>{top}</code>, so the only closing bracket allowed next is <code>{closer}</code>; a{" "}
-              <code>{closer === "}" ? "]" : "}"}</code> gets −∞ here no matter how much the model wants it.
-            </>
-          ) : (
-            <>Nothing is open: after the top-level value closes, the only legal continuation is the end of the sequence.</>
-          )}
-        </p>
-        <p className="text-xs text-muted">
-          Depth over the whole run is the chart above. Note the grammar follows JSON Schema literally: unless the schema says{" "}
-          <code>additionalProperties: false</code>, extra keys are legal, which the regex engine never allows.
-        </p>
-      </div>
+      {closer && <span className="chip">next closer: {closer}</span>}
     </div>
   );
 }

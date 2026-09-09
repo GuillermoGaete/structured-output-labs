@@ -1,19 +1,38 @@
 # Structured Output Labs
 
-An interactive lab for **constrained decoding**: watch a small language model generate JSON while
-[outlines](https://github.com/dottxt-ai/outlines) writes `−∞` over every token the schema forbids, one step at a time.
+One screen for **constrained decoding**: paste a Pydantic model, watch a small language model fill it in, and scrub
+through every token while [outlines](https://github.com/dottxt-ai/outlines) writes `−∞` over what the schema forbids.
 
-- **Schema → Automaton** — paste a JSON Schema, see the regex outlines compiles it to and the finite-state machine behind it,
-  at character level (interegular) and at token level (the `outlines_core` index generation actually walks).
-- **Time Machine** — generate with the model and scrub through every token: the model's *original* top-K vs the *forced*
-  top-K, how much of the vocabulary survived the mask, how much probability mass was removed, the automaton state, the
-  nesting depth. Final JSON rendered with one pastel background per token.
-- **How it works** — the nine presentation figures (tokens → embeddings → transformer → logits → softmax → mask → automaton → observers → FSM vs CFG).
+The whole pipeline, left to right, on one page:
 
 ```
-web/            Next.js app (deploy to Vercel)          ── talks to ──▶  backend/   FastAPI + outlines (deploy to a Hugging Face Space)
+Pydantic model ──▶ JSON Schema ──▶ regex ──▶ token automaton ──▶ mask ──▶ the token that was sampled
+```
+
+- **Left column** — a Pydantic `BaseModel` (or JSON Schema directly), the prompt, the constraint engine, temperature.
+  The derived schema is shown next to the source: that conversion is `model_json_schema()`, done server-side.
+- **Right column** — the transport, the JSON typing itself out one pastel token at a time, and per step: the model's
+  *original* top-K against the *forced* top-K with the forbidden tokens struck through, how much of the vocabulary
+  survived, how much probability mass the mask removed, and where you are in the automaton (or in the parser stack,
+  in CFG mode).
+
+There is no explanatory copy: every string is a control label, a number, or a chip. The reasoning lives in tooltips.
+
+```
+web/            Next.js app, one route (deploy to Vercel)   ── talks to ──▶  backend/   FastAPI + outlines (deploy to a Hugging Face Space)
 presentation/   HTML/SVG slides → PNG 1920×1080 + SVG
 ```
+
+## Pydantic in, JSON Schema out
+
+`POST /schema/from-pydantic` takes pasted source and returns `model_json_schema()`. **The source is never executed.**
+It is parsed with `ast`, every class, annotation and `Field()` keyword is checked against an allowlist, and the models
+are rebuilt with `pydantic.create_model`, so `os.system(...)` is an unsupported statement rather than a shell command.
+Supported: `BaseModel` and `str`/`int` `Enum` classes, the JSON scalars, `list`/`dict`/`set`/`tuple`, `Optional`,
+unions, `Literal`, references between the classes in the same source (recursion included) and
+`ConfigDict(extra=...)`. Anything else is rejected with a message and a line number. See
+`backend/app/pydantic_schema.py` and `backend/tests/test_pydantic_schema.py`, which asserts that the three presets'
+source reproduces their schema exactly.
 
 ## How the backend instruments the model
 
@@ -60,13 +79,13 @@ Details in [`backend/README.md`](backend/README.md).
 
 1. Import this repository in Vercel and set **Root Directory** to `web`.
 2. Add the environment variable `NEXT_PUBLIC_BACKEND_URL=https://<user>-<space-name>.hf.space`.
-3. Deploy. Visitors can also paste a different backend URL inside the app (kept in their browser).
+3. Deploy. Visitors can also paste a different backend URL inside the app, behind the gear in the top bar (kept in
+   their browser).
 
 ## Presentation figures
 
 `presentation/slides/*.html` are 1920×1080 pages with one inline SVG each; `npm run build` renders them with Chromium to
-`presentation/out/` and also extracts the SVG so you can edit it. The same PNGs are copied to `web/public/figures/` for the
-"How it works" page.
+`presentation/out/` and also extracts the SVG so you can edit it. The web app no longer embeds them.
 
 ```bash
 cd presentation && npm install && npx playwright install chromium && npm run build
@@ -98,4 +117,5 @@ in a browser, `p` for presenter notes); `npm run deck:pdf` writes `presentation/
   depth shown is computed from the text (unclosed `{`/`[`).
 - Bug worth showing in the talk: at the innermost unrolled level `outlines_core` 0.2.14 drops the recursive property but keeps
   the comma before it (`\{"value": <int>, \}`), so a deep enough run in FSM mode ends in JSON the automaton accepts and a
-  parser rejects. The app warns when this happens; `auto` mode avoids it by using the grammar engine for recursive schemas.
+  parser rejects. The app shows a chip as soon as it compiles a regex with that shape; `auto` mode avoids it by using the
+  grammar engine for recursive schemas.

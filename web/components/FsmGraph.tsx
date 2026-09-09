@@ -68,8 +68,12 @@ export function FsmGraph({ automaton, currentState = null, visited = [], followC
   useEffect(() => {
     const svgEl = svgRef.current;
     if (!svgEl) return;
-    const width = svgEl.clientWidth || 800;
+    let width = svgEl.clientWidth || 800;
     const svg = d3.select(svgEl);
+    // Kept in locals so the ResizeObserver below can retarget them.
+    const centerForce = d3.forceCenter(width / 2, height / 2);
+    const xForce = d3.forceX(width / 2).strength(0.03);
+    const yForce = d3.forceY(height / 2).strength(0.03);
     svg.selectAll("*").remove();
     svg.attr("viewBox", `0 0 ${width} ${height}`);
 
@@ -106,10 +110,10 @@ export function FsmGraph({ automaton, currentState = null, visited = [], followC
           .strength(0.6),
       )
       .force("charge", d3.forceManyBody().strength(many ? -80 : -260))
-      .force("center", d3.forceCenter(width / 2, height / 2))
+      .force("center", centerForce)
       .force("collide", d3.forceCollide(many ? 14 : 24))
-      .force("x", d3.forceX(width / 2).strength(0.03))
-      .force("y", d3.forceY(height / 2).strength(0.03));
+      .force("x", xForce)
+      .force("y", yForce);
 
     const link = root
       .append("g")
@@ -281,7 +285,24 @@ export function FsmGraph({ automaton, currentState = null, visited = [], followC
       fit();
     }
 
+    let frame = 0;
+    const observer = new ResizeObserver(() => {
+      const next = svgEl.clientWidth;
+      if (!next || Math.abs(next - width) < 8) return;
+      width = next;
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        centerForce.x(width / 2);
+        xForce.x(width / 2);
+        if (!frozenRef.current) sim.alpha(0.3).restart();
+        fit();
+      });
+    });
+    observer.observe(svgEl);
+
     return () => {
+      observer.disconnect();
+      cancelAnimationFrame(frame);
       sim.stop();
       fitRef.current = null;
     };
@@ -375,8 +396,15 @@ export function FsmGraph({ automaton, currentState = null, visited = [], followC
         <span className="inline-flex items-center gap-1.5">
           <span className="inline-block w-4 h-0.5 bg-forced" /> path taken
         </span>
-        <span className="text-muted">
-          {automaton.nodes.length.toLocaleString("en-US")} of {automaton.total_states.toLocaleString("en-US")} states shown · drag nodes, scroll to zoom
+        <span
+          className={automaton.truncated ? "text-warning" : "text-muted"}
+          title={
+            automaton.truncated
+              ? "Breadth-first from the initial state; tighten the schema (maxLength) to see all of it. Drag nodes, scroll to zoom."
+              : "Drag nodes, scroll to zoom"
+          }
+        >
+          {automaton.nodes.length.toLocaleString("en-US")} / {automaton.total_states.toLocaleString("en-US")} states
         </span>
         <button
           type="button"

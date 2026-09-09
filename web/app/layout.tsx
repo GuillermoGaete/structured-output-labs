@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 import { BackendProvider } from "@/components/BackendProvider";
-import { Nav } from "@/components/Nav";
+import { Header } from "@/components/Header";
 
 const plexSans = IBM_Plex_Sans({
   variable: "--font-plex-sans",
@@ -26,11 +26,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${plexSans.variable} ${plexMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <BackendProvider>
-          <Nav />
-          <main className="flex-1 w-full max-w-6xl mx-auto px-5 py-8">{children}</main>
-          <footer className="border-t border-line py-4 text-center text-xs text-muted">
-            outlines 1.3 · transformers · Next.js — a lab for constrained decoding
-          </footer>
+          <Header />
+          <main className="flex-1 w-full max-w-[1500px] mx-auto px-5 py-6">{children}</main>
         </BackendProvider>
       </body>
     </html>

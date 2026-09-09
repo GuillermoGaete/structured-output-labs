@@ -20,8 +20,13 @@ interface Props {
  */
 export function PathStrip({ steps, index, graphIdOf, onPick }: Props) {
   const currentRef = useRef<HTMLButtonElement | null>(null);
+  const boxRef = useRef<HTMLDivElement | null>(null);
+  // scrollIntoView would scroll every ancestor, including the page, once per streamed token.
   useEffect(() => {
-    currentRef.current?.scrollIntoView({ inline: "nearest", block: "nearest", behavior: "smooth" });
+    const box = boxRef.current;
+    const chip = currentRef.current;
+    if (!box || !chip) return;
+    box.scrollTo({ left: chip.offsetLeft - box.clientWidth / 2 + chip.clientWidth / 2, behavior: "auto" });
   }, [index]);
 
   if (!steps.length) return null;
@@ -60,11 +65,11 @@ export function PathStrip({ steps, index, graphIdOf, onPick }: Props) {
     <div className="flex flex-col gap-1.5">
       <div className="flex items-baseline justify-between gap-3 flex-wrap">
         <span className="eyebrow">Path so far</span>
-        <span className="text-xs text-muted">
-          {shown.length} transition{shown.length === 1 ? "" : "s"} · {distinct} distinct state{distinct === 1 ? "" : "s"} · click a state to jump there
+        <span className="text-xs text-muted" title="Click a state to jump there">
+          {shown.length} steps · {distinct} states
         </span>
       </div>
-      <div className="flex items-center gap-1 overflow-x-auto py-1.5 px-1 -mx-1" role="list" aria-label="States visited so far">
+      <div ref={boxRef} className="flex items-center gap-1 overflow-x-auto py-1.5 px-1 -mx-1" role="list" aria-label="States visited so far">
         {shown.map((s, i) => (
           <span key={i} className="flex items-center gap-1 shrink-0" role="listitem">
             {chip(s.fsm_state, i, i === index ? "current" : "past")}

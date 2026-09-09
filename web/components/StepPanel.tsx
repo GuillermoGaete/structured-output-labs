@@ -11,6 +11,7 @@ function Bars({
   note,
   digits,
   log,
+  rows,
 }: {
   entries: TopEntry[];
   color: string;
@@ -19,12 +20,14 @@ function Bars({
   note: string;
   digits: number;
   log: boolean;
+  /** Rows to reserve, so both charts keep one height while the mask shrinks the allowed list. */
+  rows: number;
 }) {
   const rowH = 22;
   const labelW = 112;
   const width = 360;
   const barMax = width - labelW - 56;
-  const height = Math.max(entries.length, 1) * rowH + 6;
+  const height = Math.max(rows, 1) * rowH + 6;
   const max = Math.max(...entries.map((e) => e.p), 1e-9);
   const widthFor = (p: number) => {
     if (p <= 0) return 0;
@@ -50,7 +53,7 @@ function Bars({
           const masked = !e.allowed;
           const isChosen = e.token_id === chosen;
           return (
-            <g key={`${e.token_id}-${i}`}>
+            <g key={i}>
               <text
                 x={labelW - 8}
                 y={y + 14}
@@ -63,10 +66,16 @@ function Bars({
               >
                 {visibleToken(e.text).slice(0, 12)}
               </text>
-              <rect x={labelW} y={y + 4} width={w} height={rowH - 10} rx={2} fill={masked ? "var(--series-masked)" : color} opacity={masked ? 0.8 : 1} />
-              {masked && (
-                <line x1={labelW} x2={labelW + w} y1={y + 4 + (rowH - 10) / 2} y2={y + 4 + (rowH - 10) / 2} stroke="var(--surface)" strokeWidth={1.5} strokeDasharray="3 3" />
-              )}
+              <rect
+                x={labelW}
+                y={y + 4}
+                width={w}
+                height={rowH - 10}
+                rx={2}
+                fill={masked ? "var(--series-masked)" : color}
+                opacity={masked ? 0.8 : 1}
+                style={{ transition: "width 140ms ease-out" }}
+              />
               <text x={labelW + w + 6} y={y + 14} fontSize={11} fontFamily="var(--font-mono)" fill="var(--ink-2)">
                 {formatPct(e.p, digits)}
                 {masked ? " ✕" : ""}
@@ -93,6 +102,7 @@ export function StepPanel({ step, mode, digits = 1, logBars = false }: { step: S
   const original = step.top_original;
   const forced = step.top_forced;
   const share = step.n_allowed / step.vocab_size;
+  const rows = Math.max(original.length, forced.length, 1);
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-wrap gap-x-8 gap-y-3">
@@ -103,7 +113,7 @@ export function StepPanel({ step, mode, digits = 1, logBars = false }: { step: S
           value={`${formatInt(step.n_allowed)} / ${formatInt(step.vocab_size)}`}
           hint="Vocabulary entries the automaton allows at this step (finite logits after the mask)"
         />
-        <Metric label="Vocabulary kept" value={formatPct(share, Math.max(digits, 2))} />
+        <Metric label="Vocabulary kept" value={formatPct(share, Math.max(digits, 2))} hint="Allowed tokens ÷ vocabulary size" />
         <Metric
           label="Probability removed"
           value={formatPct(step.mass_removed, digits)}
@@ -116,24 +126,29 @@ export function StepPanel({ step, mode, digits = 1, logBars = false }: { step: S
         />
       </div>
 
-      {step.was_overridden ? (
-        <p className="text-sm rounded-md px-3 py-2 bg-accent-soft text-ink">
-          <strong>Overridden.</strong> The model&apos;s top choice was{" "}
-          <code className="px-1">{visibleToken(original[0]?.text ?? "")}</code> ({formatPct(original[0]?.p ?? 0, digits)}); the mask forbade it, so{" "}
-          <code className="px-1">{visibleToken(step.text) || "⟨eos⟩"}</code> was sampled instead
-          {step.p_original > 0 ? ` (it had ${formatPct(step.p_original, Math.max(digits, 2))} before masking, ${formatPct(step.p_forced, digits)} after)` : ""}.
-        </p>
-      ) : (
-        <p className="text-sm text-ink-2">
-          The model&apos;s own top choice was allowed. Before masking it had {formatPct(step.p_original, digits)}; after renormalisation {formatPct(step.p_forced, digits)}.
-        </p>
-      )}
+      <div className="flex items-center gap-2 flex-wrap">
+        {step.was_overridden ? (
+          <span className="chip chip-warning" title="The model's own argmax was forbidden by the mask, so a different token was sampled">
+            overridden · wanted {visibleToken(original[0]?.text ?? "") || "⟨eos⟩"} ({formatPct(original[0]?.p ?? 0, digits)})
+          </span>
+        ) : (
+          <span className="chip" title="The model's own top choice was allowed by the mask">
+            argmax allowed
+          </span>
+        )}
+        <span className="chip" title="Probability of the chosen token before masking, then after renormalisation">
+          {visibleToken(step.text) || "⟨eos⟩"} · {formatPct(step.p_original, Math.max(digits, 2))} → {formatPct(step.p_forced, digits)}
+        </span>
+        <span className="chip" title="Grey, struck-through bars are tokens the automaton forbids: logit −∞, probability 0">
+          <span className="inline-block h-2 w-2 rounded-sm" style={{ background: "var(--series-masked)" }} aria-hidden="true" />
+          masked
+        </span>
+      </div>
 
       <div className="grid md:grid-cols-2 gap-6">
-        <Bars entries={original} color="var(--series-original)" chosen={step.token_id} title="Original intent" note="raw logits → softmax" digits={digits} log={logBars} />
-        <Bars entries={forced} color="var(--series-forced)" chosen={step.token_id} title="Forced" note="after −∞ mask → softmax" digits={digits} log={logBars} />
+        <Bars entries={original} color="var(--series-original)" chosen={step.token_id} title="Original intent" note="raw logits → softmax" digits={digits} log={logBars} rows={rows} />
+        <Bars entries={forced} color="var(--series-forced)" chosen={step.token_id} title="Forced" note="after −∞ mask → softmax" digits={digits} log={logBars} rows={rows} />
       </div>
-      <p className="text-xs text-muted">Struck-through grey bars are tokens the automaton forbids: their logit became −∞ and their probability 0. The remaining mass is renormalised on the right.</p>
     </div>
   );
 }

@@ -1,11 +1,57 @@
 import type { Preset } from "./types";
 
+const FORBID = '    model_config = ConfigDict(extra="forbid")';
+
+const PERSON_SOURCE = `from pydantic import BaseModel, ConfigDict, Field
+
+
+class Person(BaseModel):
+${FORBID}
+
+    name: str = Field(max_length=24)
+    age: int
+    city: str = Field(max_length=24)
+`;
+
+const INVOICE_SOURCE = `from pydantic import BaseModel, ConfigDict, Field
+
+
+class LineItem(BaseModel):
+${FORBID}
+
+    sku: str = Field(max_length=12)
+    qty: int
+    unit_price: float
+
+
+class Invoice(BaseModel):
+${FORBID}
+
+    invoice_id: str = Field(max_length=12)
+    customer: str = Field(max_length=24)
+    items: list[LineItem]
+    paid: bool
+`;
+
+const TREE_SOURCE = `from pydantic import BaseModel, ConfigDict
+
+
+class TreeNode(BaseModel):
+    """A recursive schema: every node holds a list of nodes."""
+
+${FORBID}
+
+    value: int
+    children: list["TreeNode"]
+`;
+
 // Fallback copies of backend/app/presets.py so the editors have content before
 // the backend answers (or when it is asleep). The backend's /presets wins once
 // it responds.
 export const FALLBACK_PRESETS: Preset[] = [
   {
     id: "person",
+    model_source: PERSON_SOURCE,
     name: "Person (flat)",
     description: "Three scalar fields. Compiles to a plain regex and a small finite-state machine.",
     schema: {
@@ -24,6 +70,7 @@ export const FALLBACK_PRESETS: Preset[] = [
   },
   {
     id: "invoice",
+    model_source: INVOICE_SOURCE,
     name: "Invoice (nested)",
     description: "An object with an array of objects inside. Still finite: the FSM just gets bigger.",
     schema: {
@@ -56,6 +103,7 @@ export const FALLBACK_PRESETS: Preset[] = [
   },
   {
     id: "tree",
+    model_source: TREE_SOURCE,
     name: "Tree (recursive)",
     description: "The schema references itself. A regex can only unroll a few levels; a grammar can nest forever.",
     schema: {

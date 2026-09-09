@@ -7,9 +7,9 @@ backend/.toy_cache/
 
 # Node
 node_modules/
-web/.next/
+.next/
 web/out/
-web/next-env.d.ts
+next-env.d.ts
 *.tsbuildinfo
 npm-debug.log*
 

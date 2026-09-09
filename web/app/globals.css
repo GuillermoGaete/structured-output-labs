@@ -169,6 +169,36 @@ textarea.input {
   line-height: 1.45;
 }
 
+/* A compact fact: a number, a state, a warning. Replaces the sentences this app used to print. */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 7px;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  background: var(--surface);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+.chip-warning {
+  border-color: var(--warning);
+  color: var(--ink);
+}
+
+.chip-good {
+  border-color: var(--good);
+  color: var(--good);
+}
+
+.chip-critical {
+  border-color: var(--critical);
+  color: var(--critical);
+}
+
 input[type="range"] {
   accent-color: var(--accent);
   width: 100%;
