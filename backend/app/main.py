@@ -22,7 +22,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from sse_starlette.sse import EventSourceResponse
 
-from .engine import DEFAULT_MODEL_ID, Engine, engine_from_env
+from .engine import Engine
+from .registry import ModelRegistry, registry_from_env
 from .presets import PRESETS
 from .pydantic_schema import MAX_SOURCE_CHARS, BadModel, from_pydantic
 
@@ -30,33 +31,28 @@ MAX_NEW_TOKENS_CAP = int(os.environ.get("MAX_NEW_TOKENS_CAP", "200"))
 
 
 class State:
-    engine: Engine | None = None
+    registry: ModelRegistry | None = None
     error: str | None = None
-    loading: bool = True
     started_at: float = time.time()
-    loaded_at: float | None = None
     busy: bool = False
-    model_id: str = os.environ.get("MODEL_ID", DEFAULT_MODEL_ID)
 
 
 state = State()
 generation_lock = asyncio.Lock()
 
 
-def _load_engine() -> None:
+def _build_registry() -> None:
     try:
-        state.engine = engine_from_env()
-        state.model_id = state.engine.model_id
-        state.loaded_at = time.time()
+        registry = registry_from_env()
+        state.registry = registry
+        registry.start_loading(None)  # the default model; the others load on demand
     except Exception as exc:  # surfaced through /health so the UI can show it
         state.error = f"{type(exc).__name__}: {exc}"
-    finally:
-        state.loading = False
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    threading.Thread(target=_load_engine, name="model-loader", daemon=True).start()
+    threading.Thread(target=_build_registry, name="registry", daemon=True).start()
     yield
 
 
@@ -70,11 +66,17 @@ app.add_middleware(
 )
 
 
-class CompileRequest(BaseModel):
+class ModelChoice(BaseModel):
+    """Which model to use. Omitted means the default, the first of MODEL_IDS."""
+
+    model: str | None = Field(default=None, max_length=200)
+
+    model_config = {"populate_by_name": True, "protected_namespaces": ()}
+
+
+class CompileRequest(ModelChoice):
     schema_: dict[str, Any] = Field(alias="schema")
     mode: Literal["auto", "fsm", "cfg"] = "auto"
-
-    model_config = {"populate_by_name": True}
 
 
 class PydanticRequest(BaseModel):
@@ -94,12 +96,29 @@ class GenerateRequest(CompileRequest):
     use_chat_template: bool = True
 
 
-def _engine_or_503() -> Engine:
-    if state.engine is None:
+def _engine_or_503(model_id: str | None = None) -> Engine:
+    """The engine for `model_id`, or 404 if it is not on the allowlist, or 503 while it loads.
+
+    A model that is on the allowlist but not resident starts loading here, so a
+    503 plus `Retry-After` is the client's cue to poll /models and come back.
+    """
+    registry = state.registry
+    if registry is None:
         if state.error:
-            raise HTTPException(status_code=503, detail=f"model failed to load: {state.error}")
-        raise HTTPException(status_code=503, detail="model is still loading")
-    return state.engine
+            raise HTTPException(status_code=503, detail=f"the registry failed to start: {state.error}")
+        raise HTTPException(status_code=503, detail="starting up", headers={"Retry-After": "2"})
+    try:
+        resolved = registry.resolve_id(model_id)
+    except KeyError:
+        raise HTTPException(status_code=404, detail=f"{model_id!r} is not in MODEL_IDS") from None
+    engine = registry.get(resolved)
+    if engine is not None:
+        return engine
+    error = registry.error(resolved)
+    if error:
+        raise HTTPException(status_code=503, detail=f"{resolved} failed to load: {error}")
+    registry.start_loading(resolved)
+    raise HTTPException(status_code=503, detail=f"{resolved} is loading", headers={"Retry-After": "5"})
 
 
 @app.get("/")
@@ -109,21 +128,50 @@ def root() -> dict[str, Any]:
 
 @app.get("/health")
 def health() -> dict[str, Any]:
-    loaded = state.engine is not None
+    """State of the default model, kept flat for the client, plus a row per allowlisted model."""
+    registry = state.registry
+    rows = registry.status() if registry else []
+    default = next((r for r in rows if r["default"]), None)
+    loaded = bool(default and default["loaded"])
+    error = state.error or (default["error"] if default else None)
     return {
-        "status": "ok" if loaded else ("error" if state.error else "loading"),
+        "status": "ok" if loaded else ("error" if error else "loading"),
         "loaded": loaded,
-        "loading": state.loading,
-        "error": state.error,
-        "model_id": state.model_id,
-        "toy": bool(state.engine and state.engine.toy),
+        "loading": bool(default and default["loading"]) or (registry is None and not state.error),
+        "error": error,
+        "model_id": default["id"] if default else "",
+        "toy": bool(default and default["toy"]),
         "device": "cpu",
-        "vocab_size": state.engine.vocab_size if state.engine else None,
+        "vocab_size": default.get("vocab_size") if default else None,
         "busy": state.busy,
         "uptime_s": round(time.time() - state.started_at, 1),
-        "load_time_s": round(state.loaded_at - state.started_at, 1) if state.loaded_at else None,
+        "load_time_s": default.get("load_time_s") if default else None,
         "max_new_tokens_cap": MAX_NEW_TOKENS_CAP,
+        "models": rows,
+        "max_resident_models": registry.max_resident if registry else None,
     }
+
+
+@app.get("/models")
+def models() -> dict[str, Any]:
+    registry = state.registry
+    if registry is None:
+        raise HTTPException(status_code=503, detail="starting up", headers={"Retry-After": "2"})
+    return {"default": registry.default_id, "max_resident": registry.max_resident, "models": registry.status()}
+
+
+@app.post("/models/load", status_code=202)
+def load_model(req: ModelChoice) -> dict[str, Any]:
+    """Start loading a model in the background. Idempotent: 202 whether or not it was already resident."""
+    registry = state.registry
+    if registry is None:
+        raise HTTPException(status_code=503, detail="starting up", headers={"Retry-After": "2"})
+    try:
+        resolved = registry.resolve_id(req.model)
+    except KeyError:
+        raise HTTPException(status_code=404, detail=f"{req.model!r} is not in MODEL_IDS") from None
+    started = registry.start_loading(resolved)
+    return {"model": resolved, "started": started, "models": registry.status()}
 
 
 @app.get("/presets")
@@ -133,7 +181,7 @@ def presets() -> list[dict[str, Any]]:
 
 @app.post("/compile")
 def compile_schema(req: CompileRequest) -> dict[str, Any]:
-    engine = _engine_or_503()
+    engine = _engine_or_503(req.model)
     try:
         return engine.compile(req.schema_, req.mode)
     except Exception as exc:
@@ -156,7 +204,7 @@ def schema_from_pydantic(req: PydanticRequest) -> dict[str, Any]:
 
 @app.post("/generate")
 async def generate(req: GenerateRequest) -> EventSourceResponse:
-    engine = _engine_or_503()
+    engine = _engine_or_503(req.model)
     events: queue.Queue[tuple[str, Any] | None] = queue.Queue()
 
     def worker() -> None:

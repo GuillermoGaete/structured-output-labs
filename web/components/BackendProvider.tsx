@@ -1,9 +1,9 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
-import { DEFAULT_BACKEND_URL, fetchHealth, fetchPresets, normalizeUrl, readStoredBackendUrl, storeBackendUrl } from "@/lib/api";
+import { DEFAULT_BACKEND_URL, fetchHealth, fetchPresets, loadModel, normalizeUrl, readStoredBackendUrl, readStoredModel, storeBackendUrl, storeModel } from "@/lib/api";
 import { FALLBACK_PRESETS } from "@/lib/presets";
-import type { Health, Preset } from "@/lib/types";
+import type { Health, ModelStatus, Preset } from "@/lib/types";
 
 export type BackendPhase = "unset" | "checking" | "online" | "waking" | "error" | "offline";
 
@@ -16,6 +16,13 @@ interface BackendContextValue {
   presets: Preset[];
   refresh: () => void;
   ready: boolean;
+  /** The allowlist the backend serves. Empty on a backend without the registry. */
+  models: ModelStatus[];
+  /** The id chosen in the UI, or null for the backend's default. */
+  model: string | null;
+  setModel: (model: string | null) => void;
+  /** State of the chosen model, which is what the pill and the Generate button read. */
+  selected: ModelStatus | null;
 }
 
 const BackendContext = createContext<BackendContextValue | null>(null);
@@ -26,6 +33,7 @@ export function BackendProvider({ children }: { children: React.ReactNode }) {
   const [health, setHealth] = useState<Health | null>(null);
   const [lastError, setLastError] = useState<string | null>(null);
   const [presets, setPresets] = useState<Preset[]>(FALLBACK_PRESETS);
+  const [model, setModelState] = useState<string | null>(null);
   const [tick, setTick] = useState(0);
   const presetsLoadedFor = useRef<string | null>(null);
 
@@ -38,6 +46,8 @@ export function BackendProvider({ children }: { children: React.ReactNode }) {
       setUrlState(stored);
       setPhase("checking");
     }
+    const storedModel = readStoredModel();
+    if (storedModel) setModelState(storedModel);
   }, []);
 
   const setUrl = useCallback((next: string) => {
@@ -52,6 +62,20 @@ export function BackendProvider({ children }: { children: React.ReactNode }) {
 
   const refresh = useCallback(() => setTick((t) => t + 1), []);
 
+  const models = useMemo(() => health?.models ?? [], [health]);
+  const selected = useMemo(() => models.find((m) => m.id === model) ?? models.find((m) => m.default) ?? null, [models, model]);
+
+  // Picking a model asks the backend to load it; the poll below reports progress.
+  const setModel = useCallback(
+    (next: string | null) => {
+      storeModel(next);
+      setModelState(next);
+      if (next && url) loadModel(url, next).catch(() => undefined);
+      setTick((t) => t + 1);
+    },
+    [url],
+  );
+
   useEffect(() => {
     if (!url) return; // setUrl already put the phase at "unset"
     let cancelled = false;
@@ -63,6 +87,7 @@ export function BackendProvider({ children }: { children: React.ReactNode }) {
         if (cancelled) return;
         setHealth(h);
         setLastError(null);
+        const busyLoading = (h.models ?? []).some((m) => m.loading);
         if (h.loaded) {
           setPhase("online");
           if (presetsLoadedFor.current !== url) {
@@ -73,7 +98,7 @@ export function BackendProvider({ children }: { children: React.ReactNode }) {
               })
               .catch(() => undefined);
           }
-          timer = setTimeout(poll, 30000);
+          timer = setTimeout(poll, busyLoading ? 3000 : 30000);
         } else if (h.error) {
           setPhase("error");
           setLastError(h.error);
@@ -97,8 +122,22 @@ export function BackendProvider({ children }: { children: React.ReactNode }) {
   }, [url, tick]);
 
   const value = useMemo<BackendContextValue>(
-    () => ({ url, setUrl, phase, health, lastError, presets, refresh, ready: phase === "online" }),
-    [url, setUrl, phase, health, lastError, presets, refresh],
+    () => ({
+      url,
+      setUrl,
+      phase,
+      health,
+      lastError,
+      presets,
+      refresh,
+      // With a registry, "ready" means the *chosen* model is loaded, not just the default.
+      ready: phase === "online" && (selected === null || selected.loaded),
+      models,
+      model,
+      setModel,
+      selected,
+    }),
+    [url, setUrl, phase, health, lastError, presets, refresh, models, model, setModel, selected],
   );
   return <BackendContext.Provider value={value}>{children}</BackendContext.Provider>;
 }

@@ -23,6 +23,29 @@ web/            Next.js app, one route (deploy to Vercel)   ── talks to ─�
 presentation/   HTML/SVG slides → PNG 1920×1080 + SVG
 ```
 
+## Several models, one process
+
+`MODEL_IDS` is a comma-separated allowlist; the first entry is the default and loads at boot, the rest load the first
+time the app asks for them. The picker in the top bar is that list, and it remembers the choice per browser.
+
+```bash
+MODEL_IDS=Qwen/Qwen2.5-0.5B-Instruct,HuggingFaceTB/SmolLM2-360M-Instruct \
+MAX_RESIDENT_MODELS=2 TORCH_THREADS=10 docker compose up -d backend
+```
+
+- Any id `transformers` can load works; the weights download once into the `hf-cache` Docker volume. Sizes are the
+  constraint on a laptop CPU: 0.5B is comfortable, 1.5B is roughly 3× slower, above that it stops being a demo.
+- `MAX_RESIDENT_MODELS` (default 2) caps how many stay in memory; beyond it the least recently used one is evicted, so
+  switching back and forth reloads from the disk cache rather than from the network.
+- Requests carry `model`; omitting it means the default. An id outside the list is a `404`, and one that is still
+  loading is a `503` with `Retry-After` while the load runs in a background thread.
+- Changing the **list** needs a container restart, because it is an environment variable. Changing the **model** does
+  not: that is the dropdown.
+- `GET /models` reports one row per id with `loaded`, `loading`, `error`, `n_params` and the load time.
+
+Comparing models is the point: the same schema compiles to the same regex, but each tokenizer walks it differently.
+Qwen2.5 has 151,936 tokens and writes `{"name":` in four; SmolLM2 has 49,152 and needs more.
+
 ## Pydantic in, JSON Schema out
 
 `POST /schema/from-pydantic` takes pasted source and returns `model_json_schema()`. **The source is never executed.**
@@ -48,8 +71,10 @@ Steps stream to the browser as Server-Sent Events. See `backend/app/spy.py` and 
 ## Run locally (Docker for the backend, npm for the web)
 
 ```bash
-# backend — real model (downloads Qwen2.5-0.5B-Instruct once into a Docker volume)
+# backend — real models (the first download lands in a Docker volume)
 docker compose up --build
+# backend — a specific list, more CPU threads
+MODEL_IDS=Qwen/Qwen2.5-0.5B-Instruct,HuggingFaceTB/SmolLM2-360M-Instruct TORCH_THREADS=10 docker compose up -d backend
 # backend — offline toy model (no download; same pipeline, meaningless probabilities)
 TOY_MODEL=1 docker compose up --build
 # backend tests (toy model)
@@ -69,8 +94,8 @@ NEXT_PUBLIC_BACKEND_URL=http://127.0.0.1:7860 npm run dev      # http://localhos
 3. Wait for the build, then the first boot downloads the model (a few minutes). `GET /health` reports `loaded: true` when ready.
 4. Your backend URL is `https://<user>-<space-name>.hf.space`.
 
-**Change the model:** Space → Settings → Variables → `MODEL_ID` (default `Qwen/Qwen2.5-0.5B-Instruct`; the 1.5B
-`deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B` also works, about 3× slower on CPU). Restart the Space. No code changes.
+**Change the models:** Space → Settings → Variables → `MODEL_IDS` (comma-separated; the first is the default). Restart
+the Space. No code changes. A free CPU Space has 16 GB of RAM, so keep `MAX_RESIDENT_MODELS` at 2 with small models.
 
 A free Space sleeps after 48 h without traffic and wakes in about a minute on the next request; the app shows that state.
 Details in [`backend/README.md`](backend/README.md).

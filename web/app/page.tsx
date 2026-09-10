@@ -60,12 +60,13 @@ export default function LabPage() {
     setAborted(false);
     setStreaming(true);
     try {
-      compileSchema(backend.url, schema, state.mode)
+      compileSchema(backend.url, schema, state.mode, backend.model)
         .then(setCompiled)
         .catch(() => setCompiled(null));
       await generate(
         backend.url,
         {
+          model: backend.model,
           schema,
           prompt: state.prompt,
           mode: state.mode,
@@ -92,7 +93,7 @@ export default function LabPage() {
     } finally {
       if (abort.current === controller) setStreaming(false);
     }
-  }, [schema, backend.ready, backend.url, state]);
+  }, [schema, backend.ready, backend.url, backend.model, state]);
 
   const stop = useCallback(() => {
     setAborted(true);
@@ -154,6 +155,11 @@ export default function LabPage() {
             <button className="btn" type="button" onClick={stop}>
               Stop
             </button>
+          )}
+          {backend.selected && !backend.selected.loaded && (
+            <span className="chip chip-warning" title={backend.selected.error ?? undefined}>
+              {backend.selected.id.split("/").pop()} · {backend.selected.error ? "failed to load" : "loading…"}
+            </span>
           )}
           {backend.health?.busy && !streaming && <span className="chip chip-warning">backend busy · queued</span>}
           {pydantic.pending && !streaming && <span className="chip">converting…</span>}

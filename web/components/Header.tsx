@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useBackend } from "./BackendProvider";
-import { BackendSettings, BackendStatusPill } from "./BackendSettings";
+import { BackendSettings, BackendStatusPill, ModelPicker } from "./BackendSettings";
 
 /** Thin top bar: the app name, the backend state, and a disclosure for its URL. No navigation. */
 export function Header() {
@@ -16,6 +16,7 @@ export function Header() {
       <div className="mx-auto flex h-12 max-w-[1800px] items-center gap-4 px-5">
         <span className="font-semibold tracking-tight">Structured Output Labs</span>
         <div className="ml-auto flex items-center gap-3">
+          <ModelPicker />
           <BackendStatusPill compact />
           <button
             className={`btn px-2 py-1 text-xs ${shown ? "border-accent" : ""}`}

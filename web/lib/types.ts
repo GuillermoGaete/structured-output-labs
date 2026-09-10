@@ -3,6 +3,23 @@
 export type Mode = "fsm" | "cfg";
 export type ModeRequest = "auto" | Mode;
 
+/** One row of the MODEL_IDS allowlist. */
+export interface ModelStatus {
+  id: string;
+  default: boolean;
+  loaded: boolean;
+  loading: boolean;
+  warmed_up: boolean;
+  error: string | null;
+  load_time_s: number | null;
+  toy: boolean;
+  vocab_size?: number;
+  n_params?: number;
+  n_layers?: number;
+  hidden_size?: number;
+  tied_embeddings?: boolean;
+}
+
 export interface Health {
   status: "ok" | "loading" | "error";
   loaded: boolean;
@@ -16,6 +33,9 @@ export interface Health {
   uptime_s: number;
   load_time_s: number | null;
   max_new_tokens_cap: number;
+  /** One row per allowlisted model. Absent on backends without the registry. */
+  models?: ModelStatus[];
+  max_resident_models?: number | null;
 }
 
 export interface Preset {
@@ -131,6 +151,8 @@ export interface Done {
 }
 
 export interface GenerateRequest {
+  /** One of the allowlisted ids; omitted means the default. */
+  model?: string | null;
   schema: Record<string, unknown>;
   prompt: string;
   mode: ModeRequest;

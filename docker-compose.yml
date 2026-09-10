@@ -13,9 +13,13 @@ services:
     ports:
       - "7860:7860"
     environment:
-      MODEL_ID: ${MODEL_ID:-Qwen/Qwen2.5-0.5B-Instruct}
+      # Comma-separated allowlist; the first one is the default and loads at boot,
+      # the rest load the first time the app asks for them.
+      MODEL_IDS: ${MODEL_IDS:-Qwen/Qwen2.5-0.5B-Instruct,Qwen/Qwen2.5-1.5B-Instruct,HuggingFaceTB/SmolLM2-360M-Instruct}
+      MAX_RESIDENT_MODELS: ${MAX_RESIDENT_MODELS:-2}
       TOY_MODEL: ${TOY_MODEL:-0}
       TORCH_THREADS: ${TORCH_THREADS:-4}
+      WARMUP: ${WARMUP:-1}
     volumes:
       - hf-cache:/home/user/.cache/huggingface
 

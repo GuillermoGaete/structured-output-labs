@@ -22,14 +22,58 @@ const PHASE_DOT: Record<BackendPhase, string> = {
 };
 
 export function BackendStatusPill({ compact = false }: { compact?: boolean }) {
-  const { phase, health } = useBackend();
-  const label = phase === "online" && health ? (compact ? health.model_id.split("/").pop() : health.model_id) : PHASE_LABEL[phase];
+  const { phase, health, models, selected } = useBackend();
+  // With a registry the interesting state is the *chosen* model's, not the default's.
+  const dot = selected ? (selected.loaded ? "bg-good" : selected.error ? "bg-critical" : "bg-warning") : PHASE_DOT[phase];
+  const name = selected?.id ?? health?.model_id ?? "";
+  // The picker already names the model, so the pill only carries the state then.
+  const named = models.length < 2;
+  const label =
+    phase !== "online"
+      ? PHASE_LABEL[phase]
+      : selected && !selected.loaded
+        ? `${selected.error ? "failed" : "loading…"}`
+        : named
+          ? (compact ? name.split("/").pop() : name)
+          : "online";
   return (
-    <span className="inline-flex items-center gap-2 text-xs text-ink-2" title={health?.model_id ?? PHASE_LABEL[phase]}>
-      <span className={`inline-block w-2 h-2 rounded-full ${PHASE_DOT[phase]}`} aria-hidden="true" />
+    <span className="inline-flex items-center gap-2 text-xs text-ink-2" title={selected?.error ?? name ?? PHASE_LABEL[phase]}>
+      <span className={`inline-block w-2 h-2 rounded-full ${dot}`} aria-hidden="true" />
       <span className="font-mono">{label}</span>
       {health?.toy && <span className="rounded-full border border-line-2 px-1.5 py-px text-[10px] uppercase tracking-wide text-muted">toy model</span>}
     </span>
+  );
+}
+
+/** The MODEL_IDS allowlist. Picking one asks the backend to load it. */
+export function ModelPicker() {
+  const { models, model, setModel, selected } = useBackend();
+  if (models.length < 2) return null;
+  const label = (m: (typeof models)[number]) => {
+    const short = m.id.split("/").pop() ?? m.id;
+    if (m.error) return `${short} · failed`;
+    if (m.loading) return `${short} · loading…`;
+    if (!m.loaded) return `${short} · not loaded`;
+    const params = m.n_params ? ` · ${(m.n_params / 1e6).toFixed(0)}M` : "";
+    return `${short}${params}`;
+  };
+  return (
+    <label className="inline-flex items-center gap-1.5 text-xs">
+      <span className="text-muted">Model</span>
+      <select
+        className="input input-fit py-0.5 px-1.5 text-xs"
+        value={model ?? selected?.id ?? ""}
+        onChange={(e) => setModel(e.target.value)}
+        aria-label="Model"
+        title="Loads on first use; MAX_RESIDENT_MODELS evicts the least recently used"
+      >
+        {models.map((m) => (
+          <option key={m.id} value={m.id}>
+            {label(m)}
+          </option>
+        ))}
+      </select>
+    </label>
   );
 }
 

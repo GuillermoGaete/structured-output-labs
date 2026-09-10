@@ -72,6 +72,31 @@ class Engine:
             self._index_cache.popitem(last=False)
         return index
 
+    def model_info(self) -> dict[str, Any]:
+        """Shape of the loaded model, for /health and the model list."""
+        config = self.model.config
+        return {
+            "n_params": sum(p.numel() for p in self.model.parameters()),
+            "n_layers": int(getattr(config, "num_hidden_layers", 0)),
+            "hidden_size": int(getattr(config, "hidden_size", 0)),
+            "tied_embeddings": bool(getattr(config, "tie_word_embeddings", False)),
+        }
+
+    def warm_up(self) -> None:
+        """Pay the one-off costs before the first visitor.
+
+        The first llguidance call in a process spends ~1.6 s in torch.dynamo
+        before falling back, and the first outlines_core Index build walks the
+        whole vocabulary. Two two-token generations get both out of the way.
+        """
+        from .presets import PRESETS
+
+        preset = PRESETS["person"]
+        with self.lock:
+            for mode in ("fsm", "cfg"):
+                for _ in self.generate(preset["schema"], preset["prompt"], mode=mode, max_new_tokens=2):
+                    pass
+
     def token_text(self, token_id: int) -> str:
         return self.tokenizer.decode([token_id])
 

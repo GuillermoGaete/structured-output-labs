@@ -1,6 +1,7 @@
-import type { CompilePayload, GenerateEvent, GenerateRequest, Health, ModeRequest, Preset, PydanticError, PydanticSchema } from "./types";
+import type { CompilePayload, GenerateEvent, GenerateRequest, Health, ModelStatus, ModeRequest, Preset, PydanticError, PydanticSchema } from "./types";
 
 const STORAGE_KEY = "sol.backendUrl";
+const MODEL_KEY = "sol.model";
 export const DEFAULT_BACKEND_URL = (process.env.NEXT_PUBLIC_BACKEND_URL ?? "").replace(/\/+$/, "");
 
 export function readStoredBackendUrl(): string | null {
@@ -15,6 +16,23 @@ export function storeBackendUrl(url: string | null): void {
   try {
     if (url) window.localStorage.setItem(STORAGE_KEY, url);
     else window.localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    /* private mode etc. */
+  }
+}
+
+export function readStoredModel(): string | null {
+  try {
+    return window.localStorage.getItem(MODEL_KEY);
+  } catch {
+    return null;
+  }
+}
+
+export function storeModel(model: string | null): void {
+  try {
+    if (model) window.localStorage.setItem(MODEL_KEY, model);
+    else window.localStorage.removeItem(MODEL_KEY);
   } catch {
     /* private mode etc. */
   }
@@ -50,11 +68,22 @@ export async function fetchPresets(base: string): Promise<Preset[]> {
   return (await res.json()) as Preset[];
 }
 
-export async function compileSchema(base: string, schema: Record<string, unknown>, mode: ModeRequest): Promise<CompilePayload> {
+/** Start loading a model in the background. Idempotent; 202 whether or not it was resident. */
+export async function loadModel(base: string, model: string): Promise<{ model: string; started: boolean; models: ModelStatus[] }> {
+  const res = await fetch(`${base}/models/load`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ model }),
+  });
+  if (!res.ok) throw new Error(`/models/load returned ${res.status}`);
+  return (await res.json()) as { model: string; started: boolean; models: ModelStatus[] };
+}
+
+export async function compileSchema(base: string, schema: Record<string, unknown>, mode: ModeRequest, model?: string | null): Promise<CompilePayload> {
   const res = await fetch(`${base}/compile`, {
     method: "POST",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify({ schema, mode }),
+    body: JSON.stringify({ schema, mode, model: model ?? null }),
   });
   if (!res.ok) {
     const detail = await res.text();
