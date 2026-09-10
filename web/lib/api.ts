@@ -138,10 +138,17 @@ export async function schemaFromPydantic(base: string, source: string, model?: s
  * POST `path` and read the Server-Sent Events stream, one parsed event at a time.
  * `EventSource` only does GET, so the SSE framing is parsed by hand here.
  */
-async function readSse<E>(base: string, path: string, body: unknown, onEvent: (event: E) => void, signal?: AbortSignal): Promise<void> {
+async function readSse<E>(
+  base: string,
+  path: string,
+  body: unknown,
+  onEvent: (event: E) => void,
+  signal?: AbortSignal,
+  headers: Record<string, string> = {},
+): Promise<void> {
   const res = await fetch(`${base}${path}`, {
     method: "POST",
-    headers: { "content-type": "application/json", accept: "text/event-stream" },
+    headers: { "content-type": "application/json", accept: "text/event-stream", ...headers },
     body: JSON.stringify(body),
     signal,
   });
@@ -187,7 +194,19 @@ export function generate(base: string, req: GenerateRequest, onEvent: (event: Ge
   return readSse(base, "/generate", req, onEvent, signal);
 }
 
-/** The logprobs mode: no schema, no mask, raw logits and the tail per token. */
-export function streamLogprobs(base: string, req: StreamRequest, onEvent: (event: StreamEvent) => void, signal?: AbortSignal): Promise<void> {
-  return readSse(base, "/stream", req, onEvent, signal);
+/**
+ * The logprobs mode: no schema, no mask, raw logits and the tail per token.
+ *
+ * `providerKey` is only sent when the model is a hosted one. It is forwarded to
+ * the provider and never stored by the backend, so a shared deployment spends
+ * each visitor's own credit.
+ */
+export function streamLogprobs(
+  base: string,
+  req: StreamRequest,
+  onEvent: (event: StreamEvent) => void,
+  signal?: AbortSignal,
+  providerKey?: string,
+): Promise<void> {
+  return readSse(base, "/stream", req, onEvent, signal, providerKey ? { "x-provider-key": providerKey } : {});
 }

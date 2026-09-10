@@ -196,6 +196,8 @@ export interface LogitEntry {
 export interface TailHistogram {
   n: number;
   mass: number;
+  /** A provider reports only its top-k, so the rest is estimated from the residual mass. */
+  approx?: boolean;
   buckets: number;
   edges: number[];
   counts: number[];
@@ -204,6 +206,10 @@ export interface TailHistogram {
 
 export interface StreamMeta {
   model_id: string;
+  /** Set for a hosted model; absent for a local one. */
+  provider?: string;
+  /** True when the tail is a single mean-field bucket rather than a histogram. */
+  tail_approx?: boolean;
   vocab_size: number;
   prompt_token_count: number;
   prompt_rendered: string;

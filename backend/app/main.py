@@ -24,11 +24,14 @@ from sse_starlette.sse import EventSourceResponse
 
 from .engine import Engine
 from .logprobs import MAX_NEW_TOKENS_CAP as STREAM_TOKENS_CAP, MAX_TOP_K, stream as stream_logprobs
+from .providers import PROVIDERS, ProviderError, is_provider, stream as stream_provider
 from .registry import ModelRegistry, registry_from_env
 from .presets import PRESETS
 from .pydantic_schema import MAX_SOURCE_CHARS, BadModel, from_pydantic
 
 MAX_NEW_TOKENS_CAP = int(os.environ.get("MAX_NEW_TOKENS_CAP", "200"))
+# The caller's provider key travels on this header and is never stored or logged.
+PROVIDER_KEY_HEADER = "x-provider-key"
 
 
 class State:
@@ -219,6 +222,32 @@ def schema_from_pydantic(req: PydanticRequest) -> dict[str, Any]:
         raise HTTPException(status_code=400, detail=exc.to_dict()) from exc
 
 
+@app.get("/providers")
+def providers() -> dict[str, Any]:
+    """Which hosted providers this build can talk to. Keys live in the browser, not here."""
+    return {
+        "providers": [
+            {
+                "id": "openai",
+                "label": "OpenAI",
+                "key_header": PROVIDER_KEY_HEADER,
+                "models": ["gpt-4.1-mini", "gpt-4.1", "gpt-4o-mini", "gpt-4o"],
+                "note": "logprobs are reliable on the 4.x line; the 5.x models gate or reject them",
+            },
+            {
+                "id": "gemini",
+                "label": "Google Gemini",
+                "key_header": PROVIDER_KEY_HEADER,
+                "models": ["gemini-2.5-flash-lite", "gemini-2.5-flash", "gemini-2.5-pro"],
+                "note": "only the 2.5 line returns logprobs; 3.x dropped them",
+            },
+        ],
+        "excluded": [{"id": "anthropic", "label": "Anthropic", "why": "the API returns no log probabilities in any form"}],
+        "max_top_logprobs": 20,
+        "temperature_on_the_wire": 1,
+    }
+
+
 @app.post("/stream")
 async def stream_endpoint(req: StreamRequest, request: Request) -> EventSourceResponse:
     """Unconstrained generation, streaming the distribution behind every token.
@@ -227,12 +256,33 @@ async def stream_endpoint(req: StreamRequest, request: Request) -> EventSourceRe
     re-apply temperature / top-k / top-p to a recorded run without generating
     again. See `app/logprobs.py`.
     """
-    engine = _engine_or_503(req.model)
+    remote = is_provider(req.model)
+    key = request.headers.get(PROVIDER_KEY_HEADER, "") if remote else ""
+    engine = None if remote else _engine_or_503(req.model)
     events: queue.Queue[tuple[str, Any] | None] = queue.Queue()
     halt = threading.Event()
 
+    def remote_worker() -> None:
+        try:
+            for name, payload in stream_provider(
+                req.model or "",
+                prompt=req.prompt,
+                key=key,
+                max_new_tokens=req.max_new_tokens,
+                top_k_report=req.top_k_report,
+                stop=halt,
+            ):
+                events.put((name, payload))
+        except ProviderError as exc:
+            events.put(("error", {"detail": exc.message, "status": exc.status}))
+        except Exception as exc:
+            events.put(("error", {"detail": f"{type(exc).__name__}: {exc}"}))
+        finally:
+            events.put(None)
+
     def worker() -> None:
         try:
+            assert engine is not None
             with engine.lock:
                 for name, payload in stream_logprobs(
                     engine,
@@ -253,19 +303,32 @@ async def stream_endpoint(req: StreamRequest, request: Request) -> EventSourceRe
         finally:
             events.put(None)
 
+    async def pump():
+        threading.Thread(target=remote_worker if remote else worker, name="stream", daemon=True).start()
+        while True:
+            if await request.is_disconnected():
+                halt.set()
+            item = await asyncio.to_thread(events.get)
+            if item is None:
+                break
+            name, payload = item
+            yield {"event": name, "data": json.dumps(payload)}
+
     async def body():
+        if remote:
+            # Nothing runs on this CPU, so a hosted call must not queue behind the
+            # local model's lock (or hold it while the network is slow).
+            try:
+                async for event in pump():
+                    yield event
+            finally:
+                halt.set()
+            return
         async with generation_lock:
             state.busy = True
             try:
-                threading.Thread(target=worker, name="stream", daemon=True).start()
-                while True:
-                    if await request.is_disconnected():
-                        halt.set()
-                    item = await asyncio.to_thread(events.get)
-                    if item is None:
-                        break
-                    name, payload = item
-                    yield {"event": name, "data": json.dumps(payload)}
+                async for event in pump():
+                    yield event
             finally:
                 halt.set()
                 state.busy = False

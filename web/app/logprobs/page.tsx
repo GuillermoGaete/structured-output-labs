@@ -3,10 +3,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useBackend } from "@/components/BackendProvider";
 import { DistributionBars, ENTROPY_HINT } from "@/components/logprobs/DistributionBars";
+import { ProviderKeys } from "@/components/logprobs/ProviderKeys";
 import { TimeMachine } from "@/components/TimeMachine";
 import { TokenRenderer } from "@/components/TokenRenderer";
 import { streamLogprobs } from "@/lib/api";
 import { formatInt, formatPct, visibleToken } from "@/lib/tokens";
+import { PROVIDERS, providerOf, readKey } from "@/lib/providers";
 import type { StreamTrace } from "@/lib/types";
 
 const EMPTY: StreamTrace = { meta: null, steps: [], done: null, error: null };
@@ -26,6 +28,16 @@ const PRESETS = [
 
 export default function LogprobsPage() {
   const backend = useBackend();
+  // This mode picks its own model: it can reach hosted ones, which the
+  // constrained mode cannot, so the header's picker is not the right control.
+  const [model, setModel] = useState<string>("");
+  const [keys, setKeys] = useState<Record<string, string>>({});
+  const [showKeys, setShowKeys] = useState(false);
+
+  // localStorage is not readable while rendering on the server.
+  useEffect(() => {
+    setKeys(Object.fromEntries(PROVIDERS.map((p) => [p.id, readKey(p.id)])));
+  }, []);
   const [prompt, setPrompt] = useState(PRESETS[0]);
   const [maxTokens, setMaxTokens] = useState(32);
   const [seed, setSeed] = useState<number | null>(7);
@@ -46,8 +58,13 @@ export default function LogprobsPage() {
   const [follow, setFollow] = useState(true);
   const abort = useRef<AbortController | null>(null);
 
+  const chosen = model || backend.model || "";
+  const provider = providerOf(chosen);
+  const missingKey = !!provider && !keys[provider];
+
   const run = useCallback(async () => {
-    if (!backend.ready || !prompt.trim()) return;
+    if (!prompt.trim() || missingKey) return;
+    if (!provider && !backend.ready) return;
     abort.current?.abort();
     const controller = new AbortController();
     abort.current = controller;
@@ -61,7 +78,7 @@ export default function LogprobsPage() {
       await streamLogprobs(
         backend.url,
         {
-          model: backend.model,
+          model: model || backend.model,
           prompt,
           max_new_tokens: maxTokens,
           temperature,
@@ -82,13 +99,14 @@ export default function LogprobsPage() {
           });
         },
         controller.signal,
+        provider ? keys[provider] : undefined,
       );
     } catch (e) {
       if (!controller.signal.aborted) setTrace((t) => ({ ...t, error: e instanceof Error ? e.message : String(e) }));
     } finally {
       if (abort.current === controller) setStreaming(false);
     }
-  }, [backend.ready, backend.url, backend.model, prompt, maxTokens, temperature, topK, topP, seed, useTemplate, reportK]);
+  }, [backend.ready, backend.url, backend.model, model, provider, keys, missingKey, prompt, maxTokens, temperature, topK, topP, seed, useTemplate, reportK]);
 
   const stop = useCallback(() => {
     setAborted(true);
@@ -114,7 +132,9 @@ export default function LogprobsPage() {
   const drifted =
     !!ran && (ran.temperature !== temperature || ran.top_k !== topK || ran.top_p !== topP);
   const rows = trace.meta?.top_k_report ?? reportK;
-  const blocked = !backend.ready || !prompt.trim() || streaming;
+  // A hosted model only needs the backend reachable as a proxy, not a local model loaded.
+  const blocked = streaming || !prompt.trim() || missingKey || (provider ? backend.phase !== "online" : !backend.ready);
+  const remote = !!trace.meta?.provider;
 
   return (
     <div className="grid lg:grid-cols-[300px_minmax(0,1fr)] gap-6 items-start">
@@ -132,6 +152,47 @@ export default function LogprobsPage() {
         </div>
 
         {trace.error && <p className="font-mono text-xs text-critical break-all">{trace.error}</p>}
+
+        <div className="flex flex-col gap-1.5">
+          <span className="eyebrow">Model</span>
+          <select
+            className="input text-xs"
+            value={chosen}
+            onChange={(e) => setModel(e.target.value)}
+            disabled={streaming}
+            aria-label="Model"
+          >
+            <optgroup label="Local">
+              {backend.models.map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.id.split("/").pop()}
+                  {m.loaded ? "" : " · not loaded"}
+                </option>
+              ))}
+            </optgroup>
+            {PROVIDERS.map((p) => (
+              <optgroup key={p.id} label={`${p.label}${keys[p.id] ? "" : " · no key"}`}>
+                {p.models.map((m) => (
+                  <option key={`${p.id}:${m}`} value={`${p.id}:${m}`}>
+                    {m}
+                  </option>
+                ))}
+              </optgroup>
+            ))}
+          </select>
+          <div className="flex items-center gap-2 flex-wrap">
+            <button className={`btn py-0.5 px-2 text-xs ${showKeys ? "border-accent" : ""}`} type="button" onClick={() => setShowKeys((v) => !v)} aria-expanded={showKeys}>
+              API keys
+            </button>
+            {missingKey && <span className="chip chip-warning">add a key to use this model</span>}
+            {provider && !missingKey && <span className="chip">sent from this browser</span>}
+          </div>
+          {showKeys && (
+            <div className="panel p-3">
+              <ProviderKeys keys={keys} onChange={(id, key) => setKeys((k) => ({ ...k, [id]: key }))} />
+            </div>
+          )}
+        </div>
 
         <label className="flex flex-col gap-1.5">
           <span className="eyebrow">Prompt</span>
@@ -263,6 +324,11 @@ export default function LogprobsPage() {
               </span>
             )}
 
+            {remote && (
+              <span className="chip chip-warning self-start" title="A provider reports only its top-k, so everything below it is one estimated bucket. The bars are exact at temperature 1 and approximate elsewhere. Its own sampling parameters are not applied: the request always asks for temperature 1 so these numbers stay raw.">
+                hosted · tail estimated · asked at T 1
+              </span>
+            )}
             <DistributionBars step={step} view={view} rows={rows} />
           </section>
         ) : (

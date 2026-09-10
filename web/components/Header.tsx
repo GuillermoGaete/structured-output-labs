@@ -37,7 +37,9 @@ export function Header() {
           ))}
         </nav>
         <div className="ml-auto flex items-center gap-3">
-          <ModelPicker />
+          {/* The logprobs mode reaches hosted models too, so it carries its own
+              picker; two "Model" dropdowns on one screen only confuse. */}
+          {pathname !== "/logprobs" && <ModelPicker />}
           <BackendStatusPill compact />
           <button
             className={`btn px-2 py-1 text-xs ${shown ? "border-accent" : ""}`}
