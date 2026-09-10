@@ -28,16 +28,25 @@ presentation/   HTML/SVG slides → PNG 1920×1080 + SVG
 `MODEL_IDS` is a comma-separated allowlist; the first entry is the default and loads at boot, the rest load the first
 time the app asks for them. The picker in the top bar is that list, and it remembers the choice per browser.
 
-The default list is five small instruct models, all verified to load, carry a chat template and produce schema-valid
-JSON through this pipeline:
+The default list is seven small instruct models, ordered by size after the default. Every one was loaded, checked for
+a chat template and made to emit schema-valid JSON through this pipeline before it went in:
 
-| Model | Params | Vocabulary | RAM (float32) | Download |
+| Model | Params | Vocabulary | RAM (float32) | Speed (10 threads) |
 |---|---:|---:|---:|---:|
-| `Qwen/Qwen2.5-0.5B-Instruct` (default) | 494M | 151,936 | 2.0 GB | ~1.0 GB |
-| `HuggingFaceTB/SmolLM2-135M-Instruct` | 135M | 49,152 | 0.5 GB | ~0.3 GB |
-| `HuggingFaceTB/SmolLM2-360M-Instruct` | 362M | 49,152 | 1.4 GB | ~0.7 GB |
-| `LiquidAI/LFM2-350M` | 354M | 65,536 | 1.4 GB | ~0.7 GB |
-| `Qwen/Qwen3-0.6B` | 596M | 151,936 | 2.4 GB | ~1.2 GB |
+| `Qwen/Qwen2.5-0.5B-Instruct` (default) | 494M | 151,936 | 2.0 GB | 4.8 tok/s |
+| `Felladrin/Minueza-32M-UltraChat` | 33M | 32,002 | 0.1 GB | 16.8 tok/s |
+| `Felladrin/Llama-160M-Chat-v1` | 162M | 32,000 | 0.6 GB | 10.8 tok/s |
+| `HuggingFaceTB/SmolLM2-135M-Instruct` | 135M | 49,152 | 0.5 GB | 6.3 tok/s |
+| `HuggingFaceTB/SmolLM2-360M-Instruct` | 362M | 49,152 | 1.4 GB | 3.7 tok/s |
+| `LiquidAI/LFM2-350M` | 354M | 65,536 | 1.4 GB | 7.2 tok/s |
+| `Qwen/Qwen3-0.6B` | 596M | 151,936 | 2.4 GB | 2.5 tok/s |
+
+Four vocabulary widths, which is the axis that matters here: the automaton is built over the vocabulary, so the same
+schema costs a different number of steps and draws a different graph at 32,000 tokens than at 151,936.
+
+The smallest models are also the fastest, and they make the point of the whole lab better than the big ones do.
+`Minueza-32M-UltraChat` answers the Person prompt with `{ "name": "John Doe", "age": 45, "city": "},  " }` — valid
+JSON, matching the schema, and completely made up. The mask guarantees the shape; nothing guarantees the content.
 
 **Memory is the real limit, not speed.** Weights load in float32, so budget **4 bytes per parameter**, times
 `MAX_RESIDENT_MODELS` (default 2). A default Docker Desktop VM has around 8 GB, which a 1.5B model alone very nearly

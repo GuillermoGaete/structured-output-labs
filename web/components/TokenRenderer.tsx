@@ -1,4 +1,4 @@
-import { cleanBpeGlyphs, pastelFor } from "@/lib/tokens";
+import { pastelFor, tokenDisplay } from "@/lib/tokens";
 
 interface TokenLike {
   token_id: number;
@@ -24,8 +24,8 @@ export function TokenRenderer({ tokens, activeIndex, limit, onPick }: Props) {
   return (
     <div className="font-mono text-[15px] leading-[2] whitespace-pre-wrap break-all" aria-label="Generated text, coloured per token">
       {shown.map((t, i) => {
-        // The backend sends "" for EOS; anything else is decoded text (raw token as a last resort).
-        const text = t.text === "" ? "" : cleanBpeGlyphs(t.text ?? t.token);
+        // The backend sends "" both for EOS and for sentencepiece's bare "▁", which is a space.
+        const { shown: text, isEnd } = tokenDisplay(t.text, t.token);
         const active = i === activeIndex;
         return (
           <span
@@ -42,7 +42,7 @@ export function TokenRenderer({ tokens, activeIndex, limit, onPick }: Props) {
               cursor: onPick ? "pointer" : "default",
             }}
           >
-            {text === "" ? "⟨eos⟩" : text}
+            {isEnd ? "⟨eos⟩" : text}
           </span>
         );
       })}

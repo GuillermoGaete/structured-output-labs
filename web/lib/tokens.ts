@@ -1,17 +1,32 @@
 /**
  * Byte-level BPE vocabularies (GPT-2, Qwen, DeepSeek, Llama 3…) spell a leading
- * space as `Ġ`, a newline as `Ċ` and a tab as `ĉ`. The backend already sends the
- * decoded text for every token, but raw strings still show up (top-K lists,
- * graph edge labels), so the same cleanup lives here too.
+ * space as `Ġ`, a newline as `Ċ` and a tab as `ĉ`; sentencepiece ones (Llama 2,
+ * Mistral, and the tiny chat models built on them) spell it `▁`. The backend
+ * already sends the decoded text for every token, but raw strings still show up
+ * (top-K lists, graph edge labels), so the same cleanup lives here too.
  */
 export function cleanBpeGlyphs(token: string): string {
-  return token.replace(/Ġ/g, " ").replace(/Ċ/g, "\n").replace(/ĉ/g, "\t");
+  return token.replace(/Ġ/g, " ").replace(/Ċ/g, "\n").replace(/ĉ/g, "\t").replace(/▁/g, " ");
+}
+
+/**
+ * What a token should read as, from its decoded text and its raw vocabulary form.
+ *
+ * `tokenizer.decode([id])` returns "" both for the end-of-sequence marker and for
+ * sentencepiece's bare `▁`, which is only a space. Falling back to the raw form
+ * tells them apart: `▁` cleans to a space, `<|im_end|>` does not.
+ */
+export function tokenDisplay(text: string, raw?: string): { shown: string; isEnd: boolean } {
+  if (text !== "") return { shown: cleanBpeGlyphs(text), isEnd: false };
+  const cleaned = cleanBpeGlyphs(raw ?? "");
+  return { shown: cleaned, isEnd: cleaned.trim() !== "" || cleaned === "" };
 }
 
 /** A short, visible form of a token for labels: spaces and newlines get glyphs. */
-export function visibleToken(text: string): string {
-  if (text === "") return "⟨eos⟩";
-  return cleanBpeGlyphs(text).replace(/ /g, "␠").replace(/\n/g, "⏎").replace(/\t/g, "⇥");
+export function visibleToken(text: string, raw?: string): string {
+  const { shown, isEnd } = tokenDisplay(text, raw);
+  if (isEnd) return "⟨eos⟩";
+  return shown.replace(/ /g, "␠").replace(/\n/g, "⏎").replace(/\t/g, "⇥");
 }
 
 /** Pastel backgrounds for the token renderer. Text on top is always #000000. */

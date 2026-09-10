@@ -64,7 +64,7 @@ function Bars({
                 fontWeight={isChosen ? 600 : 400}
                 style={masked ? { textDecoration: "line-through" } : undefined}
               >
-                {visibleToken(e.text).slice(0, 12)}
+                {visibleToken(e.text, e.token).slice(0, 12)}
               </text>
               <rect
                 x={labelW}
@@ -107,7 +107,7 @@ export function StepPanel({ step, mode, digits = 1, logBars = false }: { step: S
     <div className="flex flex-col gap-5">
       <div className="flex flex-wrap gap-x-8 gap-y-3">
         <Metric label="Step" value={`${step.i}`} />
-        <Metric label="Chosen token" value={visibleToken(step.text) || "⟨eos⟩"} hint={`token id ${step.token_id} · raw ${JSON.stringify(step.token)}`} />
+        <Metric label="Chosen token" value={visibleToken(step.text, step.token)} hint={`token id ${step.token_id} · raw ${JSON.stringify(step.token)}`} />
         <Metric
           label="Allowed tokens"
           value={`${formatInt(step.n_allowed)} / ${formatInt(step.vocab_size)}`}
@@ -129,7 +129,7 @@ export function StepPanel({ step, mode, digits = 1, logBars = false }: { step: S
       <div className="flex items-center gap-2 flex-wrap">
         {step.was_overridden ? (
           <span className="chip chip-warning" title="The model's own argmax was forbidden by the mask, so a different token was sampled">
-            overridden · wanted {visibleToken(original[0]?.text ?? "") || "⟨eos⟩"} ({formatPct(original[0]?.p ?? 0, digits)})
+            overridden · wanted {visibleToken(original[0]?.text ?? "", original[0]?.token)} ({formatPct(original[0]?.p ?? 0, digits)})
           </span>
         ) : (
           <span className="chip" title="The model's own top choice was allowed by the mask">
@@ -137,7 +137,7 @@ export function StepPanel({ step, mode, digits = 1, logBars = false }: { step: S
           </span>
         )}
         <span className="chip" title="Probability of the chosen token before masking, then after renormalisation">
-          {visibleToken(step.text) || "⟨eos⟩"} · {formatPct(step.p_original, Math.max(digits, 2))} → {formatPct(step.p_forced, digits)}
+          {visibleToken(step.text, step.token)} · {formatPct(step.p_original, Math.max(digits, 2))} → {formatPct(step.p_forced, digits)}
         </span>
         <span className="chip" title="Grey, struck-through bars are tokens the automaton forbids: logit −∞, probability 0">
           <span className="inline-block h-2 w-2 rounded-sm" style={{ background: "var(--series-masked)" }} aria-hidden="true" />
