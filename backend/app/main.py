@@ -17,12 +17,13 @@ import time
 from contextlib import asynccontextmanager
 from typing import Any, Literal
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from sse_starlette.sse import EventSourceResponse
 
 from .engine import Engine
+from .logprobs import MAX_NEW_TOKENS_CAP as STREAM_TOKENS_CAP, MAX_TOP_K, stream as stream_logprobs
 from .registry import ModelRegistry, registry_from_env
 from .presets import PRESETS
 from .pydantic_schema import MAX_SOURCE_CHARS, BadModel, from_pydantic
@@ -77,6 +78,20 @@ class ModelChoice(BaseModel):
 class CompileRequest(ModelChoice):
     schema_: dict[str, Any] = Field(alias="schema")
     mode: Literal["auto", "fsm", "cfg"] = "auto"
+
+
+class StreamRequest(ModelChoice):
+    """The logprobs mode: no schema, no mask, just the distribution per token."""
+
+    prompt: str = Field(min_length=1, max_length=4000)
+    max_new_tokens: int = Field(default=48, ge=1, le=STREAM_TOKENS_CAP)
+    temperature: float = Field(default=0.8, ge=0.0, le=2.0)
+    top_k: int = Field(default=0, ge=0, le=1000)
+    top_p: float = Field(default=1.0, ge=0.0, le=1.0)
+    seed: int | None = None
+    use_chat_template: bool = True
+    top_k_report: int = Field(default=12, ge=1, le=MAX_TOP_K)
+    tail_bins: int = Field(default=48, ge=0, le=256)
 
 
 class PydanticRequest(BaseModel):
@@ -202,6 +217,60 @@ def schema_from_pydantic(req: PydanticRequest) -> dict[str, Any]:
         return from_pydantic(req.source, req.model)
     except BadModel as exc:
         raise HTTPException(status_code=400, detail=exc.to_dict()) from exc
+
+
+@app.post("/stream")
+async def stream_endpoint(req: StreamRequest, request: Request) -> EventSourceResponse:
+    """Unconstrained generation, streaming the distribution behind every token.
+
+    Steps carry raw logits plus a histogram of the tail, so the browser can
+    re-apply temperature / top-k / top-p to a recorded run without generating
+    again. See `app/logprobs.py`.
+    """
+    engine = _engine_or_503(req.model)
+    events: queue.Queue[tuple[str, Any] | None] = queue.Queue()
+    halt = threading.Event()
+
+    def worker() -> None:
+        try:
+            with engine.lock:
+                for name, payload in stream_logprobs(
+                    engine,
+                    prompt=req.prompt,
+                    max_new_tokens=req.max_new_tokens,
+                    temperature=req.temperature,
+                    top_k=req.top_k,
+                    top_p=req.top_p,
+                    seed=req.seed,
+                    use_chat_template=req.use_chat_template,
+                    top_k_report=req.top_k_report,
+                    tail_bins=req.tail_bins,
+                    stop=halt,
+                ):
+                    events.put((name, payload))
+        except Exception as exc:
+            events.put(("error", {"detail": f"{type(exc).__name__}: {exc}"}))
+        finally:
+            events.put(None)
+
+    async def body():
+        async with generation_lock:
+            state.busy = True
+            try:
+                threading.Thread(target=worker, name="stream", daemon=True).start()
+                while True:
+                    if await request.is_disconnected():
+                        halt.set()
+                    item = await asyncio.to_thread(events.get)
+                    if item is None:
+                        break
+                    name, payload = item
+                    yield {"event": name, "data": json.dumps(payload)}
+            finally:
+                halt.set()
+                state.busy = False
+
+    return EventSourceResponse(body(), ping=15)
 
 
 @app.post("/generate")

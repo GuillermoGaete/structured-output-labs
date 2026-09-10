@@ -1,4 +1,16 @@
-import type { CompilePayload, GenerateEvent, GenerateRequest, Health, ModelStatus, ModeRequest, Preset, PydanticError, PydanticSchema } from "./types";
+import type {
+  CompilePayload,
+  GenerateEvent,
+  GenerateRequest,
+  Health,
+  ModelStatus,
+  ModeRequest,
+  Preset,
+  PydanticError,
+  PydanticSchema,
+  StreamEvent,
+  StreamRequest,
+} from "./types";
 
 const STORAGE_KEY = "sol.backendUrl";
 const MODEL_KEY = "sol.model";
@@ -122,21 +134,20 @@ export async function schemaFromPydantic(base: string, source: string, model?: s
  * POST /generate and read the Server-Sent Events stream.
  * EventSource only does GET, so the SSE framing is parsed by hand here.
  */
-export async function generate(
-  base: string,
-  req: GenerateRequest,
-  onEvent: (event: GenerateEvent) => void,
-  signal?: AbortSignal,
-): Promise<void> {
-  const res = await fetch(`${base}/generate`, {
+/**
+ * POST `path` and read the Server-Sent Events stream, one parsed event at a time.
+ * `EventSource` only does GET, so the SSE framing is parsed by hand here.
+ */
+async function readSse<E>(base: string, path: string, body: unknown, onEvent: (event: E) => void, signal?: AbortSignal): Promise<void> {
+  const res = await fetch(`${base}${path}`, {
     method: "POST",
     headers: { "content-type": "application/json", accept: "text/event-stream" },
-    body: JSON.stringify(req),
+    body: JSON.stringify(body),
     signal,
   });
   if (!res.ok || !res.body) {
     const detail = await res.text().catch(() => "");
-    throw new Error(detail || `/generate returned ${res.status}`);
+    throw new Error(detail || `${path} returned ${res.status}`);
   }
   const reader = res.body.getReader();
   const decoder = new TextDecoder();
@@ -151,7 +162,7 @@ export async function generate(
     }
     if (!dataLines.length) return;
     try {
-      onEvent({ event, data: JSON.parse(dataLines.join("\n")) } as GenerateEvent);
+      onEvent({ event, data: JSON.parse(dataLines.join("\n")) } as E);
     } catch {
       /* ignore malformed block */
     }
@@ -169,4 +180,14 @@ export async function generate(
     }
   }
   if (buffer.trim()) dispatch(buffer);
+}
+
+/** Constrained generation: schema, mask, per-step top-K before and after. */
+export function generate(base: string, req: GenerateRequest, onEvent: (event: GenerateEvent) => void, signal?: AbortSignal): Promise<void> {
+  return readSse(base, "/generate", req, onEvent, signal);
+}
+
+/** The logprobs mode: no schema, no mask, raw logits and the tail per token. */
+export function streamLogprobs(base: string, req: StreamRequest, onEvent: (event: StreamEvent) => void, signal?: AbortSignal): Promise<void> {
+  return readSse(base, "/stream", req, onEvent, signal);
 }

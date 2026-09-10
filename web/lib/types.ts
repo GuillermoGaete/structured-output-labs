@@ -176,3 +176,91 @@ export interface Trace {
   done: Done | null;
   error: string | null;
 }
+
+
+// ---------------------------------------------------------------- logprobs mode
+// POST /stream. No schema, no mask: the distribution behind every token.
+
+export interface LogitEntry {
+  rank: number;
+  token_id: number;
+  token: string;
+  text: string;
+  /** Raw logit, before any temperature. This is what lets the browser redraw the bars. */
+  logit: number;
+  /** softmax over the whole vocabulary at T = 1, for reference. */
+  p: number;
+}
+
+/** Histogram, in logit space, of everything below the reported top-k. */
+export interface TailHistogram {
+  n: number;
+  mass: number;
+  buckets: number;
+  edges: number[];
+  counts: number[];
+  logit_mean: number[];
+}
+
+export interface StreamMeta {
+  model_id: string;
+  vocab_size: number;
+  prompt_token_count: number;
+  prompt_rendered: string;
+  max_new_tokens: number;
+  sampling: { temperature: number; top_k: number; top_p: number; seed: number | null };
+  top_k_report: number;
+  tail_bins: number;
+  use_chat_template: boolean;
+}
+
+export interface StreamStep {
+  i: number;
+  token_id: number;
+  token: string;
+  text: string;
+  partial_text: string;
+  chosen_logit: number;
+  chosen_p: number;
+  chosen_rank: number | null;
+  logsumexp: number;
+  entropy_bits: number;
+  top: LogitEntry[];
+  tail: TailHistogram;
+  dt_ms: number;
+  forward_ms: number;
+}
+
+export interface StreamDone {
+  text: string;
+  n_steps: number;
+  stop_reason: "eos" | "max_new_tokens" | "stopped";
+  elapsed_s: number;
+  tokens_per_s: number;
+}
+
+export interface StreamRequest {
+  model?: string | null;
+  prompt: string;
+  max_new_tokens: number;
+  temperature: number;
+  top_k: number;
+  top_p: number;
+  seed: number | null;
+  use_chat_template: boolean;
+  top_k_report: number;
+  tail_bins: number;
+}
+
+export type StreamEvent =
+  | { event: "meta"; data: StreamMeta }
+  | { event: "step"; data: StreamStep }
+  | { event: "done"; data: StreamDone }
+  | { event: "error"; data: { detail: string } };
+
+export interface StreamTrace {
+  meta: StreamMeta | null;
+  steps: StreamStep[];
+  done: StreamDone | null;
+  error: string | null;
+}
