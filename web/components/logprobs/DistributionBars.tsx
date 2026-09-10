@@ -1,8 +1,15 @@
 "use client";
 
+import { useState } from "react";
 import { softmaxView, type SoftmaxOptions } from "@/lib/math";
 import { formatInt, formatPct, visibleToken } from "@/lib/tokens";
 import type { StreamStep } from "@/lib/types";
+
+/** Hover help. The lab shows no explanatory prose, so the reasoning lives in tooltips. */
+export const ENTROPY_HINT =
+  "Entropy: how undecided the model is at this step. 0 bits means one option and no doubt. Every extra bit doubles the number of equally likely options, so 1 bit is a coin flip, 3 bits is about 8 options, 10 bits is about 1000.";
+export const CHOICES_HINT =
+  "2 to the power of the entropy: the number of equally likely options this distribution is worth. A sharp distribution with one clear favourite lands near 1; a flat one lands near the size of the vocabulary.";
 
 const ROW = 26;
 const LABEL_W = 132;
@@ -29,6 +36,7 @@ export function DistributionBars({
   /** Rows to reserve so the panel keeps one height across steps. */
   rows: number;
 }) {
+  const [help, setHelp] = useState(false);
   const projected = softmaxView(step.top, step.tail, view);
   const height = (rows + 1) * ROW + 8;
   const max = Math.max(...projected.p, projected.tailMass, 1e-9);
@@ -39,15 +47,34 @@ export function DistributionBars({
       <figcaption className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
         <span className="text-sm font-medium">What the sampler sees</span>
         <span className="flex flex-wrap items-center gap-2">
-          <span className="chip" title="Entropy of the projected distribution">
+          <span className="chip" title={ENTROPY_HINT}>
             {projected.entropyBits.toFixed(2)} bits
           </span>
-          <span className="chip" title="2^entropy: how many equally likely options this is worth">
+          <span className="chip" title={CHOICES_HINT}>
             ≈ {projected.effectiveChoices.toFixed(1)} choices
           </span>
           {projected.greedy && <span className="chip chip-warning">greedy · one option</span>}
+          <button
+            type="button"
+            className={`chip ${help ? "border-accent" : ""}`}
+            onClick={() => setHelp((v) => !v)}
+            aria-expanded={help}
+            aria-label="What entropy means"
+            title="What these two numbers mean"
+          >
+            ?
+          </button>
         </span>
       </figcaption>
+
+      {help && (
+        <p className="panel p-3 text-xs leading-relaxed text-ink-2">
+          <b>Entropy</b> measures how undecided the model is here. Zero bits is one option and no doubt. Every extra bit
+          doubles the number of equally likely options, so 1 bit is a coin flip, 3 bits about 8 options, 10 bits about a
+          thousand. <b>Choices</b> is that same number read out directly: two raised to the entropy. Raising the
+          temperature flattens the bars and pushes both numbers up; top-k and top-p cut options away and pull them down.
+        </p>
+      )}
 
       <svg viewBox={`0 0 ${WIDTH} ${height}`} className="h-auto w-full" role="img" aria-label="Next-token distribution">
         {step.top.map((entry, i) => {

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useBackend } from "@/components/BackendProvider";
-import { DistributionBars } from "@/components/logprobs/DistributionBars";
+import { DistributionBars, ENTROPY_HINT } from "@/components/logprobs/DistributionBars";
 import { TimeMachine } from "@/components/TimeMachine";
 import { TokenRenderer } from "@/components/TokenRenderer";
 import { streamLogprobs } from "@/lib/api";
@@ -247,7 +247,11 @@ export default function LogprobsPage() {
               <Metric label="Token" value={visibleToken(step.text, step.token)} hint={`id ${step.token_id}`} />
               <Metric label="Rank" value={step.chosen_rank === null ? "in the tail" : `#${step.chosen_rank + 1}`} hint="Where the sampled token sat in the model's own ranking" />
               <Metric label="Its probability" value={formatPct(step.chosen_p, 2)} hint="At temperature 1, over the whole vocabulary" />
-              <Metric label="Entropy" value={`${step.entropy_bits.toFixed(2)} bits`} hint="Of the raw distribution, before any parameter" />
+              <Metric
+                label="Entropy"
+                value={`${step.entropy_bits.toFixed(2)} bits`}
+                hint={`${ENTROPY_HINT} This one is the raw distribution, before any parameter; the bars below react to the sliders.`}
+              />
               <Metric label="Forward" value={`${step.forward_ms.toFixed(0)} ms`} />
             </div>
 
