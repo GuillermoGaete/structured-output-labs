@@ -132,12 +132,14 @@ def health() -> dict[str, Any]:
     registry = state.registry
     rows = registry.status() if registry else []
     default = next((r for r in rows if r["default"]), None)
-    loaded = bool(default and default["loaded"])
+    # `loaded` means the service can serve, not that the default model happens to
+    # be resident: MAX_RESIDENT_MODELS can evict it while another model answers.
+    loaded = any(r["loaded"] for r in rows)
     error = state.error or (default["error"] if default else None)
     return {
         "status": "ok" if loaded else ("error" if error else "loading"),
         "loaded": loaded,
-        "loading": bool(default and default["loading"]) or (registry is None and not state.error),
+        "loading": not loaded and not error,
         "error": error,
         "model_id": default["id"] if default else "",
         "toy": bool(default and default["toy"]),

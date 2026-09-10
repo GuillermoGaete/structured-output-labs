@@ -28,15 +28,33 @@ presentation/   HTML/SVG slides → PNG 1920×1080 + SVG
 `MODEL_IDS` is a comma-separated allowlist; the first entry is the default and loads at boot, the rest load the first
 time the app asks for them. The picker in the top bar is that list, and it remembers the choice per browser.
 
+The default list is five small instruct models, all verified to load, carry a chat template and produce schema-valid
+JSON through this pipeline:
+
+| Model | Params | Vocabulary | RAM (float32) | Download |
+|---|---:|---:|---:|---:|
+| `Qwen/Qwen2.5-0.5B-Instruct` (default) | 494M | 151,936 | 2.0 GB | ~1.0 GB |
+| `HuggingFaceTB/SmolLM2-135M-Instruct` | 135M | 49,152 | 0.5 GB | ~0.3 GB |
+| `HuggingFaceTB/SmolLM2-360M-Instruct` | 362M | 49,152 | 1.4 GB | ~0.7 GB |
+| `LiquidAI/LFM2-350M` | 354M | 65,536 | 1.4 GB | ~0.7 GB |
+| `Qwen/Qwen3-0.6B` | 596M | 151,936 | 2.4 GB | ~1.2 GB |
+
+**Memory is the real limit, not speed.** Weights load in float32, so budget **4 bytes per parameter**, times
+`MAX_RESIDENT_MODELS` (default 2). A default Docker Desktop VM has around 8 GB, which a 1.5B model alone very nearly
+fills at 6.2 GB; asking for one next to the resident default gets the container OOM-killed, and the app then shows
+`backend unreachable`. Either raise Docker's memory, or set `MODEL_DTYPE=bfloat16` to halve the cost — at some
+precision in the probabilities this lab puts on screen, which is why float32 is the default.
+
 ```bash
-MODEL_IDS=Qwen/Qwen2.5-0.5B-Instruct,HuggingFaceTB/SmolLM2-360M-Instruct \
-MAX_RESIDENT_MODELS=2 TORCH_THREADS=10 docker compose up -d backend
+# a bigger model, at half the memory
+MODEL_IDS=Qwen/Qwen2.5-1.5B-Instruct MODEL_DTYPE=bfloat16 MAX_RESIDENT_MODELS=1 \
+TORCH_THREADS=10 docker compose up -d backend
 ```
 
-- Any id `transformers` can load works; the weights download once into the `hf-cache` Docker volume. Sizes are the
-  constraint on a laptop CPU: 0.5B is comfortable, 1.5B is roughly 3× slower, above that it stops being a demo.
-- `MAX_RESIDENT_MODELS` (default 2) caps how many stay in memory; beyond it the least recently used one is evicted, so
-  switching back and forth reloads from the disk cache rather than from the network.
+- Any id `transformers` can load works; the weights download once into the `hf-cache` Docker volume. Gated models
+  (Gemma, Llama) need a token this setup does not pass, so they fail to load.
+- `MAX_RESIDENT_MODELS` caps how many stay in memory; beyond it the least recently used one is evicted, so switching
+  back and forth reloads from the disk cache rather than from the network.
 - Requests carry `model`; omitting it means the default. An id outside the list is a `404`, and one that is still
   loading is a `503` with `Retry-After` while the load runs in a background thread.
 - Changing the **list** needs a container restart, because it is an environment variable. Changing the **model** does
@@ -44,7 +62,8 @@ MAX_RESIDENT_MODELS=2 TORCH_THREADS=10 docker compose up -d backend
 - `GET /models` reports one row per id with `loaded`, `loading`, `error`, `n_params` and the load time.
 
 Comparing models is the point: the same schema compiles to the same regex, but each tokenizer walks it differently.
-Qwen2.5 has 151,936 tokens and writes `{"name":` in four; SmolLM2 has 49,152 and needs more.
+Qwen2.5 has 151,936 tokens, SmolLM2 has 49,152, so the same JSON costs a different number of steps and the automaton
+is a different size.
 
 ## Pydantic in, JSON Schema out
 
@@ -118,8 +137,9 @@ docker compose run --rm backend-test
 cd web && npx tsc --noEmit && npm run lint && npm run build
 ```
 
-Environment variables, all optional: `MODEL_IDS` (comma-separated allowlist, default Qwen2.5-0.5B plus two others),
-`MAX_RESIDENT_MODELS` (2), `TORCH_THREADS` (4), `TOY_MODEL` (0), `WARMUP` (1), `MAX_NEW_TOKENS_CAP` (200).
+Environment variables, all optional: `MODEL_IDS` (comma-separated allowlist), `MAX_RESIDENT_MODELS` (2),
+`MODEL_DTYPE` (float32; bfloat16 or float16 halve the memory), `TORCH_THREADS` (4), `TOY_MODEL` (0), `WARMUP` (1),
+`MAX_NEW_TOKENS_CAP` (200).
 
 ## Deploy
 

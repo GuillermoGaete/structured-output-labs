@@ -27,6 +27,14 @@ TOY_MODEL_ID = "toy/qwen2-random-64d"
 SYSTEM_PROMPT = "You are a JSON generator. Reply with a single JSON object and nothing else."
 
 
+# float32 costs 4 bytes per parameter, which is the real limit on a laptop: a
+# 1.5B model needs ~6 GB of RAM before anything else. `MODEL_DTYPE=bfloat16`
+# halves that, at the cost of a little precision in the probabilities this lab
+# puts on screen, so float32 stays the default.
+DTYPES = {"float32": torch.float32, "bfloat16": torch.bfloat16, "float16": torch.float16}
+DTYPE = DTYPES[os.environ.get("MODEL_DTYPE", "float32").lower()]
+
+
 class Engine:
     def __init__(self, model_id: str = DEFAULT_MODEL_ID, toy: bool = False) -> None:
         self.toy = toy
@@ -39,7 +47,7 @@ class Engine:
         else:
             self.model_id = model_id
             self.tokenizer = AutoTokenizer.from_pretrained(model_id)
-            self.model = AutoModelForCausalLM.from_pretrained(model_id, dtype=torch.float32)
+            self.model = AutoModelForCausalLM.from_pretrained(model_id, dtype=DTYPE)
             self.model.eval()
         self.device = "cpu"
         # outlines' wrapper is what the backends know how to read a vocabulary from.

@@ -92,8 +92,24 @@ class ModelRegistry:
             raise RuntimeError(self._errors.get(resolved, f"{resolved} did not load"))
         return engine
 
+    def _evict_to(self, keep: int) -> None:
+        """Drop least-recently-used engines until at most `keep` remain."""
+        evicted: list[Engine] = []
+        with self._lock:
+            while len(self._engines) > max(keep, 0):
+                victim_id, victim = self._engines.popitem(last=False)
+                self._warmed.discard(victim_id)
+                evicted.append(victim)
+        if evicted:
+            del evicted
+            gc.collect()
+
     def _load(self, resolved: str) -> None:
         started = time.time()
+        # Make room *before* allocating: building the new Engine while `max_resident`
+        # are still held peaks at one model too many, which is what gets a
+        # memory-tight container OOM-killed mid-download.
+        self._evict_to(self.max_resident - 1)
         try:
             engine = Engine(model_id=resolved, toy=self.toy)
         except Exception as exc:
@@ -101,17 +117,12 @@ class ModelRegistry:
                 self._errors[resolved] = f"{type(exc).__name__}: {exc}"
                 self._loading.pop(resolved, None)
             return
-        evicted: list[Engine] = []
         with self._lock:
             self._engines[resolved] = engine
             self._engines.move_to_end(resolved)
             self._load_times[resolved] = time.time() - started
-            while len(self._engines) > self.max_resident:
-                victim_id, victim = self._engines.popitem(last=False)
-                self._warmed.discard(victim_id)
-                evicted.append(victim)
             self._loading.pop(resolved, None)
-        del evicted  # drop the references before the warm-up so the memory is actually free
+        self._evict_to(self.max_resident)
         gc.collect()
         if self.warm_up and not self.toy:
             try:

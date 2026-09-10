@@ -14,9 +14,12 @@ services:
       - "7860:7860"
     environment:
       # Comma-separated allowlist; the first one is the default and loads at boot,
-      # the rest load the first time the app asks for them.
-      MODEL_IDS: ${MODEL_IDS:-Qwen/Qwen2.5-0.5B-Instruct,Qwen/Qwen2.5-1.5B-Instruct,HuggingFaceTB/SmolLM2-360M-Instruct}
+      # the rest load the first time the app asks for them. All five are small
+      # enough to sit two-at-a-time in a default Docker VM: weights load in
+      # float32, so budget 4 bytes per parameter.
+      MODEL_IDS: ${MODEL_IDS:-Qwen/Qwen2.5-0.5B-Instruct,HuggingFaceTB/SmolLM2-135M-Instruct,HuggingFaceTB/SmolLM2-360M-Instruct,LiquidAI/LFM2-350M,Qwen/Qwen3-0.6B}
       MAX_RESIDENT_MODELS: ${MAX_RESIDENT_MODELS:-2}
+      MODEL_DTYPE: ${MODEL_DTYPE:-float32}
       TOY_MODEL: ${TOY_MODEL:-0}
       TORCH_THREADS: ${TORCH_THREADS:-4}
       WARMUP: ${WARMUP:-1}

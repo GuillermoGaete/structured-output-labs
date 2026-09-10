@@ -32,7 +32,9 @@ const REGEX_BUG = /,\[ \]\?\\\}/;
 export default function LabPage() {
   const backend = useBackend();
   const [state, update] = useLabState();
-  const pydantic = usePydanticSchema(state.pydanticText, state.pydanticModel, state.sourceKind === "pydantic", backend.url, backend.ready);
+  // The conversion only needs the backend to answer; it does not touch the model,
+  // so an evicted or still-loading model must not hide the derived schema.
+  const pydantic = usePydanticSchema(state.pydanticText, state.pydanticModel, state.sourceKind === "pydantic", backend.url, backend.phase === "online");
   const typed = useMemo(() => parseSchema(state.schemaText), [state.schemaText]);
   const schema = state.sourceKind === "pydantic" ? pydantic.schema : typed.schema;
 
@@ -156,11 +158,12 @@ export default function LabPage() {
               Stop
             </button>
           )}
-          {backend.selected && !backend.selected.loaded && (
+          {backend.phase === "online" && backend.selected && !backend.selected.loaded && (
             <span className="chip chip-warning" title={backend.selected.error ?? undefined}>
-              {backend.selected.id.split("/").pop()} · {backend.selected.error ? "failed to load" : "loading…"}
+              {backend.selected.id.split("/").pop()} · {backend.selected.error ? "failed to load" : backend.selected.loading ? "loading…" : "not resident"}
             </span>
           )}
+          {backend.phase === "offline" && <span className="chip chip-critical">backend unreachable</span>}
           {backend.health?.busy && !streaming && <span className="chip chip-warning">backend busy · queued</span>}
           {pydantic.pending && !streaming && <span className="chip">converting…</span>}
         </div>

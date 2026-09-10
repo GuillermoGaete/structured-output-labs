@@ -121,6 +121,21 @@ export function BackendProvider({ children }: { children: React.ReactNode }) {
     };
   }, [url, tick]);
 
+  // MAX_RESIDENT_MODELS evicts the least recently used, so the chosen model can
+  // become non-resident without anyone asking. Ask for it back, once: /health
+  // only reports `loading` on the next poll, so the ref stops a burst of POSTs.
+  const asked = useRef<string | null>(null);
+  useEffect(() => {
+    if (phase !== "online" || !selected) return;
+    if (selected.loaded || selected.loading || selected.error) {
+      if (selected.loaded) asked.current = null;
+      return;
+    }
+    if (asked.current === selected.id) return;
+    asked.current = selected.id;
+    loadModel(url, selected.id).catch(() => undefined);
+  }, [phase, selected, url]);
+
   const value = useMemo<BackendContextValue>(
     () => ({
       url,

@@ -47,10 +47,11 @@ export function BackendStatusPill({ compact = false }: { compact?: boolean }) {
 
 /** The MODEL_IDS allowlist. Picking one asks the backend to load it. */
 export function ModelPicker() {
-  const { models, model, setModel, selected } = useBackend();
+  const { models, model, setModel, selected, phase } = useBackend();
   if (models.length < 2) return null;
   const label = (m: (typeof models)[number]) => {
     const short = m.id.split("/").pop() ?? m.id;
+    if (phase !== "online") return short; // the last /health is stale; do not claim a state
     if (m.error) return `${short} · failed`;
     if (m.loading) return `${short} · loading…`;
     if (!m.loaded) return `${short} · not loaded`;
