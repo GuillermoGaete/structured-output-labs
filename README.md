@@ -68,22 +68,58 @@ Every generation step runs a `LogitsProcessorList([PreMaskObserver, <outlines pr
 
 Steps stream to the browser as Server-Sent Events. See `backend/app/spy.py` and `backend/app/engine.py`.
 
-## Run locally (Docker for the backend, npm for the web)
+## Run locally
+
+You need **Docker** (the backend runs in a container) and **Node 20+** (the web app runs on the host). The backend
+listens on `7860`, the app on `3000`.
+
+**1. Start the backend.** The first run builds the image and downloads the default model into a Docker volume, so it
+takes a few minutes; after that it is seconds.
 
 ```bash
-# backend — real models (the first download lands in a Docker volume)
-docker compose up --build
-# backend — a specific list, more CPU threads
-MODEL_IDS=Qwen/Qwen2.5-0.5B-Instruct,HuggingFaceTB/SmolLM2-360M-Instruct TORCH_THREADS=10 docker compose up -d backend
-# backend — offline toy model (no download; same pipeline, meaningless probabilities)
-TOY_MODEL=1 docker compose up --build
-# backend tests (toy model)
+TORCH_THREADS=10 docker compose up -d --build backend      # use however many cores you can spare
+```
+
+**2. Wait for the model.** `loaded` flips to `true` when it is ready to serve:
+
+```bash
+curl -s localhost:7860/health | python3 -m json.tool | head -20
+# or block until it is up:
+until curl -sf localhost:7860/health | grep -q '"loaded":true'; do sleep 3; done; echo ready
+```
+
+**3. Start the app**, in another terminal:
+
+```bash
+cd web && npm install
+NEXT_PUBLIC_BACKEND_URL=http://127.0.0.1:7860 npm run dev
+```
+
+Open <http://localhost:3000>. The dot in the top bar turns green with the model's name next to it. If it does not,
+the gear opens a field where you can paste the backend URL by hand; the app keeps it in the browser.
+
+**Stopping:** `docker compose stop backend` and `Ctrl-C` in the npm terminal. `docker compose down -v` also deletes
+the volume with the downloaded weights, so only use it if you want that.
+
+### Variants
+
+```bash
+# a different model list (see "Several models" above); the first entry is the default
+MODEL_IDS=Qwen/Qwen2.5-0.5B-Instruct,HuggingFaceTB/SmolLM2-360M-Instruct docker compose up -d backend
+
+# no download at all: a tiny randomly-initialised model. The whole pipeline runs
+# (vocabulary, automaton, mask, observers); the probabilities are meaningless.
+TOY_MODEL=1 docker compose up -d --build backend
+
+# the backend test suite, on that toy model, offline
 docker compose run --rm backend-test
 
-# web, in another terminal
-cd web && npm install
-NEXT_PUBLIC_BACKEND_URL=http://127.0.0.1:7860 npm run dev      # http://localhost:3000
+# the web app's checks
+cd web && npx tsc --noEmit && npm run lint && npm run build
 ```
+
+Environment variables, all optional: `MODEL_IDS` (comma-separated allowlist, default Qwen2.5-0.5B plus two others),
+`MAX_RESIDENT_MODELS` (2), `TORCH_THREADS` (4), `TOY_MODEL` (0), `WARMUP` (1), `MAX_NEW_TOKENS_CAP` (200).
 
 ## Deploy
 
