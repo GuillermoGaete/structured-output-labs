@@ -1,6 +1,7 @@
 // Mirrors backend/app/tracing.py and the /compile payload. Keep in sync.
 
-export type Mode = "fsm" | "cfg";
+/** "none": no mask; the prompt asks for the shape in words and only the final validation checks it. */
+export type Mode = "fsm" | "cfg" | "xgr" | "none";
 export type ModeRequest = "auto" | Mode;
 
 /** One row of the MODEL_IDS allowlist. */
@@ -33,6 +34,8 @@ export interface Health {
   uptime_s: number;
   load_time_s: number | null;
   max_new_tokens_cap: number;
+  /** The constraint engines this build can run; "xgr" only when xgrammar is installed. Absent on older backends. */
+  engines?: Mode[];
   /** One row per allowlisted model. Absent on backends without the registry. */
   models?: ModelStatus[];
   max_resident_models?: number | null;
@@ -46,6 +49,10 @@ export interface Preset {
   prompt: string;
   /** The same model as pasteable Pydantic source. Absent on older backends. */
   model_source?: string;
+  /** Catalogue heading: "Structure", "Classification & bias", "Reasoning", "Extraction", "Bias probes". */
+  group?: string;
+  /** Counterfactual variants: one attribute swapped, everything else the same. The first is `prompt`. */
+  variants?: { label: string; prompt: string }[];
 }
 
 /** POST /schema/from-pydantic: what pydantic's own model_json_schema() produced. */
@@ -89,7 +96,7 @@ export interface Automaton {
 
 export interface CompilePayload {
   mode: Mode;
-  backend: "outlines_core" | "llguidance";
+  backend: "outlines_core" | "llguidance" | "xgrammar" | "none";
   recursive: boolean;
   regex: string | null;
   regex_error: string | null;
@@ -99,6 +106,15 @@ export interface CompilePayload {
   char_fsm: Automaton | null;
   token_dfa: Automaton | null;
   token_dfa_error?: string;
+  /** CFG mode: a BNF reading of the schema, the shape llguidance compiles. Absent on older backends. */
+  grammar?: string | null;
+  grammar_rules?: number;
+  /** "schema": a BNF reading the lab derives; "engine": the text the engine itself compiled (XGrammar). */
+  grammar_source?: "schema" | "engine" | null;
+  /** FSM mode: numeric bounds outlines_core has no regex for. Small integer ranges are compiled as enums instead. */
+  fsm_ignored?: string[];
+  /** "none" mode: the sentence appended to the prompt, schema included. */
+  schema_hint?: string;
 }
 
 export interface TopEntry {
@@ -125,6 +141,12 @@ export interface Step {
   was_overridden: boolean;
   p_original: number;
   p_forced: number;
+  /** The grammar engine only: token ids it forces next, their text, and whether it would accept EOS here. */
+  ff_token_ids?: number[];
+  ff_text?: string;
+  accepting?: boolean | null;
+  /** A branch recomputed this step from its parent's prefix. */
+  replayed?: boolean;
 }
 
 export interface Meta {
@@ -137,6 +159,10 @@ export interface Meta {
   max_new_tokens: number;
   temperature: number;
   recursive: boolean;
+  /** "none" mode: the schema was appended to the prompt instead of compiled into a mask. */
+  schema_in_prompt?: boolean;
+  /** The exact text that was tokenized: system prompt, chat template and, in "none" mode, the hint. */
+  prompt_text?: string;
 }
 
 export interface Done {
@@ -162,6 +188,10 @@ export interface GenerateRequest {
   top_k_report: number;
   seed: number | null;
   use_chat_template: boolean;
+  /** A branch: replay these tokens through the mask, then continue. */
+  prefix_token_ids?: number[];
+  /** "none" mode only: the wording that asks for the shape in the prompt; `{schema}` marks where the schema goes. */
+  schema_hint?: string | null;
 }
 
 export type GenerateEvent =
@@ -235,6 +265,7 @@ export interface StreamStep {
   tail: TailHistogram;
   dt_ms: number;
   forward_ms: number;
+  replayed?: boolean;
 }
 
 export interface StreamDone {
@@ -256,6 +287,10 @@ export interface StreamRequest {
   use_chat_template: boolean;
   top_k_report: number;
   tail_bins: number;
+  /** A branch: replay these tokens, then continue. Local models only. */
+  prefix_token_ids?: number[];
+  /** Render the prompt like the constrained mode, to continue one of its runs without the mask. */
+  json_system_prompt?: boolean;
 }
 
 export type StreamEvent =

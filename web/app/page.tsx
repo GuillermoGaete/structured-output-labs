@@ -1,286 +1,325 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useBackend } from "@/components/BackendProvider";
-import { FsmGraph } from "@/components/FsmGraph";
-import { PathStrip } from "@/components/PathStrip";
-import { SchemaEditor } from "@/components/SchemaEditor";
-import { StackDepth } from "@/components/StackDepth";
-import { StackView } from "@/components/StackView";
-import { StepPanel } from "@/components/StepPanel";
-import { TimeMachine } from "@/components/TimeMachine";
-import { TokenRenderer } from "@/components/TokenRenderer";
-import { compileSchema, generate } from "@/lib/api";
-import { parseSchema, useLabState } from "@/lib/labState";
-import { formatInt, formatPct } from "@/lib/tokens";
-import type { CompilePayload, Trace } from "@/lib/types";
+import { ConstrainedViewer } from "@/components/ConstrainedViewer";
+import { LogprobsViewer } from "@/components/LogprobsViewer";
+import { BatchPanel } from "@/components/shell/BatchPanel";
+import { BatchProgress } from "@/components/shell/BatchProgress";
+import { ComparePanel } from "@/components/shell/ComparePanel";
+import { SetupColumn } from "@/components/shell/SetupColumn";
+import { EmptyState } from "@/components/shell/EmptyState";
+import { Menu } from "@/components/shell/Menu";
+import { ProbePanel } from "@/components/shell/ProbePanel";
+import { EngineSection } from "@/components/shell/EngineSection";
+import { ModelSection } from "@/components/shell/ModelSection";
+import { PromptHint } from "@/components/shell/PromptHint";
+import { RunActions } from "@/components/shell/RunActions";
+import { RunTabs } from "@/components/shell/RunTabs";
+import { SchemaSection } from "@/components/shell/SchemaSection";
+import { Section } from "@/components/shell/Section";
+import { VariantsEditor } from "@/components/shell/VariantsEditor";
+import { DEFAULT_SCHEMA_HINT, engineLabel } from "@/lib/engines";
+import { buildGenerateRequest, editorSnapshot, engineSummary, parseSchema, patchFromRun, presetPatch, probeKey, runnableVariants, useLabState } from "@/lib/labState";
+import { cancelBatch, cancelQueue, MAX_BATCH_N, queueBatches, startBatch, type BatchPlan } from "@/lib/runner";
+import { useBatchesRecord, useLocalBusy, usePinned, useRunState, useSelectedBatch, useSelectedRun } from "@/lib/runStore";
+import type { Batch, Run } from "@/lib/runTypes";
+import type { SeedNote } from "@/lib/seeds";
+import { formatInt } from "@/lib/tokens";
 import { usePydanticSchema } from "@/lib/usePydanticSchema";
-
-const EMPTY: Trace = { meta: null, steps: [], done: null, error: null };
-const GRAPH_HEIGHT = 520;
-
-const STOP_LABEL: Record<string, string> = {
-  eos: "stopped at EOS",
-  max_new_tokens: "hit the token limit",
-  stopped: "stopped early",
-};
-
-// The regex outlines_core emits for a recursive schema keeps a trailing comma
-// where the recursion was cut off, so the automaton accepts invalid JSON.
-const REGEX_BUG = /,\[ \]\?\\\}/;
+import { useViewState } from "@/lib/viewState";
 
 export default function LabPage() {
   const backend = useBackend();
   const [state, update] = useLabState();
+  const [view, updateView] = useViewState();
   // The conversion only needs the backend to answer; it does not touch the model,
   // so an evicted or still-loading model must not hide the derived schema.
   const pydantic = usePydanticSchema(state.pydanticText, state.pydanticModel, state.sourceKind === "pydantic", backend.url, backend.phase === "online");
   const typed = useMemo(() => parseSchema(state.schemaText), [state.schemaText]);
   const schema = state.sourceKind === "pydantic" ? pydantic.schema : typed.schema;
 
-  const [trace, setTrace] = useState<Trace>(EMPTY);
-  const [compiled, setCompiled] = useState<CompilePayload | null>(null);
-  const [index, setIndex] = useState(0);
-  const [playing, setPlaying] = useState(false);
-  const [streaming, setStreaming] = useState(false);
-  const [aborted, setAborted] = useState(false);
-  const [follow, setFollow] = useState(true);
-  const [showGraph, setShowGraph] = useState(true);
-  const [followCurrent, setFollowCurrent] = useState(true);
-  const abort = useRef<AbortController | null>(null);
+  const selected = useSelectedRun();
+  const selectedBatch = useSelectedBatch();
+  const batches = useBatchesRecord();
+  const pinned = usePinned();
+  const busy = useLocalBusy();
+  const running = useRunState((s) => Object.values(s.runs).find((r) => r.status === "running") ?? null);
+  const [notes, setNotes] = useState<SeedNote[]>([]);
+  const blocked = !backend.ready || !schema || busy;
+  const blockedNow = blocked;
 
-  const run = useCallback(async () => {
-    if (!schema || !backend.ready) return;
-    abort.current?.abort();
-    const controller = new AbortController();
-    abort.current = controller;
-    setTrace(EMPTY);
-    setCompiled(null);
-    setIndex(0);
-    setFollow(true);
-    setPlaying(false);
-    setAborted(false);
-    setStreaming(true);
-    try {
-      compileSchema(backend.url, schema, state.mode, backend.model)
-        .then(setCompiled)
-        .catch(() => setCompiled(null));
-      await generate(
-        backend.url,
-        {
-          model: backend.model,
-          schema,
-          prompt: state.prompt,
-          mode: state.mode,
-          max_new_tokens: state.maxNewTokens,
-          temperature: state.temperature,
-          top_k_sampling: 0,
-          top_k_report: Math.min(Math.max(state.topK, 1), 20),
-          seed: null,
-          use_chat_template: true,
-        },
-        (ev) => {
-          setTrace((t) => {
-            if (ev.event === "meta") return { ...t, meta: ev.data };
-            if (ev.event === "step") return { ...t, steps: [...t.steps, ev.data] };
-            if (ev.event === "done") return { ...t, done: ev.data };
-            if (ev.event === "error") return { ...t, error: ev.data.detail };
-            return t;
-          });
-        },
-        controller.signal,
-      );
-    } catch (e) {
-      if (!controller.signal.aborted) setTrace((t) => ({ ...t, error: e instanceof Error ? e.message : String(e) }));
-    } finally {
-      if (abort.current === controller) setStreaming(false);
-    }
-  }, [schema, backend.ready, backend.url, backend.model, state]);
+  const presetName = backend.presets.find((p) => p.id === state.presetId)?.name ?? "custom";
+  const modelShort = (backend.model ?? backend.selected?.id ?? "model").split("/").pop() ?? "model";
 
-  const stop = useCallback(() => {
-    setAborted(true);
-    abort.current?.abort();
-  }, []);
-
-  useEffect(() => {
-    if (follow && trace.steps.length) setIndex(trace.steps.length - 1);
-  }, [trace.steps.length, follow]);
-
-  const onIndex = useCallback(
-    (i: number) => {
-      setIndex(i);
-      setFollow(streaming && i >= trace.steps.length - 1);
+  // A preset card runs before the editors have re-derived their schema, so it passes its own.
+  const start = useCallback(
+    (override?: { schema?: Record<string, unknown>; prompt?: string; name?: string; n?: number }) => {
+      const useSchema = override?.schema ?? schema;
+      if (!useSchema || !backend.ready) return;
+      const started = startBatch({
+        kind: "constrained",
+        backendUrl: backend.url,
+        n: override?.n ?? 1,
+        seedPolicy: state.seedPolicy,
+        request: buildGenerateRequest(state, useSchema, backend.model, override?.prompt),
+        editor: editorSnapshot(state),
+        label: `${override?.name ?? presetName} · ${modelShort}`,
+      });
+      setNotes(started ? started.notes : [{ level: "warning", text: "a run is already in flight" }]);
     },
-    [streaming, trace.steps.length],
+    [schema, backend.ready, backend.url, backend.model, state, presetName, modelShort],
   );
 
-  const step = trace.steps[index];
-  // `compiled.mode` resolves `auto` before the first token arrives; without it a
-  // recursive schema on Auto shows the FSM section for a second and then swaps.
-  const mode = trace.meta?.mode ?? compiled?.mode ?? (state.mode === "cfg" ? "cfg" : "fsm");
-  const automaton = compiled?.token_dfa ?? null;
-  const regexBug = !!trace.meta?.recursive && trace.meta.mode === "fsm" && REGEX_BUG.test(trace.meta.regex ?? "");
-  // Guide.get_state() reports outlines_core's own state ids; the graph renumbers them in BFS order.
-  const rawToGraphId = useMemo(() => {
-    const map = new Map<number, number>();
-    automaton?.nodes.forEach((n) => {
-      if (n.raw !== undefined) map.set(n.raw, n.id);
-    });
-    return map;
-  }, [automaton]);
-  const graphIdOf = useCallback((raw: number | null) => (raw === null ? null : (rawToGraphId.get(raw) ?? null)), [rawToGraphId]);
-  const currentGraphState = step ? graphIdOf(step.fsm_state) : null;
-  // States visited up to the current step, in order, restricted to the ones the graph draws.
-  const visitedGraphStates = useMemo(() => {
-    const ids: number[] = [];
-    for (const s of trace.steps.slice(0, index + 1)) {
-      const id = graphIdOf(s.fsm_state);
-      if (id !== null) ids.push(id);
-    }
-    return ids;
-  }, [trace.steps, index, graphIdOf]);
 
-  const overridden = trace.steps.filter((s) => s.was_overridden).length;
-  // A flat schema never nests, so the depth chart would be a straight line at 1.
-  const nests = trace.steps.some((s) => s.stack_depth > 1);
-  const blocked = !backend.ready || !schema || streaming;
-  const started = streaming || !!trace.meta;
+  const stop = useCallback(() => {
+    cancelQueue();
+    if (running) cancelBatch(running.batchId);
+  }, [running]);
+
+  /**
+   * A plan for one variant, from whatever the setup holds now (schema and prompts included), so a
+   * probe can be edited before it runs. The probe key pools the batches of one edit into one table.
+   */
+  const planFor = (setup: typeof state, schemaNow: Record<string, unknown>, variant: { label: string; prompt: string } | null, n: number): BatchPlan => {
+    // From `setup`, not from the rendered state: a card launches before its preset has reached the editors.
+    const name = setup.probeName ?? backend.presets.find((p) => p.id === setup.presetId)?.name ?? "custom";
+    const list = runnableVariants(setup.variants);
+    return {
+      kind: "constrained",
+      backendUrl: backend.url,
+      n,
+      seedPolicy: setup.seedPolicy,
+      request: buildGenerateRequest(setup, schemaNow, backend.model, variant?.prompt ?? setup.prompt),
+      editor: editorSnapshot(setup),
+      label: `${name}${variant ? ` · ${variant.label}` : ""} · ${modelShort}`,
+      probe: variant && setup.probeId ? { presetId: probeKey(setup.probeId, schemaNow, list), presetName: name, variant: variant.label } : null,
+    };
+  };
+
+  /** Load a preset into the setup: schema, prompt and, for a probe, its variants. */
+  const loadPreset = (id: string) => {
+    const preset = backend.presets.find((p) => p.id === id);
+    if (!preset) return null;
+    const next = { ...state, ...presetPatch(preset, state) };
+    update(presetPatch(preset, state));
+    return { preset, next };
+  };
+
+  const pickPreset = (id: string, variant = 0) => {
+    const loaded = loadPreset(id);
+    if (!loaded || !backend.ready) return;
+    const { preset, next } = loaded;
+    const v = preset.variants?.[variant] ?? null;
+    if (v) update({ prompt: v.prompt });
+    const started = startBatch(planFor({ ...next, prompt: v?.prompt ?? next.prompt }, preset.schema, v, 1));
+    setNotes(started ? started.notes : [{ level: "warning", text: "a run is already in flight" }]);
+  };
+
+  const editPreset = (id: string) => {
+    if (!loadPreset(id)) return;
+    setNotes([{ level: "info", text: "edit the variants and the schema, then Run all variants" }]);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  /** Every variant the setup holds now, with the schema as edited. */
+  const runAllFromSetup = () => {
+    const list = runnableVariants(state.variants);
+    if (!list.length || !schema || !backend.ready) return;
+    queueBatches(list.map((v) => planFor(state, schema, v, state.repeatN)));
+    setNotes(state.temperature <= 0 ? [{ level: "warning", text: "greedy: every repetition will be identical; raise the temperature to sample" }] : [{ level: "info", text: `${list.length} variants × ${state.repeatN} queued` }]);
+  };
+
+  /** From a card: the preset as it comes, loaded and launched at once. */
+  const runAllVariants = (id: string) => {
+    const loaded = loadPreset(id);
+    if (!loaded || !backend.ready) return;
+    const { preset, next } = loaded;
+    const list = runnableVariants(next.variants);
+    queueBatches(list.map((v) => planFor(next, preset.schema, v, next.repeatN)));
+    setNotes(next.temperature <= 0 ? [{ level: "warning", text: "greedy: every repetition will be identical; raise the temperature to sample" }] : []);
+  };
+
+  /** The same request twice, N runs each: the mask on, and the shape asked for in the prompt only. */
+  const compareModes = (setup: typeof state, schemaNow: Record<string, unknown>, name: string) => {
+    // The hint is part of the key: rewording it starts a new table instead of pooling into the old one.
+    const key = probeKey(`${setup.presetId || "custom"}·modes`, schemaNow, [
+      { label: "mode", prompt: setup.prompt },
+      { label: "hint", prompt: setup.schemaHint },
+    ]);
+    const masked = setup.mode === "none" ? "auto" : setup.mode;
+    const plans: BatchPlan[] = [
+      { ...planFor({ ...setup, mode: masked }, schemaNow, null, setup.repeatN), label: `${name} · with mask · ${modelShort}`, probe: { presetId: key, presetName: `${name} · mask vs prompt`, variant: `with mask (${masked === "auto" ? "auto" : engineLabel(masked)})` } },
+      { ...planFor({ ...setup, mode: "none" }, schemaNow, null, setup.repeatN), label: `${name} · prompt only · ${modelShort}`, probe: { presetId: key, presetName: `${name} · mask vs prompt`, variant: "prompt only" } },
+    ];
+    queueBatches(plans);
+    setNotes(setup.temperature <= 0 ? [{ level: "warning", text: "greedy: every repetition will be identical; raise the temperature to sample" }] : [{ level: "info", text: `2 × ${setup.repeatN} queued: with mask, then prompt only` }]);
+  };
+
+  const compareModesFromSetup = () => {
+    if (!schema || !backend.ready) return;
+    compareModes(state, schema, presetName);
+  };
+
+  const compareModesForPreset = (id: string) => {
+    const loaded = loadPreset(id);
+    if (!loaded || !backend.ready) return;
+    compareModes(loaded.next, loaded.preset.schema, loaded.preset.name);
+  };
+
+  const runVariantFromSetup = (i: number) => {
+    const list = runnableVariants(state.variants);
+    const v = state.variants[i];
+    if (!v || !schema || !backend.ready) return;
+    const label = list.find((x) => x.prompt === v.prompt)?.label ?? v.label;
+    update({ prompt: v.prompt });
+    const started = startBatch(planFor({ ...state, prompt: v.prompt }, schema, { label, prompt: v.prompt }, 1));
+    setNotes(started ? started.notes : [{ level: "warning", text: "a run is already in flight" }]);
+  };
+
+  const repeatMenu = (
+    <Menu
+      label="▾"
+      className="btn btn-primary btn-icon rounded-l-none border-l-0"
+      ariaLabel="Repeat"
+      title="Run the same request several times"
+      disabled={blockedNow}
+      items={[
+        ...(state.variants.length
+          ? [{ label: `Run all variants ×${state.repeatN}`, hint: "Every variant in the setup, as edited, one batch after another", onSelect: runAllFromSetup }]
+          : []),
+        { label: `Mask vs prompt ×${state.repeatN}`, hint: "Two batches: the schema as a mask, then the schema asked for in the prompt only; compare the valid rates", onSelect: compareModesFromSetup },
+        ...[3, 5, 10, 20].map((n) => ({ label: `Repeat ×${n}`, hint: `${n} runs, one after the other`, onSelect: () => start({ n }) })),
+        {
+          label: `Repeat ×${state.repeatN}…`,
+          hint: `Ask for a number up to ${MAX_BATCH_N}`,
+          onSelect: () => {
+            const raw = window.prompt("How many runs?", String(state.repeatN));
+            const n = Math.min(Math.max(Number(raw) || 0, 1), MAX_BATCH_N);
+            if (raw !== null && n > 1) {
+              update({ repeatN: n });
+              start({ n });
+            }
+          },
+        },
+        {
+          label: `${state.seedPolicy === "fresh" ? "✓ " : ""}Seed · new per run`,
+          hint: "Each repetition samples differently (needs T > 0)",
+          onSelect: () => update({ seedPolicy: "fresh" }),
+        },
+        {
+          label: `${state.seedPolicy === "same" ? "✓ " : ""}Seed · same for all`,
+          hint: "Every repetition uses one seed: identical runs, a check on reproducibility",
+          onSelect: () => update({ seedPolicy: "same" }),
+        },
+      ]}
+    />
+  );
+
+  const duplicate = (run: Run, batch: Batch) => {
+    if (run.kind !== "constrained") return false;
+    update(patchFromRun(run, batch));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    return true;
+  };
+
+  // The same count the Derived schema chip shows: the pretty-printed text.
+  const schemaSummary = `${presetName} · ${state.sourceKind === "pydantic" ? "Pydantic" : "JSON Schema"}${schema ? ` · ${formatInt(JSON.stringify(schema, null, 2).length)} chars` : ""}`;
+  const promptSummary = `${state.prompt.length > 56 ? `${state.prompt.slice(0, 56)}…` : state.prompt}${state.mode === "none" ? " · + JSON hint" : ""}`;
 
   return (
-    <div className="grid lg:grid-cols-[320px_minmax(0,1fr)] gap-6 items-start">
-      <div className="flex flex-col gap-4 lg:sticky lg:top-4 lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto lg:pr-1">
-        <div className="flex items-center gap-2 flex-wrap">
-          <button className="btn btn-primary" type="button" onClick={run} disabled={blocked}>
-            {streaming ? "Generating…" : "Generate"}
-          </button>
-          {streaming && (
-            <button className="btn" type="button" onClick={stop}>
-              Stop
-            </button>
+    <div className="grid lg:grid-cols-[360px_minmax(0,1fr)] gap-6 items-start">
+      <SetupColumn summary={`${presetName} · ${modelShort} · ${engineSummary(state)}`}>
+        <ModelSection value={backend.model ?? backend.selected?.id ?? ""} onChange={(id) => backend.setModel(id)} disabled={busy} />
+
+        <Section id="schema" title="Schema" summary={schemaSummary}>
+          <SchemaSection state={state} update={update} pydantic={pydantic} disabled={busy} />
+        </Section>
+
+        <Section id="prompt" title={state.variants.length ? "Prompt · probe" : "Prompt"} summary={state.variants.length ? `${state.probeName ?? "probe"} · ${state.variants.length} variants` : promptSummary}>
+          {state.variants.length ? (
+            <VariantsEditor
+              variants={state.variants}
+              onChange={(variants) => update({ variants })}
+              onRunOne={runVariantFromSetup}
+              onRunAll={runAllFromSetup}
+              repeatN={state.repeatN}
+              disabled={busy}
+              action="Generate"
+            />
+          ) : (
+            <textarea className="input text-sm min-h-[84px]" value={state.prompt} onChange={(e) => update({ prompt: e.target.value })} disabled={busy} aria-label="Prompt" />
           )}
-          {backend.phase === "online" && backend.selected && !backend.selected.loaded && (
-            <span className="chip chip-warning" title={backend.selected.error ?? undefined}>
-              {backend.selected.id.split("/").pop()} · {backend.selected.error ? "failed to load" : backend.selected.loading ? "loading…" : "not resident"}
-            </span>
-          )}
+          {state.mode === "none" ? (
+            <PromptHint template={state.schemaHint} schema={schema} onChange={(schemaHint) => update({ schemaHint })} disabled={busy} />
+          ) : selected?.kind === "constrained" && selected.request.mode === "none" ? (
+            // The setup is on another engine, but the run on screen was prompt only: show what it really sent.
+            <PromptHint
+              template={selected.request.schema_hint ?? DEFAULT_SCHEMA_HINT}
+              schema={selected.request.schema}
+              eyebrow="Prompt only · what the selected run appended after its prompt"
+              action={{
+                label: "Use prompt only here",
+                hint: "Switch the setup to Prompt only with this wording",
+                onSelect: () => update({ mode: "none", schemaHint: selected.request.schema_hint ?? DEFAULT_SCHEMA_HINT }),
+              }}
+            />
+          ) : null}
+        </Section>
+
+        <Section id="engine" title="Engine & sampling" defaultOpen={false} summary={engineSummary(state)}>
+          <EngineSection state={state} update={update} disabled={busy} engines={backend.health?.engines} />
+        </Section>
+
+        <RunActions label="Generate" runningLabel="Generating…" running={!!running} disabled={blocked} onRun={() => start()} onStop={stop} menu={repeatMenu}>
+          <BatchProgress />
           {backend.phase === "offline" && <span className="chip chip-critical">backend unreachable</span>}
-          {backend.health?.busy && !streaming && <span className="chip chip-warning">backend busy · queued</span>}
-          {pydantic.pending && !streaming && <span className="chip">converting…</span>}
-        </div>
-
-        {trace.error && <p className="font-mono text-xs text-critical break-all">{trace.error}</p>}
-
-        <SchemaEditor state={state} update={update} pydantic={pydantic} disabled={streaming} />
-
-        {trace.meta && (
-          <dl className="text-xs text-ink-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 font-mono">
-            <dt className="text-muted">model</dt>
-            <dd className="break-all">{trace.meta.model_id}</dd>
-            <dt className="text-muted">engine</dt>
-            <dd>
-              {trace.meta.backend} ({trace.meta.mode.toUpperCase()})
-            </dd>
-            <dt className="text-muted">prompt</dt>
-            <dd>{formatInt(trace.meta.prompt_token_count)} tokens</dd>
-            <dt className="text-muted">vocab</dt>
-            <dd>{formatInt(trace.meta.vocab_size)}</dd>
-            <dt className="text-muted">regex</dt>
-            <dd>{trace.meta.regex ? `${formatInt(trace.meta.regex.length)} chars` : "—"}</dd>
-          </dl>
-        )}
-      </div>
+          {backend.health?.busy && !busy && <span className="chip chip-warning">backend busy · queued</span>}
+          {pydantic.pending && !busy && <span className="chip">converting…</span>}
+          {notes.map((n) => (
+            <span key={n.text} className={`chip ${n.level === "warning" ? "chip-warning" : ""}`}>
+              {n.text}
+            </span>
+          ))}
+        </RunActions>
+      </SetupColumn>
 
       <div className="flex flex-col gap-5 min-w-0">
-        <section className="panel p-4 flex flex-col gap-3">
-          <TimeMachine count={trace.steps.length} index={index} playing={playing} streaming={streaming} onIndex={onIndex} onPlay={setPlaying} />
-          {trace.steps.length > 0 && (
-            <>
-              <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                <span className="eyebrow">Across the run</span>
-                <span className="text-xs text-muted">
-                  {overridden} / {trace.steps.length} overridden · vocabulary kept{" "}
-                  {formatPct(trace.steps.reduce((a, s) => a + s.n_allowed / s.vocab_size, 0) / trace.steps.length, Math.max(state.pctDigits, 2))}
-                </span>
-              </div>
-              {nests && <StackDepth steps={trace.steps} current={index} />}
-            </>
-          )}
-        </section>
-
-        <section className="panel p-4 flex flex-col gap-2">
-          <div className="flex items-baseline justify-between gap-3 flex-wrap">
-            <span className="eyebrow">Text so far</span>
-            <span className="flex items-center gap-2 flex-wrap">
-              {regexBug && (
-                <span
-                  className="chip chip-warning"
-                  title="outlines_core unrolls a recursive schema three levels and leaves a trailing comma where the recursion was cut off. The mask followed the regex; the regex was wrong."
-                >
-                  FSM regex bug at depth 3 · use CFG
-                </span>
-              )}
-              {trace.done ? (
-                <span className={`chip ${trace.done.valid ? "chip-good" : "chip-critical"}`} title={trace.done.validation_error ?? undefined}>
-                  {trace.done.valid ? "valid" : "invalid"} · {STOP_LABEL[trace.done.stopped_by] ?? trace.done.stopped_by} · {trace.done.n_steps} steps ·{" "}
-                  {trace.done.elapsed_s.toFixed(1)}s
-                </span>
-              ) : (
-                aborted && !streaming && trace.steps.length > 0 && <span className="chip chip-warning">stopped early · {trace.steps.length} steps</span>
-              )}
-            </span>
-          </div>
-          <TokenRenderer tokens={trace.steps} limit={step ? index + 1 : 0} activeIndex={index} onPick={onIndex} />
-          {trace.done && !trace.done.valid && trace.done.validation_error && (
-            <p className="font-mono text-xs text-critical">{trace.done.validation_error}</p>
-          )}
-        </section>
-
-        {step ? (
-          <section className="panel p-4">
-            <StepPanel step={step} mode={mode} digits={state.pctDigits} logBars={state.logBars} />
-          </section>
-        ) : (
-          <section className="panel p-8 text-sm text-muted">{streaming ? "Waiting for the first token…" : "Press Generate."}</section>
-        )}
-
-        {started &&
-          (mode === "cfg" ? (
-          <section className="flex flex-col gap-3">
-            <div className="flex items-center gap-3 flex-wrap">
-              <span className="eyebrow">Parser stack</span>
-              <span className="chip">llguidance · stack, no automaton</span>
-            </div>
-            <div className="panel p-4">{step ? <StackView step={step} /> : <p className="text-sm text-muted">waiting…</p>}</div>
-          </section>
+        <RunTabs backendUrl={backend.url} onDuplicate={duplicate} />
+        {pinned.length === 2 && <ComparePanel runIds={pinned} />}
+        {(() => {
+          const probeBatch = selectedBatch ?? (selected ? (batches[selected.batchId] ?? null) : null);
+          return probeBatch?.probe ? <ProbePanel key={`probe-${probeBatch.probe.presetId}`} batch={probeBatch} /> : null;
+        })()}
+        {selectedBatch && <BatchPanel key={selectedBatch.id} batch={selectedBatch} />}
+        {selected && (!selectedBatch || selected.batchId === selectedBatch.id) ? (
+          selected.kind === "constrained" ? (
+            <ConstrainedViewer key={selected.id} run={selected} view={view} onView={updateView} setupTemperature={state.temperature} />
           ) : (
-          <section className="flex flex-col gap-3">
-            <div className="flex items-center gap-3 flex-wrap">
-              <span className="eyebrow">Token automaton</span>
-              <span className="chip">outlines_core</span>
-              <button className="btn py-0.5 px-2 text-xs" type="button" onClick={() => setShowGraph((v) => !v)}>
-                {showGraph ? "Hide" : "Show"}
-              </button>
-              <button
-                className={`btn py-0.5 px-2 text-xs ${followCurrent ? "border-accent" : ""}`}
-                type="button"
-                onClick={() => setFollowCurrent((v) => !v)}
-                title="Keep the current state centred as you scrub"
-              >
-                Follow
-              </button>
-              {step && <span className="chip">state {currentGraphState === null ? `${step.fsm_state ?? "—"} (not drawn)` : currentGraphState}</span>}
-            </div>
-            {trace.steps.length > 0 && <PathStrip steps={trace.steps} index={index} graphIdOf={graphIdOf} onPick={onIndex} />}
-            {showGraph &&
-              (automaton ? (
-                <FsmGraph automaton={automaton} currentState={currentGraphState} visited={visitedGraphStates} followCurrent={followCurrent} height={GRAPH_HEIGHT} />
-              ) : (
-                <div className="panel flex items-center justify-center text-sm text-muted" style={{ height: GRAPH_HEIGHT }}>
-                  {compiled?.token_dfa_error ?? "compiling…"}
-                </div>
-              ))}
-          </section>
-          ))}
+            <LogprobsViewer
+              key={selected.id}
+              run={selected}
+              view={view}
+              onView={updateView}
+              sampling={{ temperature: selected.request.temperature, topK: selected.request.top_k, topP: selected.request.top_p }}
+            />
+          )
+        ) : selectedBatch ? null : (
+          <EmptyState
+            eyebrow="Start from a preset"
+            items={backend.presets.map((p) => ({ id: p.id, name: p.name, description: p.description, group: p.group, variants: p.variants?.map((v) => v.label) }))}
+            activeId={state.presetId}
+            onPick={(id) => pickPreset(id)}
+            onPickVariant={pickPreset}
+            onRunAll={runAllVariants}
+            onEdit={editPreset}
+            onCompareModes={compareModesForPreset}
+            repeatN={state.repeatN}
+            ready={backend.ready && !busy}
+            action="Generate"
+            hint={<span className="text-xs text-muted">or edit the schema and press Generate</span>}
+          />
+        )}
       </div>
     </div>
   );

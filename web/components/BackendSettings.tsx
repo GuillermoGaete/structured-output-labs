@@ -45,39 +45,6 @@ export function BackendStatusPill({ compact = false }: { compact?: boolean }) {
   );
 }
 
-/** The MODEL_IDS allowlist. Picking one asks the backend to load it. */
-export function ModelPicker() {
-  const { models, model, setModel, selected, phase } = useBackend();
-  if (models.length < 2) return null;
-  const label = (m: (typeof models)[number]) => {
-    const short = m.id.split("/").pop() ?? m.id;
-    if (phase !== "online") return short; // the last /health is stale; do not claim a state
-    if (m.error) return `${short} · failed`;
-    if (m.loading) return `${short} · loading…`;
-    if (!m.loaded) return `${short} · not loaded`;
-    const params = m.n_params ? ` · ${(m.n_params / 1e6).toFixed(0)}M` : "";
-    return `${short}${params}`;
-  };
-  return (
-    <label className="inline-flex items-center gap-1.5 text-xs">
-      <span className="text-muted">Model</span>
-      <select
-        className="input input-fit py-0.5 px-1.5 text-xs"
-        value={model ?? selected?.id ?? ""}
-        onChange={(e) => setModel(e.target.value)}
-        aria-label="Model"
-        title="Loads on first use; MAX_RESIDENT_MODELS evicts the least recently used"
-      >
-        {models.map((m) => (
-          <option key={m.id} value={m.id}>
-            {label(m)}
-          </option>
-        ))}
-      </select>
-    </label>
-  );
-}
-
 /** Backend URL field. The status itself is the pill; failures show the raw error, not an explanation. */
 export function BackendSettings() {
   const { url, setUrl, phase, lastError, refresh } = useBackend();

@@ -9,14 +9,53 @@ The whole pipeline, left to right, on one page:
 Pydantic model ──▶ JSON Schema ──▶ regex ──▶ token automaton ──▶ mask ──▶ the token that was sampled
 ```
 
-- **Left column** — a Pydantic `BaseModel` (or JSON Schema directly), the prompt, the constraint engine, temperature.
-  The derived schema is shown next to the source: that conversion is `model_json_schema()`, done server-side.
-- **Right column** — the transport, the JSON typing itself out one pastel token at a time, and per step: the model's
-  *original* top-K against the *forced* top-K with the forbidden tokens struck through, how much of the vocabulary
-  survived, how much probability mass the mask removed, and where you are in the automaton (or in the parser stack,
-  in CFG mode).
+- **Setup column** — only what defines the run, in sections that fold to one line showing their current value: the
+  model, the schema (a Pydantic `BaseModel` or JSON Schema directly; *Expand* opens a wide editor with the derived
+  schema next to the source, the `model_json_schema()` conversion done server-side), the prompt, and the engine and
+  sampling knobs. *Generate* sits at the foot, always visible; ⌘/Ctrl+Enter presses it.
+- **Result column** — before the first run, the presets as cards. After it: the JSON typing itself out one pastel
+  token at a time with the run's numbers under it (valid, steps, time, overridden, vocabulary kept, mass removed);
+  the step inspector with the transport, and per step the model's *original* top-K against the *forced* top-K with
+  the forbidden tokens struck through; and, folded until asked for, the token automaton with the path taken (or the
+  parser stack, in CFG mode). Decimals, bar scale and rows live in a small view popover next to the numbers.
 
 There is no explanatory copy: every string is a control label, a number, or a chip. The reasoning lives in tooltips.
+
+## Runs, repeats and branches
+
+Every run lands in a tab above the result, in both modes, and nothing is lost when you generate again. A tab's menu
+re-runs it with the same seed (the same trace again, token by token, on a local model) or a new one, puts its
+schema, prompt and knobs back in the setup, or closes it. Summaries of the last 200 runs survive a reload; the full
+steps of the last 20 stay in memory.
+
+- **Repeat ×N** — the split half of *Generate* runs the same request 3, 5, 10, 20 or N times, one after the other on a
+  local model (three at a time on a hosted one), with a fresh seed per run or the same seed for all. The batch is one
+  tab; its panel shows validity (with pass@k and pass^k), the distinct outputs with counts, **agreement per JSON
+  field** (the mask fixes the shape; this is the content), the token where the runs first part ways as a prefix tree,
+  timing, and a row per run that opens it in the inspector. At temperature 0 every repetition is identical, and the
+  app says so. *Stop* cancels what is left; the backend drops the run within a step.
+- **Branch from here** — standing on any step of the Time Machine, start a new run from the tokens before it: resample
+  with another seed or temperature, press an allowed row in the bars to write *that* token next, or continue a
+  constrained run without its mask in the logprobs mode. The backend replays the prefix in one forward pass through
+  the same processors, so the automaton or the parser is exactly where the original run left it; the replayed steps
+  arrive marked and are drawn dimmed. Local models only: hosted APIs cannot continue a reply.
+- **Resample ×N from here**, in the same menu, starts N branches from that step, one fresh seed each. Their batch
+  tab opens with a **Branch point** panel: for the step where they part ways, the probability the parent's model put
+  on each next token next to how many of the N branches actually drew it, and the spread of both in bits. The
+  outputs, field agreement and divergence tree below it are measured after the shared prefix.
+- **Lab / Talk**, in the top bar. Talk hides the view settings, the branch menu, the per-token strips and the
+  keyboard hint, and enlarges the tokens: the projector view. The automaton opens in its *Near* scope, the states
+  within two hops of the current one plus the path so far, fitted to the box as you scrub; *Whole* shows every drawn
+  state. Pressing a state focuses it: only that state and its destinations stay on screen, and a table beside the
+  graph lists every transition that leaves it, the first tokens on it, how many tokens it carries, the state it
+  reaches and whether the run took it; pressing a destination walks the automaton, Esc lets go. A tab's menu can *Pin to compare*: two pinned runs are shown side by side, shared tokens dimmed, differing
+  ones outlined, and their JSON leaf by leaf. On a narrow screen the setup folds into a sheet that slides up from a
+  bar at the bottom.
+- In CFG mode the *Parser* section shows the JSON so far as a tree with the open brackets as the stack, the cursor's
+  path in the schema, what the grammar forces next and whether it would accept EOS (both from llguidance's matcher),
+  a strip of who wrote each token (the constraint, when only one token was allowed, or the model), and a BNF reading
+  of the schema. llguidance compiles that grammar internally and does not print it, so the text is derived from the
+  schema with the same compact separators; it is a reading, not a dump.
 
 ```
 web/            Next.js app, one route (deploy to Vercel)   ── talks to ──▶  backend/   FastAPI + outlines (deploy to a Hugging Face Space)
@@ -26,7 +65,8 @@ presentation/   HTML/SVG slides → PNG 1920×1080 + SVG
 ## Several models, one process
 
 `MODEL_IDS` is a comma-separated allowlist; the first entry is the default and loads at boot, the rest load the first
-time the app asks for them. The picker in the top bar is that list, and it remembers the choice per browser.
+time the app asks for them. The *Model* picker at the top of the setup column is that list, and it remembers the
+choice per browser.
 
 The default list is seven small instruct models, ordered by size after the default. Every one was loaded, checked for
 a chat template and made to emit schema-valid JSON through this pipeline before it went in:
@@ -73,6 +113,83 @@ TORCH_THREADS=10 docker compose up -d backend
 Comparing models is the point: the same schema compiles to the same regex, but each tokenizer walks it differently.
 Qwen2.5 has 151,936 tokens, SmolLM2 has 49,152, so the same JSON costs a different number of steps and the automaton
 is a different size.
+
+## The catalogue
+
+The presets are grouped by what they show, and every one runs on both engines. *Structure*: Person, Invoice, Tree, and Shapes (a union: the mask picks the branch at
+the `kind` token). *Classification & bias*: a review with three labels, a suspect the text never identifies (answer
+only, and reasoning first), a loan decision and a candidate score with too little to go on. These last ones are bias
+probes: the schema forces a verdict the prompt does not justify, so Repeat ×10 and the per-field agreement show the
+model's priors, and swapping a name or an age in the prompt shows whether they move. *Reasoning*: the same
+arithmetic question with the result first and with a list of steps before it, and a multiple-choice question with the
+reasoning written first. *Extraction*: an event with a date pattern and an optional field, and a tool call.
+
+*Bias probes* are forced choices: one prompt lists two to four people or situations that are identical except for
+the sensitive attribute (a name that signals origin, a nationality, a gender, an age), and the schema must pick one:
+hire one of four, who gets the flat and who is turned down first, who took the wallet (with `cannot tell` allowed),
+whom to trust with a phone, a salary per person in one object, a loan for Martín or María, which doctor, who is at
+fault. One run shows the pick and the reason; Repeat ×10 and the per-field agreement show the distribution, and
+even odds mean no bias. The prompts are plain on purpose: the decision is the measurement, never the wording.
+
+*Counterfactual probes* are the stricter version of the same idea: one prompt, one attribute swapped, everything
+else the same, one batch per variant. Each card lists its variants; a chip runs one, *Generate all ×N* queues them
+all as they come, and *Edit prompts & schema* loads them into the setup first: the Prompt section becomes a list of
+variants (label and prompt each, add or remove), the schema is edited as usual, and *Run all variants ×N* launches
+the batches from what the setup holds. The *Probe* table then puts the variants side by side: valid runs and the
+decision fields as shares or means. Every edit of the prompts or the schema starts a new table, so runs of
+different wordings are never pooled. A gap between rows comes from the model, not from the text.
+
+The logprobs mode has its own prompts, grouped the same way: facts the model is sure of, bias probes where the next
+token is the choice itself (the best of four candidates, who took the wallet, who gets the flat: the bars are the
+model's prior over the names), counterfactual prompts with country and name variants compared at the first token in
+the probe table, a pronoun probe, a question answered step by step and answered directly, and code and
+prose. All of them are in `backend/app/presets.py` and `web/lib/logprobsState.ts`.
+
+### Numeric bounds (`ge`, `le`, `gt`, `lt`)
+
+The two engines differ here. llguidance enforces `minimum`/`maximum` on integers and numbers at the token level.
+outlines_core accepts the keywords and then ignores them: its regex for `{"type": "integer", "minimum": 1,
+"maximum": 5}` is the regex of any integer, so the mask lets `7` or `-2` through and only the validation at the end
+marks the run invalid. The lab closes the gap where a regex can: before compiling for the FSM engine it turns a
+bounded integer range of up to 500 values into the equivalent `enum`, which outlines_core does honour. What is left
+(open ranges, floats, `multipleOf`) is reported by `/compile` as `fsm_ignored` and shown as a warning chip on the run;
+switch the engine to CFG for those.
+
+### Three engines
+
+The engine buttons name the library that runs, not the technique. `Auto` picks outlines_core for a flat schema and
+llguidance for a recursive one; the other tiles force one:
+
+| Button | Technique | What it builds | What the lab can show |
+|---|---|---|---|
+| outlines_core | FSM | JSON Schema → regex → automaton over tokens | the automaton graph, the state per step, the regex |
+| llguidance | CFG | JSON Schema → grammar with a pushdown stack | the parse tree and stack, forced tokens, EOS acceptance; the grammar shown is a reading of the schema, llguidance does not print its own |
+| xgrammar (optional) | CFG | JSON Schema → grammar, pushdown automaton, cache of token masks | the same parser view, plus the grammar **the engine itself compiled**, and its jump-forward strings as the forced text |
+
+A fifth tile, **Prompt only**, is the control group: no mask at all. A hint is appended to the prompt, asking for the
+JSON directly ("Answer directly with one JSON object that matches this JSON Schema. Do not explain… Return just the
+JSON:"), the model writes what it wants, and only the validation at the end says whether the shape came out. The
+hint is editable in the setup while Prompt only is selected; the schema goes in without titles and descriptions,
+which the engines ignore anyway and which would otherwise leak the lab's own commentary to the model. Every run
+keeps a folded **Prompt as sent** with the exact text that was tokenized: system prompt, chat template, hint. The step view shows one distribution instead
+of two, and the run carries a "prompt only · no mask" chip. **Mask vs prompt ×N**, on every preset card and in the
+Repeat menu, queues two batches of N with the same schema and prompt, one with the mask and one without, and the
+probe table puts them side by side: valid runs and the decision fields. That gap, over N repetitions, is what
+structured output buys.
+
+Two things keep that comparison honest. The system prompt asks for the JSON directly, with no reasoning outside it,
+in both rows. And chat templates that open a thinking block by default (Qwen3) are rendered with
+`enable_thinking=False`, because a mask forbids `<think>` from the first token anyway; without it the unmasked run
+spends its whole budget reasoning in prose and the masked run starts with a spurious override. Templates without
+that variable ignore it.
+
+Where a preset asks for a reason, that field comes **first** in the schema, so the mask makes the model write the
+reason before the verdict (Review, Loan decision, Tenant, Trust, Hire, Phone, Loan pick, Doctor, Fault; the
+"answer only" presets are the deliberate contrast). Property order is generation order under a mask.
+
+XGrammar is optional: `pip install xgrammar` (in `requirements.txt` by default). `/health` lists the engines the build can
+run and the app only offers the modes it reports. All three run through the same processor chain, the same
+observers, the same prefix replay for branching and the same cancellation.
 
 ## Pydantic in, JSON Schema out
 

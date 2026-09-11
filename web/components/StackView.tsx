@@ -32,8 +32,8 @@ export function StackView({ step }: { step: Step }) {
   return (
     <div className="flex flex-col gap-2">
       <figure className="flex flex-col gap-2">
-        <figcaption className="eyebrow">Parser stack · depth {stack.length}</figcaption>
-        <div className="flex flex-col gap-1 min-h-[96px]">
+        <figcaption className="eyebrow">Stack · depth {stack.length}</figcaption>
+        <div className="flex flex-col gap-1 w-40">
           {rows.length === 0 && <span className="text-xs text-muted">empty: at the top level</span>}
           {rows.map((b, i) => (
             <span

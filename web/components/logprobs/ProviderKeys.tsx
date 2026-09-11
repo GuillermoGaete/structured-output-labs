@@ -27,7 +27,6 @@ export function ProviderKeys({ keys, onChange }: { keys: Record<string, string>;
 
   return (
     <div className="flex flex-col gap-3">
-      <span className="eyebrow">API keys</span>
       {PROVIDERS.map((p) => {
         const key = keys[p.id] ?? "";
         const open = editing === p.id;

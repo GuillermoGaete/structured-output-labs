@@ -218,3 +218,480 @@ input[type="range"] {
     transition: none !important;
   }
 }
+
+/* ---------------------------------------------------------------- shell */
+
+/* An icon-only button: same border and hover as .btn, square. */
+.btn-icon {
+  padding: 5px;
+  width: 28px;
+  height: 28px;
+  justify-content: center;
+}
+
+/* A folding block: its title, and what it currently says when folded. */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 24px;
+}
+.section-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+  padding: 2px 0;
+  border: 0;
+  background: none;
+  color: var(--ink-2);
+  text-align: left;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.section-toggle:hover .eyebrow {
+  color: var(--ink-2);
+}
+.section-summary {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-2);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.section-actions {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.section-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* The setup column: sticky, scrolls on its own, and keeps the action row at its foot. */
+.setup {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.run-actions {
+  position: sticky;
+  bottom: 0;
+  margin-top: auto;
+  padding: 12px 0 4px;
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.kbd {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  border: 1px solid var(--line-2);
+  border-radius: 4px;
+  padding: 0 5px;
+  line-height: 18px;
+}
+
+/* A number with its label. */
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 96px;
+}
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+.stat-note {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* A preset as something to press. */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border: 1px solid var(--line-2);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+.card:hover:not(:disabled) {
+  border-color: var(--accent);
+  background: var(--surface-2);
+}
+.card:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.card-active {
+  border-color: var(--accent);
+}
+
+/* A small panel that opens under a button. */
+.popover {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: 20;
+  min-width: 200px;
+  padding: 10px 12px;
+  border: 1px solid var(--line-2);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12px;
+}
+.popover-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--ink-2);
+}
+
+/* Native dialogs, in the app's own surface. Tailwind's preflight zeroes every
+   margin, dialogs included, so the centring has to be put back by hand. */
+.dialog {
+  margin: auto;
+  border: 1px solid var(--line-2);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--ink);
+  padding: 0;
+  width: min(92vw, 560px);
+  max-height: 90vh;
+}
+.dialog-wide {
+  width: min(96vw, 1240px);
+}
+.dialog::backdrop {
+  background: rgba(0, 0, 0, 0.45);
+}
+.dialog-body {
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 90vh;
+  overflow: auto;
+}
+
+/* Runs as tabs above the result. */
+.tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+.tab {
+  display: inline-flex;
+  align-items: stretch;
+  flex-shrink: 0;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  background: var(--surface);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.tab-active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.tab-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 4px 3px 10px;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+  border-radius: 999px 0 0 999px;
+  white-space: nowrap;
+}
+.tab-menu {
+  border: 0;
+  background: none;
+  color: var(--muted);
+  padding: 0 8px 0 4px;
+  cursor: pointer;
+  border-radius: 0 999px 999px 0;
+  font-size: 14px;
+  line-height: 1;
+}
+.tab-menu:hover {
+  color: var(--ink);
+}
+.menu {
+  min-width: 190px;
+  padding: 6px;
+  gap: 2px;
+}
+.menu-item {
+  text-align: left;
+  padding: 6px 8px;
+  border: 0;
+  border-radius: 5px;
+  background: none;
+  color: var(--ink);
+  font-size: 13px;
+  cursor: pointer;
+}
+.menu-item:hover:not(:disabled) {
+  background: var(--surface-2);
+}
+.menu-item:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* A bar row that can be pressed to branch from it. */
+.bar-row {
+  cursor: pointer;
+}
+.bar-row .go {
+  opacity: 0;
+  fill: var(--accent);
+}
+.bar-row:hover .go,
+.bar-row:focus-visible .go {
+  opacity: 1;
+}
+.bar-row:hover rect {
+  filter: brightness(1.12);
+}
+
+/* Talk mode: what a projector does not need goes away, and the tokens grow. */
+html[data-ui="talk"] .talk-hide {
+  display: none !important;
+}
+html[data-ui="talk"] .tokens {
+  font-size: 19px;
+  line-height: 2.1;
+}
+html[data-ui="talk"] .stat-value {
+  font-size: 17px;
+}
+.segmented {
+  display: inline-flex;
+  border: 1px solid var(--line-2);
+  border-radius: 6px;
+  overflow: hidden;
+  font-size: 12px;
+}
+.segmented button {
+  padding: 4px 9px;
+  border: 0;
+  background: none;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.segmented button[aria-pressed="true"] {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+
+/* Compare: pinned tabs and the plain field table. */
+.tab-pinned {
+  border-style: dashed;
+}
+.tbl-plain {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Below lg the setup column is a sheet from the bottom. */
+@media (max-width: 1023.98px) {
+  main {
+    padding-bottom: 88px;
+  }
+  .setup-col {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 40;
+    max-height: 86vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    border-top: 1px solid var(--line-2);
+    border-radius: 14px 14px 0 0;
+    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.18);
+    transform: translateY(105%);
+    transition: transform 200ms ease-out;
+  }
+  .setup-col.setup-open {
+    transform: none;
+  }
+  .setup-col .setup {
+    overflow: auto;
+    padding: 0 16px 16px;
+  }
+  .setup-sheet-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px 6px;
+  }
+  .setup-bar {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--ink);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14);
+    cursor: pointer;
+    text-align: left;
+  }
+  .setup-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 35;
+    background: rgba(0, 0, 0, 0.35);
+  }
+}
+
+/* A popover drawn on the body, placed from its button. */
+.popover.popover-fixed {
+  position: fixed;
+  top: auto;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  z-index: 60;
+}
+
+/* The Start tab stays put while the run tabs scroll under it. */
+.tab-start {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  box-shadow: 4px 0 8px -4px rgba(0, 0, 0, 0.25), 0 0 0 4px var(--bg);
+}
+
+/* A card that holds its own buttons instead of being one. */
+.card-static {
+  cursor: default;
+}
+.card-static:hover {
+  border-color: var(--line-2);
+  background: var(--surface);
+}
+/* The title block still runs the preset; only it lights the card up. */
+.card-main {
+  cursor: pointer;
+}
+.card-main:disabled {
+  cursor: not-allowed;
+}
+.card-static:has(.card-main:hover:not(:disabled)) {
+  border-color: var(--accent);
+}
+/* The actions under a card: each one paints its own background on hover, so it is clear which will fire. */
+.card-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--accent);
+  font-size: 12px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.card-action:hover:not(:disabled) {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+.card-action-primary {
+  border-color: var(--line-2);
+  background: var(--surface);
+  color: var(--ink);
+}
+.card-action-primary:hover:not(:disabled) {
+  background: var(--surface-2);
+  border-color: var(--accent);
+}
+.card-action:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* One engine as an option: the library on top, what it builds under it. */
+.engine-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 10px;
+  border: 1px solid var(--line-2);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+.engine-tile:hover:not(:disabled) {
+  background: var(--surface-2);
+}
+.engine-tile[aria-checked="true"] {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+.engine-tile:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* One variant of a probe: its label row, then its prompt. */
+.variant {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}

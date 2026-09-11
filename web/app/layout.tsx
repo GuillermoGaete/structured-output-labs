@@ -3,6 +3,7 @@ import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 import { BackendProvider } from "@/components/BackendProvider";
 import { Header } from "@/components/Header";
+import { RunsProvider } from "@/components/RunsProvider";
 
 const plexSans = IBM_Plex_Sans({
   variable: "--font-plex-sans",
@@ -26,8 +27,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${plexSans.variable} ${plexMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <BackendProvider>
-          <Header />
-          <main className="flex-1 w-full max-w-[1500px] mx-auto px-5 py-6">{children}</main>
+          <RunsProvider>
+            <Header />
+            <main className="flex-1 w-full max-w-[1500px] mx-auto px-5 py-6">{children}</main>
+          </RunsProvider>
         </BackendProvider>
       </body>
     </html>

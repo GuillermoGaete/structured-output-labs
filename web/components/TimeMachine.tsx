@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
+import { IconPause, IconPlay, IconSkipBack, IconSkipForward, IconStepBack, IconStepForward } from "./icons";
 
 interface Props {
   count: number;
@@ -9,10 +10,12 @@ interface Props {
   streaming: boolean;
   onIndex: (i: number) => void;
   onPlay: (playing: boolean) => void;
+  /** Controls that sit at the right end of the transport row. */
+  trailing?: ReactNode;
 }
 
-/** Slider + transport controls over the recorded steps. */
-export function TimeMachine({ count, index, playing, streaming, onIndex, onPlay }: Props) {
+/** Transport and slider over the recorded steps. ← → step, space plays. */
+export function TimeMachine({ count, index, playing, streaming, onIndex, onPlay, trailing }: Props) {
   const last = Math.max(count - 1, 0);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -32,7 +35,8 @@ export function TimeMachine({ count, index, playing, streaming, onIndex, onPlay 
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if ((e.target as HTMLElement | null)?.tagName === "TEXTAREA" || (e.target as HTMLElement | null)?.tagName === "INPUT") return;
+      const tag = (e.target as HTMLElement | null)?.tagName;
+      if (tag === "TEXTAREA" || tag === "INPUT" || tag === "SELECT") return;
       if (e.key === "ArrowLeft") onIndex(Math.max(index - 1, 0));
       if (e.key === "ArrowRight") onIndex(Math.min(index + 1, last));
       if (e.key === " ") {
@@ -44,29 +48,31 @@ export function TimeMachine({ count, index, playing, streaming, onIndex, onPlay 
     return () => window.removeEventListener("keydown", onKey);
   }, [index, last, playing, onIndex, onPlay]);
 
+  const none = count === 0;
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center gap-2 flex-wrap">
-        <button className="btn" type="button" onClick={() => onIndex(0)} disabled={count === 0} aria-label="First step">
-          ⏮
-        </button>
-        <button className="btn" type="button" onClick={() => onIndex(Math.max(index - 1, 0))} disabled={count === 0 || index === 0} aria-label="Previous step">
-          ◀
-        </button>
-        <button className="btn btn-primary min-w-[88px] justify-center" type="button" onClick={() => onPlay(!playing)} disabled={count === 0}>
-          {playing ? "Pause" : "Play"}
-        </button>
-        <button className="btn" type="button" onClick={() => onIndex(Math.min(index + 1, last))} disabled={count === 0 || index >= last} aria-label="Next step">
-          ▶
-        </button>
-        <button className="btn" type="button" onClick={() => onIndex(last)} disabled={count === 0} aria-label="Last step">
-          ⏭
-        </button>
-        <span className="font-mono text-sm tabular-nums ml-2">
-          {count === 0 ? "— / —" : `${index + 1} / ${count}`}
-          {streaming && <span className="text-muted"> · streaming</span>}
-        </span>
-        <span className="text-xs text-muted ml-auto">← → step · space play</span>
+        <span className="eyebrow">Step</span>
+        <span className="font-mono text-sm tabular-nums">{none ? "— / —" : `${index + 1} / ${count}`}</span>
+        <div className="flex items-center gap-1 ml-1" role="group" aria-label="Transport" title="← → step · space play/pause">
+          <button className="btn btn-icon" type="button" onClick={() => onIndex(0)} disabled={none} aria-label="First step">
+            <IconSkipBack />
+          </button>
+          <button className="btn btn-icon" type="button" onClick={() => onIndex(Math.max(index - 1, 0))} disabled={none || index === 0} aria-label="Previous step">
+            <IconStepBack />
+          </button>
+          <button className={`btn btn-icon ${playing ? "border-accent" : ""}`} type="button" onClick={() => onPlay(!playing)} disabled={none} aria-label={playing ? "Pause" : "Play"}>
+            {playing ? <IconPause /> : <IconPlay />}
+          </button>
+          <button className="btn btn-icon" type="button" onClick={() => onIndex(Math.min(index + 1, last))} disabled={none || index >= last} aria-label="Next step">
+            <IconStepForward />
+          </button>
+          <button className="btn btn-icon" type="button" onClick={() => onIndex(last)} disabled={none} aria-label="Last step">
+            <IconSkipForward />
+          </button>
+        </div>
+        {streaming && <span className="chip">streaming</span>}
+        {trailing && <span className="ml-auto flex items-center gap-2">{trailing}</span>}
       </div>
       <input
         type="range"
@@ -77,7 +83,7 @@ export function TimeMachine({ count, index, playing, streaming, onIndex, onPlay 
           onPlay(false);
           onIndex(Number(e.target.value));
         }}
-        disabled={count === 0}
+        disabled={none}
         aria-label="Step"
       />
     </div>

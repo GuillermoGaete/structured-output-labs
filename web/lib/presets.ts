@@ -51,6 +51,7 @@ ${FORBID}
 export const FALLBACK_PRESETS: Preset[] = [
   {
     id: "person",
+    group: "Structure",
     model_source: PERSON_SOURCE,
     name: "Person (flat)",
     description: "Three scalar fields. Compiles to a plain regex and a small finite-state machine.",
@@ -70,6 +71,7 @@ export const FALLBACK_PRESETS: Preset[] = [
   },
   {
     id: "invoice",
+    group: "Structure",
     model_source: INVOICE_SOURCE,
     name: "Invoice (nested)",
     description: "An object with an array of objects inside. Still finite: the FSM just gets bigger.",
@@ -103,6 +105,7 @@ export const FALLBACK_PRESETS: Preset[] = [
   },
   {
     id: "tree",
+    group: "Structure",
     model_source: TREE_SOURCE,
     name: "Tree (recursive)",
     description: "The schema references itself. A regex can only unroll a few levels; a grammar can nest forever.",

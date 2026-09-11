@@ -29,12 +29,15 @@ export function DistributionBars({
   view,
   digits = 1,
   rows,
+  onContinue,
 }: {
   step: StreamStep;
   view: SoftmaxOptions;
   digits?: number;
   /** Rows to reserve so the panel keeps one height across steps. */
   rows: number;
+  /** Pressing a row continues the run from here with that token. */
+  onContinue?: (tokenId: number) => void;
 }) {
   const [help, setHelp] = useState(false);
   const projected = softmaxView(step.top, step.tail, view);
@@ -82,8 +85,19 @@ export function DistributionBars({
           const cut = !projected.allowed[i];
           const chosen = entry.token_id === step.token_id;
           const y = i * ROW + 4;
+          const pressable = !!onContinue && !cut;
           return (
-            <g key={i}>
+            <g
+              key={i}
+              className={pressable ? "bar-row" : undefined}
+              onClick={pressable ? () => onContinue(entry.token_id) : undefined}
+              tabIndex={pressable ? 0 : undefined}
+              onKeyDown={pressable ? (ev) => ev.key === "Enter" && onContinue(entry.token_id) : undefined}
+              role={pressable ? "button" : undefined}
+              aria-label={pressable ? `continue from here with ${visibleToken(entry.text, entry.token)}` : undefined}
+            >
+              {pressable && <title>continue from here with this token</title>}
+              {pressable && <rect x={0} y={y} width={WIDTH} height={ROW} fill="transparent" />}
               <text
                 x={LABEL_W - 8}
                 y={y + 16}
@@ -109,6 +123,11 @@ export function DistributionBars({
                 {cut ? "✕" : formatPct(p, digits)}
                 {chosen ? " ←" : ""}
               </text>
+              {pressable && (
+                <text className="go" x={WIDTH - 12} y={y + 16} fontSize={11} fontFamily="var(--font-mono)" textAnchor="end">
+                  ↳ continue
+                </text>
+              )}
             </g>
           );
         })}
