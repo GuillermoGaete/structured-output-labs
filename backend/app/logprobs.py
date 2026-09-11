@@ -19,7 +19,7 @@ from typing import Any, Iterator
 
 import torch
 
-from .engine import Engine
+from .engine import ENABLE_THINKING, Engine
 
 # What the browser reprojects exactly (the top-k) vs approximately (the tail).
 DEFAULT_TOP_K = 12
@@ -76,7 +76,7 @@ def render_prompt(engine: Engine, prompt: str, use_chat_template: bool) -> str:
     template = getattr(engine.tokenizer, "chat_template", None)
     if use_chat_template and template:
         return engine.tokenizer.apply_chat_template(
-            [{"role": "user", "content": prompt}], tokenize=False, add_generation_prompt=True
+            [{"role": "user", "content": prompt}], tokenize=False, add_generation_prompt=True, enable_thinking=ENABLE_THINKING
         )
     return prompt
 
@@ -119,13 +119,27 @@ def stream(
     top_k_report: int = DEFAULT_TOP_K,
     tail_bins: int = DEFAULT_TAIL_BINS,
     stop: Any = None,
+    prefix_token_ids: list[int] | None = None,
+    json_system_prompt: bool = False,
 ) -> Iterator[tuple[str, dict[str, Any]]]:
-    """Yield ("meta" | "step" | "done", payload) for one unconstrained generation."""
+    """Yield ("meta" | "step" | "done", payload) for one unconstrained generation.
+
+    `prefix_token_ids` is a branch: those tokens are replayed first (one forward
+    pass, teacher-forced, steps marked `replayed`) and sampling starts after
+    them. `json_system_prompt` renders the prompt the way the constrained mode
+    does, so a constrained run can be continued here without its mask.
+    """
     top_k_report = max(1, min(top_k_report, MAX_TOP_K))
     max_new_tokens = max(1, min(max_new_tokens, MAX_NEW_TOKENS_CAP))
 
-    rendered = render_prompt(engine, prompt, use_chat_template)
+    rendered = engine.format_prompt(prompt, use_chat_template) if json_system_prompt else render_prompt(engine, prompt, use_chat_template)
     input_ids = engine.tokenizer(rendered, return_tensors="pt").input_ids
+    prefix = [int(t) for t in (prefix_token_ids or [])]
+    eos_id = engine.tokenizer.eos_token_id
+    if eos_id in prefix:
+        raise ValueError("the prefix already ends the sequence")
+    if len(prefix) >= max_new_tokens:
+        raise ValueError(f"the prefix has {len(prefix)} tokens and max_new_tokens is {max_new_tokens}")
     yield "meta", {
         "model_id": engine.model_id,
         "vocab_size": engine.vocab_size,
@@ -139,7 +153,6 @@ def stream(
     }
 
     generator = torch.Generator().manual_seed(seed) if seed is not None else None
-    eos_id = engine.tokenizer.eos_token_id
     generated: list[int] = []
     partial = ""
     stop_reason = "max_new_tokens"
@@ -147,60 +160,82 @@ def stream(
     cur_ids = input_ids
     past = None
 
+    def describe(i: int, logits: torch.Tensor, next_id: int, step_started: float, forward_ms: float, replayed: bool) -> dict[str, Any]:
+        nonlocal partial
+        logsumexp = float(torch.logsumexp(logits, dim=-1))
+        probs = torch.softmax(logits, dim=-1)
+        entropy_nats = float(-(probs * torch.log(probs.clamp_min(1e-12))).sum())
+        k = min(top_k_report, logits.numel())
+        top_values, top_ids = torch.topk(logits, k)
+        ordered = torch.sort(logits, descending=True).values
+        is_eos = next_id == eos_id
+        text = "" if is_eos else engine.token_text(next_id)
+        if not is_eos:
+            generated.append(next_id)
+            partial = engine.tokenizer.decode(generated)
+        top = [
+            {
+                "rank": rank,
+                "token_id": int(tid),
+                "token": engine.token_raw(int(tid)),
+                "text": engine.token_text(int(tid)),
+                "logit": round(float(lv), 4),
+                "p": round(float(probs[int(tid)]), 8),
+            }
+            for rank, (lv, tid) in enumerate(zip(top_values.tolist(), top_ids.tolist()))
+        ]
+        chosen_rank = next((e["rank"] for e in top if e["token_id"] == next_id), None)
+        return {
+            "i": i,
+            "token_id": next_id,
+            "token": engine.token_raw(next_id),
+            "text": text,
+            "partial_text": partial,
+            "chosen_logit": round(float(logits[next_id]), 4),
+            "chosen_p": round(float(probs[next_id]), 8),
+            "chosen_rank": chosen_rank,
+            "logsumexp": round(logsumexp, 4),
+            "entropy_bits": round(entropy_nats / 0.6931471805599453, 4),
+            "top": top,
+            "tail": tail_histogram(ordered[k:], logsumexp, tail_bins),
+            "dt_ms": round((time.perf_counter() - step_started) * 1000.0, 2),
+            "forward_ms": round(forward_ms, 2),
+            "replayed": replayed,
+        }
+
+    first = 0
+    pending_logits: torch.Tensor | None = None
     with torch.no_grad():
-        for i in range(max_new_tokens):
+        if prefix:
+            step_started = time.perf_counter()
+            ids = torch.cat([input_ids, torch.tensor([prefix], dtype=input_ids.dtype)], dim=1)
+            p_len = int(input_ids.shape[1])
+            out = engine.model(input_ids=ids, use_cache=True)
+            forward_ms = (time.perf_counter() - step_started) * 1000.0 / len(prefix)
+            for j, tok in enumerate(prefix):
+                yield "step", describe(j, out.logits[0, p_len - 1 + j, :].float(), tok, step_started, forward_ms, replayed=True)
+            past = out.past_key_values
+            pending_logits = out.logits[0, -1, :].float()
+            first = len(prefix)
+
+        for i in range(first, max_new_tokens):
             if stop is not None and stop.is_set():
                 stop_reason = "stopped"
                 break
             step_started = time.perf_counter()
-            out = engine.model(input_ids=cur_ids, past_key_values=past, use_cache=True)
-            past = out.past_key_values
-            logits = out.logits[0, -1, :].float()
-            forward_ms = (time.perf_counter() - step_started) * 1000.0
-
-            logsumexp = float(torch.logsumexp(logits, dim=-1))
-            probs = torch.softmax(logits, dim=-1)
-            entropy_nats = float(-(probs * torch.log(probs.clamp_min(1e-12))).sum())
-            k = min(top_k_report, logits.numel())
-            top_values, top_ids = torch.topk(logits, k)
-            ordered = torch.sort(logits, descending=True).values
+            if pending_logits is not None:
+                logits = pending_logits
+                pending_logits = None
+                forward_ms = 0.0
+            else:
+                out = engine.model(input_ids=cur_ids, past_key_values=past, use_cache=True)
+                past = out.past_key_values
+                logits = out.logits[0, -1, :].float()
+                forward_ms = (time.perf_counter() - step_started) * 1000.0
 
             next_id = _sample(logits, temperature, top_k, top_p, generator)
-            is_eos = next_id == eos_id
-            text = "" if is_eos else engine.token_text(next_id)
-            if not is_eos:
-                generated.append(next_id)
-                partial = engine.tokenizer.decode(generated)
-
-            top = [
-                {
-                    "rank": rank,
-                    "token_id": int(tid),
-                    "token": engine.token_raw(int(tid)),
-                    "text": engine.token_text(int(tid)),
-                    "logit": round(float(lv), 4),
-                    "p": round(float(probs[int(tid)]), 8),
-                }
-                for rank, (lv, tid) in enumerate(zip(top_values.tolist(), top_ids.tolist()))
-            ]
-            chosen_rank = next((e["rank"] for e in top if e["token_id"] == next_id), None)
-            yield "step", {
-                "i": i,
-                "token_id": next_id,
-                "token": engine.token_raw(next_id),
-                "text": text,
-                "partial_text": partial,
-                "chosen_logit": round(float(logits[next_id]), 4),
-                "chosen_p": round(float(probs[next_id]), 8),
-                "chosen_rank": chosen_rank,
-                "logsumexp": round(logsumexp, 4),
-                "entropy_bits": round(entropy_nats / 0.6931471805599453, 4),
-                "top": top,
-                "tail": tail_histogram(ordered[k:], logsumexp, tail_bins),
-                "dt_ms": round((time.perf_counter() - step_started) * 1000.0, 2),
-                "forward_ms": round(forward_ms, 2),
-            }
-            if is_eos:
+            yield "step", describe(i, logits, next_id, step_started, forward_ms, replayed=False)
+            if next_id == eos_id:
                 stop_reason = "eos"
                 break
             cur_ids = torch.tensor([[next_id]], dtype=input_ids.dtype)

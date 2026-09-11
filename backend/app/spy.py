@@ -42,12 +42,23 @@ class MasterObserver(LogitsProcessor):
     state_getter:
         Optional callable returning the automaton state the mask was computed
         from (only the outlines_core backend exposes one).
+    probe:
+        Optional callable returning extra facts about the engine after the mask
+        (the grammar backend: forced tokens, whether EOS is accepted). Its dict
+        is merged into the record.
     """
 
-    def __init__(self, pre: PreMaskObserver, top_k: int = 8, state_getter: Callable[[], int | None] | None = None) -> None:
+    def __init__(
+        self,
+        pre: PreMaskObserver,
+        top_k: int = 8,
+        state_getter: Callable[[], int | None] | None = None,
+        probe: Callable[[], dict] | None = None,
+    ) -> None:
         self.pre = pre
         self.top_k = top_k
         self.state_getter = state_getter
+        self.probe = probe
         self.records: list[dict] = []
 
     def reset(self) -> None:
@@ -81,8 +92,16 @@ class MasterObserver(LogitsProcessor):
             except Exception:  # pragma: no cover - defensive, the getter reaches into outlines internals
                 state = None
 
+        extra: dict = {}
+        if self.probe is not None:
+            try:
+                extra = self.probe()
+            except Exception:  # pragma: no cover - defensive, the probe reaches into llguidance internals
+                extra = {}
+
         self.records.append(
             {
+                **extra,
                 "n_allowed": n_allowed,
                 "vocab_size": int(raw.numel()),
                 "mass_removed": mass_removed,

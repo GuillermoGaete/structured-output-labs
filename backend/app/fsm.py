@@ -20,7 +20,7 @@ from .tracing import clean_bpe_glyphs
 
 CHAR_STATE_CAP = 400
 TOKEN_STATE_CAP = 300
-TOKEN_EDGE_SAMPLES = 4
+TOKEN_EDGE_SAMPLES = 8
 
 
 def _printable(ch: str) -> str:

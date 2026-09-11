@@ -22,7 +22,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from sse_starlette.sse import EventSourceResponse
 
-from .engine import Engine
+from .engine import BadPrefix, Engine, engines_available
 from .logprobs import MAX_NEW_TOKENS_CAP as STREAM_TOKENS_CAP, MAX_TOP_K, stream as stream_logprobs
 from .providers import PROVIDERS, ProviderError, is_provider, stream as stream_provider
 from .registry import ModelRegistry, registry_from_env
@@ -80,7 +80,7 @@ class ModelChoice(BaseModel):
 
 class CompileRequest(ModelChoice):
     schema_: dict[str, Any] = Field(alias="schema")
-    mode: Literal["auto", "fsm", "cfg"] = "auto"
+    mode: Literal["auto", "fsm", "cfg", "xgr", "none"] = "auto"
 
 
 class StreamRequest(ModelChoice):
@@ -95,6 +95,10 @@ class StreamRequest(ModelChoice):
     use_chat_template: bool = True
     top_k_report: int = Field(default=12, ge=1, le=MAX_TOP_K)
     tail_bins: int = Field(default=48, ge=0, le=256)
+    # A branch: replay these tokens, then continue. Local models only.
+    prefix_token_ids: list[int] = Field(default_factory=list, max_length=STREAM_TOKENS_CAP)
+    # Render the prompt like the constrained mode, so its runs can be continued here unmasked.
+    json_system_prompt: bool = False
 
 
 class PydanticRequest(BaseModel):
@@ -112,6 +116,10 @@ class GenerateRequest(CompileRequest):
     top_k_report: int = Field(default=8, ge=1, le=20)
     seed: int | None = None
     use_chat_template: bool = True
+    # A branch: replay these tokens through the mask, then continue.
+    prefix_token_ids: list[int] = Field(default_factory=list, max_length=MAX_NEW_TOKENS_CAP)
+    # "none" mode only: the wording that asks for the shape in the prompt; `{schema}` marks where the schema goes.
+    schema_hint: str | None = Field(default=None, max_length=2000)
 
 
 def _engine_or_503(model_id: str | None = None) -> Engine:
@@ -167,6 +175,7 @@ def health() -> dict[str, Any]:
         "uptime_s": round(time.time() - state.started_at, 1),
         "load_time_s": default.get("load_time_s") if default else None,
         "max_new_tokens_cap": MAX_NEW_TOKENS_CAP,
+        "engines": engines_available(),
         "models": rows,
         "max_resident_models": registry.max_resident if registry else None,
     }
@@ -257,6 +266,8 @@ async def stream_endpoint(req: StreamRequest, request: Request) -> EventSourceRe
     again. See `app/logprobs.py`.
     """
     remote = is_provider(req.model)
+    if remote and req.prefix_token_ids:
+        raise HTTPException(status_code=400, detail="branching is not supported for hosted models: their APIs cannot continue a reply")
     key = request.headers.get(PROVIDER_KEY_HEADER, "") if remote else ""
     engine = None if remote else _engine_or_503(req.model)
     events: queue.Queue[tuple[str, Any] | None] = queue.Queue()
@@ -296,6 +307,8 @@ async def stream_endpoint(req: StreamRequest, request: Request) -> EventSourceRe
                     top_k_report=req.top_k_report,
                     tail_bins=req.tail_bins,
                     stop=halt,
+                    prefix_token_ids=req.prefix_token_ids,
+                    json_system_prompt=req.json_system_prompt,
                 ):
                     events.put((name, payload))
         except Exception as exc:
@@ -337,9 +350,11 @@ async def stream_endpoint(req: StreamRequest, request: Request) -> EventSourceRe
 
 
 @app.post("/generate")
-async def generate(req: GenerateRequest) -> EventSourceResponse:
+async def generate(req: GenerateRequest, request: Request) -> EventSourceResponse:
+    """Constrained generation as Server-Sent Events. A client that goes away stops the run within a step."""
     engine = _engine_or_503(req.model)
     events: queue.Queue[tuple[str, Any] | None] = queue.Queue()
+    halt = threading.Event()
 
     def worker() -> None:
         try:
@@ -354,8 +369,13 @@ async def generate(req: GenerateRequest) -> EventSourceResponse:
                     top_k_report=req.top_k_report,
                     seed=req.seed,
                     use_chat_template=req.use_chat_template,
+                    stop=halt,
+                    prefix_token_ids=req.prefix_token_ids,
+                    schema_hint=req.schema_hint,
                 ):
                     events.put((name, payload))
+        except BadPrefix as exc:
+            events.put(("error", {"detail": str(exc), "step": exc.step, "token_id": exc.token_id}))
         except Exception as exc:
             events.put(("error", {"detail": f"{type(exc).__name__}: {exc}"}))
         finally:
@@ -367,12 +387,15 @@ async def generate(req: GenerateRequest) -> EventSourceResponse:
             try:
                 threading.Thread(target=worker, name="generate", daemon=True).start()
                 while True:
+                    if await request.is_disconnected():
+                        halt.set()
                     item = await asyncio.to_thread(events.get)
                     if item is None:
                         break
                     name, payload = item
                     yield {"event": name, "data": json.dumps(payload)}
             finally:
+                halt.set()
                 state.busy = False
 
     return EventSourceResponse(stream(), ping=15)

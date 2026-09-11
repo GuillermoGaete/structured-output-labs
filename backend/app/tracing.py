@@ -9,7 +9,7 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass, field
 from typing import Any, Literal
 
-Mode = Literal["fsm", "cfg"]
+Mode = Literal["fsm", "cfg", "xgr", "none"]
 
 # Byte-level BPE tokenizers (GPT-2, Qwen, DeepSeek, Llama 3…) encode a leading
 # space as `Ġ`, a newline as `Ċ` and a tab as `ĉ`. The model never sees these
@@ -77,6 +77,12 @@ class Step:
     was_overridden: bool
     p_original: float  # probability the model gave the chosen token before masking
     p_forced: float  # probability after masking + renormalisation
+    # The grammar engine only: what it forces next, and whether it would accept EOS here.
+    ff_token_ids: list[int] = field(default_factory=list)
+    ff_text: str = ""
+    accepting: bool | None = None
+    # A branch recomputes its parent's prefix through the same processors; those steps are marked.
+    replayed: bool = False
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -93,6 +99,10 @@ class Meta:
     max_new_tokens: int
     temperature: float
     recursive: bool
+    # "none" mode: no mask; the prompt carries the schema and only the final validation checks the shape.
+    schema_in_prompt: bool = False
+    # The exact text that was tokenized: system prompt, chat template, and the hint in "none" mode.
+    prompt_text: str = ""
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

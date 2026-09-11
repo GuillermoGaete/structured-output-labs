@@ -132,3 +132,26 @@ def test_http_stream(monkeypatch):
         assert "event: meta" in body and "event: step" in body and "event: done" in body
         assert client.post("/stream", json={"prompt": "hola", "model": "nope/unknown"}).status_code == 404
         assert client.post("/stream", json={"prompt": "", "max_new_tokens": 3}).status_code == 422
+
+
+
+def test_stream_from_prefix_replays_then_continues(engine: Engine):
+    _, base, _ = run(engine, max_new_tokens=8, temperature=0.0)
+    prefix = [s["token_id"] for s in base[:3]]
+    assert engine.tokenizer.eos_token_id not in prefix
+    _, steps, done = run(engine, max_new_tokens=8, temperature=0.0, prefix_token_ids=prefix)
+    assert [s["token_id"] for s in steps[:3]] == prefix
+    assert all(s["replayed"] for s in steps[:3]) and not steps[3]["replayed"]
+    # the same context gives the same distribution, whether replayed in one pass or step by step
+    for a, b in zip(steps[:3], base[:3]):
+        assert abs(a["chosen_logit"] - b["chosen_logit"]) < 1e-2
+    # greedy, so the continuation matches the original run too
+    assert [s["token_id"] for s in steps[3:6]] == [s["token_id"] for s in base[3:6]]
+    assert done["n_steps"] == len([s for s in steps if s["text"] != ""])
+
+
+def test_stream_can_render_the_constrained_prompt(engine: Engine):
+    meta, _, _ = run(engine, max_new_tokens=2, temperature=0.0, json_system_prompt=True)
+    # the toy tokenizer has no chat template, so the prompt passes through either way;
+    # what matters is that the option is accepted and reported
+    assert meta["prompt_rendered"]
