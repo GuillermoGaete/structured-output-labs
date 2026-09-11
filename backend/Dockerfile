@@ -8,7 +8,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     MODEL_ID=Qwen/Qwen2.5-0.5B-Instruct \
     TORCH_THREADS=2
 
-RUN apt-get update && apt-get install -y --no-install-recommends git && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends git g++ && rm -rf /var/lib/apt/lists/*
 
 # HF Spaces run the container as uid 1000; create that user and own the app dir.
 RUN useradd -m -u 1000 user
