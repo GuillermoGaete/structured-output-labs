@@ -6,9 +6,12 @@ import type { ModeRequest } from "@/lib/types";
 
 const ORDER: ModeRequest[] = ["auto", "fsm", "cfg", "xgr", "none"];
 
+/** The knobs this section edits; the Replay page keeps the same names. */
+export type EngineKnobs = Pick<LabState, "mode" | "maxNewTokens" | "temperature" | "seed" | "topKSampling">;
+
 interface Props {
-  state: LabState;
-  update: (patch: Partial<LabState>) => void;
+  state: EngineKnobs;
+  update: (patch: Partial<EngineKnobs>) => void;
   disabled?: boolean;
   /** Engines the backend reports; a mode it cannot run is not offered. */
   engines?: string[];

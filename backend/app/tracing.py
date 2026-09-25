@@ -103,6 +103,8 @@ class Meta:
     schema_in_prompt: bool = False
     # The exact text that was tokenized: system prompt, chat template, and the hint in "none" mode.
     prompt_text: str = ""
+    # A replayed conversation that the chat template refused as it was: what was reshaped to fit.
+    template_notes: list[str] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

@@ -10,9 +10,10 @@ import { BackendSettings, BackendStatusPill } from "./BackendSettings";
 const MODES = [
   { href: "/", label: "Constrained", title: "A schema compiled to an automaton that masks the logits" },
   { href: "/logprobs", label: "Logprobs", title: "No schema: the raw distribution behind every token" },
+  { href: "/replay", label: "Replay", title: "Import a LangChain trace and generate again from any of its messages" },
 ];
 
-/** Thin top bar: the app name, the two modes, the backend state, and its URL. The model is an input of the run, so it lives in the setup column. */
+/** Thin top bar: the app name, the three modes, the backend state, and its URL. The model is an input of the run, so it lives in the setup column. */
 export function Header() {
   const { phase } = useBackend();
   const pathname = usePathname();

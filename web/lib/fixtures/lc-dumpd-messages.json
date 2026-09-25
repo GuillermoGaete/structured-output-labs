@@ -1,0 +1,5 @@
+[
+  { "lc": 1, "type": "constructor", "id": ["langchain", "schema", "messages", "SystemMessage"], "kwargs": { "content": "Describe images briefly.", "type": "system" } },
+  { "lc": 1, "type": "constructor", "id": ["langchain", "schema", "messages", "HumanMessage"], "kwargs": { "content": [{ "type": "text", "text": "What is in this picture?" }, { "type": "image_url", "image_url": { "url": "data:image/png;base64,iVBORw0KGgo=" } }], "type": "human" } },
+  { "lc": 1, "type": "constructor", "id": ["langchain", "schema", "messages", "AIMessage"], "kwargs": { "content": "A cat asleep on a keyboard.", "type": "ai" } }
+]

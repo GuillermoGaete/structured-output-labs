@@ -10,7 +10,7 @@ import type { StatProps } from "@/components/shell/Stat";
 import { StepInspector } from "@/components/shell/StepInspector";
 import { StepPanel } from "@/components/StepPanel";
 import { compileSchema } from "@/lib/api";
-import { composePrompt } from "@/lib/engines";
+import { composeRequest } from "@/lib/chat";
 import { branchFrom, rerun } from "@/lib/runner";
 import { runStore, useBatch, useBatchOrder, useLocalBusy, useTrace } from "@/lib/runStore";
 import type { ConstrainedRun } from "@/lib/runTypes";
@@ -175,7 +175,7 @@ export function ConstrainedViewer({ run, view, onView, setupTemperature }: Props
   // The prompt the model read. Exact when the trace is in memory; composed from the request otherwise
   // (the chat template only exists on the server). Open for prompt only, where the prompt is the mechanism.
   const exactPrompt = trace?.meta?.prompt_text;
-  const sentPrompt = exactPrompt ?? (unmasked ? composePrompt(run.request.prompt, run.request.schema_hint, run.request.schema) : null);
+  const sentPrompt = exactPrompt ?? (unmasked ? composeRequest(run.request) : null);
   const promptBlock = sentPrompt ? (
     <details className="panel px-4 py-2" open={unmasked}>
       <summary

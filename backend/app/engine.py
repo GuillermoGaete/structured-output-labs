@@ -18,6 +18,7 @@ from outlines_core import Index
 from outlines_core.json_schema import build_regex_from_schema
 from transformers import AutoModelForCausalLM, AutoTokenizer, LogitsProcessor, LogitsProcessorList
 
+from .chat import Message, fit_template, plain_transcript, with_hint
 from .fsm import char_fsm_payload, token_dfa_payload
 from .grammar import render_grammar
 from . import xgr as xgr_engine
@@ -363,8 +364,29 @@ class Engine:
         use_chat_template: bool,
         schema: dict[str, Any] | None = None,
         schema_hint: str | None = None,
+        messages: list[Message] | None = None,
     ) -> str:
         """The text the model sees. With `schema`, the shape is asked for in words: the "none" mode's substitute for a mask."""
+        return self.build_prompt(prompt, use_chat_template, schema, schema_hint, messages)[0]
+
+    def build_prompt(
+        self,
+        prompt: str,
+        use_chat_template: bool,
+        schema: dict[str, Any] | None = None,
+        schema_hint: str | None = None,
+        messages: list[Message] | None = None,
+    ) -> tuple[str, list[str]]:
+        """(the text the model sees, what the chat template needed reshaped).
+
+        A replayed conversation (`messages`) is rendered as the trace recorded
+        it: the lab's own system prompt is not added, since that would change
+        what is being replayed.
+        """
+        if messages:
+            if schema is not None:
+                messages = with_hint(messages, render_hint(schema, schema_hint))
+            return self.render_chat(messages, use_chat_template)
         if schema is not None:
             prompt = f"{prompt}\n\n{render_hint(schema, schema_hint)}"
         template = getattr(self.tokenizer, "chat_template", None)
@@ -374,8 +396,43 @@ class Engine:
                 tokenize=False,
                 add_generation_prompt=True,
                 enable_thinking=ENABLE_THINKING,
+            ), []
+        return prompt, []
+
+    def render_chat(self, messages: list[Message], use_chat_template: bool) -> tuple[str, list[str]]:
+        """A conversation through the chat template, or as a plain transcript without one.
+
+        Some templates raise on a system role or on two turns of one role in a
+        row. Those get one retry with the conversation reshaped by
+        `fit_template`, and the notes say what changed.
+        """
+        template = getattr(self.tokenizer, "chat_template", None)
+        if not (use_chat_template and template):
+            return plain_transcript(messages), []
+
+        def apply(msgs: list[Message]) -> str:
+            return self.tokenizer.apply_chat_template(msgs, tokenize=False, add_generation_prompt=True, enable_thinking=ENABLE_THINKING)
+
+        try:
+            return apply(messages), []
+        except Exception as first:
+            fitted, notes = fit_template(messages)
+            try:
+                return apply(fitted), notes
+            except Exception as exc:
+                raise ValueError(
+                    f"the chat template rejects this conversation ({type(first).__name__}: {first}); "
+                    f"reshaped it still fails ({type(exc).__name__}: {exc}); untick the chat template to send it as a transcript"
+                ) from exc
+
+    def check_context(self, n_prompt: int, max_new_tokens: int) -> None:
+        """Raise when the prompt plus the tokens asked for would not fit the model's positions."""
+        limit = getattr(self.model.config, "max_position_embeddings", None)
+        if isinstance(limit, int) and n_prompt + max_new_tokens > limit:
+            raise ValueError(
+                f"the prompt is {n_prompt} tokens and {max_new_tokens} more were asked for, "
+                f"but {self.model_id} reads at most {limit}: cut earlier or shorten the conversation"
             )
-        return prompt
 
     def _top_entries(self, entries: list[tuple[int, float, bool]]) -> list[TopEntry]:
         return [
@@ -397,6 +454,7 @@ class Engine:
         stop: threading.Event | None = None,
         prefix_token_ids: list[int] | None = None,
         schema_hint: str | None = None,
+        messages: list[Message] | None = None,
     ) -> Iterator[tuple[str, dict[str, Any]]]:
         """Yield ("meta"|"step"|"done", payload) while decoding one sequence.
 
@@ -410,7 +468,8 @@ class Engine:
         chain (which advances the automaton or the parser exactly as the
         original run did), in one forward pass; their steps are marked
         `replayed`, and sampling starts after them. `schema_hint` is the
-        "none" mode's wording for asking the shape in the prompt.
+        "none" mode's wording for asking the shape in the prompt. `messages`
+        replaces `prompt` with a conversation, rendered as it was recorded.
         """
         resolved, recursive = self.resolve_mode(schema, mode)
         proc, state_getter, probe = self.build_processor(schema, resolved)
@@ -430,8 +489,10 @@ class Engine:
             except Exception:
                 regex = None
 
-        prompt_text = self.format_prompt(prompt, use_chat_template, schema if resolved == "none" else None, schema_hint)
+        prompt_text, template_notes = self.build_prompt(prompt, use_chat_template, schema if resolved == "none" else None, schema_hint, messages)
         input_ids = self.tokenizer(prompt_text, return_tensors="pt").input_ids
+        if messages:
+            self.check_context(int(input_ids.shape[1]), max_new_tokens)
         yield "meta", Meta(
             mode=resolved,
             backend=BACKEND_NAME[resolved],
@@ -444,6 +505,7 @@ class Engine:
             recursive=recursive,
             schema_in_prompt=resolved == "none",
             prompt_text=prompt_text,
+            template_notes=template_notes,
         ).to_dict()
 
         generator = torch.Generator().manual_seed(seed) if seed is not None else None

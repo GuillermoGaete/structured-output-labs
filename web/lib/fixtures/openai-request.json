@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o-mini",
+  "temperature": 0,
+  "max_tokens": 200,
+  "messages": [
+    { "role": "developer", "content": "Turn the customer's message into a support ticket." },
+    { "role": "user", "content": "My order #4521 arrived broken and I want a refund. Sent from Rosario." }
+  ],
+  "response_format": {
+    "type": "json_schema",
+    "json_schema": {
+      "name": "Ticket",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "order_id": { "type": "string" },
+          "category": { "type": "string", "enum": ["refund", "shipping", "question", "other"] },
+          "urgent": { "type": "boolean" },
+          "summary": { "type": "string" }
+        },
+        "required": ["order_id", "category", "urgent", "summary"]
+      }
+    }
+  }
+}

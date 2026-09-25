@@ -10,7 +10,7 @@ import {
   foldLogprobsMeta,
   foldLogprobsStep,
 } from "./stats";
-import type { GenerateEvent, StreamEvent, StreamTrace, Trace } from "./types";
+import type { ChatMessage, GenerateEvent, StreamEvent, StreamTrace, Trace } from "./types";
 
 /** Full traces kept in memory; older runs keep only their summary. */
 export const TRACE_LIMIT = 20;
@@ -137,6 +137,14 @@ export function reduce(state: RunState, action: RunAction): RunState {
         // A reload interrupted whatever was in flight.
         runs[id] = run.status === "queued" || run.status === "running" ? { ...run, status: "cancelled", error: "interrupted by a reload" } : run;
       }
+      // A replay's conversation was stored once per batch, on its first run.
+      for (const batch of Object.values(p.batches)) {
+        const messages = runs[batch.runIds[0]]?.request.messages;
+        if (!messages) continue;
+        for (const rid of batch.runIds.slice(1)) {
+          if (runs[rid] && !runs[rid].request.messages) runs[rid] = withMessages(runs[rid], messages);
+        }
+      }
       const next = { ...state, batches: p.batches, batchOrder: p.batchOrder, runs, traces: {}, hydrated: true };
       const newest = next.batches[next.batchOrder[0] ?? ""];
       return { ...next, selectedRunId: newestRunId(next), selectedBatchId: newest && newest.n > 1 ? newest.id : null };
@@ -233,7 +241,12 @@ export function readPersisted(): PersistedRuns | null {
   }
 }
 
-/** Summaries only, newest batches first, capped. Traces never leave memory. */
+/** The same run with its request's conversation replaced (or dropped, with `undefined`). */
+function withMessages(run: Run, messages: ChatMessage[] | undefined): Run {
+  return run.kind === "constrained" ? { ...run, request: { ...run.request, messages } } : { ...run, request: { ...run.request, messages } };
+}
+
+/** Summaries only, newest batches first, capped. Traces never leave memory. A replay's conversation is kept once per batch. */
 export function toPersisted(state: RunState, maxRuns = MAX_PERSISTED_RUNS): PersistedRuns {
   const batchOrder: string[] = [];
   const batches: Record<string, Batch> = {};
@@ -247,7 +260,7 @@ export function toPersisted(state: RunState, maxRuns = MAX_PERSISTED_RUNS): Pers
     batches[id] = b;
     for (const rid of b.runIds) {
       const r = state.runs[rid];
-      if (r) runs[rid] = r;
+      if (r) runs[rid] = rid !== b.runIds[0] && r.request.messages ? withMessages(r, undefined) : r;
     }
     count += b.runIds.length;
   }
@@ -257,12 +270,12 @@ export function toPersisted(state: RunState, maxRuns = MAX_PERSISTED_RUNS): Pers
 function writePersisted(state: RunState): void {
   if (!state.hydrated) return;
   let maxRuns = MAX_PERSISTED_RUNS;
-  for (let attempt = 0; attempt < 2; attempt++) {
+  for (let attempt = 0; attempt < 4; attempt++) {
     try {
       window.localStorage.setItem(KEY, JSON.stringify(toPersisted(state, maxRuns)));
       return;
     } catch {
-      maxRuns = Math.floor(maxRuns / 2); // quota: keep the newer half, then give up
+      maxRuns = Math.floor(maxRuns / 2); // quota: keep the newer half, down to an eighth, then give up
     }
   }
 }

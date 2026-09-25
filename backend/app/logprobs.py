@@ -19,6 +19,7 @@ from typing import Any, Iterator
 
 import torch
 
+from .chat import Message
 from .engine import ENABLE_THINKING, Engine
 
 # What the browser reprojects exactly (the top-k) vs approximately (the tail).
@@ -121,6 +122,7 @@ def stream(
     stop: Any = None,
     prefix_token_ids: list[int] | None = None,
     json_system_prompt: bool = False,
+    messages: list[Message] | None = None,
 ) -> Iterator[tuple[str, dict[str, Any]]]:
     """Yield ("meta" | "step" | "done", payload) for one unconstrained generation.
 
@@ -128,12 +130,22 @@ def stream(
     pass, teacher-forced, steps marked `replayed`) and sampling starts after
     them. `json_system_prompt` renders the prompt the way the constrained mode
     does, so a constrained run can be continued here without its mask.
+    `messages` replaces `prompt` with a conversation; it renders the same way
+    in both modes, so `json_system_prompt` has nothing to change there.
     """
     top_k_report = max(1, min(top_k_report, MAX_TOP_K))
     max_new_tokens = max(1, min(max_new_tokens, MAX_NEW_TOKENS_CAP))
 
-    rendered = engine.format_prompt(prompt, use_chat_template) if json_system_prompt else render_prompt(engine, prompt, use_chat_template)
+    template_notes: list[str] = []
+    if messages:
+        rendered, template_notes = engine.render_chat(messages, use_chat_template)
+    elif json_system_prompt:
+        rendered = engine.format_prompt(prompt, use_chat_template)
+    else:
+        rendered = render_prompt(engine, prompt, use_chat_template)
     input_ids = engine.tokenizer(rendered, return_tensors="pt").input_ids
+    if messages:
+        engine.check_context(int(input_ids.shape[1]), max_new_tokens)
     prefix = [int(t) for t in (prefix_token_ids or [])]
     eos_id = engine.tokenizer.eos_token_id
     if eos_id in prefix:
@@ -150,6 +162,7 @@ def stream(
         "top_k_report": top_k_report,
         "tail_bins": tail_bins,
         "use_chat_template": use_chat_template,
+        "template_notes": template_notes,
     }
 
     generator = torch.Generator().manual_seed(seed) if seed is not None else None

@@ -39,6 +39,9 @@ export interface Health {
   /** One row per allowlisted model. Absent on backends without the registry. */
   models?: ModelStatus[];
   max_resident_models?: number | null;
+  /** A replayed conversation's limits. Absent on backends without the replay mode. */
+  max_messages?: number;
+  max_messages_chars?: number;
 }
 
 export interface Preset {
@@ -53,6 +56,13 @@ export interface Preset {
   group?: string;
   /** Counterfactual variants: one attribute swapped, everything else the same. The first is `prompt`. */
   variants?: { label: string; prompt: string }[];
+}
+
+/** One turn of a replayed conversation. Tool calls and results travel flattened into text. */
+export type ChatRole = "system" | "user" | "assistant";
+export interface ChatMessage {
+  role: ChatRole;
+  content: string;
 }
 
 /** POST /schema/from-pydantic: what pydantic's own model_json_schema() produced. */
@@ -163,6 +173,8 @@ export interface Meta {
   schema_in_prompt?: boolean;
   /** The exact text that was tokenized: system prompt, chat template and, in "none" mode, the hint. */
   prompt_text?: string;
+  /** A replayed conversation the chat template refused as it was: what was reshaped to fit. */
+  template_notes?: string[];
 }
 
 export interface Done {
@@ -180,7 +192,10 @@ export interface GenerateRequest {
   /** One of the allowlisted ids; omitted means the default. */
   model?: string | null;
   schema: Record<string, unknown>;
+  /** "" when `messages` is sent: the backend takes exactly one of the two. */
   prompt: string;
+  /** A replayed conversation instead of `prompt`; rendered as recorded, without the lab's system prompt. */
+  messages?: ChatMessage[];
   mode: ModeRequest;
   max_new_tokens: number;
   temperature: number;
@@ -248,6 +263,7 @@ export interface StreamMeta {
   top_k_report: number;
   tail_bins: number;
   use_chat_template: boolean;
+  template_notes?: string[];
 }
 
 export interface StreamStep {
@@ -278,7 +294,10 @@ export interface StreamDone {
 
 export interface StreamRequest {
   model?: string | null;
+  /** "" when `messages` is sent. */
   prompt: string;
+  /** A replayed conversation instead of `prompt`. */
+  messages?: ChatMessage[];
   max_new_tokens: number;
   temperature: number;
   top_k: number;

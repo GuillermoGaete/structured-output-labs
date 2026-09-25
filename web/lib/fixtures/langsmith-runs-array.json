@@ -1,0 +1,42 @@
+[
+  {
+    "id": "r-llm-b",
+    "name": "openai.chat.completions.create",
+    "run_type": "llm",
+    "start_time": "2025-06-03T08:00:02.000000",
+    "dotted_order": "20250603T080000000000Zr-root.20250603T080002000000Zr-llm-b",
+    "parent_run_id": "r-root",
+    "inputs": { "messages": [{ "role": "user", "content": "Classify: 'meh, it works'" }], "model": "gpt-4.1-mini" },
+    "outputs": null,
+    "error": "RateLimitError: Rate limit reached"
+  },
+  {
+    "id": "r-root",
+    "name": "classify_reviews",
+    "run_type": "chain",
+    "start_time": "2025-06-03T08:00:00.000000",
+    "dotted_order": "20250603T080000000000Zr-root",
+    "parent_run_id": null,
+    "inputs": { "reviews": 2 },
+    "outputs": {}
+  },
+  {
+    "id": "r-llm-a",
+    "name": "openai.chat.completions.create",
+    "run_type": "llm",
+    "start_time": "2025-06-03T08:00:01.000000",
+    "dotted_order": "20250603T080000000000Zr-root.20250603T080001000000Zr-llm-a",
+    "parent_run_id": "r-root",
+    "inputs": {
+      "model": "gpt-4.1-mini",
+      "temperature": 0.3,
+      "messages": [
+        { "role": "system", "content": "Classify the review's sentiment." },
+        { "role": "user", "content": [{ "type": "text", "text": "Classify: 'best purchase this year'" }] }
+      ],
+      "response_format": { "type": "json_schema", "json_schema": { "name": "Sentiment", "schema": { "type": "object", "properties": { "sentiment": { "type": "string", "enum": ["positive", "neutral", "negative"] } }, "required": ["sentiment"] } } }
+    },
+    "outputs": { "choices": [{ "index": 0, "message": { "role": "assistant", "content": "{\"sentiment\":\"positive\"}" } }] },
+    "error": null
+  }
+]

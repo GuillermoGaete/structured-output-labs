@@ -1,0 +1,6 @@
+[
+  { "type": "system", "data": { "content": "You are terse.", "additional_kwargs": {}, "type": "system" } },
+  { "type": "human", "data": { "content": "Name a prime number.", "additional_kwargs": {}, "type": "human" } },
+  { "type": "AIMessageChunk", "data": { "content": "7", "additional_kwargs": {}, "type": "AIMessageChunk" } },
+  { "type": "chat", "data": { "content": "Another one?", "role": "user", "type": "chat" } }
+]
