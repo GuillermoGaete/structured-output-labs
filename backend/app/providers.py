@@ -32,6 +32,8 @@ from typing import Any, Iterator
 
 import httpx
 
+from .chat import Message, plain_transcript, to_gemini
+
 # Vocabulary sizes, needed only to say how many entries the tail lumps together.
 # Approximate on purpose: neither provider publishes an exact figure.
 VOCAB_HINT = {"openai": 200_000, "gemini": 262_144}
@@ -131,10 +133,12 @@ def _step(
 # ----------------------------------------------------------------------- OpenAI
 
 
-def _openai(model: str, prompt: str, key: str, max_new_tokens: int, top_k_report: int, stop: Any) -> Iterator[tuple[str, dict[str, Any]]]:
+def _openai(
+    model: str, prompt: str, key: str, max_new_tokens: int, top_k_report: int, stop: Any, messages: list[Message] | None = None
+) -> Iterator[tuple[str, dict[str, Any]]]:
     body = {
         "model": model,
-        "messages": [{"role": "user", "content": prompt}],
+        "messages": messages or [{"role": "user", "content": prompt}],
         "max_completion_tokens": max_new_tokens,
         "temperature": 1,  # see the module docstring: keeps the logprobs raw
         "logprobs": True,
@@ -146,7 +150,7 @@ def _openai(model: str, prompt: str, key: str, max_new_tokens: int, top_k_report
         "model_id": f"openai:{model}",
         "vocab_size": vocab,
         "prompt_token_count": 0,
-        "prompt_rendered": prompt,
+        "prompt_rendered": plain_transcript(messages) if messages else prompt,
         "max_new_tokens": max_new_tokens,
         "sampling": {"temperature": 1.0, "top_k": 0, "top_p": 1.0, "seed": None},
         "top_k_report": min(top_k_report, MAX_TOP_LOGPROBS),
@@ -195,9 +199,12 @@ def _openai(model: str, prompt: str, key: str, max_new_tokens: int, top_k_report
 # ----------------------------------------------------------------------- Gemini
 
 
-def _gemini(model: str, prompt: str, key: str, max_new_tokens: int, top_k_report: int, stop: Any) -> Iterator[tuple[str, dict[str, Any]]]:
-    body = {
-        "contents": [{"role": "user", "parts": [{"text": prompt}]}],
+def _gemini(
+    model: str, prompt: str, key: str, max_new_tokens: int, top_k_report: int, stop: Any, messages: list[Message] | None = None
+) -> Iterator[tuple[str, dict[str, Any]]]:
+    system, contents = to_gemini(messages) if messages else (None, [{"role": "user", "parts": [{"text": prompt}]}])
+    body: dict[str, Any] = {
+        "contents": contents,
         "generationConfig": {
             "maxOutputTokens": max_new_tokens,
             "temperature": 1,  # see the module docstring
@@ -205,12 +212,14 @@ def _gemini(model: str, prompt: str, key: str, max_new_tokens: int, top_k_report
             "logprobs": min(top_k_report, MAX_TOP_LOGPROBS),
         },
     }
+    if system:
+        body["systemInstruction"] = {"parts": [{"text": system}]}
     vocab = VOCAB_HINT["gemini"]
     yield "meta", {
         "model_id": f"gemini:{model}",
         "vocab_size": vocab,
         "prompt_token_count": 0,
-        "prompt_rendered": prompt,
+        "prompt_rendered": plain_transcript(messages) if messages else prompt,
         "max_new_tokens": max_new_tokens,
         "sampling": {"temperature": 1.0, "top_k": 0, "top_p": 1.0, "seed": None},
         "top_k_report": min(top_k_report, MAX_TOP_LOGPROBS),
@@ -275,9 +284,10 @@ def stream(
     max_new_tokens: int = 48,
     top_k_report: int = 12,
     stop: Any = None,
+    messages: list[Message] | None = None,
 ) -> Iterator[tuple[str, dict[str, Any]]]:
-    """Yield ("meta" | "step" | "done", payload) from a hosted model."""
+    """Yield ("meta" | "step" | "done", payload) from a hosted model. `messages` replaces `prompt` with a conversation."""
     provider, model = parse_model(model_id)
     if not key:
         raise ProviderError(f"no API key for {provider}; add one in the app's settings", status=401)
-    yield from PROVIDERS[provider](model, prompt, key, max_new_tokens, top_k_report, stop)
+    yield from PROVIDERS[provider](model, prompt, key, max_new_tokens, top_k_report, stop, messages)

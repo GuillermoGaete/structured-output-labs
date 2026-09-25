@@ -161,6 +161,22 @@ describe("reduce", () => {
     expect(Object.keys(p.runs).length).toBe(3);
     expect("traces" in p).toBe(false);
   });
+
+  it("keeps a replay's conversation once per batch and puts it back on hydrate", () => {
+    const messages = [
+      { role: "system" as const, content: "S" },
+      { role: "user" as const, content: "U" },
+    ];
+    const { batch, runs } = batchOf(3);
+    const replay = runs.map((r) => ({ ...r, status: "done" as const, request: { ...REQUEST, prompt: "", messages } }));
+    const s = reduce(INITIAL, { type: "createBatch", batch, runs: replay });
+    const p = JSON.parse(JSON.stringify(toPersisted(s)));
+    expect(p.runs[replay[0].id].request.messages).toEqual(messages);
+    expect(p.runs[replay[1].id].request.messages).toBeUndefined();
+    expect(p.runs[replay[2].id].request.messages).toBeUndefined();
+    const back = reduce(INITIAL, { type: "hydrate", persisted: p });
+    for (const r of replay) expect(back.runs[r.id].request.messages).toEqual(messages);
+  });
 });
 
 describe("pins", () => {

@@ -1,0 +1,115 @@
+{
+  "id": "0b1f6a54-0000-4000-8000-000000000001",
+  "name": "LangGraph",
+  "run_type": "chain",
+  "start_time": "2025-06-01T10:00:00.000000",
+  "dotted_order": "20250601T100000000000Z0b1f6a54-0000-4000-8000-000000000001",
+  "parent_run_id": null,
+  "inputs": { "messages": [{ "lc": 1, "type": "constructor", "id": ["langchain", "schema", "messages", "HumanMessage"], "kwargs": { "content": "What's the weather in Paris? Answer in one sentence.", "type": "human" } }] },
+  "outputs": {},
+  "error": null,
+  "child_runs": [
+    {
+      "id": "0b1f6a54-0000-4000-8000-000000000005",
+      "name": "agent",
+      "run_type": "chain",
+      "start_time": "2025-06-01T10:00:02.000000",
+      "dotted_order": "20250601T100000000000Z0b1f6a54-0000-4000-8000-000000000001.20250601T100002000000Z0b1f6a54-0000-4000-8000-000000000005",
+      "parent_run_id": "0b1f6a54-0000-4000-8000-000000000001",
+      "inputs": {},
+      "outputs": {},
+      "child_runs": [
+        {
+          "id": "0b1f6a54-0000-4000-8000-000000000006",
+          "name": "ChatOpenAI",
+          "run_type": "llm",
+          "start_time": "2025-06-01T10:00:02.100000",
+          "dotted_order": "20250601T100000000000Z0b1f6a54-0000-4000-8000-000000000001.20250601T100002000000Z0b1f6a54-0000-4000-8000-000000000005.20250601T100002100000Z0b1f6a54-0000-4000-8000-000000000006",
+          "parent_run_id": "0b1f6a54-0000-4000-8000-000000000005",
+          "extra": {
+            "invocation_params": { "model": "gpt-4o-mini", "model_name": "gpt-4o-mini", "temperature": 0.2, "_type": "openai-chat", "tools": [{ "type": "function", "function": { "name": "get_weather", "description": "Current weather for a city", "parameters": { "type": "object", "properties": { "city": { "type": "string" } }, "required": ["city"] } } }] },
+            "metadata": { "ls_provider": "openai", "ls_model_name": "gpt-4o-mini", "ls_model_type": "chat", "ls_temperature": 0.2 }
+          },
+          "inputs": {
+            "messages": [
+              [
+                { "lc": 1, "type": "constructor", "id": ["langchain", "schema", "messages", "SystemMessage"], "kwargs": { "content": "You are a helpful weather assistant. Use the tools.", "type": "system" } },
+                { "lc": 1, "type": "constructor", "id": ["langchain", "schema", "messages", "HumanMessage"], "kwargs": { "content": "What's the weather in Paris? Answer in one sentence.", "type": "human" } },
+                { "lc": 1, "type": "constructor", "id": ["langchain", "schema", "messages", "AIMessage"], "kwargs": { "content": "", "type": "ai", "tool_calls": [{ "name": "get_weather", "args": { "city": "Paris" }, "id": "call_1", "type": "tool_call" }] } },
+                { "lc": 1, "type": "constructor", "id": ["langchain", "schema", "messages", "ToolMessage"], "kwargs": { "content": "{\"temp_c\": 18, \"sky\": \"sunny\"}", "type": "tool", "name": "get_weather", "tool_call_id": "call_1" } }
+              ]
+            ]
+          },
+          "outputs": {
+            "generations": [[{ "text": "It is 18 °C and sunny in Paris right now.", "type": "ChatGeneration", "message": { "lc": 1, "type": "constructor", "id": ["langchain", "schema", "messages", "AIMessage"], "kwargs": { "content": "It is 18 °C and sunny in Paris right now.", "type": "ai", "tool_calls": [], "invalid_tool_calls": [] } } }]],
+            "llm_output": { "model_name": "gpt-4o-mini" },
+            "type": "LLMResult"
+          },
+          "error": null,
+          "child_runs": []
+        }
+      ]
+    },
+    {
+      "id": "0b1f6a54-0000-4000-8000-000000000002",
+      "name": "agent",
+      "run_type": "chain",
+      "start_time": "2025-06-01T10:00:00.100000",
+      "dotted_order": "20250601T100000000000Z0b1f6a54-0000-4000-8000-000000000001.20250601T100000100000Z0b1f6a54-0000-4000-8000-000000000002",
+      "parent_run_id": "0b1f6a54-0000-4000-8000-000000000001",
+      "inputs": {},
+      "outputs": {},
+      "child_runs": [
+        {
+          "id": "0b1f6a54-0000-4000-8000-000000000003",
+          "name": "ChatOpenAI",
+          "run_type": "llm",
+          "start_time": "2025-06-01T10:00:00.200000",
+          "dotted_order": "20250601T100000000000Z0b1f6a54-0000-4000-8000-000000000001.20250601T100000100000Z0b1f6a54-0000-4000-8000-000000000002.20250601T100000200000Z0b1f6a54-0000-4000-8000-000000000003",
+          "parent_run_id": "0b1f6a54-0000-4000-8000-000000000002",
+          "extra": {
+            "invocation_params": { "model": "gpt-4o-mini", "model_name": "gpt-4o-mini", "temperature": 0.2, "_type": "openai-chat", "tools": [{ "type": "function", "function": { "name": "get_weather", "description": "Current weather for a city", "parameters": { "type": "object", "properties": { "city": { "type": "string" } }, "required": ["city"] } } }] },
+            "metadata": { "ls_provider": "openai", "ls_model_name": "gpt-4o-mini", "ls_model_type": "chat", "ls_temperature": 0.2 }
+          },
+          "inputs": {
+            "messages": [
+              [
+                { "lc": 1, "type": "constructor", "id": ["langchain", "schema", "messages", "SystemMessage"], "kwargs": { "content": "You are a helpful weather assistant. Use the tools.", "type": "system" } },
+                { "lc": 1, "type": "constructor", "id": ["langchain", "schema", "messages", "HumanMessage"], "kwargs": { "content": "What's the weather in Paris? Answer in one sentence.", "type": "human" } }
+              ]
+            ]
+          },
+          "outputs": {
+            "generations": [[{ "text": "", "type": "ChatGeneration", "message": { "lc": 1, "type": "constructor", "id": ["langchain", "schema", "messages", "AIMessage"], "kwargs": { "content": "", "type": "ai", "additional_kwargs": { "tool_calls": [{ "id": "call_1", "type": "function", "function": { "name": "get_weather", "arguments": "{\"city\":\"Paris\"}" } }] }, "tool_calls": [{ "name": "get_weather", "args": { "city": "Paris" }, "id": "call_1", "type": "tool_call" }] } } }]],
+            "type": "LLMResult"
+          },
+          "error": null,
+          "child_runs": []
+        }
+      ]
+    },
+    {
+      "id": "0b1f6a54-0000-4000-8000-000000000004",
+      "name": "tools",
+      "run_type": "chain",
+      "start_time": "2025-06-01T10:00:01.000000",
+      "dotted_order": "20250601T100000000000Z0b1f6a54-0000-4000-8000-000000000001.20250601T100001000000Z0b1f6a54-0000-4000-8000-000000000004",
+      "parent_run_id": "0b1f6a54-0000-4000-8000-000000000001",
+      "inputs": {},
+      "outputs": {},
+      "child_runs": [
+        {
+          "id": "0b1f6a54-0000-4000-8000-000000000007",
+          "name": "get_weather",
+          "run_type": "tool",
+          "start_time": "2025-06-01T10:00:01.100000",
+          "dotted_order": "20250601T100000000000Z0b1f6a54-0000-4000-8000-000000000001.20250601T100001000000Z0b1f6a54-0000-4000-8000-000000000004.20250601T100001100000Z0b1f6a54-0000-4000-8000-000000000007",
+          "parent_run_id": "0b1f6a54-0000-4000-8000-000000000004",
+          "inputs": { "input": "{'city': 'Paris'}" },
+          "outputs": { "output": "{\"temp_c\": 18, \"sky\": \"sunny\"}" },
+          "child_runs": []
+        }
+      ]
+    }
+  ]
+}

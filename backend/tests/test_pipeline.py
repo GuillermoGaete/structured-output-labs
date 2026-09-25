@@ -128,6 +128,96 @@ def test_chat_template_is_asked_not_to_think(engine: Engine):
         engine.tokenizer = real
 
 
+REPLAY = [
+    {"role": "system", "content": "You are a support bot."},
+    {"role": "user", "content": "My order is late."},
+    {"role": "assistant", "content": "Sorry to hear that."},
+    {"role": "user", "content": "Order 42, please check."},
+]
+
+
+def test_a_replayed_conversation_goes_through_the_template_as_recorded(engine: Engine):
+    """No lab system prompt: the trace's own messages, in order, with the same template flags."""
+
+    class Tok:
+        chat_template = "{% for m in messages %}{{ m.content }}{% endfor %}"
+
+        def __init__(self) -> None:
+            self.seen: list | None = None
+            self.kwargs: dict | None = None
+
+        def apply_chat_template(self, messages, **kwargs):
+            self.seen, self.kwargs = messages, kwargs
+            return "|".join(f"{m['role']}:{m['content']}" for m in messages)
+
+    tok = Tok()
+    real = engine.tokenizer
+    engine.tokenizer = tok
+    try:
+        text, notes = engine.build_prompt("", True, messages=REPLAY)
+        assert text == "|".join(f"{m['role']}:{m['content']}" for m in REPLAY)
+        assert SYSTEM_PROMPT not in text and notes == []
+        assert tok.kwargs is not None and tok.kwargs["enable_thinking"] is False and tok.kwargs["add_generation_prompt"] is True
+        # "none" mode: the hint rides on the last user message
+        hinted = engine.format_prompt("", True, PRESETS["person"]["schema"], None, REPLAY)
+        assert hinted.split("|")[-1].startswith("user:Order 42, please check.\n\n") and "Return just the JSON:" in hinted
+    finally:
+        engine.tokenizer = real
+
+
+def test_a_template_that_refuses_the_system_role_gets_the_conversation_reshaped(engine: Engine):
+    class Strict:
+        chat_template = "strict"
+
+        def apply_chat_template(self, messages, **kwargs):
+            if any(m["role"] == "system" for m in messages):
+                raise ValueError("System role not supported")
+            return "|".join(f"{m['role']}:{m['content']}" for m in messages)
+
+    real = engine.tokenizer
+    engine.tokenizer = Strict()
+    try:
+        text, notes = engine.build_prompt("", True, messages=REPLAY)
+        assert text.startswith("user:You are a support bot.\n\nMy order is late.|assistant:")
+        assert notes and "folded" in notes[0]
+    finally:
+        engine.tokenizer = real
+
+    class Broken:
+        chat_template = "broken"
+
+        def apply_chat_template(self, messages, **kwargs):
+            raise ValueError("nope")
+
+    engine.tokenizer = Broken()
+    try:
+        with pytest.raises(ValueError, match="untick the chat template"):
+            engine.build_prompt("", True, messages=REPLAY)
+    finally:
+        engine.tokenizer = real
+
+
+def test_a_replay_on_the_toy_model_reads_the_whole_conversation(engine: Engine):
+    """The toy tokenizer has no template: the conversation becomes a transcript."""
+    schema = PRESETS["person"]["schema"]
+    meta = next(p for n, p in engine.generate(schema, "", mode="fsm", max_new_tokens=2, messages=REPLAY) if n == "meta")
+    assert meta["prompt_text"].startswith("System: You are a support bot.\n\nUser: My order is late.")
+    assert meta["prompt_text"].endswith("User: Order 42, please check.\n\nAssistant:")
+    assert SYSTEM_PROMPT not in meta["prompt_text"] and meta["template_notes"] == []
+    none_meta = next(p for n, p in engine.generate(schema, "", mode="none", max_new_tokens=1, messages=REPLAY) if n == "meta")
+    assert "Order 42, please check.\n\nAnswer directly" in none_meta["prompt_text"]
+    # one user message is sent as its own text, the same as a prompt
+    single = next(p for n, p in engine.generate(schema, "", mode="fsm", max_new_tokens=1, use_chat_template=False, messages=[{"role": "user", "content": "Ada"}]) if n == "meta")
+    plain = next(p for n, p in engine.generate(schema, "Ada", mode="fsm", max_new_tokens=1, use_chat_template=False) if n == "meta")
+    assert single["prompt_text"] == plain["prompt_text"] == "Ada"
+
+
+def test_a_conversation_longer_than_the_model_reads_is_refused(engine: Engine):
+    long = [{"role": "user", "content": "the value of the city " * 400}]
+    with pytest.raises(ValueError, match="reads at most"):
+        next(engine.generate(PRESETS["person"]["schema"], "", mode="fsm", max_new_tokens=8, messages=long))
+
+
 def test_reason_comes_before_the_outcome():
     """Where a preset asks for a reason, it is the first property: the mask makes the model write it before deciding."""
     seen = 0
@@ -469,3 +559,34 @@ def test_http_surface(monkeypatch):
         assert "event: meta" in body
         assert "event: step" in body
         assert "event: done" in body
+
+
+def test_http_replay_takes_a_conversation(monkeypatch):
+    monkeypatch.setenv("TOY_MODEL", "1")
+    from app import main
+
+    schema = PRESETS["person"]["schema"]
+    with TestClient(main.app) as client:
+        for _ in range(200):
+            health = client.get("/health").json()
+            if health["loaded"] or health["error"]:
+                break
+        assert health["loaded"], health
+        assert health["max_messages"] == main.MAX_MESSAGES and health["max_messages_chars"] == main.MAX_MESSAGES_CHARS
+        with client.stream("POST", "/generate", json={"schema": schema, "messages": REPLAY, "max_new_tokens": 4, "seed": 1}) as response:
+            assert response.status_code == 200
+            body = "".join(response.iter_text())
+        assert "event: meta" in body and "Order 42" in body and "event: done" in body
+
+        def status(**extra) -> int:
+            return client.post("/generate", json={"schema": schema, "max_new_tokens": 2, **extra}).status_code
+
+        assert status() == 422, "neither a prompt nor messages"
+        assert status(prompt="hi", messages=REPLAY) == 422, "both"
+        assert status(messages=[]) == 422
+        assert status(messages=[{"role": "user", "content": "  "}]) == 422, "nothing but blanks"
+        assert status(messages=REPLAY[:3]) == 422, "ends with the assistant"
+        assert status(messages=[{"role": "tool", "content": "x"}]) == 422, "tool turns arrive flattened"
+        assert status(messages=[{"role": "user", "content": "x"}] * (main.MAX_MESSAGES + 1)) == 422
+        half = main.MAX_MESSAGES_CHARS // 2 + 1
+        assert status(messages=[{"role": "user", "content": "x" * half}, {"role": "user", "content": "y" * half}]) == 422

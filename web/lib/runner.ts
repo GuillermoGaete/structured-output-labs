@@ -25,6 +25,7 @@ export interface BatchPlan {
   branch?: Branch | null;
   label: string;
   probe?: Batch["probe"];
+  replay?: Batch["replay"];
 }
 
 const controllers = new Map<string, AbortController>();
@@ -108,6 +109,7 @@ export function startBatch(plan: BatchPlan): Started | null {
     label: n > 1 ? `${plan.label} · ×${n}` : plan.label,
     backendUrl: plan.backendUrl,
     probe: plan.probe ?? null,
+    replay: plan.replay ?? null,
   };
   runStore.dispatch({ type: "createBatch", batch, runs });
 
@@ -160,6 +162,7 @@ export function rerun(run: Run, batch: Batch, seed: "same" | "new", backendUrl: 
     providerKey,
     branch: run.branch,
     label: batch.label.replace(/ · ×\d+$/, ""),
+    replay: batch.replay ?? null,
   });
 }
 
@@ -192,6 +195,8 @@ export function branchFrom(parent: Run, parentBatch: Batch, atStep: number, opts
     const request: StreamRequest = {
       model: parent.request.model,
       prompt: parent.request.prompt,
+      // A replay renders its conversation the same way in both modes, so the prefix lines up.
+      messages: parent.request.messages,
       max_new_tokens: Math.max(parent.request.max_new_tokens, prefix.length + 8),
       temperature: opts.temperature ?? parent.request.temperature,
       top_k: parent.request.top_k_sampling,
@@ -203,7 +208,7 @@ export function branchFrom(parent: Run, parentBatch: Batch, atStep: number, opts
       prefix_token_ids: prefix,
       json_system_prompt: true,
     };
-    return startBatch({ kind: "logprobs", backendUrl: opts.backendUrl, n, seedPolicy, request, editor: parentBatch.editor, branch, label });
+    return startBatch({ kind: "logprobs", backendUrl: opts.backendUrl, n, seedPolicy, request, editor: parentBatch.editor, branch, label, replay: parentBatch.replay ?? null });
   }
   const request = {
     ...parent.request,
@@ -222,6 +227,7 @@ export function branchFrom(parent: Run, parentBatch: Batch, atStep: number, opts
     providerKey: opts.providerKey,
     branch,
     label,
+    replay: parentBatch.replay ?? null,
   });
 }
 

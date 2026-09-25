@@ -25,6 +25,23 @@ export interface Branch {
   unmasked: boolean;
 }
 
+/** A batch that replays one LLM call of an imported trace, cut at a message. */
+export interface ReplayInfo {
+  traceName: string;
+  callId: string;
+  /** "#2 ChatOpenAI", for labels. */
+  callLabel: string;
+  /** How many of the call's messages were sent. */
+  cutAt: number;
+  /** The conversation sent differs from the trace's. */
+  edited: boolean;
+  /** What the trace recorded at the cut, truncated; null when it recorded nothing there. */
+  recorded: string | null;
+  /** A structured reply (JSON content or a forced tool call's arguments), when small enough to keep. */
+  recordedStructured?: unknown;
+  recordedModel?: string | null;
+}
+
 interface RunBase {
   id: string;
   batchId: string;
@@ -110,6 +127,8 @@ export interface Batch {
   backendUrl: string;
   /** Set when the batch is one variant of a counterfactual probe; batches sharing `presetId` are compared. */
   probe?: { presetId: string; presetName: string; variant: string } | null;
+  /** Set when the batch replays a trace; the recorded reply is compared with each run. */
+  replay?: ReplayInfo | null;
 }
 
 export type BatchStatus = "queued" | "running" | "done" | "partial" | "cancelled";

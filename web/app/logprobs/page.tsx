@@ -183,6 +183,10 @@ export default function LogprobsPage() {
   const duplicate = (run: Run, batch: Batch) => {
     void batch;
     if (run.kind !== "logprobs") return false;
+    if (run.request.messages?.length) {
+      setNotes([{ level: "info", text: "a replayed conversation: Duplicate & edit it on the Replay page" }]);
+      return false;
+    }
     update(patchFromLogprobsRun(run));
     window.scrollTo({ top: 0, behavior: "smooth" });
     return true;

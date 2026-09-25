@@ -243,3 +243,69 @@ def test_gemini_without_logprobs_says_which_models_have_them(monkeypatch):
     with pytest.raises(ProviderError) as e:
         list(stream("gemini:gemini-3.8-flash", "hi", key="AIza-test"))
     assert e.value.status == 422 and "2.5" in e.value.message
+
+
+CONVERSATION = [
+    {"role": "system", "content": "Answer in one word."},
+    {"role": "user", "content": "Capital of France?"},
+    {"role": "assistant", "content": "Paris."},
+    {"role": "user", "content": "And of Italy?"},
+]
+
+
+def test_openai_receives_a_replayed_conversation_as_is(monkeypatch):
+    sent: dict = {}
+
+    class FakeClient:
+        def __init__(self, **kw):
+            pass
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *exc):
+            return False
+
+        def stream(self, method, url, headers=None, json=None):
+            sent.update({"body": json or {}})
+            return _FakeStream(200, [_openai_chunk(" Rome", [(" Rome", math.log(0.9))]), "data: [DONE]"])
+
+    monkeypatch.setattr(providers.httpx, "Client", FakeClient)
+    events = list(stream("openai:gpt-4.1-mini", "", key="sk-test", messages=CONVERSATION))
+    assert sent["body"]["messages"] == CONVERSATION
+    assert events[0][1]["prompt_rendered"].startswith("System: Answer in one word.") and events[0][1]["prompt_rendered"].endswith("Assistant:")
+    assert events[-1][1]["text"] == " Rome"
+
+
+def test_gemini_receives_a_system_instruction_and_model_turns(monkeypatch):
+    sent: dict = {}
+    payload = {
+        "candidates": [
+            {
+                "logprobsResult": {
+                    "chosenCandidates": [{"token": "Rome", "tokenId": 7, "logProbability": math.log(0.9)}],
+                    "topCandidates": [{"candidates": [{"token": "Rome", "logProbability": math.log(0.9)}]}],
+                }
+            }
+        ]
+    }
+
+    class FakeClient:
+        def __init__(self, **kw):
+            pass
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *exc):
+            return False
+
+        def post(self, url, headers=None, json=None):
+            sent.update({"body": json or {}})
+            return _FakeResponse(200, payload)
+
+    monkeypatch.setattr(providers.httpx, "Client", FakeClient)
+    list(stream("gemini:gemini-2.5-flash-lite", "", key="AIza-test", messages=CONVERSATION))
+    assert sent["body"]["systemInstruction"] == {"parts": [{"text": "Answer in one word."}]}
+    assert [c["role"] for c in sent["body"]["contents"]] == ["user", "model", "user"]
+    assert sent["body"]["contents"][-1]["parts"][0]["text"] == "And of Italy?"

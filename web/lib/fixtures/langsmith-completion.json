@@ -1,0 +1,10 @@
+{
+  "id": "c0000000-0000-4000-8000-000000000001",
+  "name": "OpenAI",
+  "run_type": "llm",
+  "start_time": "2025-06-04T12:00:00.000000",
+  "extra": { "invocation_params": { "model_name": "gpt-3.5-turbo-instruct", "temperature": 0.7, "max_tokens": 16, "_type": "openai" } },
+  "inputs": { "prompts": ["Q: What is six times seven?\nA:"] },
+  "outputs": { "generations": [[{ "text": " 42", "generation_info": { "finish_reason": "stop" }, "type": "Generation" }]], "type": "LLMResult" },
+  "error": null
+}

@@ -218,6 +218,10 @@ export default function LabPage() {
 
   const duplicate = (run: Run, batch: Batch) => {
     if (run.kind !== "constrained") return false;
+    if (run.request.messages?.length) {
+      setNotes([{ level: "info", text: "a replayed conversation: Duplicate & edit it on the Replay page" }]);
+      return false;
+    }
     update(patchFromRun(run, batch));
     window.scrollTo({ top: 0, behavior: "smooth" });
     return true;

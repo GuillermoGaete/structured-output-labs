@@ -23,7 +23,7 @@ There is no explanatory copy: every string is a control label, a number, or a ch
 
 ## Runs, repeats and branches
 
-Every run lands in a tab above the result, in both modes, and nothing is lost when you generate again. A tab's menu
+Every run lands in a tab above the result, in every mode, and nothing is lost when you generate again. A tab's menu
 re-runs it with the same seed (the same trace again, token by token, on a local model) or a new one, puts its
 schema, prompt and knobs back in the setup, or closes it. Summaries of the last 200 runs survive a reload; the full
 steps of the last 20 stay in memory.
@@ -57,8 +57,41 @@ steps of the last 20 stay in memory.
   of the schema. llguidance compiles that grammar internally and does not print it, so the text is derived from the
   schema with the same compact separators; it is a reading, not a dump.
 
+## Replay a LangChain trace
+
+The *Replay* tab (`/replay`) imports a trace and generates again from any point of it, with either engine.
+
+- **Import** — upload, drop or paste a LangSmith run exported as JSON: a single LLM call, a chain or an agent with its
+  `child_runs`, `{ "runs": [...] }`, or a flat list or JSON Lines of runs linked by `parent_run_id` (siblings in
+  `dotted_order`). A bare conversation works too: LangChain messages as `dumpd` or `messages_to_dict` produce them, a
+  `ChatPromptValue`, `{role, content}` or `{type, content}` dicts, `[role, content]` pairs, or `{ "messages": [...] }`
+  (an OpenAI-style request or a LangGraph state). Every `llm` run becomes a call you can pick, with the path of runs
+  above it.
+- **Cut** — the conversation of the picked call is an editor, and the cut is a line between two messages: everything
+  above it is sent, the model writes the next assistant message, and the panel over the result compares that with
+  what the trace recorded there — exact or not, words in common, and field by field when both sides are JSON; a
+  Repeat ×N batch is compared run by run. Cuts sit before any assistant message, so an agent's call can be replayed
+  from before its tool call or before its final answer.
+- **Edit** — change a message's text or role, delete it, or insert one: a counterfactual, marked *edited* on the run.
+  *Reset to trace* puts the recorded messages back.
+- **Engine** — *Logprobs* runs on a local model or a hosted one (OpenAI, Gemini) and shows the distribution behind every
+  token. *Constrained* runs on a local model under a mask built from the schema the call asked for, found in
+  `response_format`, `ls_structured_output_format` (`with_structured_output`), a forced tool, or Gemini's
+  `response_schema`; a schema can also be pasted. A reply that was a call to the structured-output tool is compared as
+  its arguments.
+
+What is replayed is the trace's own conversation: the lab's JSON system prompt is not added, and in *Prompt only* the
+schema hint goes on the last user message. The backend accepts only system, user and assistant turns, so tool calls
+are written into the assistant's text (`[tool call · name] {...}`), tool results become user turns
+(`[tool result · name]`), and images or files become placeholders. A chat template that refuses the conversation (no
+system role, strict alternation) gets one retry with the system folded into the first user turn and consecutive turns
+merged, and the run says so. Without a template the conversation is sent as a `User: … Assistant:` transcript, a
+single user message as its own text. `/generate` and `/stream` take `messages` instead of `prompt`, up to
+`MAX_MESSAGES` (64) messages and `MAX_MESSAGES_CHARS` (24,000) characters in all, and refuse a conversation that
+would not fit the model's context. Runs, repeats, branches and pins work on replays as on any other run.
+
 ```
-web/            Next.js app, one route (deploy to Vercel)   ── talks to ──▶  backend/   FastAPI + outlines (deploy to a Hugging Face Space)
+web/            Next.js app, three routes (deploy to Vercel)   ── talks to ──▶  backend/   FastAPI + outlines (deploy to a Hugging Face Space)
 presentation/   HTML/SVG slides → PNG 1920×1080 + SVG
 ```
 

@@ -1,0 +1,65 @@
+{
+  "id": "5d2c0000-0000-4000-8000-000000000001",
+  "name": "RunnableSequence",
+  "run_type": "chain",
+  "start_time": "2025-06-02T09:00:00.000000",
+  "inputs": { "text": "Ada Lovelace, 36, lives in London." },
+  "outputs": { "name": "Ada Lovelace", "age": 36, "city": "London" },
+  "child_runs": [
+    {
+      "id": "5d2c0000-0000-4000-8000-000000000002",
+      "name": "ChatPromptTemplate",
+      "run_type": "prompt",
+      "start_time": "2025-06-02T09:00:00.100000",
+      "parent_run_id": "5d2c0000-0000-4000-8000-000000000001",
+      "inputs": { "text": "Ada Lovelace, 36, lives in London." },
+      "outputs": { "output": { "lc": 1, "type": "constructor", "id": ["langchain", "prompts", "chat", "ChatPromptValue"], "kwargs": { "messages": [] } } },
+      "child_runs": []
+    },
+    {
+      "id": "5d2c0000-0000-4000-8000-000000000003",
+      "name": "ChatOpenAI",
+      "run_type": "llm",
+      "start_time": "2025-06-02T09:00:00.200000",
+      "parent_run_id": "5d2c0000-0000-4000-8000-000000000001",
+      "extra": {
+        "invocation_params": {
+          "model": "gpt-4o-mini",
+          "temperature": 0,
+          "max_tokens": 120,
+          "_type": "openai-chat",
+          "tools": [{ "type": "function", "function": { "name": "Person", "description": "A person mentioned in the text.", "parameters": { "type": "object", "properties": { "name": { "type": "string" }, "age": { "type": "integer" }, "city": { "type": "string" } }, "required": ["name", "age", "city"] } } }],
+          "tool_choice": { "type": "function", "function": { "name": "Person" } },
+          "parallel_tool_calls": false
+        },
+        "metadata": {
+          "ls_provider": "openai",
+          "ls_model_name": "gpt-4o-mini",
+          "ls_structured_output_format": { "kwargs": { "method": "function_calling" }, "schema": { "type": "function", "function": { "name": "Person", "description": "A person mentioned in the text.", "parameters": { "type": "object", "properties": { "name": { "type": "string" }, "age": { "type": "integer" }, "city": { "type": "string" } }, "required": ["name", "age", "city"] } } } }
+        }
+      },
+      "inputs": {
+        "messages": [
+          [
+            { "lc": 1, "type": "constructor", "id": ["langchain", "schema", "messages", "SystemMessage"], "kwargs": { "content": "Extract the person described by the user.", "type": "system" } },
+            { "lc": 1, "type": "constructor", "id": ["langchain", "schema", "messages", "HumanMessage"], "kwargs": { "content": "Ada Lovelace, 36, lives in London.", "type": "human" } }
+          ]
+        ]
+      },
+      "outputs": {
+        "generations": [[{ "text": "", "type": "ChatGeneration", "message": { "lc": 1, "type": "constructor", "id": ["langchain", "schema", "messages", "AIMessage"], "kwargs": { "content": "", "type": "ai", "additional_kwargs": { "tool_calls": [{ "id": "call_p", "type": "function", "function": { "name": "Person", "arguments": "{\"name\":\"Ada Lovelace\",\"age\":36,\"city\":\"London\"}" } }] }, "tool_calls": [{ "name": "Person", "args": { "name": "Ada Lovelace", "age": 36, "city": "London" }, "id": "call_p", "type": "tool_call" }] } } }]]
+      },
+      "child_runs": []
+    },
+    {
+      "id": "5d2c0000-0000-4000-8000-000000000004",
+      "name": "PydanticToolsParser",
+      "run_type": "parser",
+      "start_time": "2025-06-02T09:00:01.000000",
+      "parent_run_id": "5d2c0000-0000-4000-8000-000000000001",
+      "inputs": {},
+      "outputs": {},
+      "child_runs": []
+    }
+  ]
+}

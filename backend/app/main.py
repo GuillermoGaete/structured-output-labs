@@ -4,6 +4,10 @@
     GET  /presets   -> editable starting points (schema + prompt)
     POST /compile   -> schema -> regex + automata for the graph view
     POST /generate  -> Server-Sent Events: meta, step*, done
+    POST /stream    -> the same, unconstrained, with the distribution behind every token
+
+`/generate` and `/stream` take either a `prompt` or a `messages` conversation
+(a replayed trace); see `ChatInput`.
 """
 
 from __future__ import annotations
@@ -19,7 +23,7 @@ from typing import Any, Literal
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 from sse_starlette.sse import EventSourceResponse
 
 from .engine import BadPrefix, Engine, engines_available
@@ -30,6 +34,9 @@ from .presets import PRESETS
 from .pydantic_schema import MAX_SOURCE_CHARS, BadModel, from_pydantic
 
 MAX_NEW_TOKENS_CAP = int(os.environ.get("MAX_NEW_TOKENS_CAP", "200"))
+# A replayed conversation: how many messages, and how many characters in all of them.
+MAX_MESSAGES = int(os.environ.get("MAX_MESSAGES", "64"))
+MAX_MESSAGES_CHARS = int(os.environ.get("MAX_MESSAGES_CHARS", "24000"))
 # The caller's provider key travels on this header and is never stored or logged.
 PROVIDER_KEY_HEADER = "x-provider-key"
 
@@ -83,10 +90,43 @@ class CompileRequest(ModelChoice):
     mode: Literal["auto", "fsm", "cfg", "xgr", "none"] = "auto"
 
 
-class StreamRequest(ModelChoice):
+class ChatMessage(BaseModel):
+    """One turn of a replayed conversation. Tool calls and results arrive flattened into text."""
+
+    role: Literal["system", "user", "assistant"]
+    content: str = Field(max_length=MAX_MESSAGES_CHARS)
+
+
+class ChatInput(BaseModel):
+    """What the model reads: a `prompt`, or a `messages` conversation. Exactly one of them."""
+
+    prompt: str = Field(default="", max_length=4000)
+    messages: list[ChatMessage] | None = Field(default=None, max_length=MAX_MESSAGES)
+
+    @model_validator(mode="after")
+    def _one_input(self):
+        if self.messages is None:
+            if not self.prompt:
+                raise ValueError("send a prompt or a messages conversation")
+            return self
+        if self.prompt:
+            raise ValueError("send a prompt or a messages conversation, not both")
+        if not self.messages or not any(m.content.strip() for m in self.messages):
+            raise ValueError("the conversation is empty")
+        total = sum(len(m.content) for m in self.messages)
+        if total > MAX_MESSAGES_CHARS:
+            raise ValueError(f"the conversation has {total} characters; the limit is {MAX_MESSAGES_CHARS}")
+        if self.messages[-1].role == "assistant":
+            raise ValueError("the conversation ends with an assistant message: cut before it, so the model writes it")
+        return self
+
+    def conversation(self) -> list[dict[str, str]] | None:
+        return [m.model_dump() for m in self.messages] if self.messages else None
+
+
+class StreamRequest(ModelChoice, ChatInput):
     """The logprobs mode: no schema, no mask, just the distribution per token."""
 
-    prompt: str = Field(min_length=1, max_length=4000)
     max_new_tokens: int = Field(default=48, ge=1, le=STREAM_TOKENS_CAP)
     temperature: float = Field(default=0.8, ge=0.0, le=2.0)
     top_k: int = Field(default=0, ge=0, le=1000)
@@ -108,8 +148,7 @@ class PydanticRequest(BaseModel):
     model: str | None = Field(default=None, max_length=200)
 
 
-class GenerateRequest(CompileRequest):
-    prompt: str = Field(min_length=1, max_length=4000)
+class GenerateRequest(CompileRequest, ChatInput):
     max_new_tokens: int = Field(default=120, ge=1, le=MAX_NEW_TOKENS_CAP)
     temperature: float = Field(default=0.0, ge=0.0, le=2.0)
     top_k_sampling: int = Field(default=0, ge=0, le=100)
@@ -175,6 +214,8 @@ def health() -> dict[str, Any]:
         "uptime_s": round(time.time() - state.started_at, 1),
         "load_time_s": default.get("load_time_s") if default else None,
         "max_new_tokens_cap": MAX_NEW_TOKENS_CAP,
+        "max_messages": MAX_MESSAGES,
+        "max_messages_chars": MAX_MESSAGES_CHARS,
         "engines": engines_available(),
         "models": rows,
         "max_resident_models": registry.max_resident if registry else None,
@@ -282,6 +323,7 @@ async def stream_endpoint(req: StreamRequest, request: Request) -> EventSourceRe
                 max_new_tokens=req.max_new_tokens,
                 top_k_report=req.top_k_report,
                 stop=halt,
+                messages=req.conversation(),
             ):
                 events.put((name, payload))
         except ProviderError as exc:
@@ -309,6 +351,7 @@ async def stream_endpoint(req: StreamRequest, request: Request) -> EventSourceRe
                     stop=halt,
                     prefix_token_ids=req.prefix_token_ids,
                     json_system_prompt=req.json_system_prompt,
+                    messages=req.conversation(),
                 ):
                     events.put((name, payload))
         except Exception as exc:
@@ -372,6 +415,7 @@ async def generate(req: GenerateRequest, request: Request) -> EventSourceRespons
                     stop=halt,
                     prefix_token_ids=req.prefix_token_ids,
                     schema_hint=req.schema_hint,
+                    messages=req.conversation(),
                 ):
                     events.put((name, payload))
         except BadPrefix as exc:

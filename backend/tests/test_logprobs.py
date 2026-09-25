@@ -155,3 +155,49 @@ def test_stream_can_render_the_constrained_prompt(engine: Engine):
     # the toy tokenizer has no chat template, so the prompt passes through either way;
     # what matters is that the option is accepted and reported
     assert meta["prompt_rendered"]
+
+
+CONVERSATION = [
+    {"role": "system", "content": "Answer in one word."},
+    {"role": "user", "content": "Capital of France?"},
+    {"role": "assistant", "content": "Paris."},
+    {"role": "user", "content": "And of Italy?"},
+]
+
+
+def test_a_conversation_streams_from_its_transcript(engine: Engine):
+    events = list(stream(engine, prompt="", messages=CONVERSATION, max_new_tokens=3, temperature=0.0))
+    meta = events[0][1]
+    assert meta["prompt_rendered"] == "System: Answer in one word.\n\nUser: Capital of France?\n\nAssistant: Paris.\n\nUser: And of Italy?\n\nAssistant:"
+    assert meta["template_notes"] == []
+    assert events[-1][0] == "done"
+
+
+def test_a_replay_continues_without_the_mask_on_the_same_prefix(engine: Engine):
+    """"Continue without the mask" on a replayed run: same conversation, same rendering, so the prefix lines up."""
+    from app.presets import PRESETS
+
+    constrained = list(engine.generate(PRESETS["person"]["schema"], "", mode="fsm", max_new_tokens=6, messages=CONVERSATION))
+    prompt_text = constrained[0][1]["prompt_text"]
+    prefix = [p["token_id"] for n, p in constrained if n == "step"][:3]
+    events = list(stream(engine, prompt="", messages=CONVERSATION, max_new_tokens=8, temperature=0.0, json_system_prompt=True, prefix_token_ids=prefix))
+    assert events[0][1]["prompt_rendered"] == prompt_text
+    steps = [p for n, p in events if n == "step"]
+    assert [s["token_id"] for s in steps[:3]] == prefix and all(s["replayed"] for s in steps[:3])
+
+
+def test_http_stream_takes_a_conversation(monkeypatch):
+    monkeypatch.setenv("TOY_MODEL", "1")
+    from app import main
+
+    with TestClient(main.app) as client:
+        for _ in range(200):
+            health = client.get("/health").json()
+            if health["loaded"] or health["error"]:
+                break
+        assert health["loaded"], health
+        with client.stream("POST", "/stream", json={"messages": CONVERSATION, "max_new_tokens": 3, "temperature": 0}) as res:
+            assert res.status_code == 200
+            body = "".join(res.iter_text())
+        assert "event: meta" in body and "And of Italy?" in body and "event: done" in body
+        assert client.post("/stream", json={"messages": CONVERSATION[:3], "max_new_tokens": 3}).status_code == 422
