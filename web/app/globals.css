@@ -279,23 +279,134 @@ input[type="range"] {
   gap: 12px;
 }
 
-/* The setup column: sticky, scrolls on its own, and keeps the action row at its foot. */
-.setup {
+/* ---------------------------------------------------------------- two steps */
+
+/* Step 1: what runs (wide) and how it runs (an aside that stays in view). */
+.setup-step {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 28px;
+  align-items: start;
+  padding-bottom: 96px; /* the action bar never covers the last field */
+}
+.setup-aside {
+  position: sticky;
+  top: 16px;
   display: flex;
   flex-direction: column;
   gap: 18px;
+  padding: 16px;
+  max-height: calc(100vh - 128px);
+  overflow-y: auto;
 }
-.run-actions {
-  position: sticky;
-  bottom: 0;
-  margin-top: auto;
-  padding: 12px 0 4px;
-  background: var(--bg);
-  border-top: 1px solid var(--line);
+.inference-step {
   display: flex;
   flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+  padding-bottom: 96px;
+}
+@media (max-width: 1023.98px) {
+  .setup-step {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .setup-aside {
+    position: static;
+    max-height: none;
+  }
+}
+
+/* The foot of both steps: what the next run does, and the button that runs it. */
+.action-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.action-bar-in {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.action-sentence {
+  flex: 1;
+  min-width: 240px;
+  font-size: 14px;
+  color: var(--ink-2);
+}
+.action-sentence b {
+  color: var(--ink);
+  font-weight: 600;
+}
+.run-actions-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+/* The steps, in the top bar. */
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.step {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 3px 11px 3px 4px;
+  border-radius: 999px;
+  border: 1px solid var(--line-2);
+  background: var(--surface);
+  color: var(--ink-2);
+  font-size: 13px;
+  cursor: pointer;
+}
+.step-n {
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: var(--surface-2);
+}
+.step[aria-current="step"] {
+  border-color: var(--accent);
+  color: var(--ink);
+}
+.step[aria-current="step"] .step-n {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.step:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.step-sep {
+  width: 18px;
+  height: 1px;
+  background: var(--line-2);
+}
+
+/* Cards that load a starting point into the setup. */
+.start-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 8px;
 }
+
 .kbd {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -532,66 +643,6 @@ html[data-ui="talk"] .stat-value {
   gap: 2px;
 }
 
-/* Below lg the setup column is a sheet from the bottom. */
-@media (max-width: 1023.98px) {
-  main {
-    padding-bottom: 88px;
-  }
-  .setup-col {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 40;
-    max-height: 86vh;
-    display: flex;
-    flex-direction: column;
-    background: var(--bg);
-    border-top: 1px solid var(--line-2);
-    border-radius: 14px 14px 0 0;
-    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.18);
-    transform: translateY(105%);
-    transition: transform 200ms ease-out;
-  }
-  .setup-col.setup-open {
-    transform: none;
-  }
-  .setup-col .setup {
-    overflow: auto;
-    padding: 0 16px 16px;
-  }
-  .setup-sheet-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 16px 6px;
-  }
-  .setup-bar {
-    position: fixed;
-    left: 12px;
-    right: 12px;
-    bottom: 12px;
-    z-index: 30;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 14px;
-    border: 1px solid var(--line-2);
-    border-radius: 999px;
-    background: var(--surface);
-    color: var(--ink);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14);
-    cursor: pointer;
-    text-align: left;
-  }
-  .setup-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 35;
-    background: rgba(0, 0, 0, 0.35);
-  }
-}
-
 /* A popover drawn on the body, placed from its button. */
 .popover.popover-fixed {
   position: fixed;
@@ -608,56 +659,6 @@ html[data-ui="talk"] .stat-value {
   left: 0;
   z-index: 1;
   box-shadow: 4px 0 8px -4px rgba(0, 0, 0, 0.25), 0 0 0 4px var(--bg);
-}
-
-/* A card that holds its own buttons instead of being one. */
-.card-static {
-  cursor: default;
-}
-.card-static:hover {
-  border-color: var(--line-2);
-  background: var(--surface);
-}
-/* The title block still runs the preset; only it lights the card up. */
-.card-main {
-  cursor: pointer;
-}
-.card-main:disabled {
-  cursor: not-allowed;
-}
-.card-static:has(.card-main:hover:not(:disabled)) {
-  border-color: var(--accent);
-}
-/* The actions under a card: each one paints its own background on hover, so it is clear which will fire. */
-.card-action {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 3px 9px;
-  border-radius: 6px;
-  border: 1px solid transparent;
-  background: transparent;
-  color: var(--accent);
-  font-size: 12px;
-  line-height: 1.4;
-  cursor: pointer;
-}
-.card-action:hover:not(:disabled) {
-  background: var(--accent-soft);
-  border-color: var(--accent);
-}
-.card-action-primary {
-  border-color: var(--line-2);
-  background: var(--surface);
-  color: var(--ink);
-}
-.card-action-primary:hover:not(:disabled) {
-  background: var(--surface-2);
-  border-color: var(--accent);
-}
-.card-action:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
 }
 
 /* One engine as an option: the library on top, what it builds under it. */

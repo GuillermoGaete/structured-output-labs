@@ -7,8 +7,6 @@ import { LogprobsViewer } from "@/components/LogprobsViewer";
 import { BatchPanel } from "@/components/shell/BatchPanel";
 import { BatchProgress } from "@/components/shell/BatchProgress";
 import { ComparePanel } from "@/components/shell/ComparePanel";
-import { SetupColumn } from "@/components/shell/SetupColumn";
-import { EmptyState } from "@/components/shell/EmptyState";
 import { Menu } from "@/components/shell/Menu";
 import { ProbePanel } from "@/components/shell/ProbePanel";
 import { EngineSection } from "@/components/shell/EngineSection";
@@ -17,22 +15,25 @@ import { PromptHint } from "@/components/shell/PromptHint";
 import { RunActions } from "@/components/shell/RunActions";
 import { RunTabs } from "@/components/shell/RunTabs";
 import { SchemaSection } from "@/components/shell/SchemaSection";
-import { Section } from "@/components/shell/Section";
+import { ActionBar, Block, InferenceHead, SetupStep, StartCards } from "@/components/shell/TwoStep";
 import { VariantsEditor } from "@/components/shell/VariantsEditor";
 import { DEFAULT_SCHEMA_HINT, engineLabel } from "@/lib/engines";
-import { buildGenerateRequest, editorSnapshot, engineSummary, parseSchema, patchFromRun, presetPatch, probeKey, runnableVariants, useLabState } from "@/lib/labState";
+import { buildGenerateRequest, editorSnapshot, parseSchema, patchFromRun, presetPatch, probeKey, runnableVariants, useLabState } from "@/lib/labState";
 import { cancelBatch, cancelQueue, MAX_BATCH_N, queueBatches, startBatch, type BatchPlan } from "@/lib/runner";
 import { useBatchesRecord, useLocalBusy, usePinned, useRunState, useSelectedBatch, useSelectedRun } from "@/lib/runStore";
 import type { Batch, Run } from "@/lib/runTypes";
 import type { SeedNote } from "@/lib/seeds";
 import { formatInt } from "@/lib/tokens";
 import { usePydanticSchema } from "@/lib/usePydanticSchema";
+import { setStep, useStep, useStepFlow } from "@/lib/stepState";
 import { useViewState } from "@/lib/viewState";
 
 export default function LabPage() {
   const backend = useBackend();
   const [state, update] = useLabState();
   const [view, updateView] = useViewState();
+  const step = useStep();
+  useStepFlow();
   // The conversion only needs the backend to answer; it does not touch the model,
   // so an evicted or still-loading model must not hide the derived schema.
   const pydantic = usePydanticSchema(state.pydanticText, state.pydanticModel, state.sourceKind === "pydantic", backend.url, backend.phase === "online");
@@ -106,38 +107,12 @@ export default function LabPage() {
     return { preset, next };
   };
 
-  const pickPreset = (id: string, variant = 0) => {
-    const loaded = loadPreset(id);
-    if (!loaded || !backend.ready) return;
-    const { preset, next } = loaded;
-    const v = preset.variants?.[variant] ?? null;
-    if (v) update({ prompt: v.prompt });
-    const started = startBatch(planFor({ ...next, prompt: v?.prompt ?? next.prompt }, preset.schema, v, 1));
-    setNotes(started ? started.notes : [{ level: "warning", text: "a run is already in flight" }]);
-  };
-
-  const editPreset = (id: string) => {
-    if (!loadPreset(id)) return;
-    setNotes([{ level: "info", text: "edit the variants and the schema, then Run all variants" }]);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   /** Every variant the setup holds now, with the schema as edited. */
   const runAllFromSetup = () => {
     const list = runnableVariants(state.variants);
     if (!list.length || !schema || !backend.ready) return;
     queueBatches(list.map((v) => planFor(state, schema, v, state.repeatN)));
     setNotes(state.temperature <= 0 ? [{ level: "warning", text: "greedy: every repetition will be identical; raise the temperature to sample" }] : [{ level: "info", text: `${list.length} variants × ${state.repeatN} queued` }]);
-  };
-
-  /** From a card: the preset as it comes, loaded and launched at once. */
-  const runAllVariants = (id: string) => {
-    const loaded = loadPreset(id);
-    if (!loaded || !backend.ready) return;
-    const { preset, next } = loaded;
-    const list = runnableVariants(next.variants);
-    queueBatches(list.map((v) => planFor(next, preset.schema, v, next.repeatN)));
-    setNotes(next.temperature <= 0 ? [{ level: "warning", text: "greedy: every repetition will be identical; raise the temperature to sample" }] : []);
   };
 
   /** The same request twice, N runs each: the mask on, and the shape asked for in the prompt only. */
@@ -159,12 +134,6 @@ export default function LabPage() {
   const compareModesFromSetup = () => {
     if (!schema || !backend.ready) return;
     compareModes(state, schema, presetName);
-  };
-
-  const compareModesForPreset = (id: string) => {
-    const loaded = loadPreset(id);
-    if (!loaded || !backend.ready) return;
-    compareModes(loaded.next, loaded.preset.schema, loaded.preset.name);
   };
 
   const runVariantFromSetup = (i: number) => {
@@ -223,108 +192,126 @@ export default function LabPage() {
       return false;
     }
     update(patchFromRun(run, batch));
+    setStep(1);
     window.scrollTo({ top: 0, behavior: "smooth" });
     return true;
   };
 
   // The same count the Derived schema chip shows: the pretty-printed text.
   const schemaSummary = `${presetName} · ${state.sourceKind === "pydantic" ? "Pydantic" : "JSON Schema"}${schema ? ` · ${formatInt(JSON.stringify(schema, null, 2).length)} chars` : ""}`;
-  const promptSummary = `${state.prompt.length > 56 ? `${state.prompt.slice(0, 56)}…` : state.prompt}${state.mode === "none" ? " · + JSON hint" : ""}`;
+
+  const sentence = (
+    <>
+      Generate {state.presetId ? <b>{presetName}</b> : <b>your schema</b>} with <b>{state.mode === "auto" ? "Auto" : engineLabel(state.mode)}</b> on <b>{modelShort}</b>,{" "}
+      {state.temperature === 0 ? "greedy" : `T ${state.temperature.toFixed(2)}`}, up to {state.maxNewTokens} tokens
+      {state.variants.length ? <>; the menu runs all {state.variants.length} variants</> : null}.
+    </>
+  );
 
   return (
-    <div className="grid lg:grid-cols-[360px_minmax(0,1fr)] gap-6 items-start">
-      <SetupColumn summary={`${presetName} · ${modelShort} · ${engineSummary(state)}`}>
-        <ModelSection value={backend.model ?? backend.selected?.id ?? ""} onChange={(id) => backend.setModel(id)} disabled={busy} />
+    <>
+      {step === 1 ? (
+        <SetupStep
+          main={
+            <>
+              <Block title="Start from" hint="A preset fills the schema and the prompt; edit both after">
+                <StartCards
+                  items={backend.presets.map((p) => ({ id: p.id, name: p.name, description: p.description, group: p.group, note: p.variants?.length ? `${p.variants.length} variants` : undefined }))}
+                  activeId={state.presetId}
+                  onPick={(id) => {
+                    const loaded = loadPreset(id);
+                    setNotes(loaded?.preset.variants ? [{ level: "info", text: "a probe: edit the variants, then run them from the menu" }] : []);
+                  }}
+                  disabled={busy}
+                />
+              </Block>
 
-        <Section id="schema" title="Schema" summary={schemaSummary}>
-          <SchemaSection state={state} update={update} pydantic={pydantic} disabled={busy} />
-        </Section>
+              <Block title="Schema" hint="Pydantic is parsed on the server, never executed" actions={<span className="chip">{schemaSummary}</span>}>
+                <SchemaSection state={state} update={update} pydantic={pydantic} disabled={busy} />
+              </Block>
 
-        <Section id="prompt" title={state.variants.length ? "Prompt · probe" : "Prompt"} summary={state.variants.length ? `${state.probeName ?? "probe"} · ${state.variants.length} variants` : promptSummary}>
-          {state.variants.length ? (
-            <VariantsEditor
-              variants={state.variants}
-              onChange={(variants) => update({ variants })}
-              onRunOne={runVariantFromSetup}
-              onRunAll={runAllFromSetup}
-              repeatN={state.repeatN}
-              disabled={busy}
-              action="Generate"
-            />
-          ) : (
-            <textarea className="input text-sm min-h-[84px]" value={state.prompt} onChange={(e) => update({ prompt: e.target.value })} disabled={busy} aria-label="Prompt" />
+              <Block title={state.variants.length ? "Prompt · probe" : "Prompt"} hint={state.mode === "none" ? "Prompt only: the schema is asked for after it" : "The lab adds a short JSON system prompt and the chat template"}>
+                {state.variants.length ? (
+                  <VariantsEditor
+                    variants={state.variants}
+                    onChange={(variants) => update({ variants })}
+                    onRunOne={runVariantFromSetup}
+                    onRunAll={runAllFromSetup}
+                    repeatN={state.repeatN}
+                    disabled={busy}
+                    action="Generate"
+                  />
+                ) : (
+                  <textarea className="input text-sm min-h-[84px]" value={state.prompt} onChange={(e) => update({ prompt: e.target.value })} disabled={busy} aria-label="Prompt" />
+                )}
+                {state.mode === "none" && <PromptHint template={state.schemaHint} schema={schema} onChange={(schemaHint) => update({ schemaHint })} disabled={busy} />}
+              </Block>
+            </>
+          }
+          aside={
+            <>
+              <ModelSection value={backend.model ?? backend.selected?.id ?? ""} onChange={(id) => backend.setModel(id)} disabled={busy} />
+              <EngineSection state={state} update={update} disabled={busy} engines={backend.health?.engines} />
+            </>
+          }
+        />
+      ) : (
+        <div className="inference-step">
+          <InferenceHead run={selected} />
+          <RunTabs backendUrl={backend.url} onDuplicate={duplicate} />
+          {pinned.length === 2 && <ComparePanel runIds={pinned} />}
+          {(() => {
+            const probeBatch = selectedBatch ?? (selected ? (batches[selected.batchId] ?? null) : null);
+            return probeBatch?.probe ? <ProbePanel key={`probe-${probeBatch.probe.presetId}`} batch={probeBatch} /> : null;
+          })()}
+          {selectedBatch && <BatchPanel key={selectedBatch.id} batch={selectedBatch} />}
+          {selected && (!selectedBatch || selected.batchId === selectedBatch.id) ? (
+            selected.kind === "constrained" ? (
+              <>
+                {selected.request.mode === "none" && state.mode !== "none" && (
+                  // The setup is on another engine, but the run on screen was prompt only: show what it really sent.
+                  <PromptHint
+                    template={selected.request.schema_hint ?? DEFAULT_SCHEMA_HINT}
+                    schema={selected.request.schema}
+                    eyebrow="Prompt only · what this run appended after its prompt"
+                    action={{
+                      label: "Use prompt only in the setup",
+                      hint: "Switch the setup to Prompt only with this wording",
+                      onSelect: () => update({ mode: "none", schemaHint: selected.request.schema_hint ?? DEFAULT_SCHEMA_HINT }),
+                    }}
+                  />
+                )}
+                <ConstrainedViewer key={selected.id} run={selected} view={view} onView={updateView} setupTemperature={state.temperature} />
+              </>
+            ) : (
+              <LogprobsViewer
+                key={selected.id}
+                run={selected}
+                view={view}
+                onView={updateView}
+                sampling={{ temperature: selected.request.temperature, topK: selected.request.top_k, topP: selected.request.top_p }}
+              />
+            )
+          ) : selectedBatch ? null : (
+            <p className="text-sm text-muted">Pick a run in the tabs above.</p>
           )}
-          {state.mode === "none" ? (
-            <PromptHint template={state.schemaHint} schema={schema} onChange={(schemaHint) => update({ schemaHint })} disabled={busy} />
-          ) : selected?.kind === "constrained" && selected.request.mode === "none" ? (
-            // The setup is on another engine, but the run on screen was prompt only: show what it really sent.
-            <PromptHint
-              template={selected.request.schema_hint ?? DEFAULT_SCHEMA_HINT}
-              schema={selected.request.schema}
-              eyebrow="Prompt only · what the selected run appended after its prompt"
-              action={{
-                label: "Use prompt only here",
-                hint: "Switch the setup to Prompt only with this wording",
-                onSelect: () => update({ mode: "none", schemaHint: selected.request.schema_hint ?? DEFAULT_SCHEMA_HINT }),
-              }}
-            />
-          ) : null}
-        </Section>
+        </div>
+      )}
 
-        <Section id="engine" title="Engine & sampling" defaultOpen={false} summary={engineSummary(state)}>
-          <EngineSection state={state} update={update} disabled={busy} engines={backend.health?.engines} />
-        </Section>
-
+      <ActionBar sentence={sentence}>
         <RunActions label="Generate" runningLabel="Generating…" running={!!running} disabled={blocked} onRun={() => start()} onStop={stop} menu={repeatMenu}>
           <BatchProgress />
           {backend.phase === "offline" && <span className="chip chip-critical">backend unreachable</span>}
           {backend.health?.busy && !busy && <span className="chip chip-warning">backend busy · queued</span>}
           {pydantic.pending && !busy && <span className="chip">converting…</span>}
+          {!schema && !pydantic.pending && <span className="chip chip-warning">the schema does not parse</span>}
           {notes.map((n) => (
             <span key={n.text} className={`chip ${n.level === "warning" ? "chip-warning" : ""}`}>
               {n.text}
             </span>
           ))}
         </RunActions>
-      </SetupColumn>
-
-      <div className="flex flex-col gap-5 min-w-0">
-        <RunTabs backendUrl={backend.url} onDuplicate={duplicate} />
-        {pinned.length === 2 && <ComparePanel runIds={pinned} />}
-        {(() => {
-          const probeBatch = selectedBatch ?? (selected ? (batches[selected.batchId] ?? null) : null);
-          return probeBatch?.probe ? <ProbePanel key={`probe-${probeBatch.probe.presetId}`} batch={probeBatch} /> : null;
-        })()}
-        {selectedBatch && <BatchPanel key={selectedBatch.id} batch={selectedBatch} />}
-        {selected && (!selectedBatch || selected.batchId === selectedBatch.id) ? (
-          selected.kind === "constrained" ? (
-            <ConstrainedViewer key={selected.id} run={selected} view={view} onView={updateView} setupTemperature={state.temperature} />
-          ) : (
-            <LogprobsViewer
-              key={selected.id}
-              run={selected}
-              view={view}
-              onView={updateView}
-              sampling={{ temperature: selected.request.temperature, topK: selected.request.top_k, topP: selected.request.top_p }}
-            />
-          )
-        ) : selectedBatch ? null : (
-          <EmptyState
-            eyebrow="Start from a preset"
-            items={backend.presets.map((p) => ({ id: p.id, name: p.name, description: p.description, group: p.group, variants: p.variants?.map((v) => v.label) }))}
-            activeId={state.presetId}
-            onPick={(id) => pickPreset(id)}
-            onPickVariant={pickPreset}
-            onRunAll={runAllVariants}
-            onEdit={editPreset}
-            onCompareModes={compareModesForPreset}
-            repeatN={state.repeatN}
-            ready={backend.ready && !busy}
-            action="Generate"
-            hint={<span className="text-xs text-muted">or edit the schema and press Generate</span>}
-          />
-        )}
-      </div>
-    </div>
+      </ActionBar>
+    </>
   );
 }

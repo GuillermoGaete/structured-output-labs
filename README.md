@@ -9,11 +9,15 @@ The whole pipeline, left to right, on one page:
 Pydantic model ──▶ JSON Schema ──▶ regex ──▶ token automaton ──▶ mask ──▶ the token that was sampled
 ```
 
-- **Setup column** — only what defines the run, in sections that fold to one line showing their current value: the
-  model, the schema (a Pydantic `BaseModel` or JSON Schema directly; *Expand* opens a wide editor with the derived
-  schema next to the source, the `model_json_schema()` conversion done server-side), the prompt, and the engine and
-  sampling knobs. *Generate* sits at the foot, always visible; ⌘/Ctrl+Enter presses it.
-- **Result column** — before the first run, the presets as cards. After it: the JSON typing itself out one pastel
+Every mode is two full-width steps, switched from the top bar.
+
+- **1 · Setup** — what runs on the left: the presets as cards that load into the editors (grouped when there are
+  many), the schema (a Pydantic `BaseModel` or JSON Schema directly, with the derived schema next to the source, the
+  `model_json_schema()` conversion done server-side) and the prompt. How it runs on the right: the model, the engine
+  and the sampling knobs. A bar fixed to the foot says in one sentence what the next run will do, next to *Generate*;
+  ⌘/Ctrl+Enter presses it. Starting a run moves to step 2.
+- **2 · Inference** — the setup of the run on screen as chips, with *← Edit setup* to go back (the run stays
+  selected; the URL keeps `#run`, so a reload stays here). Then the run tabs and the result: the JSON typing itself out one pastel
   token at a time with the run's numbers under it (valid, steps, time, overridden, vocabulary kept, mass removed);
   the step inspector with the transport, and per step the model's *original* top-K against the *forced* top-K with
   the forbidden tokens struck through; and, folded until asked for, the token automaton with the path taken (or the
@@ -49,8 +53,7 @@ steps of the last 20 stay in memory.
   state. Pressing a state focuses it: only that state and its destinations stay on screen, and a table beside the
   graph lists every transition that leaves it, the first tokens on it, how many tokens it carries, the state it
   reaches and whether the run took it; pressing a destination walks the automaton, Esc lets go. A tab's menu can *Pin to compare*: two pinned runs are shown side by side, shared tokens dimmed, differing
-  ones outlined, and their JSON leaf by leaf. On a narrow screen the setup folds into a sheet that slides up from a
-  bar at the bottom.
+  ones outlined, and their JSON leaf by leaf. On a narrow screen the setup's two columns stack.
 - In CFG mode the *Parser* section shows the JSON so far as a tree with the open brackets as the stack, the cursor's
   path in the schema, what the grammar forces next and whether it would accept EOS (both from llguidance's matcher),
   a strip of who wrote each token (the constraint, when only one token was allowed, or the model), and a BNF reading
@@ -98,7 +101,7 @@ presentation/   HTML/SVG slides → PNG 1920×1080 + SVG
 ## Several models, one process
 
 `MODEL_IDS` is a comma-separated allowlist; the first entry is the default and loads at boot, the rest load the first
-time the app asks for them. The *Model* picker at the top of the setup column is that list, and it remembers the
+time the app asks for them. The *Model* picker in the setup is that list, and it remembers the
 choice per browser.
 
 The default list is seven small instruct models, ordered by size after the default. Every one was loaded, checked for

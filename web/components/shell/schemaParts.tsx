@@ -1,9 +1,8 @@
 "use client";
 
 import { type ReactNode, useEffect, useRef, useState } from "react";
-import { useBackend } from "@/components/BackendProvider";
 import type { LabState, SourceKind } from "@/lib/labState";
-import { parseSchema, presetPatch } from "@/lib/labState";
+import { parseSchema } from "@/lib/labState";
 import type { PydanticState } from "@/lib/usePydanticSchema";
 
 export interface EditorProps {
@@ -19,61 +18,6 @@ const SOURCES: { value: SourceKind; label: string; hint: string }[] = [
 ];
 
 const MAX_UPLOAD_BYTES = 8_000;
-
-export function PresetChips({ state, update, disabled }: Pick<EditorProps, "state" | "update" | "disabled">) {
-  const { presets } = useBackend();
-  if (presets.length > 4) {
-    const groups: [string, typeof presets][] = [];
-    for (const p of presets) {
-      const g = p.group ?? "Presets";
-      const bucket = groups.find(([name]) => name === g);
-      if (bucket) bucket[1].push(p);
-      else groups.push([g, [p]]);
-    }
-    return (
-      <label className="flex items-center gap-2 text-xs">
-        <span className="text-muted shrink-0">Preset</span>
-        <select
-          className="input text-xs"
-          value={state.presetId}
-          onChange={(e) => {
-            const preset = presets.find((p) => p.id === e.target.value);
-            if (preset) update(presetPatch(preset, state));
-          }}
-          disabled={disabled}
-          aria-label="Preset"
-        >
-          {!state.presetId && <option value="">custom</option>}
-          {groups.map(([name, list]) => (
-            <optgroup key={name} label={name}>
-              {list.map((p) => (
-                <option key={p.id} value={p.id} title={p.description}>
-                  {p.name}
-                </option>
-              ))}
-            </optgroup>
-          ))}
-        </select>
-      </label>
-    );
-  }
-  return (
-    <div className="flex gap-2 flex-wrap">
-      {presets.map((p) => (
-        <button
-          key={p.id}
-          type="button"
-          className={`btn py-1 px-2.5 text-[13px] ${state.presetId === p.id ? "border-accent" : ""}`}
-          onClick={() => update(presetPatch(p, state))}
-          title={p.description}
-          disabled={disabled}
-        >
-          {p.name}
-        </button>
-      ))}
-    </div>
-  );
-}
 
 export function SourceChips({ state, update, disabled }: Pick<EditorProps, "state" | "update" | "disabled">) {
   return (

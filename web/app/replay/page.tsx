@@ -11,20 +11,18 @@ import { CallPicker, TraceSection } from "@/components/replay/TraceSection";
 import { BatchPanel } from "@/components/shell/BatchPanel";
 import { BatchProgress } from "@/components/shell/BatchProgress";
 import { ComparePanel } from "@/components/shell/ComparePanel";
-import { EmptyState } from "@/components/shell/EmptyState";
 import { EngineSection } from "@/components/shell/EngineSection";
 import { Menu } from "@/components/shell/Menu";
 import { ModelSection } from "@/components/shell/ModelSection";
 import { PromptHint } from "@/components/shell/PromptHint";
 import { RunActions } from "@/components/shell/RunActions";
 import { RunTabs } from "@/components/shell/RunTabs";
-import { Section } from "@/components/shell/Section";
-import { SetupColumn } from "@/components/shell/SetupColumn";
+import { ActionBar, Block, InferenceHead, SetupStep, StartCards } from "@/components/shell/TwoStep";
 import { loadModel } from "@/lib/api";
 import { conversationChars } from "@/lib/chat";
-import { engineSummary, parseSchema } from "@/lib/labState";
+import { engineLabel } from "@/lib/engines";
+import { parseSchema } from "@/lib/labState";
 import { parseTrace, TraceError, type ImportedTrace, type LlmCall } from "@/lib/langchainTrace";
-import { samplingSummary } from "@/lib/logprobsState";
 import { PROVIDERS, providerOf, readKey } from "@/lib/providers";
 import {
   buildReplayGenerateRequest,
@@ -37,6 +35,7 @@ import {
   editMessages,
   isEdited,
   patchFromReplayRun,
+  recordedAt,
   replayInfo,
   replayProblems,
   useImportedTrace,
@@ -48,12 +47,15 @@ import { cancelBatch, cancelQueue, MAX_BATCH_N, startBatch, type BatchPlan } fro
 import { useBatchesRecord, useLocalBusy, usePinned, useRunState, useSelectedBatch, useSelectedRun } from "@/lib/runStore";
 import type { Batch, Run } from "@/lib/runTypes";
 import type { SeedNote } from "@/lib/seeds";
+import { setStep, useStep, useStepFlow } from "@/lib/stepState";
 import { useViewState } from "@/lib/viewState";
 
 export default function ReplayPage() {
   const backend = useBackend();
   const [s, update] = useReplayState();
   const [view, updateView] = useViewState();
+  const step = useStep();
+  useStepFlow();
   const { trace, stored, setTrace } = useImportedTrace();
   const [keys, setKeys] = useState<Record<string, string>>({});
   const [notes, setNotes] = useState<SeedNote[]>([]);
@@ -78,7 +80,7 @@ export default function ReplayPage() {
   const model = localOnly ? (backend.model ?? "") : chosen;
   const provider = s.engine === "logprobs" ? hostedChoice : "";
   const missingKey = !!provider && !keys[provider];
-  const modelShort = model.split("/").pop()?.split(":").pop() || "model";
+  const modelShort = (model || backend.selected?.id || "model").split("/").pop()?.split(":").pop() || "model";
 
   const parsedSchema = useMemo(() => parseSchema(s.schemaText), [s.schemaText]);
   const limits = { maxMessages: backend.health?.max_messages ?? DEFAULT_MAX_MESSAGES, maxChars: backend.health?.max_messages_chars ?? DEFAULT_MAX_MESSAGES_CHARS };
@@ -147,6 +149,7 @@ export default function ReplayPage() {
 
   const duplicate = (run: Run, batch: Batch) => {
     update(patchFromReplayRun(run, batch));
+    setStep(1);
     setNotes(run.request.messages?.length ? [] : [{ level: "info", text: "a prompt run: its prompt is now a one-message conversation" }]);
     window.scrollTo({ top: 0, behavior: "smooth" });
     return true;
@@ -189,131 +192,159 @@ export default function ReplayPage() {
     />
   );
 
-  const engineLine = s.engine === "constrained" ? `Constrained · ${engineSummary(s)}` : `Logprobs · ${samplingSummary({ temperature: s.lpTemperature, topK: s.lpTopK, topP: s.lpTopP })}`;
   const replayBatch = selectedBatch ?? (selected ? (batches[selected.batchId] ?? null) : null);
+  const engineName = s.engine === "constrained" ? `Constrained · ${s.mode === "auto" ? "Auto" : engineLabel(s.mode)}` : "Logprobs";
+  const recorded = recordedAt(s);
+  const sentence = s.messages.length ? (
+    <>
+      Send <b>{sent.length} message{sent.length === 1 ? "" : "s"}</b> to <b>{modelShort}</b> with <b>{engineName}</b>; the model writes message #{s.cutAt + 1}
+      {recorded ? ", compared with the recorded reply" : ""}.
+    </>
+  ) : (
+    <>Import a trace or load an example: the conversation it recorded is what gets replayed.</>
+  );
 
   return (
-    <div className="grid lg:grid-cols-[360px_minmax(0,1fr)] gap-6 items-start">
-      <SetupColumn summary={`${s.source?.callLabel ?? "no trace"} · cut @${s.cutAt} · ${modelShort}`}>
-        <ModelSection hosted={s.engine === "logprobs"} value={localOnly ? model : chosen} onChange={onModel} disabled={!!running} keys={keys} onKey={(id, key) => setKeys((k) => ({ ...k, [id]: key }))} />
-        {localOnly && <span className="chip chip-warning self-start">hosted models replay in Logprobs only; this runs on {modelShort}</span>}
+    <>
+      {step === 1 ? (
+        <SetupStep
+          main={
+            <>
+              <Block title="Trace" hint="A LangSmith export, a JSON Lines list of runs, or LangChain messages">
+                <div className="panel p-3.5">
+                  <TraceSection trace={trace} stored={stored} onImport={importTrace} onClear={() => setTrace(null)} disabled={!!running} />
+                </div>
+                {!trace && (
+                  <div className="flex flex-col gap-2 mt-1">
+                    <span className="eyebrow">Or start from an example</span>
+                    <StartCards items={REPLAY_SAMPLES.map((x) => ({ id: x.id, name: x.name, description: x.description, group: x.group }))} onPick={loadSample} disabled={!!running} />
+                  </div>
+                )}
+              </Block>
 
-        <Section id="rp-trace" title="Trace" summary={trace ? `${trace.name} · ${trace.calls.length} calls` : (s.source?.traceName ?? "none")}>
-          <TraceSection trace={trace} stored={stored} onImport={importTrace} onClear={() => setTrace(null)} disabled={!!running} />
-        </Section>
+              {trace && trace.calls.length > 1 && (
+                <Block title="LLM call" hint={`${trace.calls.length} model calls in this trace, in order`}>
+                  <CallPicker calls={trace.calls} value={s.source?.callId ?? null} onChange={pickCall} disabled={!!running} />
+                </Block>
+              )}
 
-        {trace && trace.calls.length > 1 && (
-          <Section id="rp-call" title="LLM call" summary={currentCall ? `#${currentCall.index} ${currentCall.name}` : "—"}>
-            <CallPicker calls={trace.calls} value={s.source?.callId ?? null} onChange={pickCall} disabled={!!running} />
-          </Section>
-        )}
-
-        <Section id="rp-messages" title="Conversation" summary={`${s.messages.length} messages · cut @${s.cutAt}${edited ? " · edited" : ""}`}>
-          <MessagesEditor
-            messages={s.messages}
-            cutAt={s.cutAt}
-            onEdit={onEdit}
-            disabled={!!running}
-            sentChars={conversationChars(sent)}
-            maxChars={limits.maxChars}
-            sentCount={sent.length}
-            edited={edited}
-            onReset={s.messages.some((m) => m.original) ? resetToTrace : undefined}
-          />
-        </Section>
-
-        <Section id="rp-engine" title="Engine" summary={engineLine}>
-          <div className="segmented self-start" role="group" aria-label="Replay with">
-            <button type="button" aria-pressed={s.engine === "logprobs"} onClick={() => update({ engine: "logprobs" })} disabled={!!running} title="No mask: the distribution behind every token; local or hosted models">
-              Logprobs
-            </button>
-            <button type="button" aria-pressed={s.engine === "constrained"} onClick={() => update({ engine: "constrained" })} disabled={!!running} title="The schema compiled to a mask; local models only">
-              Constrained
-            </button>
-          </div>
-          {s.engine === "constrained" ? (
+              <Block title="Conversation" hint="Everything above the cut is sent; the model writes the message below it">
+                <MessagesEditor
+                  messages={s.messages}
+                  cutAt={s.cutAt}
+                  onEdit={onEdit}
+                  disabled={!!running}
+                  sentChars={conversationChars(sent)}
+                  maxChars={limits.maxChars}
+                  sentCount={sent.length}
+                  edited={edited}
+                  onReset={s.messages.some((m) => m.original) ? resetToTrace : undefined}
+                />
+              </Block>
+            </>
+          }
+          aside={
             <>
               <div className="flex flex-col gap-1.5">
-                <div className="flex items-baseline justify-between gap-2 flex-wrap">
-                  <span className="eyebrow">JSON Schema</span>
-                  {s.schemaSource && <span className="chip chip-good">from the trace · {s.schemaSource}</span>}
-                </div>
-                <textarea
-                  className="input mono text-[12px] min-h-[140px]"
-                  value={s.schemaText}
-                  onChange={(e) => update({ schemaText: e.target.value, schemaSource: null })}
-                  spellCheck={false}
-                  disabled={!!running}
-                  placeholder={'{"type": "object", "properties": {...}}'}
-                  aria-label="JSON Schema"
-                />
-                {s.schemaText.trim() && parsedSchema.error && <span className="mono text-[12px] text-critical">{parsedSchema.error}</span>}
-                {currentCall?.schema && !s.schemaSource && (
-                  <button
-                    type="button"
-                    className="btn py-0.5 px-2 text-xs self-start"
-                    onClick={() => currentCall.schema && update({ schemaText: JSON.stringify(currentCall.schema.schema, null, 2), schemaSource: currentCall.schema.source })}
-                    disabled={!!running}
-                  >
-                    Reset to the trace&apos;s schema
+                <span className="eyebrow">Run with</span>
+                <div className="grid grid-cols-2 gap-1.5" role="radiogroup" aria-label="Replay with">
+                  <button type="button" role="radio" aria-checked={s.engine === "logprobs"} className="engine-tile" onClick={() => update({ engine: "logprobs" })} disabled={!!running}>
+                    <span className="text-[13px] leading-tight">Logprobs</span>
+                    <span className="text-[11px] leading-tight text-muted">No mask; the distribution behind every token. Local or hosted.</span>
                   </button>
-                )}
+                  <button type="button" role="radio" aria-checked={s.engine === "constrained"} className="engine-tile" onClick={() => update({ engine: "constrained" })} disabled={!!running}>
+                    <span className="text-[13px] leading-tight">Constrained</span>
+                    <span className="text-[11px] leading-tight text-muted">The schema compiled into a mask. Local only.</span>
+                  </button>
+                </div>
               </div>
-              <EngineSection state={s} update={update} disabled={!!running} engines={backend.health?.engines} />
-              {s.mode === "none" && (
-                <PromptHint template={s.schemaHint} schema={parsedSchema.schema} onChange={(schemaHint) => update({ schemaHint })} disabled={!!running} eyebrow="Prompt only · appended to the last user message" />
-              )}
-            </>
-          ) : (
-            <ReplayKnobs state={s} update={update} disabled={!!running} />
-          )}
-          <label className="flex items-center gap-2 text-xs">
-            <input type="checkbox" checked={s.useTemplate} onChange={(e) => update({ useTemplate: e.target.checked })} disabled={!!running} />
-            <span className="text-muted" title="Off: the conversation is sent as a plain transcript (a single user message as its own text)">
-              Chat template
-            </span>
-          </label>
-        </Section>
 
+              <ModelSection hosted={s.engine === "logprobs"} value={localOnly ? model : chosen} onChange={onModel} disabled={!!running} keys={keys} onKey={(id, key) => setKeys((k) => ({ ...k, [id]: key }))} />
+              {localOnly && <span className="chip chip-warning self-start">hosted models replay in Logprobs only; this runs on {modelShort}</span>}
+              {s.source?.callModel && <span className="text-xs text-muted -mt-3">The trace used <span className="mono">{s.source.callModel}</span>.</span>}
+
+              {s.engine === "constrained" ? (
+                <>
+                  <div className="flex flex-col gap-1.5">
+                    <div className="flex items-baseline justify-between gap-2 flex-wrap">
+                      <span className="eyebrow">JSON Schema</span>
+                      {s.schemaSource && <span className="chip chip-good">from the trace · {s.schemaSource}</span>}
+                    </div>
+                    <textarea
+                      className="input mono text-[12px] min-h-[140px]"
+                      value={s.schemaText}
+                      onChange={(e) => update({ schemaText: e.target.value, schemaSource: null })}
+                      spellCheck={false}
+                      disabled={!!running}
+                      placeholder={'{"type": "object", "properties": {...}}'}
+                      aria-label="JSON Schema"
+                    />
+                    {s.schemaText.trim() && parsedSchema.error && <span className="mono text-[12px] text-critical">{parsedSchema.error}</span>}
+                    {currentCall?.schema && !s.schemaSource && (
+                      <button
+                        type="button"
+                        className="btn py-0.5 px-2 text-xs self-start"
+                        onClick={() => currentCall.schema && update({ schemaText: JSON.stringify(currentCall.schema.schema, null, 2), schemaSource: currentCall.schema.source })}
+                        disabled={!!running}
+                      >
+                        Reset to the trace&apos;s schema
+                      </button>
+                    )}
+                  </div>
+                  <EngineSection state={s} update={update} disabled={!!running} engines={backend.health?.engines} />
+                  {s.mode === "none" && (
+                    <PromptHint template={s.schemaHint} schema={parsedSchema.schema} onChange={(schemaHint) => update({ schemaHint })} disabled={!!running} eyebrow="Prompt only · appended to the last user message" />
+                  )}
+                </>
+              ) : (
+                <ReplayKnobs state={s} update={update} disabled={!!running} />
+              )}
+              <label className="flex items-center gap-2 text-xs">
+                <input type="checkbox" checked={s.useTemplate} onChange={(e) => update({ useTemplate: e.target.checked })} disabled={!!running} />
+                <span className="text-muted" title="Off: the conversation is sent as a plain transcript (a single user message as its own text)">
+                  Chat template
+                </span>
+              </label>
+            </>
+          }
+        />
+      ) : (
+        <div className="inference-step">
+          <InferenceHead run={selected} />
+          <RunTabs backendUrl={backend.url} onDuplicate={duplicate} />
+          {pinned.length === 2 && <ComparePanel runIds={pinned} />}
+          {replayBatch?.replay && <RecordedPanel batch={replayBatch} run={selected && selected.batchId === replayBatch.id ? selected : null} />}
+          {selectedBatch && <BatchPanel key={selectedBatch.id} batch={selectedBatch} />}
+          {selected && (!selectedBatch || selected.batchId === selectedBatch.id) ? (
+            selected.kind === "logprobs" ? (
+              <LogprobsViewer key={selected.id} run={selected} view={view} onView={updateView} sampling={{ temperature: s.lpTemperature, topK: s.lpTopK, topP: s.lpTopP }} />
+            ) : (
+              <ConstrainedViewer key={selected.id} run={selected} view={view} onView={updateView} setupTemperature={s.temperature} />
+            )
+          ) : selectedBatch ? null : (
+            <p className="text-sm text-muted">Pick a run in the tabs above.</p>
+          )}
+        </div>
+      )}
+
+      <ActionBar sentence={sentence}>
         <RunActions label="Replay" runningLabel="Replaying…" running={!!running} disabled={blocked} onRun={() => start()} onStop={stop} menu={repeatMenu}>
           <BatchProgress />
           {backend.phase === "offline" && <span className="chip chip-critical">backend unreachable</span>}
           {missingKey && <span className="chip chip-warning">add a key to use this model</span>}
-          {problems.map((p) => (
-            <span key={p} className="chip chip-warning">
-              {p}
-            </span>
-          ))}
+          {s.messages.length > 0 &&
+            problems.map((p) => (
+              <span key={p} className="chip chip-warning">
+                {p}
+              </span>
+            ))}
           {notes.map((n) => (
             <span key={n.text} className={`chip ${n.level === "warning" ? "chip-warning" : ""}`}>
               {n.text}
             </span>
           ))}
         </RunActions>
-      </SetupColumn>
-
-      <div className="flex flex-col gap-5 min-w-0">
-        <RunTabs backendUrl={backend.url} onDuplicate={duplicate} />
-        {pinned.length === 2 && <ComparePanel runIds={pinned} />}
-        {replayBatch?.replay && <RecordedPanel batch={replayBatch} run={selected && selected.batchId === replayBatch.id ? selected : null} />}
-        {selectedBatch && <BatchPanel key={selectedBatch.id} batch={selectedBatch} />}
-        {selected && (!selectedBatch || selected.batchId === selectedBatch.id) ? (
-          selected.kind === "logprobs" ? (
-            <LogprobsViewer key={selected.id} run={selected} view={view} onView={updateView} sampling={{ temperature: s.lpTemperature, topK: s.lpTopK, topP: s.lpTopP }} />
-          ) : (
-            <ConstrainedViewer key={selected.id} run={selected} view={view} onView={updateView} setupTemperature={s.temperature} />
-          )
-        ) : selectedBatch ? null : (
-          <EmptyState
-            eyebrow="Start from a trace"
-            items={REPLAY_SAMPLES.map((x) => ({ id: x.id, name: x.name, description: x.description, group: x.group }))}
-            onPick={loadSample}
-            ready={!running}
-            action="Load"
-            hint={<span className="text-xs text-muted">or import your own LangSmith export in the setup</span>}
-          />
-        )}
-      </div>
-    </div>
+      </ActionBar>
+    </>
   );
 }

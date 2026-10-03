@@ -11,11 +11,11 @@ interface Props {
   onStop: () => void;
   /** The primary's other choices, rendered as the split half of the button. */
   menu?: ReactNode;
-  /** Status chips and errors, under the buttons. */
+  /** Status chips and errors, before the buttons. */
   children?: ReactNode;
 }
 
-/** The page's one primary action, at the foot of the setup column. ⌘/Ctrl+Enter presses it from anywhere. */
+/** The page's one primary action, in the action bar at the foot of the screen. ⌘/Ctrl+Enter presses it from anywhere. */
 export function RunActions({ label, runningLabel, running, disabled, onRun, onStop, menu, children }: Props) {
   const [mac, setMac] = useState(true);
   useEffect(() => {
@@ -33,26 +33,30 @@ export function RunActions({ label, runningLabel, running, disabled, onRun, onSt
     return () => window.removeEventListener("keydown", onKey);
   }, [disabled, running, onRun]);
 
-  return (
-    <div className="run-actions">
-      <div className="flex items-center gap-2 flex-wrap">
-        <span className="inline-flex">
-          <button className={`btn btn-primary ${menu ? "rounded-r-none" : ""}`} type="button" onClick={onRun} disabled={disabled || running} title={`${mac ? "⌘" : "Ctrl"} + Enter`}>
-            {running ? runningLabel : label}
-          </button>
-          {menu}
+  const buttons = (
+    <div className="flex items-center gap-2 flex-wrap">
+      <span className="inline-flex">
+        <button className={`btn btn-primary ${menu ? "rounded-r-none" : ""}`} type="button" onClick={onRun} disabled={disabled || running} title={`${mac ? "⌘" : "Ctrl"} + Enter`}>
+          {running ? runningLabel : label}
+        </button>
+        {menu}
+      </span>
+      {running ? (
+        <button className="btn" type="button" onClick={onStop}>
+          Stop
+        </button>
+      ) : (
+        <span className="kbd talk-hide" aria-hidden="true">
+          {mac ? "⌘⏎" : "Ctrl⏎"}
         </span>
-        {running ? (
-          <button className="btn" type="button" onClick={onStop}>
-            Stop
-          </button>
-        ) : (
-          <span className="kbd talk-hide" aria-hidden="true">
-            {mac ? "⌘⏎" : "Ctrl⏎"}
-          </span>
-        )}
-      </div>
-      {children && <div className="flex items-center gap-2 flex-wrap">{children}</div>}
+      )}
+    </div>
+  );
+
+  return (
+    <div className="run-actions-bar">
+      {children}
+      {buttons}
     </div>
   );
 }
