@@ -1,43 +1,32 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { IconExpand } from "@/components/icons";
-import { SchemaEditorDialog } from "./SchemaEditorDialog";
-import { derivedText, PresetChips, SourceChips, SourceEditor, type EditorProps } from "./schemaParts";
+import { parseSchema } from "@/lib/labState";
+import { derivedText, SourceChips, SourceEditor, type EditorProps } from "./schemaParts";
 
-/** The compact editor in the setup column; "Expand" opens the wide one next to the derived schema. */
+const PANE_HEIGHT = 300;
+
+/** The schema at full width: the source on the left, what the server derives from it on the right, live. */
 export function SchemaSection({ state, update, pydantic, disabled = false }: EditorProps) {
-  const dialog = useRef<HTMLDialogElement | null>(null);
-  const [showDerived, setShowDerived] = useState(false);
-  const derived = state.sourceKind === "pydantic" ? derivedText(pydantic) : "";
+  const isPydantic = state.sourceKind === "pydantic";
+  const right = isPydantic
+    ? derivedText(pydantic)
+    : (() => {
+        const parsed = parseSchema(state.schemaText);
+        return parsed.schema ? JSON.stringify(parsed.schema, null, 2) : "";
+      })();
 
   return (
-    <>
-      <PresetChips state={state} update={update} disabled={disabled} />
+    <div className="flex flex-col gap-2.5">
       <SourceChips state={state} update={update} disabled={disabled} />
-      <SourceEditor
-        state={state}
-        update={update}
-        pydantic={pydantic}
-        disabled={disabled}
-        minHeight={200}
-        extra={
-          <button className="btn py-0.5 px-2 text-xs" type="button" onClick={() => dialog.current?.showModal()} title="Edit in a wider window, next to the derived schema">
-            <IconExpand size={13} /> Expand
-          </button>
-        }
-      />
-      {derived && (
-        <div className="flex flex-col gap-1">
-          <button className="flex items-center gap-2 self-start text-xs text-ink-2" type="button" onClick={() => setShowDerived((v) => !v)} aria-expanded={showDerived}>
-            <span aria-hidden="true">{showDerived ? "▾" : "▸"}</span>
-            <span className="eyebrow">Derived schema</span>
-            <span className="chip">{derived.length.toLocaleString("en-US")} chars</span>
-          </button>
-          {showDerived && <pre className="panel mono max-h-64 overflow-auto p-2 text-[11.5px] leading-snug">{derived}</pre>}
+      <div className="grid gap-4 lg:grid-cols-2 items-start">
+        <SourceEditor state={state} update={update} pydantic={pydantic} disabled={disabled} minHeight={PANE_HEIGHT} />
+        <div className="flex flex-col gap-1.5 min-w-0">
+          <span className="eyebrow">{isPydantic ? "Derived JSON Schema" : "Parsed"}</span>
+          <pre className="panel mono overflow-auto p-3 text-[12px] leading-snug m-0" style={{ minHeight: PANE_HEIGHT, maxHeight: 420 }}>
+            {right || (isPydantic && pydantic.pending ? "converting…" : "")}
+          </pre>
         </div>
-      )}
-      <SchemaEditorDialog dialogRef={dialog} state={state} update={update} pydantic={pydantic} disabled={disabled} />
-    </>
+      </div>
+    </div>
   );
 }

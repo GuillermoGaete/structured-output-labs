@@ -163,22 +163,29 @@ export function TraceSection({ trace, stored, onImport, onClear, disabled = fals
   );
 }
 
-/** One LLM call of a multi-step trace (a chain, an agent loop), with where it sits in the tree. */
+/** One LLM call of a multi-step trace (a chain, an agent loop), as cards in trace order. */
 export function CallPicker({ calls, value, onChange, disabled = false }: { calls: LlmCall[]; value: string | null; onChange: (id: string) => void; disabled?: boolean }) {
   const current = calls.find((c) => c.id === value) ?? null;
   return (
-    <div className="flex flex-col gap-1.5">
-      <select className="input text-xs" value={value ?? ""} onChange={(e) => onChange(e.target.value)} disabled={disabled} aria-label="LLM call">
-        {!current && <option value="">—</option>}
-        {calls.map((c) => (
-          <option key={c.id} value={c.id}>
-            {callLabel(c)} · {c.messages.filter((m) => m.origin !== "output").length} msgs{c.error ? " · failed" : ""}
-          </option>
-        ))}
-      </select>
+    <div className="flex flex-col gap-2">
+      <div className="start-grid">
+        {calls.map((c) => {
+          const reply = c.messages.find((m) => m.origin === "output");
+          return (
+            <button key={c.id} type="button" className={`card text-left ${c.id === value ? "card-active" : ""}`} onClick={() => onChange(c.id)} disabled={disabled} aria-pressed={c.id === value}>
+              <span className="font-medium text-[13.5px]">{callLabel(c)}</span>
+              {c.path.length > 0 && <span className="mono text-[11px] text-muted truncate" title={c.path.join(" › ")}>{c.path.join(" › ")}</span>}
+              <span className="flex gap-1.5 flex-wrap mt-0.5">
+                <span className="chip">{c.messages.filter((m) => m.origin !== "output").length} msgs in</span>
+                {c.error ? <span className="chip chip-critical">failed</span> : reply?.toolCalls ? <span className="chip">answered with a tool call</span> : reply ? <span className="chip">answered in text</span> : null}
+                {c.schema && <span className="chip chip-good">schema</span>}
+              </span>
+            </button>
+          );
+        })}
+      </div>
       {current && (
         <>
-          {current.path.length > 0 && <span className="mono text-[11px] text-muted truncate" title={current.path.join(" › ")}>{current.path.join(" › ")}</span>}
           <div className="flex items-center gap-1.5 flex-wrap">
             {current.schema && <span className="chip chip-good" title="The call asked for this shape; Constrained enforces it with a mask">schema · {current.schema.source}</span>}
             {current.error && (

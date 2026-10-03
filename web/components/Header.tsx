@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useBackend } from "./BackendProvider";
 import { setUiMode, useUiMode } from "@/lib/uiMode";
 import { BackendSettings, BackendStatusPill } from "./BackendSettings";
+import { Stepper } from "./shell/TwoStep";
 
 const MODES = [
   { href: "/", label: "Constrained", title: "A schema compiled to an automaton that masks the logits" },
@@ -13,7 +14,7 @@ const MODES = [
   { href: "/replay", label: "Replay", title: "Import a LangChain trace and generate again from any of its messages" },
 ];
 
-/** Thin top bar: the app name, the three modes, the backend state, and its URL. The model is an input of the run, so it lives in the setup column. */
+/** Thin top bar: the app name, the three modes, the two steps of the one on screen, the backend state, and its URL. */
 export function Header() {
   const { phase } = useBackend();
   const pathname = usePathname();
@@ -39,6 +40,7 @@ export function Header() {
             </Link>
           ))}
         </nav>
+        {MODES.some((m) => m.href === pathname) && <Stepper />}
         <div className="ml-auto flex items-center gap-3">
           <div className="segmented" role="group" aria-label="Interface mode" title="Talk hides the view settings, the branch menu and the per-token strips, and enlarges the tokens">
             <button type="button" aria-pressed={mode === "lab"} onClick={() => setUiMode("lab")}>
